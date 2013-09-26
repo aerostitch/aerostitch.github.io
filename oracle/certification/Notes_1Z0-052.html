@@ -1,0 +1,2126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="AsciiDoc 8.6.7" />
+<meta name="author" content="Joseph HERLANT" />
+<link rel="shortcut icon" href="/custom_/ico/favicon.png" />
+<title>Notes for exams 1Z0-052</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install(2);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="/twbs_/css/bootstrap.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="/twbs_/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- Custom styles for this template -->
+<link href="/custom_/css/theme.css" rel="stylesheet" />
+<link href="/custom_/css/offcanvas.css" rel="stylesheet" />
+<link href="/custom_/js/offcanvas.js" rel="stylesheet" />
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">aerostitch's tips</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav" id="menu_left">
+          <!-- Here will stand the menu bar generated on page load by a jquery script -->
+          </ul>
+          <!--
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Bla</a></li>
+            <li><a href="#">Bla</a></li>
+            <li class="active"><a href="./">Active</a></li>
+          </ul>
+          -->
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div class="row row-offcanvas row-offcanvas-right">
+
+      <div class="col-xs-12 col-sm-9">
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Notes for exams 1Z0-052</h1>
+<span id="author">Joseph HERLANT</span><br />
+<span id="revnumber">version 1.0.5,</span>
+<span id="revdate">2013-05-16</span>
+<br /><span id="revremark">Minor corrections</span>
+</div>
+      </div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img alt="Warning" src="data:image/png;base64,
+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
+/F/lgJiyQFHragAAAABJRU5ErkJggg==" />
+</td>
+<td class="content">This document is my personnal notes I took when reading the "OCA/OCP Oracle Database 11g: All-in-One Exam Guide" to prepare 1Z0-052 exam. This is not a complete review of the exam topics, just the ones I either didn&#8217;t know or having hard time to remember.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_architectural_overview_of_database_11g">1. Architectural overview of Database 11g</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_introduction">1.1. Introduction</h3>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Instance
+</dt>
+<dd>
+<p>
+Memory structures and a set of processes. It exists on the CPU(s) and in the memory of a server node, and its existence is temporary. It manages all access to the database. Users of the database initiate sessions against the instance.
+</p>
+</dd>
+<dt class="hdlist1">
+Database
+</dt>
+<dd>
+<p>
+a set of files on the disk. It exists until these files are deleted.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>If the query <code>select parallel from v$instance;</code> returns NO, this means the instance is not part of a RAC.</p></div>
+<div class="paragraph"><p>If the query <code>select protection_level from v$database;</code> returns UNPROTECTED, it means that the instance is not part of a dataguard.</p></div>
+<div class="paragraph"><p>If the query <code>select * from dba_streams_administrator;</code> returns no rows, it means Streams has not been configured.</p></div>
+<div class="paragraph"><p><code>v$sga_dynamic_components</code> won&#8217;t show the log buffer because this view show only components that can be dynamically resized.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_memory">1.2. Memory</h3>
+<div class="sect3">
+<h4 id="_sga">1.2.1. SGA</h4>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 1. SGA structures</caption>
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<thead>
+<tr>
+<th colspan="3" align="center" valign="top">SGA mandatory structures                                       </th>
+<th colspan="3" align="center" valign="top">SGA Optionnal structures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td rowspan="5" align="center" valign="middle"><p class="table"><strong>Buffer cache</strong></p></td>
+<td rowspan="5" align="center" valign="middle"><p class="table"><strong>Log Buffer</strong></p></td>
+<td align="center" valign="top"><p class="table"><strong>Shared Pool</strong></p></td>
+<td rowspan="5" align="center" valign="middle"><p class="table"><strong>Large pool</strong></p></td>
+<td rowspan="5" align="center" valign="middle"><p class="table"><strong>Java pool</strong></p></td>
+<td rowspan="5" align="center" valign="middle"><p class="table"><strong>Streams pool</strong></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Library cache</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Data dictionnary cache</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">PL/SQL cache</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">PL/SQL functions / SQL Query cache</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+SGA required memory buffers
+</dt>
+<dd>
+<p>
+DB buffer cache, Log buffer, Shared pool (library cache, data dictionnary cache, PL/SQL Area, SQL Query / PL/SQL function result cache,&#8230;)
+</p>
+</dd>
+<dt class="hdlist1">
+SGA optionnal memory buffers
+</dt>
+<dd>
+<p>
+Large pool, Java pool, streams pool
+</p>
+</dd>
+<dt class="hdlist1">
+Dirty blocks
+</dt>
+<dd>
+<p>
+block that is not the same on the disk and in the buffer cache. Process of writing blocks to the disks are managed by the DBWriter background process. The buffer will become dirty when the block in it is updated.
+</p>
+</dd>
+<dt class="hdlist1">
+Pinned blocks
+</dt>
+<dd>
+<p>
+blocks in the buffer cache currently used by a session.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>Redo log data are written from the log buffer to the redo logs using LGWR (log writer) background process. COMMIT statements will generate real-time writing blocks from log buffers to redo logs.</p></div>
+<div class="paragraph"><p>The size of the log buffer is static, fixed at instance startup. It cannot be automatically managed.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Library cache
+</dt>
+<dd>
+<p>
+stores parsed form of the statements. (Note: parsing is case sensitive!)
+</p>
+</dd>
+<dt class="hdlist1">
+Data dictionnary cache
+</dt>
+<dd>
+<p>
+(=row cache) stores recently used object definitions.
+</p>
+</dd>
+<dt class="hdlist1">
+PL/SQL Area
+</dt>
+<dd>
+<p>
+Stores compiled versions of PL/SQL objects (procedures, functions, packaged procedures &amp; functions, object type definitions, and triggers)
+</p>
+</dd>
+<dt class="hdlist1">
+(SQL Query / PL/SQL function) Result cache
+</dt>
+<dd>
+<p>
+stores the result of a query. (The cache of a query will be invalidated each time a table against which the query was run has been updated). This cache is disabled by default and can be enabled programatically.
+</p>
+</dd>
+<dt class="hdlist1">
+Large pool
+</dt>
+<dd>
+<p>
+Used by Shared Server processes and Parallel execution servers when existing (instead of shared pool). Some I/O processes can also make use of a large pool (ie: Recovery Manager when backing up to tape device)
+</p>
+</dd>
+<dt class="hdlist1">
+Java pool
+</dt>
+<dd>
+<p>
+Only required for applications running Java stored procedures (that is the case of a number of Oracle options). It is used to instantiate the Java objects. The Java code is stored in the shared pool, not in the Java pool!
+</p>
+</dd>
+<dt class="hdlist1">
+Streams pool
+</dt>
+<dd>
+<p>
+used by Oracle Streams to reconstruct the statements to execute on remote database from the redo logs.
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_background_processes">1.3. Background processes</h3>
+<div class="sect3">
+<h4 id="_main_background_processes">1.3.1. Main background processes</h4>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+System Monitor (SMON)
+</dt>
+<dd>
+<p>
+mounts the database by locating and validating controlfiles. Then opens database by locating and validating datafiles and online log files. Once database opened, it does various tasks such as coalescing free space in datafiles.
+</p>
+</dd>
+<dt class="hdlist1">
+Process Monitor (PMON)
+</dt>
+<dd>
+<p>
+monitors server processes and detects any problem with the sessions. If a session has terminated abnormally, PMON will destroy the associated processes, return session&#8217;s PGA to the server and rollback any uncommited transaction.
+</p>
+</dd>
+<dt class="hdlist1">
+Database Writer (DBWn)
+</dt>
+<dd>
+<p>
+Writes dirty buffers from DB buffer cache to the datafiles (a session only modifies data in buffer cache, not directly on disks; a commit does not implies any write to disk!). It writes as little blocks as possible as rarely as possible. 4 events will force DBWn to write: No free buffers (neither dirty nor pinned - currently used by another session), too many dirty buffers (defined internally), a 3 second timeout (3 seconds without writing any buffers), and checkpoints (Full: manual, or on database closing ; partial (for just a tablespace or datafile): when datafiles / tablespaces are taken offline / backup mode / read only).
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p><strong>From Oracle 8i, checkpoints do not occur on log switch anymore.</strong></p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Log Writer (LGWR)
+</dt>
+<dd>
+<p>
+flushes the log buffer (containing blocks change vectors) to the online log files on disk in real time. 3 events generate this: a session commit, a third full log buffer, just before the DBWn  writes. Write-on-commit can be set in background mode (to prevent the session from hanging on commit), but if server crashed, some block changes can have not been written to online logs.
+</p>
+</dd>
+<dt class="hdlist1">
+Checkpoint Process (CKPT)
+</dt>
+<dd>
+<p>
+Handles full checkpoints requested manually or on closing database. Is also responsible of asking frequent incremental checkpoints to the DBWn for minimizing recovery time. Also writes the RBA (Redo Byte Address) aka checkpoint position (redo stream at which recovery must begin) to the controlfile.
+</p>
+</dd>
+<dt class="hdlist1">
+Manageability Monitor (MMON)
+</dt>
+<dd>
+<p>
+handles self-monitoring and self-tunning of the database. It captures activity statistics from the SGA (by default every hour) and writes them to the data dictionnary (kept 8 days by default). Each time it gathers a set of statistics, it launches ADDM (Automatic Database Diagnostic Monitor). It also checks whether alerts should be raised.
+</p>
+</dd>
+<dt class="hdlist1">
+Manageability Monitor Light (MMNL)
+</dt>
+<dd>
+<p>
+flushes the MMON data when the memory buffers used for MMON data are full before MMON is due to flush them.
+</p>
+</dd>
+<dt class="hdlist1">
+Memory Manager (MMAN)
+</dt>
+<dd>
+<p>
+Manages the memory allocations (&amp; grows &amp; shrinks).
+</p>
+</dd>
+<dt class="hdlist1">
+Archiver (ARCn)
+</dt>
+<dd>
+<p>
+Copies online redo logs to archive redo log files. There can be 0 to 30 processes. In normal running, LGWR writes to redo logs, ARCn reads to them and no other process touch them at all. (This is a facultative process)
+</p>
+</dd>
+<dt class="hdlist1">
+Recoverer (RECO)
+</dt>
+<dd>
+<p>
+handles the process of rollbacking in all databases impacted by a transaction rollback. (This is a facultative process)
+</p>
+</dd>
+</dl></div>
+</div>
+<div class="sect3">
+<h4 id="_other_background_processes">1.3.2. Other background processes</h4>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+CQJn,Jnnn
+</dt>
+<dd>
+<p>
+Manage jobs scheduled. CQJn for the job queue and sending jobs to a job queue. Jnnn for execution of a job.
+</p>
+</dd>
+<dt class="hdlist1">
+DBMR
+</dt>
+<dd>
+<p>
+resource manager.
+</p>
+</dd>
+<dt class="hdlist1">
+DIA0
+</dt>
+<dd>
+<p>
+diagnosability process zero is responsible for hang detection and deadlock resolution.
+</p>
+</dd>
+<dt class="hdlist1">
+DIAG
+</dt>
+<dd>
+<p>
+for disagnostic dumps and executes oradebug commands.
+</p>
+</dd>
+<dt class="hdlist1">
+FBDA
+</dt>
+<dd>
+<p>
+flashback data archiver process archives the historical rows of tracked tables into flashback data archives.
+</p>
+</dd>
+<dt class="hdlist1">
+PSPn
+</dt>
+<dd>
+<p>
+Process spawner for creating and managing other Oracle processes.
+</p>
+</dd>
+<dt class="hdlist1">
+Dnnn,Snnn
+</dt>
+<dd>
+<p>
+Dnnn is the dispatcher process that will send SQL calls to shared server processes. Snnn is the same but when the shared server mechanism has been enabled.
+</p>
+</dd>
+<dt class="hdlist1">
+QMNC,Qnnn
+</dt>
+<dd>
+<p>
+Queue manager coordinator for monitoring queues in the database and assigning Qnnn processes to enqueue and dequeue messages to and from these queues.
+</p>
+</dd>
+<dt class="hdlist1">
+SHAD
+</dt>
+<dd>
+<p>
+(="TNS V1-V3" on Linux systems) to support user sessions.
+</p>
+</dd>
+<dt class="hdlist1">
+SMCO,Wnnn
+</dt>
+<dd>
+<p>
+for space management (allocation and space reclamation). Wnnn are slave processes of SMCO to implement the task.
+</p>
+</dd>
+<dt class="hdlist1">
+VKTM
+</dt>
+<dd>
+<p>
+(virtual keeper of time) is responsible of keeping track of time.
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_storage">1.4. Storage</h3>
+<div class="paragraph"><p>Every database must have at least 2 groups of online logs, each containing at least 1 member. (and should have at least 2 members for safety)</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installing_and_creating_a_db">2. Installing and creating a DB</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In Linux &amp; Unix environments, if the DISPLAY variable is not set properly, the OUI will not be able to open a window and will throw an error.</p></div>
+<div class="paragraph"><p>In windows, registery keys are under HKEY_LOCAL_MACHINE\SOFTWARE\ORACLE. Registry keys that contains the parameters of the windows service are under HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\OracleService <strong>&lt;DB_SID&gt;</strong></p></div>
+<div class="paragraph"><p>In an instance parameter file, the only parameter that has no default value is the "DB_NAME" parameter, so it is the only required. The DB_NAME can be up to 8 characters long, begining with a letter and containing letters and digits only.</p></div>
+<div class="paragraph"><p>NOMOUNT instance = instance created (following the parameter file) but not connected to a database.</p></div>
+<div class="paragraph"><p>MOUNT mode = instance created and connected to the controlfile of a database.</p></div>
+<div class="paragraph"><p>OPEN mode = instance created, connected to controlfile and files listed in controlfile have been located and opened.</p></div>
+<div class="paragraph"><p>Be sure to have $ORACLE_HOME/bin at the begining of the PATH variable in case there were any linux executable that have the same name as the oracle command (ex: rman command on Suse Linux)</p></div>
+<div class="paragraph"><p>DB_BLOCK_SIZE is the only parameter you cannot change after database creation.</p></div>
+<div class="paragraph"><p>CHARACTERSET of a database cannot be changed throug DBCA.</p></div>
+<div class="paragraph"><p>Database control can be used for each database of a server and will use a different port for each one.</p></div>
+<div class="paragraph"><p>If you use DBCA to create a database and DB Control is selected, a listener must be created first or DBCA will not continue.</p></div>
+<div class="paragraph"><p>Only DBCA offers template management.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_instance_management">3. Instance management</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Get instance basic parameters:
+<code>select s.name, s.value as value_in_spfile, p.value as value_in_memory from v$spparameter s inner join v$parameter p on s.name=p.name where p.isbasic='TRUE' order by name;</code></p></div>
+<div class="paragraph"><p>If you raise the log_buffer size, you may find that commit processing takes longer. If you make it smaller, it will be internally adjusted up to the default value. Generally speaking, you should keep it to the default value.</p></div>
+<div class="paragraph"><p>SYSOPER has the ability to issue:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+STARTUP
+</p>
+</li>
+<li>
+<p>
+SHUTDOWN
+</p>
+</li>
+<li>
+<p>
+ALTER DATABASE [MOUNT | OPEN | CLOSE | DISMOUNT]
+</p>
+</li>
+<li>
+<p>
+ALTER [DATABASE | TABLESPACE] [BEGIN | END] BACKUP
+</p>
+</li>
+<li>
+<p>
+RECOVER
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>SYSDBA and SYSOPER are not users: they are privileges that can be granted to users. By default only user SYS has these privileges until they are deliberatly granted to other users.
+Normal (not sysoper/sysdba) connections authenticate against the data dictionnary. Connections using sysdba or sysoper privileges authenticate externally, so do not need the database to be opened to authenticate.</p></div>
+<div class="paragraph"><p>Dynamic performance views are populated from the instance (access from nomount) or the controlfile (access from mount); DBA_, ALL_ and USER_ views are populated from the data dictionnary (access in open mode only).</p></div>
+<div class="paragraph"><p>The default scope of an ALTER SYSTEM is both memory and SPFILE!</p></div>
+<div class="paragraph"><p>The SMON process will roll back incomplete transactions, after opening the database (that crashed for example). Rollback occurs while the database is available for use (after the users are able to connect).</p></div>
+<div class="paragraph"><p>DB Control url will not get an error if database or listener is not running (since it can be used to start and stop both).</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_oracle_networking">4. Oracle Networking</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_global_functionning">4.1. Global functionning</h3>
+<div class="paragraph"><p>Execution of an SQL statement goes through 4 stages:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+parse (transforms statement in something executable using the shared pool)
+</p>
+</li>
+<li>
+<p>
+bind (expanding variables into literals)
+</p>
+</li>
+<li>
+<p>
+execute (interacting with data buffer cache which sometimes implies access tot he datafiles)
+</p>
+</li>
+<li>
+<p>
+fetch (server process sends data to the user process)
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>Oracle net is responsible for establishing a session and then for the ongoing communication between the user process and the server process (transmitting SQL and fetching result back).</p></div>
+<div class="paragraph"><p>From Oracle 11G, Sqlnet can only work with the following protocols:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+TCP
+</p>
+</li>
+<li>
+<p>
+TCP with secured sockets
+</p>
+</li>
+<li>
+<p>
+Windows named pipes (NMP)
+</p>
+</li>
+<li>
+<p>
+Sockets direct protocol (SDP) over infiniband high-speed networks
+</p>
+</li>
+<li>
+<p>
+OS-specific inter-processing communication (IPC) &#8594; for local connections only
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>There are several graphical tools for configuring a listener (Database / Grid control, Net manager, Net Configuration assistant). The Oracle Net configuration assistant does not let you configure multiple listening adresses.</p></div>
+<div class="paragraph"><p>The listener and the instance must be running on the same computer, or (only for RAC), on any computer of the same cluster.</p></div>
+<div class="paragraph"><p>To change the listener where the instance will register to, change the "local_listener" initialisation parameter.</p></div>
+<div class="paragraph"><p>To add service names for the listener to listen to for a given instance, use the "service_names" init parameter that is a coma-separated list of service names. (works for dynamic registering)</p></div>
+<div class="paragraph"><p>PMON registers the DB with a listener once a minute.</p></div>
+<div class="paragraph"><p>In the lsnrctl prompt, "EXIT" will save the changes, but "QUIT" will NOT!</p></div>
+<div class="paragraph"><p>sqlnet.ora file contains settings that apply to all connections and listeners, such as security rules and encryption.</p></div>
+<div class="paragraph"><p>The TNS_ADMIN variable contains the path to the listener.ora, tnsnames.ora and sqlnet.ora to use in the set environment.</p></div>
+<div class="paragraph"><p>Dedicated server implies: listener creates a server process at user connection request. This server process will execute the SQL.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_shared_server_environments">4.2. Shared server environments</h3>
+<div class="paragraph"><p>Shared server implies: listener will transfert the user process to one dispatcher (load balancing between all dispatchers) that will queue the statements in a common queue. A shared server process (not tied to a session) that will take the job from the common queue and then queue the fetched result back to the initial dispatcher&#8217;s response queue that will transmit it to the user process.</p></div>
+<div class="paragraph"><p>Listener connection is transient but connection between user process and dispatcher will persist for the duration of the session.</p></div>
+<div class="paragraph"><p>The common queue is shared by all dispatchers. All shared server processes monitor the common queue.</p></div>
+<div class="paragraph"><p>The response queue is specific to the dispatcher that recieved the job (SQL) in the 1st place. Each dispatcher monitors its own response queue.</p></div>
+<div class="paragraph"><p>UGA (user global area) is the equivalent to the PGA in a shared server environment. It resides in the SGA. The difference is that the session stack space that is still outside the SGA. The UGA can be configured manually using the "large_pool" parameter.</p></div>
+<div class="paragraph"><p>"shared_servers" parameter (that defaults to 1) controls the number of shared server processes that will be launched at instance startup time. In case of load, Oracle will automatically launch additionnal shared servers until it reaches the "max_shared_servers" (that defaults to a eigth of the "processes" parameter).</p></div>
+<div class="paragraph"><p>"dispatchers" is the only required parameter in order to configure a shared server environment. It contains the number of dispatchers and the corresponding protocol.</p></div>
+<div class="paragraph"><p>To force a dedicated connection in a shared server environment (for admin tasks for example), put <code>(SERVER = DEDICATED)</code> in the client side&#8217;s tnsnames.ora. Operations like RMAN backups, bulk loads, DataWarehousing DBA work need dedicated connections.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_oracle_storage">5. Oracle Storage</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>If a column of a table is defined as a user-defined object segment that itself has columns, then the column can be stored in its own segment called <code>a nested table</code>.</p></div>
+<div class="paragraph"><p>To allocate manually a new extent to a segment (here a table), use: <code>ALTER TABLE &lt;table_name&gt; ALLOCATE EXTENT [STORAGE (datafile '&lt;file_name&gt;')]</code></p></div>
+<div class="paragraph"><p>Oracle Home cannot be in ASM. Only datafiles, backup, redo and datapump files can be stored in ASM.</p></div>
+<div class="paragraph"><p>Extent management of a tablespace should always be LOCAL.</p></div>
+<div class="paragraph"><p><code>ALTER TABLESPACE &lt;ts_name&gt; OFFLINE IMMEDIATE</code> will not generated a checkpoint (due to the <strong>IMMEDIATE</strong> option) and will need change vectors to be applied before opening it back.</p></div>
+<div class="paragraph"><p>Objects in a READ ONLY (and/or OFFLINE) tablespace cannot be changed using DML statements but can be dropped (because it is only deleting rows in the data dictionnary)! But as the creation of a data object requires writing the 1<sup>st</sup> extent to the tablespace, creation of data objects is not possible in a READ ONLY tablespace.</p></div>
+<div class="paragraph"><p>It is possible to convert tablespace from dictionnary extent management to local extent management but not from freelist segment management to automatic segment management.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_oracle_security">6. Oracle Security</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>User names must be <strong>&le; 30 characters</strong>, consists of leters, digits, the "$" sign and the "_" sign. If setting username with double quotes, theses rules can be broken except for length using non standard characters.</p></div>
+<div class="paragraph"><p>If a user&#8217;s quota is reduced to below the size of their existing objects (or even reduced to zero), the user objects will survive and be usable but they will not be permitted to get any bigger.</p></div>
+<div class="paragraph"><p>Before you can create a table you must have the "CREATE TABLE" grant <strong>AND</strong> quota on the tablespace in which you create it.</p></div>
+<div class="paragraph"><p>List of users that are in the password file are accessible through the <code>V$PWFILE_USERS</code> dynamic view.</p></div>
+<div class="paragraph"><p>To have external authentication on normal user without advanced security option, create the account with the same name that the OS account prefixed with the value of the "OS_AUTHENT_PREFIX" init parameter (which defaults to OPS$).
+On windows domain, the user name will be "DOMAIN\USER", and the prefix will be added before the DOMAIN.</p></div>
+<div class="paragraph"><p>Using external authentication can be very useful, but only if the users actually log on to the machine hosting the database. Users will rarely do this, so the technique is more likely to be of value for accounts used for running maintenance or batch jobs.</p></div>
+<div class="paragraph"><p>Revocation of a system privilege will not cascade (unlike revocation of an object privilege which will cascade the object privileges granted from the "with grant option" to other users).</p></div>
+<div class="paragraph"><p>A (non-dba) user can only revoke objects-privileges that <strong>he/she granted</strong>.</p></div>
+<div class="paragraph"><p>To enable a non default role on your session, use the SET ROLE rolename.
+If you want a user to enable a role only by a specific procedure, use: CREATE ROLE rolename IDENTIFIED USING procedure_name;</p></div>
+<div class="paragraph"><p>Resource limits will not be applied unless the <code>RESOURCE_LIMIT</code> instance parameter has been set to TRUE.</p></div>
+<div class="paragraph"><p>In a profile, the <code>LIMIT SESSION_PER_USER</code> will not be applied unless the <code>RESOURCE_LIMIT</code> is set to TRUE.</p></div>
+<div class="paragraph"><p>A profile cannot be dropped if it has been assigned to a user. They must be altered to a different profile first, or use <code>DROP PROFILE &lt;profile_name&gt; CASCADE;</code> which will automatically reassign the assigned users to the default profile.</p></div>
+<div class="paragraph"><p>A profile can limit logical I/O, from the database buffer cache, but not physical I/O from the database.</p></div>
+<div class="paragraph"><p>Public is a role that is granted to everyone, but when connecting using the "AS SYSOPER" syntax, you will appear to be connected to an account named "PUBLIC"! When connected "AS SYSDBA", you will appear to be connected as user "SYS".</p></div>
+<div class="paragraph"><p><code>GRANT ANY</code> system privilege protects SYS schema (to protect dictionnary by excluding its objects from the grant). It will not grants rights on the SYS schema as long as the <code>O7_DICTIONNARY_ACCESSIBILITY</code> is set to <code>FALSE</code>.</p></div>
+<div class="paragraph"><p>In the <code>AUDIT</code> command, the <code>BY SESSION</code> (which is the default) will create an audit entry for each session violating the rules, no matter how many violation it makes. The <code>BY ACCESS</code> will create 1 audit entry for each violation.</p></div>
+<div class="paragraph"><p>In the <code>AUDIT</code> command, the <code>WHENEVER SUCCESSFULL</code> keywork limits audit records to those where the operation succeeded. The alternative syntax is <code>WHENEVER NOT SUCCESSFULL</code>. By default, all are audited.</p></div>
+<div class="paragraph"><p>Logons are audited with the <code>AUDIT SESSION</code> command.</p></div>
+<div class="paragraph"><p><code>DBA_AUDIT_TRAIL</code> view is used for accessing standard auditing datas.</p></div>
+<div class="paragraph"><p>To manage Fine-Grained Auditing, use the <code>DBMS_FGA</code> package and the <code>DBA_FGA_AUDIT_TRAIL</code> view.</p></div>
+<div class="paragraph"><p><code>DBA_COMMON_AUDIT_TRAIL</code> view shows events from both standard and Fine-Grained auditing.</p></div>
+<div class="paragraph"><p>Roles can be password protected!</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ddl_and_schema_objects">7. DDL and schema objects</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_objects_definition">7.1. Objects definition</h3>
+<div class="paragraph"><p>Object names must be between 1 and 30 characters long (except for DB_LINKS that can be up to 128 characters long). They can only include letters, numbers, "_", "$" and "#" (this rule can be broken by using double quotes, but that exception does not include the length rule).</p></div>
+<div class="paragraph"><p>The following objects have each their own namespace:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Indexes
+</p>
+</li>
+<li>
+<p>
+Database triggers
+</p>
+</li>
+<li>
+<p>
+Constraints
+</p>
+</li>
+<li>
+<p>
+Private DB_LINKS
+</p>
+</li>
+<li>
+<p>
+Clusters
+</p>
+</li>
+<li>
+<p>
+Dimensions
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>For ISO/ANSI compliance, you can specify the VARCHAR datatype, but any column of this type will automatically be converted to the VARCHAR2 datatype.</p></div>
+<div class="paragraph"><p>A table can be organized in a way of:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+a <code>heap table</code>: simplest, randomly organized, variable-length columns
+</p>
+</li>
+<li>
+<p>
+an <code>index-organized table</code>: stores rows in the order of an index key
+</p>
+</li>
+<li>
+<p>
+an <code>index cluster</code>: can denormalize tables in parent-child relationship so that related rows from different tables are stored together
+</p>
+</li>
+<li>
+<p>
+a <code>hash cluster</code>: forces a random distribution rows to break ordering based on the entry sequence
+</p>
+</li>
+<li>
+<p>
+a <code>partitionned table</code>: stores rows in separated physical structures (the partitions), allocating rows according to the value of a column
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Temporary tables exists ideally only in the PGA of the session that is using them (no disk or database buffer cache activity). If PGA is not big enough, the user&#8217;s temporary tablespace will be used (and as always with TEMP tablespaces, the db buffer cache will still be skipped). &#8658; faster than classic tables!</p></div>
+<div class="paragraph"><p>Temporary tables' DML operation do not generate redo logs &#8658; faster than classic tables!</p></div>
+<div class="paragraph"><p>It is recommended to put an index on the foreign key to help Oracle searching for keys (when deleting rows in parent table for example).</p></div>
+<div class="paragraph"><p>There is no precompilation that makes a view quicker than the query without the view.</p></div>
+<div class="paragraph"><p>View created with <code>select * from ...</code> will be transformed internally to <code>select col1, col2, ... from ...</code> at the time of the creation and will therefore <strong>NOT</strong> become invalid when a new column will be added to the undelying table, but will not show the added column unless a manual recompilation is made against the view.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_query_plan_techniques">7.2. Query plan techniques</h3>
+<div class="paragraph"><p><code>Nested join</code> technique passes through one table using an index placed on the other table of a the join to locate the matching rows (usually disk-intensive operation).</p></div>
+<div class="paragraph"><p><code>Hash join</code> technique reads the entire table into memory, converts it into a hash table and uses a hashing algorithm to locate the matching rows (memory and CPU intensive).</p></div>
+<div class="paragraph"><p><code>Sort merge</code> technique sorts the tables according to the join column and then merges them together (compromise among disk, memory and CPU).</p></div>
+<div class="paragraph"><p><code>Skip-scanning</code> method is used when the leftmost column of a composite index is not included in a select. That is much less effiscient than if the leftmost column was included.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_indexes">7.3. Indexes</h3>
+<div class="paragraph"><p><code>Reverse key indexes</code> store "John" as "nhoJ". When select is done, Oracle will automatically reverse the search key. Usefull when the data concatenate to the high end of the index.</p></div>
+<div class="paragraph"><p><code>Compressed indexes</code> will store the duplicated keys once, followed by a string of all the matching rowids.</p></div>
+<div class="paragraph"><p>Unlike B*Tree indexes, bitmap indexes include NULL values.</p></div>
+<div class="paragraph"><p>Use bitmap indexes only with a low cardinality.</p></div>
+<div class="paragraph"><p>When creating an index with the <code>NOSORT</code> option, you indicate Oracle that the rows do not need to be sorted; if they are not already sorted (in the index order), the index creation will fail.</p></div>
+<div class="paragraph"><p>If you create a PK/UNIQUE constraint on 1 or more columns and a unique index already exists on these columns, oracle will detect it and use it for the PK/UNIQUE constraint. If the existing index is a NON-UNIQUE index, it will be used and converted to a UNIQUE index.</p></div>
+<div class="paragraph"><p>Dropping a constraint that have an implicit index defined will also drop the index, but if the index was explicitly created before the contraint, then the index will survive.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dml_and_concurrency">8. DML and concurrency</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Truncating a table only resets its High Water Mark.</p></div>
+<div class="paragraph"><p>Closing a Windows SQL*Plus terminal with an "exit" will commit transactions, but NOT on all the other Operating Systems!</p></div>
+<div class="paragraph"><p>PL/SQL functions are similar in concept to a PL/SQL procedure but it does not have OUT argument and cannot be invoked with <code>EXECUTE</code>. It returns a single value with the <code>RETURN</code> statement.</p></div>
+<div class="paragraph"><p>DML statement acquire at least 2 locks:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+1 EXCLUSIVE lock on the row it modifies (1 for each row involved)
+</p>
+</li>
+<li>
+<p>
+1 SHARED at the table level to prevent any DDL statement from modifying the table&#8217;s structure during the DML operation
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p><code>V$ROLLSTAT</code> gives informations on the size of the UNDO segments.</p></div>
+<div class="paragraph"><p><code>DBA_ROLLBACK_SEGS</code> gives informations about the existing ROLLBACK segments.</p></div>
+<div class="paragraph"><p><code>V$TRANSACTION</code> gives informations on the currently active transactions.</p></div>
+<div class="paragraph"><p><code>V$SESSION</code> gives informations about the currently existing sessions.</p></div>
+<div class="paragraph"><p>To find out space needed for an undo tablespace, take the longest query and the retention guarantee and do the following operation:</p></div>
+<div class="paragraph"><p><strong>(</strong> max(<em>Number of blocks for the query</em>) <strong>/</strong>  (<em>seconds of retention guarantee</em>)  <strong>)</strong> * (<em>Block size</em>) * max(<em>Duration of the query (sec)</em>)</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuring_the_db_for_backup_and_recovery">9. Configuring the DB for Backup and recovery</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Can a <code>shutdown abort</code> corrupt a database? No, it is impossible to corrupt the database using these types of commands.</p></div>
+<div class="paragraph"><p>At instance startup, the roll forward phase reconstructs UNDO segments in memory and buffer cache from the active and current redo logs to enable the rollback phase.</p></div>
+<div class="paragraph"><p>Instance recovery never needs an ARCHIVED redo log file.</p></div>
+<div class="paragraph"><p>MTTR (&#8594; Mean Time To Recover) can be controlled by the <code>FAST_START_MTTR_TARGET</code> (which defaults to 0, that means UNLIMITED). This initialization parameter makes the DWR work more harder to ensure that the time between the checkpoint time (in the redo) and the current time tend to be near the value of this particular parameter. This parameter also enables "checkpoint auto-tunning".</p></div>
+<div class="paragraph"><p>When <code>FAST_START_MTTR_TARGET</code> is set to a nonzero value, it will override the <code>LOG_CHECKPOINT_INTERVAL</code>.</p></div>
+<div class="paragraph"><p>MTTR Advisor can be seen through <code>V$INSTANCE_RECOVERY</code> view.</p></div>
+<div class="paragraph"><p>Full checkpoint only occurs with orderly shutdown or by user request (<code>alter system checkpoint</code>).</p></div>
+<div class="paragraph"><p>Partial checkpoint occurs while:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+taking a tablespace or a datafile offline
+</p>
+</li>
+<li>
+<p>
+dropping a segment
+</p>
+</li>
+<li>
+<p>
+truncating a table
+</p>
+</li>
+<li>
+<p>
+putting a tablespace in backup mode
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>An instance can have up to 8 multiplexed copies of a controlfile.</p></div>
+<div class="paragraph"><p><code>DB_RECOVERY_FILE_DEST_SIZE</code> must be set <strong>before</strong> attempting to set <code>DB_RECOVERY_FILE_DEST</code>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_backup_with_rman">10. Backup with RMAN</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>An <code>OPEN</code> backup can only be made if the database is in <code>ARCHIVELOG</code> mode.</p></div>
+<div class="paragraph"><p>In <code>NOARCHIVELOG</code> mode, backup of database can only be done with database closed (<code>MOUNT</code> mode after a <strong>CLEAN</strong> shutdown).</p></div>
+<div class="paragraph"><p>Files that cannot be backed up with RMAN are:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+TEMPFILES
+</p>
+</li>
+<li>
+<p>
+ONLINE REDO LOG
+</p>
+</li>
+<li>
+<p>
+PASSWORD FILE
+</p>
+</li>
+<li>
+<p>
+Static PFILE
+</p>
+</li>
+<li>
+<p>
+Oracle NET configuration files
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>If there is no level 0 backup, then the first level 1 differential or cumulative backup will in fact perform a level 0 backup!</p></div>
+<div class="paragraph"><p>Incremental backups &#8658; all changed blocks since the <strong>last incremental</strong> backup (which could be either a level 0 or a level 1)</p></div>
+<div class="paragraph"><p>Cumulative backups &#8658; all changed blocks since the <strong>last level 0</strong> backup.</p></div>
+<div class="paragraph"><p>An image copy is a backup file that is identical to the input file.</p></div>
+<div class="paragraph"><p>An image copy can be used immediately, without a restore operation. Backupsets always need a restore operation to be usable.</p></div>
+<div class="paragraph"><p>Tape channels, compression, incremental backups <strong>CANNOT</strong> be used with image copy backups.</p></div>
+<div class="paragraph"><p>RMAN generates 3 types of sessions against the database:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+one <code>default session</code>: invokes the kernelized (available before DB is mounted) PL/SQL that implements RMAN.
+</p>
+</li>
+<li>
+<p>
+one <code>pooling session</code>: monitors the progress of RMAN operations
+</p>
+</li>
+<li>
+<p>
+one ore more <code>channel session</code>: reads and writes on a disk or tape. One by user-defined (or defaults) channels.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>RMAN&#8217;s parallelism (# of channels) cannot exceed the number of input (if the multisection backup is disabled) and output files.</p></div>
+<div class="paragraph"><p>Default RMAN encryption requires a wallet and will be AES128. Alternatively, a password or longer keys can be specified.</p></div>
+<div class="paragraph"><p><code>CONFIGURE BACKUP OPTIMIZATION ON;</code> allows RMAN not to backup certain files if it considers it already has suffiscient copies of the files (related to retention policy). For read-write datafiles, it will never have identical copies of the file.</p></div>
+<div class="paragraph"><p><code>DELETE EXPIRED;</code> will not delete anything on disk, only the references marked as expired in the RMAN repository.</p></div>
+<div class="paragraph"><p><code>DELETE OBSOLETE;</code> will delete files and update the repository accordingly.</p></div>
+<div class="paragraph"><p>RMAN stores its repository on controlfile &#8658; loss of it means no restore possible! RMAN Recovery Catalog avoids this.</p></div>
+<div class="paragraph"><p>If you use LOG_ARCHIVE_DEST or LOG_ARCHIVE_DUPLEX_DEST, these locations must be disks (Filesystems or ASM). It cannot be another Oracle instance.</p></div>
+<div class="paragraph"><p>If a MANDATORY archive destination is unavailable, the database will shut down.</p></div>
+<div class="paragraph"><p>Control files and redo logs are considered as permanent. A copy of the controlfile and each online log is kept in the FRA. Archivelog and backups are considered as transient.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_restore_and_recover_with_rman">11. Restore and recover with RMAN</h2>
+<div class="sectionbody">
+<div class="hdlist"><table>
+<tr>
+<td class="hdlist1">
+ADR
+<br />
+</td>
+<td class="hdlist2">
+<p style="margin-top: 0;">
+Automatic Diagnostic Repository
+</p>
+</td>
+</tr>
+</table></div>
+<div class="paragraph"><p>Health monitor will run reactively or on demand and will write errors details to the ADR.</p></div>
+<div class="paragraph"><p>Health monitor&#8217;s PL/SQL package &#8658; DBMS_HM</p></div>
+<div class="ulist"><div class="title">Actions that do the Health Monitor</div><ul>
+<li>
+<p>
+In NOMOUNT mode, checks the "DB structure integrity" (integrity of the controlfiles)
+</p>
+</li>
+<li>
+<p>
+In MOUNT mode, checks:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+the "DB structure integrity" (integrity of the controlfiles + online redo logs and datafile headers)
+</p>
+</li>
+<li>
+<p>
+the "Redo Integrity check" (online and archived logfiles accessibility and corruptions)
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+In OPEN mode:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+scans every data block for corruption
+</p>
+</li>
+<li>
+<p>
+checks data dictionnary integrity
+</p>
+</li>
+<li>
+<p>
+checks undo segments integrity
+</p>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+DRA
+</dt>
+<dd>
+<p>
+Data Recovery Advisor : makes the use of informations gathered by the Health Monitor to find problems and contructs RMAN scripts to repair them. It can do nothing unless the instance is in nomount mode or higher.
+</p>
+</dd>
+</dl></div>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="paragraph"><p>If one or more failure exists, then you should typically use:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+<code>LIST FAILURE;</code> RMAN command to show informations about the failure
+</p>
+</li>
+<li>
+<p>
+<code>ADVISE FAILURE;</code> RMAN command <strong>in the SAME RMAN session</strong> to obtain a report of repair. DRA will not generate any advice if you have not first asked it to the list the failures. Fixed failures or occurences since last listing will not be advised upon.
+</p>
+</li>
+<li>
+<p>
+<code>REPAIR FAILURE;</code> RMAN command <strong>in the SAME RMAN session</strong> to automatically run the generated repair script
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>DRA will function only for a single-instance database. It cannot work with a RAC clustered database, nor against a DataGuard standby database.</p></div>
+<div class="paragraph"><p>In <strong>NOarchivelog</strong> mode, the corruption of a datafile will mean full restore and a clear of the logfile groups using <code>ALTER DATABASE CLEAR LOGFILE GROUP &lt;group_number&gt;;</code>. This recreates the specified logfile group. Other solution would be to drop the relevant tablespace&#8230;</p></div>
+<div class="paragraph"><p>In <strong>NOarchivelog</strong> mode, restoring an incremental backup will need the use of <code>RECOVER DATABASE NOREDO;</code> command after the full backup restore.</p></div>
+<div class="paragraph"><p>RMAN will always apply incremental backups in preference to applying redo data (if they are available).</p></div>
+<div class="paragraph"><p>SYSTEM and/or active UNDO tablespaces and/or any controlfile copy corruption will all bring database down.</p></div>
+<div class="paragraph"><p>Other tablespaces' datafile corruption &#8658; datafile will be brought offline (and the rest of the database will remain open).</p></div>
+<div class="paragraph"><p>Incomplete recovery is necessary if there is a missing archivelog or if all members of the current online redo log file group are missing.</p></div>
+<div class="paragraph"><p>Autobackup of controlfile and spfile will rely on DBID, so keep the DBID in your documentation.</p></div>
+<div class="paragraph"><p><code>RESTORE CONTROLFILE|SPFILE FROM AUTOBACKUP|'&lt;file_path&gt;';</code> are the only RMAN commands that can be executed in NOMOUNT mode.</p></div>
+<div class="paragraph"><p>In RMAN, the <code>SET</code> commands (SET UNTIL, NEWNAME, DBID,&#8230;) can <strong>only</strong> be executed in a <strong>run block</strong>.</p></div>
+<div class="paragraph"><p>Block corruptions will not take the datafile offline. RMAN can detect them as it performs backup operations and repair them automatically.</p></div>
+<div class="paragraph"><p>To manually recover a block using RMAN, use the <code>block recover datafile &lt;datafile_number&gt; block &lt;coma_separated_block_numbers_to_recover&gt;;</code>.</p></div>
+<div class="paragraph"><p>If you use the backup with the MAXCORRUPT option, you can recover corrupted blocks using <code>block recover corruption list [until SYSDATE-7];</code> (for example). The "until sysdate - 7" would recover from a backup at least older than 7 days.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_moving_and_reorganizing_data">12. Moving and reorganizing data</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_sql_loader">12.1. SQL*Loader</h3>
+<div class="paragraph"><p>SQL*Loader can use either binded insert with normal commit or <code>direct path loads</code> that will skip buffer cache (can even skip redo), generate no UNDO, writes directly above HWM and move HWM at the end of the work.</p></div>
+<div class="paragraph"><p>Direct path loads have drawbacks:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Referential integrity contraints must be dropped or disabled for the duration of the operation (except for unique, not null &amp; PK)
+</p>
+</li>
+<li>
+<p>
+Insert triggers are not fired
+</p>
+</li>
+<li>
+<p>
+Table will be locked against DML from other sessions
+</p>
+</li>
+<li>
+<p>
+Cannot be used against clustered tables
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Only <strong>UNIQUE</strong>, <strong>NOT NULL</strong> and PK constraints are enforced during a direct path load.</p></div>
+<div class="paragraph"><p>SQL*Loader use:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Input files (data)
+</p>
+</li>
+<li>
+<p>
+Control files (settings and format)
+</p>
+</li>
+<li>
+<p>
+Log files
+</p>
+</li>
+<li>
+<p>
+Bad files (formatting errors or not matching DB integrity constraints)
+</p>
+</li>
+<li>
+<p>
+Reject files (correct input but do not match some record selection criterion)
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_directories_amp_external_tables">12.2. Directories &amp; external tables</h3>
+<div class="paragraph"><p>Directories are always owned by SYS user even if not created by SYS. So having created a directory do not mean that you will be able to drop it!</p></div>
+<div class="paragraph"><p>External tables relies on oracle&#8217;s "DIRECTORIES" objects just as DATAPUMP do.</p></div>
+<div class="paragraph"><p>External tables cannot have indexes, constraints or triggers.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_datapump">12.3. DataPump</h3>
+<div class="paragraph"><p>When a DataPump job is launched, at least 2 processes are started:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The <code>DMnn</code>: DataPump Master process (one by datapump job)
+</p>
+</li>
+<li>
+<p>
+One or more <code>DWnn</code>: Worker processes. If parallelism is enabled, each DWnn may make use of 2 or more parallel execution server processes named <code>Pnnn</code>.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>2 queues are created for each datapump jobs:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+A control queue: Individual tasks to make up the job are placed in the control queue by the DMnn process. DWnn process pick up these tasks and execute them.
+</p>
+</li>
+<li>
+<p>
+A status queue: DMnn place messages in the status queue to describe the state of the job. Any session with appropriate privileges can query the queue to monitor the job&#8217;s progress.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>There are 3 datapump file types:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+SQL files
+</p>
+</li>
+<li>
+<p>
+Log files
+</p>
+</li>
+<li>
+<p>
+Dump files
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Directory (or directories) can be specified to a datapump job at 4 levels (in order of precedence):</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+A per-file within the datapump job
+</p>
+</li>
+<li>
+<p>
+A parameter applied to the whole datapump job at command-line level
+</p>
+</li>
+<li>
+<p>
+The <code>DATAPUMP_DIR</code> environment variable
+</p>
+</li>
+<li>
+<p>
+The <code>DATA_PUMP_DIR</code> directory
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>Datapump has 2 methods for loading and unloading data:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Direct path: works the same way as for SQL*Loader
+</p>
+</li>
+<li>
+<p>
+External table path: uses SELECT and INSERT statements using the buffer cache, UNDO, REDO and regular COMMIT mechanisms.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>DBA has no control of which method is used. Datapump makes the decision himself based on the complexity of the objects (ie: simply structured data such as table heap with no triggers &#8658; direct path). In either case, the generated file is identical.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_transportable_tablespaces">12.4. Transportable tablespaces</h3>
+<div class="paragraph"><p>Transportable tablespaces requires data to be converted to the endian format. To transport tablespace accross platforms with a different endian requires converting datafiles. You do this using the <code>CONVERT</code> RMAN command.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_tables_reorganization">12.5. Tables reorganization</h3>
+<div class="paragraph"><p><code>DBA_RESUMABLE</code> view lists all suspended sessions. Resumable can be set:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+at session level using <code>ALTER SESSION ENABLE RESUMABLE [TIMEOUT &lt;seconds&gt;] [name &lt;operation_name&gt;];</code>. TIMEOUT defauts to infinite; NAME is the name that would appear in DBA_RESUMABLE
+</p>
+</li>
+<li>
+<p>
+at system level by setting the <code>RESUMABLE_TIMEOUT</code> instance parameter
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Row migration is caused by UPDATE statement. INSERT or DELETE can NEVER cause row migration.</p></div>
+<div class="paragraph"><p>Reorganizing a table with a MOVE will render all associated indexes unusable.</p></div>
+<div class="paragraph"><p>A MOVE operation will lock the table against DML. You cannot move a table if there is an uncommited transaction against it.</p></div>
+<div class="paragraph"><p>To find chained rows, use the <code>ANALYZE</code> command, <strong>NOT</strong> <code>DBMS_STATS</code> package. Then go to the <code>CHAIN_CNT</code> of the <code>DBA_TABLES</code>. If the <code>AVG_ROW_LEN</code> is less than the block size, these are migrated rows; if it is greater, they will be chained rows.</p></div>
+<div class="paragraph"><p>Tables in tablespace that use the older freelist technique for managing segment space usage cannot be shrunk.</p></div>
+<div class="paragraph"><p>You CANNOT <code>SHRINK</code> a table that:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+has a column of type <code>LONG</code>
+</p>
+</li>
+<li>
+<p>
+has a materialize view defined with <code>REFRESH ON COMMIT</code>
+</p>
+</li>
+<li>
+<p>
+has not row movement enabled
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>MMON process is responsible of raising an alert when a tablespace usage treshold is reached. DB Control reports it.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_awr_and_the_alert_system">13. The AWR and the Alert System</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>By default AWR snapshots are taken by MMON every 60 minutes and stored 8 days before being overwritten.</p></div>
+<div class="paragraph"><p>AWR tables are stored in the SYSAUX tablespace (SYSMAN schema) and cannot be relocated to anywhere else.</p></div>
+<div class="paragraph"><p>DB control and Grid connect directly using SYSMAN to query AWR informations.</p></div>
+<div class="paragraph"><p>ADDM reports are generated by MMON each time an AWR shanpshot is taken and are purged every 30 days by default.</p></div>
+<div class="paragraph"><p>Alerting queue (raised by MMON) can be queried from the <code>DBA_OUTSTANDING_ALERTS</code> view.</p></div>
+<div class="paragraph"><p>Metrics used for alerts are in V$METRICNAME. You can configure alerts using <code>DBMS_SERVER_ALERT</code> package.</p></div>
+<div class="paragraph"><p>When an alert is cleared, it is removed from <code>DBA_OUTSTANDING_ALERTS</code> and written to <code>DBA_ALERT_HISTORY</code>. Stateless alerts go straight to the history view.</p></div>
+<div class="paragraph"><p>The space usage alert is intelligent enough to ignore dropped objects and to take account of file autoextension, but it is only checked every ten minutes and can be disabled per tablespace. A snapshot is not needed for checking alerts, and if no threshold is set for a tablespace, then the database-wide default threshold will be applied.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_performance_tunning">14. Performance Tunning</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>There will be 3 stages of PGA memory allocation:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Optimal: The whole SORT of data is made into memory.
+</p>
+</li>
+<li>
+<p>
+One-pass: The SORT is made by batch of rows into memory. Each batch is written to disk and a final MERGE is made in memory.
+</p>
+</li>
+<li>
+<p>
+Multipass: Both SORT and MERGE are separated into batches, sorted and written to disk.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>The LOG_BUFFER is the only SGA structure that cannot be adjusted dynamically. It cannot therefore be automatically generated.</p></div>
+<div class="paragraph"><p>If AMM (<code>MEMORY_TARGET</code>) is set and that you also set <code>PGA_AGGREGATE_TARGET</code> and <code>SGA_TARGET</code>, these will be considered as <strong>MINIMUM</strong>. AMM will never reduce PGA and SGA beneath those sizes.</p></div>
+<div class="paragraph"><p>When Automatic Memory Management is enabled, the individual advisors (which are necessary for AMM to function) can be seen in V$ views, but only the overall advisor is displayed by Database Control.</p></div>
+<div class="paragraph"><p>Automatic memory management cannot function unless the <code>statistics_level</code> instance parameter is set to TYPICAL (which is the default) or ALL.</p></div>
+<div class="paragraph"><p>Memory advisor views: <code>v$memory_target_advice</code>, <code>v$sga_target_advice</code> and <code>v$pga_target_advice</code></p></div>
+<div class="paragraph"><p>An invalid object may become valid on next access, but unusable indexes must be made valid by manual rebuild.</p></div>
+<div class="sect2">
+<h3 id="_sql_tuning_advisor">14.1. SQL Tuning Advisor</h3>
+<div class="paragraph"><p>Inputs of SQL Tuning Advisor are SQL statement(s) from:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+the library cache (in shared pool)
+</p>
+</li>
+<li>
+<p>
+a precreated set of SQL statements
+</p>
+</li>
+<li>
+<p>
+the AWR
+</p>
+</li>
+<li>
+<p>
+a manually given SQL statement
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>SQL Tuning Advisor advises upon:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+statistics
+</p>
+</li>
+<li>
+<p>
+SQL profiles creation
+</p>
+</li>
+<li>
+<p>
+Indexes creation
+</p>
+</li>
+<li>
+<p>
+Materialized views creation (not modifications!)
+</p>
+</li>
+<li>
+<p>
+Partitionning
+</p>
+</li>
+<li>
+<p>
+revision of SQL statement
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Package to use the SQL Tuning Advisor: <code>DBMS_SQLTUNE</code>. To launch SQL Tuning Advisor job manually, use <code>DBMS_SQLTUNE.EXECUTE_TUNNING_TASK</code>.</p></div>
+<div class="paragraph"><p>Views to use with the SQL Tuning Advisor: <code>DBA_ADVISOR_LOG</code>, <code>DBA_/USER_ADVISOR_TASKS</code> and <code>V$ADVISOR_PROGRESS</code>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_sql_access_advisor">14.2. SQL Access Advisor</h3>
+<div class="paragraph"><p>Inputs of SQL Access Advisor can be:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+A single SQL statement
+</p>
+</li>
+<li>
+<p>
+A SQL statement tuning set
+</p>
+</li>
+<li>
+<p>
+Current SQL cache contents
+</p>
+</li>
+<li>
+<p>
+A hypothetical workload imputed from the DDL of a set of objects
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>SQL Access Advisor can recommend changes to Materialize views, changing indexes and partitionning, and enabling query rewrite. But only SQL Access Advisor recommends changes to Materialized views (including their creation).</p></div>
+<div class="paragraph"><p>Package to use the SQL Access Advisor: <code>DBMS_ADVISOR</code>. To launch SQL Access Advisor job manually, use <code>DBMS_ADVISOR.QUICK_TUNE</code>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_database_replay">14.3. Database replay</h3>
+<div class="paragraph"><p>Database Replay consists of four steps:
+ . workload capture
+ . workload preprocessing
+ . workload replay
+ . analysis and reporting</p></div>
+<div class="paragraph"><p>Are <strong>NOT</strong> included in capture:
+ * SQL*Loader operations
+ * Oracle Streams
+ * flashback queries
+ * distributed transactions
+ * remote DESCRIBE or COMMIT commands</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_intelligent_infrastructure">15. The Intelligent Infrastructure</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The ADR is a central file-based repository for all diagnostic information. This includes various dumps and trace files, the alert log, and health monitor reports.</p></div>
+<div class="paragraph"><p><code>ADR_BASE</code> defaults to (in order of precedence):</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+DIAGNOSTIC_DEST/diag
+</p>
+</li>
+<li>
+<p>
+ORACLE_BASE/diag (if DIAGNOSTIC_DEST instance parameter is not set)
+</p>
+</li>
+<li>
+<p>
+ORACLE_HOME/log (if ORACLE_BASE environment variable is not set)
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>A problem is a critical error in the database or the instance. An incident is an occurrence of a problem. An incident package is a collection of data regarding one or more incidents and problems, formatted for upload to Oracle Support Services as part of an SR.</p></div>
+<div class="paragraph"><p>Before the REFRESHFROMMETALINK job can run, Database Control must be able to make an outbound HTTP connection to My Oracle Support website.</p></div>
+<div class="paragraph"><p>Using the EM Workbench Support, you can create full or incremental packages, add or remove trace files to a package and add SQL test cases to the package.</p></div>
+</div>
+</div>
+  </div><!--/row-->
+    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar"
+      role="navigation">
+      <div class="well sidebar-nav">
+        <ul class="nav">
+          <li>Documents in this category</li>
+          <li class="active"><a href="#">Current doc</a></li>
+          <li><a href="#">Another doc</a></li>
+          <li><a href="#">Still another one...</a></li>
+          <li>Chapters of this document</li>
+<div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+        </ul>
+      </div><!--/.well -->
+    </div><!--/span-->
+    </div> <!-- /container -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/custom_/js/jquery.js"></script>
+    <script src="/twbs_/js/bootstrap.min.js"></script>
+    <script src="/custom_/js/offcanvas.js"></script>
+    <script src="/custom_/js/custom_jquery_twbs.js"></script>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 1.0.5<br />
+Last updated 2013-09-26 21:08:52 CEST
+</div>
+</div>
+</body>
+</html>

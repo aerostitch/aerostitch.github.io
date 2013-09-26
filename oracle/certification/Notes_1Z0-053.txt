@@ -1,0 +1,628 @@
+Notes for exams 1Z0-053
+=======================
+Joseph HERLANT
+v1.0.0, 2013-05-16: Initial version
+:encoding: UTF-8
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+asciidoc Notes_1Z0-053.txt
+a2x -fpdf -L Notes_1Z0-053.txt
+/////
+
+
+WARNING: This document is my personnal notes I took when reading the "OCA/OCP Oracle Database 11g: All-in-One Exam Guide" to prepare 1Z0-053 exam. This is not a complete review of the exams topics, just the ones I either didn't know or having hard time to remember. 
+
+.Exams to chapters matching in book "OCA/OCP Oracle Database 11g: All-in-One Exam Guide"
+[options="header"]
+|==================================================
+| Exam    | Corresponding chapters
+| 1Z0-051 | 7,8,9,10,11,12,13 
+| 1Z0-052 | 1,2,3,4,5,6,7,8,14,15,16,23,24,25,27
+| 1Z0-053 | 14,15,16,17,18,19,20,21,22,23,25,26,27
+|==================================================
+
+
+
+Chapter 14: Configuring the DB for Backup and recovery
+------------------------------------------------------
+
+Can a `shutdown abort` corrupt a database? No, it is impossible to corrupt the database using these types of commands.
+
+At instance startup, the roll forward phase reconstructs UNDO segments in memory and buffer cache from the active and current redo logs to enable the rollback phase.
+
+Instance recovery never needs an ARCHIVED redo log file.
+
+MTTR (-> Mean Time To Recover) can be controlled by the `FAST_START_MTTR_TARGET` (which defaults to 0, that means UNLIMITED). This initialization parameter makes the DWR work more harder to ensure that the time between the checkpoint time (in the redo) and the current time tend to be near the value of this particular parameter. This parameter also enables "checkpoint auto-tunning".
+
+When `FAST_START_MTTR_TARGET` is set to a nonzero value, it will override the `LOG_CHECKPOINT_INTERVAL`.
+
+MTTR Advisor can be seen through `V$INSTANCE_RECOVERY` view.
+
+Full checkpoint only occurs with orderly shutdown or by user request (`alter system checkpoint`).
+
+Partial checkpoint occurs while:
+
+ * taking a tablespace or a datafile offline
+ * dropping a segment
+ * truncating a table
+ * putting a tablespace in backup mode
+
+An instance can have up to 8 multiplexed copies of a controlfile.
+
+`DB_RECOVERY_FILE_DEST_SIZE` must be set *before* attempting to set `DB_RECOVERY_FILE_DEST`.
+
+%Test:% 3 errors Q1,3,6 (2013-03-28)
+
+%Test:% 0 error (2013-05-07)
+
+
+Chapter 15: Backup with RMAN
+----------------------------
+
+An `OPEN` backup can only be made if the database is in `ARCHIVELOG` mode.
+
+In `NOARCHIVELOG` mode, backup of database can only be done with database closed (`MOUNT` mode after a *CLEAN* shutdown).
+
+Files that cannot be backed up with RMAN are:
+
+ * TEMPFILES
+ * ONLINE REDO LOG
+ * PASSWORD FILE
+ * Static PFILE
+ * Oracle NET configuration files
+
+If there is no level 0 backup, then the first level 1 differential or cumulative backup will in fact perform a level 0 backup!
+
+Incremental backups => all changed blocks since the *last incremental* backup (which could be either a level 0 or a level 1)
+
+Cumulative backups => all changed blocks since the *last level 0* backup.
+
+An image copy is a backup file that is identical to the input file.
+
+An image copy can be used immediately, without a restore operation. Backupsets always need a restore operation to be usable.
+
+Tape channels, compression, incremental backups *CANNOT* be used with image copy backups.
+
+RMAN generates 3 types of sessions against the database:
+
+ * one `default session`: invokes the kernelized (available before DB is mounted) PL/SQL that implements RMAN.
+ * one `pooling sesion`: monitors the progress of RMAN operations
+ * one ore more `channel session`: reads and writes on a disk or tape. One by user-defined (or defaults) channels.
+
+RMAN's parallelism (# of channels) cannot exceed the number of input (if the multisection backup is disabled) and output files.
+
+Default RMAN encryption requires a wallet and will be AES128. Alternatively, a password or longer keys can be specified.
+
+`CONFIGURE BACKUP OPTIMIZATION ON;` allows RMAN not to backup certain files if it considers it already has suffiscient copies of the files (related to retention policy). For read-write datafiles, it will never have identical copies of the file.
+
+`DELETE EXPIRED;` will not delete anything on disk, only the references marked as expired in the RMAN repository.
+
+`DELETE OBSOLETE;` will delete files and update the repository accordingly.
+
+RMAN stores its repository on controlfile => loss of it means no restore possible! RMAN Recovery Catalog avoids this. 
+
+If you use LOG_ARCHIVE_DEST or LOG_ARCHIVE_DUPLEX_DEST, these locations must be disks (Filesystems or ASM). It cannot be another Oracle instance.
+
+If a MANDATORY archive destination is unavailable, the database will shut down.
+
+Control files and redo logs are considered as permanent. A copy of the controlfile and each online log is kept in the FRA. Archivelog and backups are considered as transient.
+
+%Test:% 3 errors Q2,5,10 (2013-03-31)
+
+%Test:% 1 error Q5 (2013-05-07)
+
+
+Chapter 16: Restore and recover with RMAN
+-----------------------------------------
+
+[horizontal]
+ADR:: Automatic Diagnostic Repository
+
+Health monitor will run reactively or on demand and will write errors details to the ADR.
+
+Health monitor's PL/SQL package => DBMS_HM
+
+.Actions that do the Health Monitor
+ * In NOMOUNT mode, checks the "DB structure integrity" (integrity of the controlfiles)
+ * In MOUNT mode, checks:
+  ** the "DB structure integrity" (integrity of the controlfiles + online redo logs and datafile headers) 
+  ** the "Redo Integrity check" (online and archived logfiles accessibility and corruptions)
+ * In OPEN mode: 
+  ** scans every data block for corruption
+  ** checks data dictionnary integrity
+  ** checks undo segments integrity
+
+
+DRA:: Data Recovery Advisor : makes the use of informations gathered by the Health Monitor to find problems and contructs RMAN scripts to repair them. It can do nothing unless the instance is in nomount mode or higher.
+
+If one or more failure exists, then you should typically use:
+
+ . `LIST FAILURE;` RMAN command to show informations about the failure
+ . `ADVISE FAILURE;` RMAN command *in the SAME RMAN session* to obtain a report of repair. DRA will not generate any advice if you have not first asked it to the list the failures. Fixed failures or occurence since last listing will not be advised upon.
+ . `REPAIR FAILURE;` RMAN command *in the SAME RMAN session* to automatically run the generated repair script
+
+DRA will function only for a single-instance database. It cannot work with a RAC clustered database, nor against a DataGuard standby database.
+
+In *NOarchivelog* mode, the corruption of a datafile will mean full resore and a clear of the logfile groups using `ALTER DATABASE CLEAR LOGFILE GROUP <group_number>;`. This recreates the specified logfile group. Other solution would be to drop the relevant tablespace...
+
+In *NOarchivelog* mode, restoring an incremental backup will need the use of `RECOVER DATABASE NOREDO;` command after the full backup restore.
+
+RMAN will always apply incremental backups in preference to applying redo data (if they are available).
+
+SYSTEM and/or active UNDO tablespaces and/or any controlfile copy corruption will all bring database down.
+
+Other tablespaces' datafile corruption => datafile will be brought offline (and the rest of the database will remain open).
+
+Incomplete recovery is necessary if there is a missing archivelog or if all members of the current online redo log file group are missing.
+
+Autobackup of controlfile and spfile will rely on DBID, so keep the DBID in your documentation.
+
+`RESTORE CONTROLFILE|SPFILE FROM AUTOBACKUP|'<file_path>';` are the only RMAN commands that can be executed in NOMOUNT mode.
+
+In RMAN, the `SET` commands (SET UNTIL, NEWNAME, DBID,...) can *only* be executed in a *run block*.
+
+Block corruptions will not take the datafile offline. RMAN can detect them as it performs backup operations and repair them automatically.
+
+To manually recover a block using RMAN, use the `block recover datafile <datafile_number> block <coma_separated_block_numbers_to_recover>;`.
+
+If you use the backup with the MAXCORRUPT option, you can revover corrupted blocks using `block recover corruption list [until SYSDATE-7];`(for example). The "until sysdate - 7" would recover from a backup at least older than 7 days.
+
+%Test:% 4 errors Q1,6,9,15 (2013-03-31)
+
+%Test:% 4 error Q6,9,11,15 (2013-05-07)
+
+
+
+Chapter 17: Advanced RMAN facilities
+------------------------------------
+
+When using rman recovery catalog, RMAN repository is also be stored in the controlfile of the target database.
+
+The retention of the RMAN repository contained in the controlfile is controlled by the `CONTROLFILE_RECORD_KEEP_TIME` parameter that defaults to 7 days. The recovery catalog can retain data indefinitely.
+
+The user owning the recovery catalog must have the `RECOVERY_CATALOG_OWNER` role.
+
+The RMAN executable must be the same release as the TARGET database, but it does not need to be the same version as the catalog.
+
+The RMAN catalog must be *CREATED* with a version of RMAN that is equal or higher than the version of any database that will be registered in it.
+
+If you are using synchronous I/O but you have set BACKUP_DISK_IO_SLAVES init parameter, then the I/O performance is monitored in the V$BACKUP_ASYNC_IO.
+
+%Test:% 1 error Q3 (2013-04-01)
+
+
+
+Chapter 18: User-managed Backup, restore and recovery
+-----------------------------------------------------
+
+Recovery from loss of a *multiplexed online redo log* can be done while the database is open (whereas for controlfiles it cannot), and therefore does not entail any database. Use the `ALTER DATABASE CLEAR LOGFILE GROUP <group_number>;` command when the given group is inactive to recreate the members on disk.
+
+To recover from the loss of a tempfile, create a new one and drop the old one. This can be done online.
+
+`V$RECOVER_FILE` is the list of all datafiles found to be damaged or missing. Available in both mount or open mode.
+
+In *NOarchivelog* mode, the loss of a datafile will always result in a complete restore of the database.
+
+A `RECOVER DATABASE UNTIL ...;` will stop immediately *BEFORE* applying the change vector of the nominated time or SCN (_not immediately after_).
+
+%Test:% 1 error Q2 (2013-04-01)
+
+
+
+Chapter 19: Flashback
+---------------------
+
+Flashback Database (and other flashback technologies) will not back out physical corruption
+
+Flashback Database
+~~~~~~~~~~~~~~~~~~
+
+Flashback Database relies on flashback logs AND redo logs.
+
+RVWR:: Recovery writer. It writes data from the `flashback buffer` (area of memory in the SGA) to the flashback logs (on disk) which are complete block images, not vector changes.
+
+Flashback logs cannot be multiplexed and are not archived. Their management and creation is automatic.
+
+Flashback Database requires flashback logs, the Archivelog mode and the use of `OPEN RESETLOGS` after the flashback.
+
+To configure Flashback Database:
+
+ . Archivelog mode
+ . Configure a FRA
+ . Set `DB_FLASHBACK_RETENTION_TARGET` (in minutes)
+ . shutdown and startup mount
+ . `ALTER DATABASE FLASHBACK ON`
+ . Open database
+
+To get the status of the Flashback technology, use `SELECT flashback_on from V$DATABASE|V$TABLESPACE;`.
+
+To list Flashback Database logs, use `V$FLASHBACK_DATABASE_LOG`.
+
+Flashback Database statistics are in the `V$FLASHBACK_DATABASE_STAT`.
+
+To Flashback a database:
+
+ . Shutdown and startup mount
+ . Flashback to a time, SCN or sequence
+ . Open resetlogs
+
+Flashback Database is the only way to recover a schema other than an incomplete recovery.
+
+If there is not enough room in the FRA for the Flashback Data, *nothing but FLASHBACK DATA* will be deleted in the FRA!
+
+If Flashback logging is impacting adversely on performance, the only thing to do is to stop flashback logging for some tablespaces.
+
+Flashback Query
+~~~~~~~~~~~~~~~
+
+Flashback Query (the 3 variations) relies on the use of UNDO segments to reconstruct data as it were in a certain point in time.
+
+You can query tables as of an earlier point in time, but you can never execute DML against the older version of the data.
+
+Flashback Version Query cannot work against external and temporary tables, nor against V$ views.
+
+Work done by the `DBMS_FLASHBACK.BACKOUT_TRANSACTION` will be left *UNCOMMITED*. You'll have to commit them manually to finish the recover.
+
+Only Flashback Table requires row movement. Flashback Transaction *DO NOT*.
+
+To flash back 2 tables in a foreign key relationship, flashback both tables in one operation.
+
+Flashback DROP
+~~~~~~~~~~~~~~
+
+Flashback Drop will *not* be able to flashback a `TRUNCATE` !
+
+In a flash back Drop, the table, associated indexes and permissions will be restored.
+
+Flashback Drop is not available for tables in the SYSTEM tablespace. Those ones are purged immediately.
+
+`DBA_SEGMENTS` contains RECYCLE BIN segments whereas `DBA_FREE_SPACE` will not take them in account!
+
+No constraint go to the recycle bin.
+
+Flash Back Data Archive
+~~~~~~~~~~~~~~~~~~~~~~~
+
+A Flash Back Data Archive (FBDA) is enabled for a table. It will create another table that will store any versions of the rows of the tables. Retention can be years.
+
+DROP, TRUNCATE and column DROP cannot be executed against a table using FBDA.
+
++++<u>Test:</u>+++ 7 errors Q1,7,9,10,12,16,17 (2013-04-03)
+
+
+
+Chapter 20: Automatic Storage Management
+----------------------------------------
+
+Oracle Cluster Services are required on the host in order to setup the communication between the RDBMS instance and the ASM instance.
+
+You can use ASM only for database and recovery files. *Not* for Oracle Home, Alert log, trace files, passord files and Static PFILE.
+
+ASM Mirroring defaults to a single mirror, but can be set to `NONE` or `DOUBLE`.
+
+Stripping is automatic and cannot be disabled.
+
+ASM is a management and control facility that makes files available. It does not do the actual I/O work.
+
+An ASM instance cannot mount or open a database.
+
+You can only connect to an ASM instance using a password file or OS authentication.
+
+RBAL and ARBn:: are ASM-specific background processes used to rebalance activity (movement of data between disks, changing in stripping or adding disks). RBAL coordinates rebalancing on the ASM instance. ARBn processes does the work.
+
+A rebalancing operation will start automatically in response to a disk group reconfiguration.
+
+On the *RDBMS* instance:
+
+ * the `RBAL` process locate ASM disks through the ASM instance and opens it
+ * the `ASMB` process creates a session against the ASM instance, continuously connected to pass the physical change orders and various statistics and status messages
+
+Required fields in an ASM instance parameter file are:
+
+ * `Instance type` (must be set to _ASM_)
+ * `ASM_DISKSTRING` that is the list of path identifying the disks to be given to ASM
+
+If an ASM instance fails, the dependent RDBMS instances using it will abort.
+RMAN is the only tool that can backup ASM files.
+
++++<u>Test:</u>+++ 0 error (2013-04-03)
+
+
+
+Chapter 21: The Resource Manager
+--------------------------------
+
+`RESOURCE_LIMITS` parameter has nothing to do with the Resource Manager. It has to do with the PROFILES.
+
+The `RESOURCE_MANAGER_PLAN` instance parameter (that defaults to DEFAULT_MAINTENANCE_PLAN) is the way to control Resource Manager. It can also be set using the scheduler or with the `DBMS_RESOURCE_MANAGER.SWITCH_PLAN` procedure.
+
+`DBMS_RESOURCE_MANAGER_PRIVS` package is used to put users into consumer groups and to grant system privileges necessary to administer the Resource Manager. The corresponding role (`ADMINISTER RESOURCE MANAGER`) cannot be granted or revoked other way than using this package.
+
+Every user can switch its consumer group using the `DBMS_SESSION.SWITCH_CURRENT_CONSUMER_GROUP` procedure.
+
+A user with rights to administer Resource Manager can use:
+
+ * `DBMS_RESOURCE_MANAGER.SWITCH_CONSUMER_GROUP_FOR_USER` to switch all the sessions connected with a user to a given consumer group
+ * `DBMS_RESOURCE_MANAGER.SWITHC_CONSUMER_GROUP_FOR_SESS` to switch a given session to a given consumer group
+
+There are 4 priority levels that can be used in a plan.
+
+Memory allocated to Resource Manager is the Pending Area (part of the SGA). It is also used to validate a plan before saving it.
+
+Every plan must include the `OTHER_GROUP` group; otherwise, the validation will fail in the pending area and the plan will not be saved in the data dictionnary.
+
+Active session in Resource Manager vocabulary includes running sessions and idle sessions with uncommited transaction(s).
+
++++<u>Test:</u>+++ 5 errors Q1,2,3,10,11 (2013-04-05)
+
+
+
+Chapter 22: The scheduler
+-------------------------
+
+CQJ0:: Job Coordinator process. It monitors `DBA_SCHEDULER_JOBS` view and launches the `Jnnn` process to run a job.
+
+`JOB_QUEUE_PROCESS` instance parameter limits the max number (0 to 1000 and defaults to 1000) of Jnnn that can be launched. If set to 0, the scheduler will not function.
+
+By default jobs and programs are disabled in the scheduler at creation time.
+
+Job class is used to associate 1 or more job with a Resource Manager consumer group and also to control logging levels.
+
+The `MANAGE SCHEDULER` system privilege is needed to create job classes and windows and to force windows to open or close irrespective of their schedules.
+
+PROGRAMS and JOBS share the same namespace => They cannot have the same name! The same is true for SCHEDULES and WINDOWS.
+
+You cannot create lightweight jobs using Database Control. Only the `DBMS_SCHEDULER` package enables you to do that.
+
+A lightweight job has always AUTO_DROP to *TRUE* and END_DATE defaulting to current timestamp.
+
+Priorities cannot be set on creation of the job. You must use the `DBMS_SCHEDULER.SET_ATTRIBUTE` procedure.
+
+Jobs priorities within a class are from 1 to 5 (highest to lowest).
+
+*Only one window an be open at once*. Other things being equal, the window with the longest to run will open or remain open if 2 windows are overlapping and having the same priority.
+
++++<u>Test:</u>+++ 2 errors Q5,8 (2013-04-06)
+
+
+
+Chapter 23: Moving and reorganizing data
+----------------------------------------
+
+SQL*Loader
+~~~~~~~~~~
+
+SQL*Loader can use either binded insert with normal commit or `direct path loads` that will skip buffer cache (can even skip redo), generate no UNDO, writes directly above HWM and move HWM at the end of the work.
+
+Direct path loads have drawbacks:
+
+ * Referential integrity contraints must be dropped or disabled for the duration of the operation (except for unique, not null & PK)
+ * Insert triggers are not fired
+ * Table will be locked against DML from other sessions
+ * Cannot be used against clustered tables
+
+Only *UNIQUE*, *NOT NULL* and PK constraints are enforced during a direct path load.
+
+SQL*Loader use:
+
+ * Input files (data)
+ * Control files (settings and format)
+ * Log files
+ * Bad files (formatting errors or not matching DB integrity constraints)
+ * Reject files (correct input but do not match some record selection criterion)
+
+Directories & external tables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Directories are always owned by SYS user even if not created by SYS. So having created a directory do not mean that you will be able to drop it!
+
+External tables relies on oracle's "DIRECTORIES" objects just as DATAPUMP do.
+
+External tables cannot have indexes, constraints or triggers.
+
+DataPump
+~~~~~~~~
+
+When a DataPump job is launched, at least 2 processes are started:
+
+ * The `DMnn`: DataPump Master process (one by datapump job)
+ * One or more `DWnn`: Worker processes. If parallelism is enabled, each DWnn may make use of 2 or more parallel execution server processes named `Pnnn`.
+
+2 queues are created for each datapump jobs:
+
+ * A control queue: Individual tasks to make up the job are placed in the control queue by the DMnn process. DWnn process pick up these tasks and execute them.
+ * A status queue: DMnn place messages in the status queue to describe the state of the job. Any session with appropriate privileges can query the queue to monitor the job's progress.
+
+There are 3 datapump file types:
+
+ * SQL files
+ * Log files
+ * Dump files
+
+Directory (or directories) can be specified to a datapump job at 4 levels (in order of precedence):
+
+ . A per-file within the datapump job
+ . A parameter applied to the whole datapump job at command-line level
+ . The `DATAPUMP_DIR` environment variable
+ . The `DATA_PUMP_DIR` directory
+
+Datapump has 2 methods for loading and unloading data:
+
+ * Direct path: works the same way as for SQL*Loader
+ * External table path: uses SELECT and INSERT statements using the buffer cache, UNDO, REDO and regular COMMIT mechanisms.
+
+DBA has no control of which method is used. Datapump makes the decision himself based on the complexity of the objects (ie: simply structured data such as table heap with no triggers => direct path). In either case, the generated file is identical.
+
+Transportable tablespaces
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Transportable tablespaces requires data to be converted to the endian format. To transport tablespace accross platforms with a different endian requires converting datafiles. You do this using the `CONVERT` RMAN command.
+
+Tables reorganization
+~~~~~~~~~~~~~~~~~~~~~
+
+`DBA_RESUMABLE` view lists all suspended sessions. Resumable can be set:
+
+ * at session level using `ALTER SESSION ENABLE RESUMABLE [TIMEOUT <seconds>] [name <operation_name>];`. TIMEOUT defauts to infinite; NAME is the name that would appear in DBA_RESUMABLE
+ * at system level by setting the `RESUMABLE_TIMEOUT` instance parameter
+
+Row migration is caused by UPDATE statement. INSERT or DELETE can NEVER cause row migration.
+
+Reorganizing a table with a MOVE will render all associated indexes unusable.
+
+A MOVE operation will lock the table against DML. You cannot move a table if there is an uncommited transaction against it.
+
+To find chained rows, use the `ANALYZE` command, *NOT* `DBMS_STATS` package. Then go to the `CHAIN_CNT` of the `DBA_TABLES`. If the `AVG_ROW_LEN` is less than the block size, these are migrated rows; if it is greater, they will be chained rows.
+
+Tables in tablespace that use the older freelist technique for managing segment space usage cannot be shrunk.
+
+You CANNOT `SHRINK` a table that:
+
+ * has a column of type `LONG`
+ * has a materialize view defined with `REFRESH ON COMMIT`
+ * has not row movement enabled
+
+MMON process is responsible of raising an alert when a tablespace usage treshold is reached. DB Control reports it.
+
++++<u>Test:</u>+++ 2 errors Q8,9 (2013-04-06)
+
++++<u>Test:</u>+++ 3 errors Q3,6,8 (2013-05-07)
+
+
+
+Chapter 25: Performance Tunning
+-------------------------------
+
+There will be 3 stages of PGA memory allocation:
+
+ * Optimal: The whole SORT of data is made into memory.
+ * One-pass: The SORT is made by batch of rows into memory. Each batch is written to disk and a final MERGE is made in memory.
+ * Multipass: Both SORT and MERGE are separated into batches, sorted and written to disk.
+
+The LOG_BUFFER is the only SGA structure that cannot be adjusted dynamically. It cannot therefore be automatically generated.
+
+If AMM (`MEMORY_TARGET`) is set and that you also set `PGA_AGGREGATE_TARGET` and `SGA_TARGET`, these will be considered as *MINIMUM*. AMM will never reduce PGA and SGA beneath those sizes.
+
+When Automatic Memory Management is enabled, the individual advisors (which are necessary for AMM to function) can be seen in V$ views, but only the overall advisor is displayed by Database Control.
+
+Automatic memory management cannot function unless the `statistics_level` instance parameter is set to TYPICAL (which is the default) or ALL.
+
+Memory advisor views: `v$memory_target_advice`, `v$sga_target_advice` and `v$pga_target_advice`
+
+An invalid object may become valid on next access, but unusable indexes must be made valid by manual rebuild.
+
+SQL Tuning Advisor
+~~~~~~~~~~~~~~~~~~
+
+Inputs of SQL Tuning Advisor are SQL statement(s) from:
+
+ * the library cache (in shared pool)
+ * a precreated set of SQL statements
+ * the AWR
+ * a manually given SQL statement
+
+SQL Tuning Advisor advises upon:
+
+ * statistics
+ * SQL profiles creation
+ * Indexes creation
+ * Materialized views creation (not modifications!)
+ * Partitionning
+ * revision of SQL statement
+
+
+Package to use the SQL Tuning Advisor: `DBMS_SQLTUNE`. To launch SQL Tuning Advisor job manually, use `DBMS_SQLTUNE.EXECUTE_TUNNING_TASK`.
+
+Views to use with the SQL Tuning Advisor: `DBA_ADVISOR_LOG`, `DBA_/USER_ADVISOR_TASKS` and `V$ADVISOR_PROGRESS`.
+
+
+SQL Access Advisor
+~~~~~~~~~~~~~~~~~~
+
+Inputs of SQL Access Advisor can be:
+
+ * A single SQL statement
+ * A SQL statement tuning set
+ * Current SQL cache contents
+ * A hypothetical workload imputed from the DDL of a set of objects
+
+SQL Access Advisor can recommend changes to Materialize views, changing indexes and partitionning, and enabling query rewrite. But only SQL Access Advisor recommends changes to Materialized views (including their creation).
+
+Package to use the SQL Access Advisor: `DBMS_ADVISOR`. To launch SQL Access Advisor job manually, use `DBMS_ADVISOR.QUICK_TUNE`.
+
+
+Database replay
+~~~~~~~~~~~~~~~
+Database Replay consists of four steps:
+ . workload capture
+ . workload preprocessing
+ . workload replay
+ . analysis and reporting
+
+Are *NOT* included in capture:
+ * SQL*Loader operations
+ * Oracle Streams
+ * flashback queries
+ * distributed transactions
+ * remote DESCRIBE or COMMIT commands
+
+
++++<u>Test:</u>+++ 5 errors Q4,12,14,16,18 (2013-04-08)
+
++++<u>Test:</u>+++ 7 errors Q9,12,13,14,15,16,18 (2013-05-07)
+
+
+Chapter 26: Globalization
+-------------------------
+
+Globalization settings can be specified at the following levels (in order or precedence):
+
+ * Database: view is `nls_database_parameters` (hard to change after DB creation)
+ * Instance: view is `nls_instance_parameters`
+ * Client environment: viewed in shell environment and on session it impacts
+ * Session: views are `V$NLS_PARAMETERS` and `nls_session_parameters`
+ * Statements: for example, through functions like `TO_CHAR(<column>, 'Day dd, Month YYYY', 'NLS_DATE_LANGUAGE=DUTCH')`
+
+Since release 9i, the National Character Set of the database can only be unicode (but the database characterset can be something else) => UTF8 (variable size) and AL16UTF16 (fixed-width).
+
+`NLS_DATE_LANGUAGE` and `NLS_SORT` are controlled by `NLS_LANGUAGE`.
+
+`NLS_DATE_FORMAT` and `NLS_NUMERIC_CHARACTERS` are controlled by `NLS_TERRITORY`.
+
+`V$NLS_VALID_VALUES` lists the supported values for the various NLS parameters.
+
++++<u>Test:</u>+++ 3 errors Q6,9,11 (2013-04-10)
+
+
+
+Chapter 27: The Intelligent Infrastructure
+------------------------------------------
+
+The ADR is a central file-based repository for all diagnostic information. This includes various dumps and trace files, the alert log, and health monitor reports.
+
+`ADR_BASE` defaults to (in order of precedence):
+
+ * DIAGNOSTIC_DEST/diag
+ * ORACLE_BASE/diag (if DIAGNOSTIC_DEST instance parameter is not set)
+ * ORACLE_HOME/log (if ORACLE_BASE environment variable is not set)
+
+A problem is a critical error in the database or the instance. An incident is an occurrence of a problem. An incident package is a collection of data regarding one or more incidents and problems, formatted for upload to Oracle Support Services as part of an SR.
+
+Before the REFRESHFROMMETALINK job can run, Database Control must be able to make an outbound HTTP connection to My Oracle Support website.
+
+Using the EM Workbench Support, you can create full or incremental packages, add or remove trace files to a package and add SQL test cases to the package.
+
+
++++<u>Test:</u>+++ 3 errors Q5,6,8 (2013-04-10)
+
++++<u>Test:</u>+++ 5 errors Q2,3,4,6,8 (2013-05-07)
+
+

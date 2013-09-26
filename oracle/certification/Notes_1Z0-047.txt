@@ -1,0 +1,146 @@
+Notes for exam 1Z0-047
+======================
+Joseph HERLANT
+v1.0, 2013-02-16 : Creation of the document
+:encoding: UTF-8
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+asciidoc Notes_1Z0-047.txt
+a2x -fpdf -L Notes_1Z0-047.txt
+/////
+
+WARNING: This document is my personnal notes I took when preparing the 1Z0-047 exam. This is not a complete review of the exam topics, just the ones I either didn't konw or having hard time to remember.
+
+Create Table As Select copies CHECK and NOT NULL constraints but not PU, UK, FK, indexes.
+
+Indexes have their own namespace (different from tables), just as for constraints.
+
+The view's `WITH CHECK OPTION` prevent rows to be updated/inserted OUTSIDE the view and the update target from getting rows disapear from the view.
+
+To reset or change the value of a sequence, you must recreate it. That's the only way.
+
+In a WHERE clause, `NOT` is evaluated 1st, then `AND`, then `OR` (if no parentheses).
+
+In a where clause, the `NOT IN` *excludes NULL*.
+
+Where clause executes *before* SET clause in an update => update with no row will not fail if SET has incorrectly formatted values...
+
+NOT NULL constraints cannot be precised in an outline way.
+
+With set operators, you can order by position or by any column of the 1st select list.
+
+In sequences:
+
+ * MINVALUE defaults to 1
+ * MAXVALUE can be set to &lt; 0 as long as MINVALUE &lt; MAXVALUE
+
+After setting a column to unused, you can reuse its name for another column.
+
+`GROUPING` function returns 1 for superaggregated rows.
+
+`TIMESTAMP WITH TIMEZONE` cannot be used as PK, but `TIMESTAMP WITH LOCAL TIMEZONE` can.
+
+`SAVEPOINT <savepoint_name>` (no *TO*), but `ROLLBACK TO <savepoint_name>` (here you have a TO)!
+
+DISTINCT and UNIQUE operators do exactly the same thing in a select clause.
+
+The `PRIOR` is on the side making reference to the parent line.
+
+`CREATE DIRECTORY` statement do not test the existence of the directory path.
+
+`SELECT ROWNUM, * FROM ...` will generate an syntax error. You cannot have a column and an a * in the same select clause.
+
+An updatable view cannot be base on hierarchical query.
+
+To disable PK with FK referencing it, use: `ALTER TABLE <table_name> DISABLE PRIMARY KEY CASCADE;`
+
+FK needs the referenced columns to be constrained by a UNIQUE constraint (no need to be a PK).
+
+Synonym creation do not require that the target object exists.
+
+Any `ALTER TABLE ...` will prevent flashback from working.
+
+Semijoins stand for `EXISTS` operators.
+
+`AVG(NULL) = NULL != 0`
+
+Available pseudocolumns in flashback version query are: 
+
+ * VERSIONS_STARTTIME
+ * VERSIONS_STARTSCN
+ * VERSIONS_ENDTIME
+ * VERSIONS_ENDSCN
+ * VERSIONS_XID
+ * VERSIONS_OPERATION
+
+The UNDO_SQL column of the `FLASHBACK_TRANSACTION_QUERY` table shows informations required to undo a single SQL statement (and not a whole transaction).
+
+`VERSION BETWEEN MINVALUE AND MAXVALUE` get all the versions of the select in the time interval (MINVALUE is the minimum timestamp available in flashback operations).
+
+When using a combination of `AS OF` and `VERSION BETWEEN`, VERSION BETWEEN must be *BEFORE* AS OF.
+
+You cannot reference subquery's table aliases in the WHEN condition(s) of a multitable INSERT.
+
+You cannot use NEXTVAL of a sequence in a subquery of a multitable INSERT.
+
+NEXTVAL in a WHEN condition of a multitable INSERT will increment *ONE and only ONE time* for each line regardless whether the when condition evaluates to true or if a multiple WHEN calls NEXTVAL.
+
+In MERGE statements, DELETE only affect previously updated rows, not inserted or not matching.
+
+`TRIM(<string> [<trim_char>] [FROM LEADING|TRAILING|BOTH])`
+
+SOUNDEX => 1st letter + 3 numerics. Don't forget to use it twice in a comparision.
+
+REMAINDER => plus proche multiple + !=
+
+`MONTH_BETWEEN(<greater_date>, <lesser_date>)`
+
+You cannot change database TZ if it already has a TIMESTAMP WITH LOCAL TIMEZONE column defined.
+
+5 types of constraints:
+
+ * NOT NULL
+ * UNIQUE
+ * PRIMARY KEY
+ * FOREIGN KEY
+ * CHECK
+
+TZD = Time Zone Daylight (includes PST, EDT, EST, CST, PDT)
+
+HAVING can preceede a GROUP BY clause. It is not required to follow it.
+
+All columns of a view must have a name assigned.
+
+If you modify a column adding a DEFAULT constraint, the DEFAULT keyword must follow the datatype specification, not preceed it!
+
+You cannot set the DEFAULT value to a column with something taht conflicts with its datatype.
+
+You cannot change the datatype of an already populated column.
+
+To set a column unused: `ALTER TABLE <table_name> SET UNUSED COLUMN <col_name>;`
+
+The GROUPING SETS operations combines the resulting row sets with an UNION ALL operation.
+
+ALL_* views list any type of objects in the database, regardless of owner, to which your account has been granted access.
+
+`ALL_TAB_PRIV_RECD` view list grants on objects for which the user, PUBLIC or enabled role is grantee.
+
+`NUMTODSINTERVAL(<number>, 'UNIT_OF_THE_NUMBER_LIKE_MINUTE')` The unit of the number must be enclosed by quotes.
+
+To defer an constraint, it must have been created with the `DEFERRABLE` option. Then you defer it using `SET CONSTRAINT <constraint_name> DEFERRED;`
+
+NVL2 function syntax `NVL2('<column or expression to evaluate>', '<column or expression to return if NOT NULL>', '<column or expression to return if NULL>')`
+
+A coumpound query will, by default, return rows sorted accross all the columns, from the left to the right. The only exception is `UNION ALL` where the rows will not be sorted.
+
+The result set of an inner query will be nested before the outer query can run.
+
+
+

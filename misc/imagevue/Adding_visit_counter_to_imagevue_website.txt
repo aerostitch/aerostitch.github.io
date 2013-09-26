@@ -1,0 +1,87 @@
+Adding a counter of visits on an imagevue based website
+=======================================================
+Joseph HERLANT
+v1.0.0, 2013-09-26: Creation
+:encoding: UTF-8
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+
+
+
+Introduction
+------------
+
+Imagevue is an image gallery and portfolio available at
+http://www.imagevuex.com.
+
+The goal of this document is to describe how to add a visit counter to the
+bottom of the website.
+
+
+Get a visit counter tool
+------------------------
+
+There's a lot of website providing this type of tools. Here, we went to the
+http://compteurdevisite.com . There you will choose your counter and they will
+provide you a script tag that looks like the example bellow (the character sentence at the end
+of the src attribute should vary). This is the part that will be included at the
+bottom of your website.
+
+-----
+<script type="text/javascript"
+src="http://counter3.compteurdevisite.com/private/counter.js?c=vcneo8641651vpsdf57tinvqmdf864"></script>
+-----
+
+
+Modify index.gallery.phtml
+--------------------------
+
+The `index.gallery.phtml` file should be located in the `iv-includes/templates/`
+folder relatively to the root of your directory.
+
+At the very end of this page, just before this following lines that represent
+the closing tags for the html and body tags...
+
+-----
+</body>
+</html>
+-----
+
+add the following code:
+
+-----
+<div style="width:100%; text-align:center">
+<script type="text/javascript" src="http://counter3.compteurdevisite.com/private/counter.js?c=vcneo8641651vpsdf57tinvqmdf864"></script>
+</div>
+-----
+
+Then modify the css file as explained bellow.
+
+
+Modifying imagevue.flash.css
+----------------------------
+
+The `imagevue.flash.css` file is located in the `iv-includes/assets/css/`
+directory (this is relative to the root of your website).
+
+There you'll need to find the declaration of the imagevue id that should be
+empty. It should look like this:
+
+-----
+#imagevue { }
+-----
+
+You need to modify this to change the size of the container to 95% of the whole
+page. You do it adding `height: 95%` in the brackets of the previously finded
+imagevue declaration tag. It should look like this:
+
+-----
+#imagevue { height:95% }
+-----
+
+And that's it!
+

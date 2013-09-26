@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset>
+  <url>
+    <title>Home</title>
+    <loc>http://aerostitch.github.io/oracle/</loc>
+    <lastmod>2013-01-01</lastmod>
+  </url>
+  <url>
+    <title>1st example with twbs</title>
+    <loc>http://aerostitch.github.io/oracle/ex_bs1.html</loc>
+    <lastmod>2013-09-01</lastmod>
+  </url>
+  <url>
+    <title>Minimalistic example</title>
+    <loc>http://aerostitch.github.io/oracle/mini.html</loc>
+    <lastmod>2013-09-01</lastmod>
+  </url>
+  <url>
+    <title>Dropdow</title>
+    <loc>http://aerostitch.github.io/oracle/ex_bs1.html</loc>
+    <lastmod>2013-09-01</lastmod>
+    <url>
+      <title>Home</title>
+      <loc>http://aerostitch.github.io/oracle/</loc>
+      <lastmod>2013-01-01</lastmod>
+    </url>
+    <url>
+      <title>1st example with twbs</title>
+      <loc>http://aerostitch.github.io/oracle/ex_bs1.html</loc>
+      <lastmod>2013-09-01</lastmod>
+    </url>
+  </url>
+</urlset> 
