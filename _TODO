@@ -1,0 +1,12 @@
+General
+-------
+menu.xml automatic generation
+sitemap.xml automatic generation
+index.xml && index.html files generation (with tree content)
+
+Asciidoc backend
+----------------
+sidebar index generation using index.xml && jquery
+correct code blocks rendering issue
+enhance backend
+integrate js & css to custom_ folder
