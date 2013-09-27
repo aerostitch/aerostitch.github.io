@@ -3,6 +3,7 @@ General
 menu.xml automatic generation
 sitemap.xml automatic generation
 index.xml && index.html files generation (with tree content)
+Add google stats tracker
 
 Asciidoc backend
 ----------------

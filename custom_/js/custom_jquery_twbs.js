@@ -55,3 +55,46 @@ function build_top_menu(xml){
   });
 }
 
+/* 
+ * This function generates the index of the folder using the index.xml file.
+ * Generally this function is used either in the sidebar or in the index pages
+ * content
+ */
+function build_index_folder_content(){
+  $.ajax({type: "GET" ,
+    url: "index.xml" ,
+    dataType: "xml" ,
+    success: function(xml){
+      $(xml).find('urlset').each(function(){
+        var tmp_item = add_index_child_url($(this), $('#index_page_idx'));
+      });
+    }
+  });
+}
+
+/*
+ * This function is a recusive function that will generate the content of the
+ * navigation menu in the index pages
+ */
+function add_index_child_url(xml, parent_obj){
+  $(xml).find('> url').each(function(){
+  var item_title = $(this).find('> title').text();
+  var item_url = $(this).find('> path').length ? $(this).find('> path').text() : "#";
+  var current_obj = add_index_page_list_item(item_title, item_url);
+  if($(this).find('> url').length > 0){
+    add_index_child_url($(this), current_obj.append($('<u>')));
+  }
+  parent_obj.append(current_obj);
+  });
+}
+
+/*
+ * This function generates the li element for an url element while processing
+ * the index.xml file
+ */
+function add_index_page_list_item(title, url){
+  var a_elt = $('<a>').attr('href',url).append(title);
+  var add_elt = $('<li>').append(a_elt);
+  return add_elt;
+}
+
