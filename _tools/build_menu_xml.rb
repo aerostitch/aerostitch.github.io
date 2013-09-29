@@ -2,6 +2,10 @@
 #
 
 require 'nokogiri'
+# This is to ensure we are in the same directory as the script
+# to enable people to run the script from another directory
+script_path = File.dirname(File.expand_path($0))
+Dir.chdir(script_path)
 
 # This function builds recursively an xml containing all folders of the website
 def gen_subfolders_node(parent_dir, parent_node)
