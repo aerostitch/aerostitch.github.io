@@ -105,7 +105,9 @@ function add_index_child_url(xml, parent_obj){
     var item_url = $(this).find('> path').length ? $(this).find('> path').text() : "#";
     var current_obj = add_index_page_list_item(item_title, item_url);
     if($(this).find('> url').length > 0){
-      add_index_child_url($(this), current_obj.append($('<u>')));
+      var p_obj = $('<ul>');
+      add_index_child_url($(this), p_obj);
+      current_obj.append(p_obj);
     }
     parent_obj.append(current_obj);
   });

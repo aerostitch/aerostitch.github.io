@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<urlset>
+  <url>
+    <title>Misc</title>
+    <path>/misc</path>
+    <url>
+      <title>Imagevue</title>
+      <path>/misc/imagevue</path>
+      <url>
+        <title>Adding a counter of visits on an imagevue based website</title>
+        <path>/misc/imagevue/Adding_visit_counter_to_imagevue_website.html</path>
+      </url>
+    </url>
+  </url>
+  <url>
+    <title>Oracle</title>
+    <path>/oracle</path>
+    <url>
+      <title>Certifications</title>
+      <path>/oracle/certifications</path>
+      <url>
+        <title>Notes for exam 1Z0-047</title>
+        <path>/oracle/certifications/Notes_1Z0-047.html</path>
+      </url>
+      <url>
+        <title>Notes for exams 1Z0-052</title>
+        <path>/oracle/certifications/Notes_1Z0-052.html</path>
+      </url>
+      <url>
+        <title>Notes for exams 1Z0-053</title>
+        <path>/oracle/certifications/Notes_1Z0-053.html</path>
+      </url>
+    </url>
+  </url>
+</urlset>
