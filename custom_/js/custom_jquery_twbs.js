@@ -10,6 +10,7 @@
 $(document).ready(function(){
   build_top_menu();
   build_index_folder_content();
+  include_description_index_page();
 });
 
 /*
@@ -123,3 +124,8 @@ function add_index_page_list_item(title, url){
   return add_elt;
 }
 
+function include_description_index_page(){
+  $(function(){
+    $("#Description").load("description.inc");
+  });
+}
