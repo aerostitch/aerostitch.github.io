@@ -19,7 +19,7 @@
       Exam 1Z0-047 is to get the "Oracle Database: SQL Certified Expert".
       </li>
       <li>
-      Exam 1Z0-052 is to get the OCA exam (1Z0-051 was not needed here because
+      Exam 1Z0-052 is to get the OCA certification (1Z0-051 was not needed here because
         superseeded by the fact I passed 1Z0-047)
       </li>
       <li>
