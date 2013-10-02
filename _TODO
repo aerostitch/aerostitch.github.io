@@ -2,9 +2,8 @@ General
 -------
 DONE: menu.xml automatic generation
 sitemap.xml automatic generation
-index.xml && index.html files generation (with tree content)
+DONE: index.xml && index.html files generation (with tree content)
 Add google stats tracker???
-If only one or less html in current folder, directly redirect
 
 Asciidoc backend
 ----------------

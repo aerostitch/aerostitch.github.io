@@ -31,7 +31,7 @@ def gen_subfolders_node(parent_dir, parent_node)
 end
 
 # Process starts here...
-doc = Nokogiri::XML::Builder.new do |xml|
+doc = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
   xml.urlset do
     xml.url {
       xml.title "Home"

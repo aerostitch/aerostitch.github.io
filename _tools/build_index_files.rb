@@ -54,7 +54,7 @@ end
 def build_index_files(idx_root)
   Dir.chdir(idx_root) do
     idx_root = Dir.pwd
-    doc = Nokogiri::XML::Builder.new do |xml|
+    doc = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
       xml.urlset{
           gen_files_nodes(idx_root,xml)
           gen_subfolders_node(idx_root,xml)
