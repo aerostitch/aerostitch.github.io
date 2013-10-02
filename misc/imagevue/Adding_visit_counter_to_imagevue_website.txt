@@ -3,6 +3,8 @@ Adding a counter of visits on an imagevue based website
 Joseph HERLANT
 v1.0.0, 2013-09-26: Creation
 :encoding: UTF-8
+:description: This document explains how to easily add a counter for counting +
+  visitors surfing on your website when using the "imagevue" website builder.
 :lang: en
 :data-uri:
 :icons:

@@ -5,6 +5,7 @@
 <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="generator" content="AsciiDoc 8.6.7" />
+<meta name="description" content="This document explains how to easily add a counter for counting visitors surfing on your website when using the "imagevue" website builder." />
 <meta name="author" content="Joseph HERLANT" />
 <link rel="shortcut icon" href="/custom_/ico/favicon.png" />
 <title>Adding a counter of visits on an imagevue based website</title>
@@ -12,11 +13,14 @@
 /* Shared CSS for AsciiDoc xhtml11 and html5 backends */
 
 /* Default font. */
+/*
 body {
   font-family: Georgia,serif;
 }
+*/
 
 /* Title font. */
+/*
 h1, h2, h3, h4, h5, h6,
 div.title, caption.title,
 thead, p.table.header,
@@ -25,11 +29,13 @@ thead, p.table.header,
 #footer {
   font-family: Arial,Helvetica,sans-serif;
 }
+*/
 
 body {
   margin: 1em 5% 1em 5%;
 }
 
+/*
 a {
   color: blue;
   text-decoration: underline;
@@ -37,7 +43,7 @@ a {
 a:visited {
   color: fuchsia;
 }
-
+*/
 em {
   font-style: italic;
   color: navy;
@@ -49,7 +55,7 @@ strong {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #527bbd;
+  /* color: #527bbd; */
   margin-top: 1.2em;
   margin-bottom: 0.5em;
   line-height: 1.3;
@@ -745,15 +751,11 @@ asciidoc.install(2);
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
           <a class="navbar-brand" href="/">aerostitch's tips</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav" id="menu_left">
+          <li></li>
           <!-- Here will stand the menu bar generated on page load by a jquery script -->
           </ul>
           <!--
@@ -771,14 +773,17 @@ asciidoc.install(2);
     <div class="row row-offcanvas row-offcanvas-right">
 
       <div class="col-xs-12 col-sm-9">
+<span id="author">Joseph HERLANT</span>
+<div style="text-align:right; float:right">
+<span id="revnumber">version 1.0.0,</span>
+<span id="revdate">2013-09-26</span>
+<span id="revremark">: Creation</span>
+</div>
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
 <div id="header">
 <h1>Adding a counter of visits on an imagevue based website</h1>
-<span id="author">Joseph HERLANT</span><br />
-<span id="revnumber">version 1.0.0,</span>
-<span id="revdate">2013-09-26</span>
-<br /><span id="revremark">Creation</span>
+This document explains how to easily add a counter for counting visitors surfing on your website when using the "imagevue" website builder.
 </div>
       </div>
 <div class="sect1">
@@ -867,15 +872,15 @@ imagevue declaration tag. It should look like this:</p></div>
   <!-- Bootstrap core JavaScript
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
-  <script src="/custom_/js/jquery.js"></script>
-  <script src="/twbs_/js/bootstrap.min.js"></script>
-  <script src="/custom_/js/offcanvas.js"></script>
-  <script src="/custom_/js/custom_jquery_twbs.js"></script>
+  <script type="text/javascript" src="/custom_/js/jquery.js"></script>
+  <script type="text/javascript" src="/twbs_/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/custom_/js/offcanvas.js"></script>
+  <script type="text/javascript" src="/custom_/js/custom_jquery_twbs.js"></script>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br />
-Last updated 2013-09-26 22:19:09 CEST
+Last updated 2013-10-02 23:32:03 CEST
 </div>
 </div>
 </body>

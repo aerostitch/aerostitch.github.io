@@ -3,6 +3,8 @@ Notes for exams 1Z0-053
 Joseph HERLANT
 v1.0.0, 2013-05-16: Initial version
 :encoding: UTF-8
+:description: This document is regrouping my personal notes I took while revising +
+  for the 1Z0-053 Oracle certification exam.
 :lang: en
 :data-uri:
 :icons:

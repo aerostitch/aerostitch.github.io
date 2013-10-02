@@ -3,6 +3,8 @@ Notes for exam 1Z0-047
 Joseph HERLANT
 v1.0, 2013-02-16 : Creation of the document
 :encoding: UTF-8
+:description: This document is regrouping my personal notes I took while revising for the +
+  1Z0-047 Oracle certification exam.
 :data-uri:
 :icons:
 :iconsdir: /usr/share/asciidoc/images/icons/
