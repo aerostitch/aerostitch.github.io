@@ -75,7 +75,9 @@ def build_index_files(idx_root)
   end
 end
 
-build_index_files('..')
+build_index_files(Website_root)
+FileUtils.copy("#{Website_root}/_tools/templates/index.html",
+                             "#{Website_root}/index.html")
 Dir.glob('../**/*')
   .delete_if { |fname| /(\/|^)_/.match(fname) or /_(\/|$)/.match(fname) }
   .select {|f| File.directory? f}
