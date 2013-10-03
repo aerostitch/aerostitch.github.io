@@ -45,10 +45,14 @@ footer {
     top: 0;
     width: 50%; /* 6 columns */
   }
+}
+
+
 /*
  * Theme
+ * --------------------------------------------------
  */
-}body {
+body {
   padding-top: 70px;
   padding-bottom: 30px;
 }
@@ -61,4 +65,12 @@ footer {
 
 .theme-showcase > p > .btn {
   margin: 5px 0;
+}
+
+.right-aligned-div {
+  text-align: right;
+}
+.menu-indicator{
+  color:      grey;
+  font-style: italic;
 }
