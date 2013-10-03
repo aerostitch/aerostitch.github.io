@@ -74,3 +74,9 @@ body {
   color:      grey;
   font-style: italic;
 }
+.menu-indicator-asciidoc{
+  float: right;
+}
+.panel{
+  width: 100%;
+}

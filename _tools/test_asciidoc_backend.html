@@ -5,10 +5,10 @@
 <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="generator" content="AsciiDoc 8.6.7" />
-<meta name="description" content="This document is regrouping my personal notes I took while revising for the 1Z0-047 Oracle certification exam." />
-<meta name="author" content="Joseph HERLANT" />
+<meta name="description" content="This is the description of the document. It is multilined (must have plus signs at the end of the text line) and is great! :)" />
+<meta name="author" content="This is the author &lt;email@email.me&gt;" />
 <link rel="shortcut icon" href="/custom_/ico/favicon.png" />
-<title>Notes for exam 1Z0-047</title>
+<title>This is the document title</title>
 <style type="text/css">
 /* Shared CSS for AsciiDoc xhtml11 and html5 backends */
 
@@ -786,154 +786,73 @@ asciidoc.install(2);
         </div>
 
 <div>
-  <span id="author">Joseph HERLANT</span>
+  <span id="author">This is the author &lt;email@email.me&gt;</span>
   <br />
   <span id="revnumber">version 1.0,</span>
-  <span id="revdate">2013-02-16</span>
-  <span id="revremark">: Creation of the document</span>
+  <span id="revdate">2013-10-03</span>
+  <span id="revremark">: Revision remark!</span>
 </div>
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
 <div id="header">
-<h1>Notes for exam 1Z0-047</h1>
-This document is regrouping my personal notes I took while revising for the 1Z0-047 Oracle certification exam.
+<h1>This is the document title</h1>
+This is the description of the document. It is multilined (must have plus signs at the end of the text line) and is great! :)
 </div>
       </div>
-<div id="preamble">
+<div class="sect1">
+<h2 id="_showing_some_panels_usage">1. Showing some panels usage</h2>
 <div class="sectionbody">
+<div class="panel panel-primary admonitionblock">
+  <div class="panel-heading">
+    <b class="panel-title">
+    Important
+    </b>
+  </div>
+  <div class="panel-body">This is a test  </div>
+</div>
+<div class="panel panel-success admonitionblock">
+  <div class="panel-heading">
+    <b class="panel-title">
+    Tip
+    </b>
+  </div>
+  <div class="panel-body">This is another test!  </div>
+</div>
+<div class="panel panel-info admonitionblock">
+  <div class="panel-heading">
+    <b class="panel-title">
+    Note
+    </b>
+  </div>
+  <div class="panel-body">That&#8217;s right!  </div>
+</div>
 <div class="panel panel-warning admonitionblock">
   <div class="panel-heading">
     <b class="panel-title">
     Warning
     </b>
   </div>
-  <div class="panel-body">This document is my personnal notes I took when preparing the 1Z0-047 exam. This is not a complete review of the exam topics, just the ones I either didn&#8217;t konw or having hard time to remember.  </div>
+  <div class="panel-body">This is the warning doc.
+Everything here can be multiline!  </div>
 </div>
-<div class="paragraph"><p>Create Table As Select copies CHECK and NOT NULL constraints but not PU, UK, FK, indexes.</p></div>
-<div class="paragraph"><p>Indexes have their own namespace (different from tables), just as for constraints.</p></div>
-<div class="paragraph"><p>The view&#8217;s <code>WITH CHECK OPTION</code> prevent rows to be updated/inserted OUTSIDE the view and the update target from getting rows disapear from the view.</p></div>
-<div class="paragraph"><p>To reset or change the value of a sequence, you must recreate it. That&#8217;s the only way.</p></div>
-<div class="paragraph"><p>In a WHERE clause, <code>NOT</code> is evaluated 1st, then <code>AND</code>, then <code>OR</code> (if no parentheses).</p></div>
-<div class="paragraph"><p>In a where clause, the <code>NOT IN</code> <strong>excludes NULL</strong>.</p></div>
-<div class="paragraph"><p>Where clause executes <strong>before</strong> SET clause in an update &#8658; update with no row will not fail if SET has incorrectly formatted values&#8230;</p></div>
-<div class="paragraph"><p>NOT NULL constraints cannot be precised in an outline way.</p></div>
-<div class="paragraph"><p>With set operators, you can order by position or by any column of the 1st select list.</p></div>
-<div class="paragraph"><p>In sequences:</p></div>
-<div class="ulist"><ul>
-<li>
-<p>
-MINVALUE defaults to 1
-</p>
-</li>
-<li>
-<p>
-MAXVALUE can be set to &lt; 0 as long as MINVALUE &lt; MAXVALUE
-</p>
-</li>
-</ul></div>
-<div class="paragraph"><p>After setting a column to unused, you can reuse its name for another column.</p></div>
-<div class="paragraph"><p><code>GROUPING</code> function returns 1 for superaggregated rows.</p></div>
-<div class="paragraph"><p><code>TIMESTAMP WITH TIMEZONE</code> cannot be used as PK, but <code>TIMESTAMP WITH LOCAL TIMEZONE</code> can.</p></div>
-<div class="paragraph"><p><code>SAVEPOINT &lt;savepoint_name&gt;</code> (no <strong>TO</strong>), but <code>ROLLBACK TO &lt;savepoint_name&gt;</code> (here you have a TO)!</p></div>
-<div class="paragraph"><p>DISTINCT and UNIQUE operators do exactly the same thing in a select clause.</p></div>
-<div class="paragraph"><p>The <code>PRIOR</code> is on the side making reference to the parent line.</p></div>
-<div class="paragraph"><p><code>CREATE DIRECTORY</code> statement do not test the existence of the directory path.</p></div>
-<div class="paragraph"><p><code>SELECT ROWNUM, * FROM ...</code> will generate an syntax error. You cannot have a column and an a * in the same select clause.</p></div>
-<div class="paragraph"><p>An updatable view cannot be base on hierarchical query.</p></div>
-<div class="paragraph"><p>To disable PK with FK referencing it, use: <code>ALTER TABLE &lt;table_name&gt; DISABLE PRIMARY KEY CASCADE;</code></p></div>
-<div class="paragraph"><p>FK needs the referenced columns to be constrained by a UNIQUE constraint (no need to be a PK).</p></div>
-<div class="paragraph"><p>Synonym creation do not require that the target object exists.</p></div>
-<div class="paragraph"><p>Any <code>ALTER TABLE ...</code> will prevent flashback from working.</p></div>
-<div class="paragraph"><p>Semijoins stand for <code>EXISTS</code> operators.</p></div>
-<div class="paragraph"><p><code>AVG(NULL) = NULL != 0</code></p></div>
-<div class="paragraph"><p>Available pseudocolumns in flashback version query are:</p></div>
-<div class="ulist"><ul>
-<li>
-<p>
-VERSIONS_STARTTIME
-</p>
-</li>
-<li>
-<p>
-VERSIONS_STARTSCN
-</p>
-</li>
-<li>
-<p>
-VERSIONS_ENDTIME
-</p>
-</li>
-<li>
-<p>
-VERSIONS_ENDSCN
-</p>
-</li>
-<li>
-<p>
-VERSIONS_XID
-</p>
-</li>
-<li>
-<p>
-VERSIONS_OPERATION
-</p>
-</li>
-</ul></div>
-<div class="paragraph"><p>The UNDO_SQL column of the <code>FLASHBACK_TRANSACTION_QUERY</code> table shows informations required to undo a single SQL statement (and not a whole transaction).</p></div>
-<div class="paragraph"><p><code>VERSION BETWEEN MINVALUE AND MAXVALUE</code> get all the versions of the select in the time interval (MINVALUE is the minimum timestamp available in flashback operations).</p></div>
-<div class="paragraph"><p>When using a combination of <code>AS OF</code> and <code>VERSION BETWEEN</code>, VERSION BETWEEN must be <strong>BEFORE</strong> AS OF.</p></div>
-<div class="paragraph"><p>You cannot reference subquery&#8217;s table aliases in the WHEN condition(s) of a multitable INSERT.</p></div>
-<div class="paragraph"><p>You cannot use NEXTVAL of a sequence in a subquery of a multitable INSERT.</p></div>
-<div class="paragraph"><p>NEXTVAL in a WHEN condition of a multitable INSERT will increment <strong>ONE and only ONE time</strong> for each line regardless whether the when condition evaluates to true or if a multiple WHEN calls NEXTVAL.</p></div>
-<div class="paragraph"><p>In MERGE statements, DELETE only affect previously updated rows, not inserted or not matching.</p></div>
-<div class="paragraph"><p><code>TRIM(&lt;string&gt; [&lt;trim_char&gt;] [FROM LEADING|TRAILING|BOTH])</code></p></div>
-<div class="paragraph"><p>SOUNDEX &#8658; 1st letter + 3 numerics. Don&#8217;t forget to use it twice in a comparision.</p></div>
-<div class="paragraph"><p>REMAINDER &#8658; plus proche multiple + !=</p></div>
-<div class="paragraph"><p><code>MONTH_BETWEEN(&lt;greater_date&gt;, &lt;lesser_date&gt;)</code></p></div>
-<div class="paragraph"><p>You cannot change database TZ if it already has a TIMESTAMP WITH LOCAL TIMEZONE column defined.</p></div>
-<div class="paragraph"><p>5 types of constraints:</p></div>
-<div class="ulist"><ul>
-<li>
-<p>
-NOT NULL
-</p>
-</li>
-<li>
-<p>
-UNIQUE
-</p>
-</li>
-<li>
-<p>
-PRIMARY KEY
-</p>
-</li>
-<li>
-<p>
-FOREIGN KEY
-</p>
-</li>
-<li>
-<p>
-CHECK
-</p>
-</li>
-</ul></div>
-<div class="paragraph"><p>TZD = Time Zone Daylight (includes PST, EDT, EST, CST, PDT)</p></div>
-<div class="paragraph"><p>HAVING can preceede a GROUP BY clause. It is not required to follow it.</p></div>
-<div class="paragraph"><p>All columns of a view must have a name assigned.</p></div>
-<div class="paragraph"><p>If you modify a column adding a DEFAULT constraint, the DEFAULT keyword must follow the datatype specification, not preceed it!</p></div>
-<div class="paragraph"><p>You cannot set the DEFAULT value to a column with something taht conflicts with its datatype.</p></div>
-<div class="paragraph"><p>You cannot change the datatype of an already populated column.</p></div>
-<div class="paragraph"><p>To set a column unused: <code>ALTER TABLE &lt;table_name&gt; SET UNUSED COLUMN &lt;col_name&gt;;</code></p></div>
-<div class="paragraph"><p>The GROUPING SETS operations combines the resulting row sets with an UNION ALL operation.</p></div>
-<div class="paragraph"><p>ALL_* views list any type of objects in the database, regardless of owner, to which your account has been granted access.</p></div>
-<div class="paragraph"><p><code>ALL_TAB_PRIV_RECD</code> view list grants on objects for which the user, PUBLIC or enabled role is grantee.</p></div>
-<div class="paragraph"><p><code>NUMTODSINTERVAL(&lt;number&gt;, 'UNIT_OF_THE_NUMBER_LIKE_MINUTE')</code> The unit of the number must be enclosed by quotes.</p></div>
-<div class="paragraph"><p>To defer an constraint, it must have been created with the <code>DEFERRABLE</code> option. Then you defer it using <code>SET CONSTRAINT &lt;constraint_name&gt; DEFERRED;</code></p></div>
-<div class="paragraph"><p>NVL2 function syntax <code>NVL2('&lt;column or expression to evaluate&gt;', '&lt;column or expression to return if NOT NULL&gt;', '&lt;column or expression to return if NULL&gt;')</code></p></div>
-<div class="paragraph"><p>A coumpound query will, by default, return rows sorted accross all the columns, from the left to the right. The only exception is <code>UNION ALL</code> where the rows will not be sorted.</p></div>
-<div class="paragraph"><p>The result set of an inner query will be nested before the outer query can run.</p></div>
+<div class="panel panel-danger admonitionblock">
+  <div class="panel-heading">
+    <b class="panel-title">
+    Caution
+    </b>
+  </div>
+  <div class="panel-body">These tags are freaky! :P  </div>
+</div>
+<div class="panel panel-danger admonitionblock">
+  <div class="panel-heading">
+    <b class="panel-title">
+    Just another caption
+: Title!
+    </b>
+  </div>
+  <div class="panel-body">Pay attention!
+You also get a title and change the caption from "caution" to whatever you want! ;)  </div>
+</div>
 </div>
 </div>
     </div>
@@ -963,7 +882,7 @@ CHECK
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br />
-Last updated 2013-10-02 23:29:12 CEST
+Last updated 2013-10-03 19:50:22 CEST
 </div>
 </div>
 </body>

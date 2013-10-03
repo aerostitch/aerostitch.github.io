@@ -1,0 +1,34 @@
+This is the document title
+==========================
+This is the author <email@email.me>
+v1.0, 2013-10-03 : Revision remark!
+:encoding: UTF-8
+:description: This is the description of the document. +
+  It is multilined (must have plus signs at the end of the text line) +
+  and is great! :)
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+
+Showing some panels usage
+-------------------------
+
+IMPORTANT: This is a test
+
+TIP: This is another test!
+
+NOTE: That's right!
+
+WARNING: This is the warning doc.
+Everything here can be multiline!
+
+CAUTION: These tags are freaky! :P
+
+[title="Title!", caption="Just another caption"]
+CAUTION: Pay attention!
+You also get a title and change the caption from "caution" to whatever you want! ;)
