@@ -1,57 +1,3214 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="Joseph HERLANT" />
-    <link rel="shortcut icon" href="/custom_/ico/favicon.png" />
-    <title>Aerostitch tips - Index page for this category</title>
-    <!-- Bootstrap core CSS -->
-    <!--<link href="/twbs_/css/bootstrap.css" rel="stylesheet" />-->
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Bootstrap theme -->
-    <!--<link href="/twbs_/css/bootstrap-theme.min.css" rel="stylesheet" />-->
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" />
-    <!-- Custom styles for this template -->
-    <link href="/custom_/css/theme.css" rel="stylesheet" />
-  </head>
-  <body class="article">
-    <!-- Fixed navbar -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="AsciiDoc 8.6.7" />
+<link rel="shortcut icon" href="/custom_/ico/favicon.png" />
+<title></title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+/*
+body {
+  font-family: Georgia,serif;
+}
+*/
+
+/* Title font. */
+/*
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+*/
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+/*
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+*/
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  /* color: #527bbd; */
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<!--<link href="/twbs_/css/bootstrap.css" rel="stylesheet" />-->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<!--<link href="/twbs_/css/bootstrap-theme.min.css" rel="stylesheet" />-->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- Custom styles for this template -->
+<link href="/custom_/css/theme.css" rel="stylesheet" />
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
     <div class="navbar navbar-inverse navbar-fixed-top">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
       <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="/">aerostitch's tips</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav" id="menu_left">
-            <li></li>
-            <!-- Here will stand the menu bar generated on page load by a jquery script -->
+          <li></li>
+          <!-- Here will stand the menu bar generated on page load by a jquery script -->
           </ul>
+          <!--
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Bla</a></li>
+            <li><a href="#">Bla</a></li>
+            <li class="active"><a href="./">Active</a></li>
+          </ul>
+          -->
         </div><!--/.nav-collapse -->
       </div>
     </div>
-    <div id="content">
-      <div class="container theme-showcase">
-        <div class="row row-offcanvas row-offcanvas-right">
-          <div class="col-xs-12 col-sm-6 col-md-6 cold-lg-6" id="Description">
-          </div>
-          <div class="col-xs-6 col-sm-6 col-md-6 cold-lg-6 sidebar-offcanvas" id="sidebar"> <!-- role="navigation"> -->
-            <div class="well sidebar-nav">
-              <ul class="nav" id="index_page_idx">
-                <li>Documents in this section</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div class="row row-offcanvas row-offcanvas-right">
+
+      <div class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+</div>
       </div>
-    </div> 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <!--<script type="text/javascript" src="/custom_/js/jquery.js"></script>-->
-    <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
-    <!--<script type="text/javascript" src="/twbs_/js/bootstrap.min.js"></script>-->
-    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/custom_/js/custom_jquery_twbs.js"></script>
-  </body>
-</html>
+<div class="paragraph"><p>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+    &lt;meta name="author" content="Joseph HERLANT" /&gt;
+    &lt;link rel="shortcut icon" href="/custom_/ico/favicon.png" /&gt;
+    &lt;title&gt;Aerostitch tips - Index page for this category&lt;/title&gt;
+    &lt;!-- Bootstrap core CSS -&#8594;
+    &lt;!--&lt;link href="/twbs_/css/bootstrap.css" rel="stylesheet" /&gt;-&#8594;
+    &lt;link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" /&gt;
+    &lt;!-- Bootstrap theme -&#8594;
+    &lt;!--&lt;link href="/twbs_/css/bootstrap-theme.min.css" rel="stylesheet" /&gt;-&#8594;
+    &lt;link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" /&gt;
+    &lt;!-- Custom styles for this template -&#8594;
+    &lt;link href="/custom_/css/theme.css" rel="stylesheet" /&gt;
+  &lt;/head&gt;
+  &lt;body class="article"&gt;
+    &lt;!-- Fixed navbar -&#8594;
+    &lt;div class="navbar navbar-inverse navbar-fixed-top"&gt;
+      &lt;button type="button" class="navbar-toggle" data-toggle="collapse"
+        data-target=".navbar-collapse"&gt;
+         &lt;span class="icon-bar"&gt;&lt;/span&gt;
+         &lt;span class="icon-bar"&gt;&lt;/span&gt;
+         &lt;span class="icon-bar"&gt;&lt;/span&gt;
+       &lt;/button&gt;</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>      &lt;div class="container"&gt;
+        &lt;div class="navbar-header"&gt;
+          &lt;a class="navbar-brand" href="/"&gt;aerostitch's tips&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div class="navbar-collapse collapse"&gt;
+          &lt;ul class="nav navbar-nav" id="menu_left"&gt;
+            &lt;li&gt;&lt;/li&gt;
+            &lt;!-- Here will stand the menu bar generated on page load by a jquery script --&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;&lt;!--/.nav-collapse --&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div id="content"&gt;
+      &lt;div class="container theme-showcase"&gt;
+        &lt;div class="row row-offcanvas row-offcanvas-right"&gt;
+          &lt;div class="col-xs-12 col-sm-6 col-md-6 cold-lg-6" id="Description"&gt;
+          &lt;/div&gt;
+          &lt;div class="col-xs-6 col-sm-6 col-md-6 cold-lg-6 sidebar-offcanvas" id="sidebar"&gt; &lt;!-- role="navigation"&gt; --&gt;
+            &lt;div class="well sidebar-nav"&gt;
+              &lt;ul class="nav" id="index_page_idx"&gt;
+                &lt;li&gt;Documents in this section&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- Bootstrap core JavaScript
+    ================================================== --&gt;
+    &lt;!-- Placed at the end of the document so the pages load faster --&gt;
+    &lt;!--&lt;script type="text/javascript" src="/custom_/js/jquery.js"&gt;&lt;/script&gt;--&gt;
+    &lt;script type="text/javascript" src="//code.jquery.com/jquery.min.js"&gt;&lt;/script&gt;
+    &lt;!--&lt;script type="text/javascript" src="/twbs_/js/bootstrap.min.js"&gt;&lt;/script&gt;--&gt;
+    &lt;script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="/custom_/js/custom_jquery_twbs.js"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+nt + div.title {
+  margin-top: 0.0em;
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>div.sidebarblock &gt; div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}</p></div>
+<div class="paragraph"><p>div.listingblock &gt; div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}</p></div>
+<div class="paragraph"><p>div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}</p></div>
+<div class="paragraph"><p>div.quoteblock &gt; div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}</p></div>
+<div class="paragraph"><p>div.verseblock &gt; pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock &gt; div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}</p></div>
+<div class="paragraph"><p>div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}</p></div>
+<div class="paragraph"><p>div.exampleblock &gt; div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}</p></div>
+<div class="paragraph"><p>div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }</p></div>
+<div class="paragraph"><p>dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd &gt; *:first-child {
+  margin-top: 0.1em;
+}</p></div>
+<div class="paragraph"><p>ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}</p></div>
+<div class="paragraph"><p>div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}</p></div>
+<div class="paragraph"><p>tfoot {
+  font-weight: bold;
+}
+td &gt; div.verse {
+  white-space: pre;
+}</p></div>
+<div class="paragraph"><p>div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}</p></div>
+<div class="literalblock">
+<div class="title">comment {</div>
+<div class="content">
+<pre><code>  background: yellow;
+}</code></pre>
+</div></div>
+<div class="literalblock">
+<div class="title">footnote, .footnoteref {</div>
+<div class="content">
+<pre><code>  font-size: 0.8em;
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>span.footnote, span.footnoteref {
+  vertical-align: super;
+}</p></div>
+<div class="paragraph"><p>#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}</p></div>
+<div class="paragraph"><p>#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}</p></div>
+<div class="paragraph"><p>#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}</p></div>
+<div class="paragraph"><p>div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}</p></div>
+<div class="paragraph"><p>@media print {
+  #footer-badges { display: none; }
+}</p></div>
+<div class="paragraph"><p>#toc {
+  margin-bottom: 2.5em;
+}</p></div>
+<div class="paragraph"><p>#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}</p></div>
+<div class="paragraph"><p>div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}</p></div>
+<div class="paragraph"><p>span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }</p></div>
+<div class="paragraph"><p>span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }</p></div>
+<div class="paragraph"><p>span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }</p></div>
+<div class="paragraph"><p>span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }</p></div>
+<div class="paragraph"><p>div.unbreakable { page-break-inside: avoid; }</p></div>
+<div class="paragraph"><p>/*
+ * xhtml11 specific
+ *
+ * */</p></div>
+<div class="paragraph"><p>div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock &gt; table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock &gt; table[frame="void"] {
+  border-style: none;
+}
+div.tableblock &gt; table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock &gt; table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}</p></div>
+<div class="paragraph"><p>/*
+ * html5 specific
+ *
+ * */</p></div>
+<div class="paragraph"><p>table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}</p></div>
+<div class="paragraph"><p>table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}</p></div>
+<div class="paragraph"><p>th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}</p></div>
+<div class="paragraph"><p>th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}</p></div>
+<div class="paragraph"><p>/*
+ * manpage specific
+ *
+ * */</p></div>
+<div class="paragraph"><p>body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}</p></div>
+<div class="paragraph"><p>@media print {
+  body.manpage div#toc { display: none; }
+}</p></div>
+<div class="paragraph"><p>&lt;/style&gt;
+&lt;script type="text/javascript"&gt;
+/<strong>&lt;![CDATA[</strong>/
+var asciidoc = {  // Namespace.</p></div>
+<div class="paragraph"><p>/* Author: Mihai Bazon, September 2002
+ * <a href="http://students.infoiasi.ro/~mishoo">http://students.infoiasi.ro/~mishoo</a>
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>/* modified by Troy D. Hanson, September 2006. License: GPL */
+/* modified by Stuart Rackham, 2006, 2009. License: GPL */</code></pre>
+</div></div>
+<div class="paragraph"><p>toc: function (toclevels) {</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>function getText(el) {
+  var text = "";
+  for (var i = el.firstChild; i != null; i = i.nextSibling) {
+    if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+      text += i.data;
+    else if (i.firstChild != null)
+      text += getText(i);
+  }
+  return text;
+}</code></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>function TocEntry(el, text, toclevel) {
+  this.element = el;
+  this.text = text;
+  this.toclevel = toclevel;
+}</code></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>function tocEntries(el, toclevels) {
+  var result = new Array;
+  var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+  // Function that scans the DOM tree for header elements (the DOM2
+  // nodeIterator API would be a better technique but not supported by all
+  // browsers).
+  var iterate = function (el) {
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+        var mo = re.exec(i.tagName);
+        if (mo &amp;&amp; (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+          result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+        }
+        iterate(i);
+      }
+    }
+  }
+  iterate(el);
+  return result;
+}</code></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>var toc = document.getElementById("toc");
+if (!toc) {
+  return;
+}</code></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>// Delete existing TOC entries in case we're reloading the TOC.
+var tocEntriesToRemove = [];
+var i;
+for (i = 0; i &lt; toc.childNodes.length; i++) {
+  var entry = toc.childNodes[i];
+  if (entry.nodeName.toLowerCase() == 'div'
+   &amp;&amp; entry.getAttribute("class")
+   &amp;&amp; entry.getAttribute("class").match(/^toclevel/))
+    tocEntriesToRemove.push(entry);
+}
+for (i = 0; i &lt; tocEntriesToRemove.length; i++) {
+  toc.removeChild(tocEntriesToRemove[i]);
+}</code></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i &lt; entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},</code></pre>
+</div></div>
+<div class="paragraph"><p>/* Based on footnote generation code from:
+ * <a href="http://www.brandspankingnew.net/archive/2005/07/format_footnote.html">http://www.brandspankingnew.net/archive/2005/07/format_footnote.html</a>
+ */</p></div>
+<div class="paragraph"><p>footnotes: function () {
+  // Delete existing footnote entries in case we&#8217;re reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i &lt; noteholder.childNodes.length; i<code>) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == <em>div</em> &amp;&amp; entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i &lt; entriesToRemove.length; i</code>) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i&lt;spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[&lt;a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'&gt;" + n + "&lt;/a&gt;]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "&lt;div class='footnote' id='_footnote_" + n + "'&gt;" +
+        "&lt;a href='#_footnoteref_" + n + "' title='Return to text'&gt;" +
+        n + "&lt;/a&gt;. " + note + "&lt;/div&gt;";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i&lt;spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[&lt;a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'&gt;" + n + "&lt;/a&gt;]";
+      }
+    }
+  }
+},</code></pre>
+</div></div>
+<div class="paragraph"><p>install: function(toclevels) {
+  var timerId;</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>function reinstall() {
+  asciidoc.footnotes();
+  if (toclevels) {
+    asciidoc.toc(toclevels);
+  }
+}</code></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>function reinstallAndRemoveTimer() {
+  clearInterval(timerId);
+  reinstall();
+}</code></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>}
+asciidoc.install();
+/<strong>]]&gt;</strong>/
+&lt;/script&gt;
+&lt;!-- Bootstrap core CSS -&#8594;
+&lt;!--&lt;link href="/twbs_/css/bootstrap.css" rel="stylesheet" /&gt;-&#8594;
+&lt;link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" /&gt;
+&lt;!-- Bootstrap theme -&#8594;
+&lt;!--&lt;link href="/twbs_/css/bootstrap-theme.min.css" rel="stylesheet" /&gt;-&#8594;
+&lt;link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" /&gt;
+&lt;!-- Custom styles for this template -&#8594;
+&lt;link href="/custom_/css/theme.css" rel="stylesheet" /&gt;
+&lt;/head&gt;
+&lt;body class="article"&gt;
+   &lt;!-- Fixed navbar -&#8594;
+    &lt;div class="navbar navbar-inverse navbar-fixed-top"&gt;
+      &lt;button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"&gt;
+        &lt;span class="icon-bar"&gt;&lt;/span&gt;
+        &lt;span class="icon-bar"&gt;&lt;/span&gt;
+        &lt;span class="icon-bar"&gt;&lt;/span&gt;
+      &lt;/button&gt;</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>      &lt;div class="container"&gt;
+        &lt;div class="navbar-header"&gt;
+          &lt;a class="navbar-brand" href="/"&gt;aerostitch's tips&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div class="navbar-collapse collapse"&gt;
+          &lt;ul class="nav navbar-nav" id="menu_left"&gt;
+          &lt;li&gt;&lt;/li&gt;
+          &lt;!-- Here will stand the menu bar generated on page load by a jquery script --&gt;
+          &lt;/ul&gt;
+          &lt;!--
+          &lt;ul class="nav navbar-nav navbar-right"&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Bla&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Bla&lt;/a&gt;&lt;/li&gt;
+            &lt;li class="active"&gt;&lt;a href="./"&gt;Active&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+          --&gt;
+        &lt;/div&gt;&lt;!--/.nav-collapse --&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+&lt;div id="content"&gt;
+    &lt;div class="container theme-showcase"&gt;
+    &lt;div class="row row-offcanvas row-offcanvas-right"&gt;</code></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>      &lt;div class="col-xs-12 col-sm-9 col-md-9 cold-lg-9"&gt;
+      &lt;!-- Main jumbotron for a primary marketing message or call to action --&gt;
+      &lt;div class="jumbotron"&gt;
+&lt;div id="header"&gt;
+&lt;/div&gt;
+      &lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+  &amp;lt;head&amp;gt;
+    &amp;lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&amp;gt;
+    &amp;lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&amp;gt;
+    &amp;lt;meta name="author" content="Joseph HERLANT" /&amp;gt;
+    &amp;lt;link rel="shortcut icon" href="/custom_/ico/favicon.png" /&amp;gt;
+    &amp;lt;title&amp;gt;Aerostitch tips - Index page for this category&amp;lt;/title&amp;gt;
+    &amp;lt;!-- Bootstrap core CSS -&amp;#8594;
+    &amp;lt;!--&amp;lt;link href="/twbs_/css/bootstrap.css" rel="stylesheet" /&amp;gt;-&amp;#8594;
+    &amp;lt;link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" /&amp;gt;
+    &amp;lt;!-- Bootstrap theme -&amp;#8594;
+    &amp;lt;!--&amp;lt;link href="/twbs_/css/bootstrap-theme.min.css" rel="stylesheet" /&amp;gt;-&amp;#8594;
+    &amp;lt;link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" /&amp;gt;
+    &amp;lt;!-- Custom styles for this template -&amp;#8594;
+    &amp;lt;link href="/custom_/css/theme.css" rel="stylesheet" /&amp;gt;
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body class="article"&amp;gt;
+    &amp;lt;!-- Fixed navbar -&amp;#8594;
+    &amp;lt;div class="navbar navbar-inverse navbar-fixed-top"&amp;gt;
+      &amp;lt;button type="button" class="navbar-toggle" data-toggle="collapse"
+        data-target=".navbar-collapse"&amp;gt;
+         &amp;lt;span class="icon-bar"&amp;gt;&amp;lt;/span&amp;gt;
+         &amp;lt;span class="icon-bar"&amp;gt;&amp;lt;/span&amp;gt;
+         &amp;lt;span class="icon-bar"&amp;gt;&amp;lt;/span&amp;gt;
+       &amp;lt;/button&amp;gt;&lt;/p&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;      &amp;lt;div class="container"&amp;gt;
+        &amp;lt;div class="navbar-header"&amp;gt;
+          &amp;lt;a class="navbar-brand" href="/"&amp;gt;aerostitch's tips&amp;lt;/a&amp;gt;
+        &amp;lt;/div&amp;gt;
+        &amp;lt;div class="navbar-collapse collapse"&amp;gt;
+          &amp;lt;ul class="nav navbar-nav" id="menu_left"&amp;gt;
+            &amp;lt;li&amp;gt;&amp;lt;/li&amp;gt;
+            &amp;lt;!-- Here will stand the menu bar generated on page load by a jquery script --&amp;gt;
+          &amp;lt;/ul&amp;gt;
+        &amp;lt;/div&amp;gt;&amp;lt;!--/.nav-collapse --&amp;gt;
+      &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div id="content"&amp;gt;
+      &amp;lt;div class="container theme-showcase"&amp;gt;
+        &amp;lt;div class="row row-offcanvas row-offcanvas-right"&amp;gt;
+          &amp;lt;div class="col-xs-12 col-sm-6 col-md-6 cold-lg-6" id="Description"&amp;gt;
+          &amp;lt;/div&amp;gt;
+          &amp;lt;div class="col-xs-6 col-sm-6 col-md-6 cold-lg-6 sidebar-offcanvas" id="sidebar"&amp;gt; &amp;lt;!-- role="navigation"&amp;gt; --&amp;gt;
+            &amp;lt;div class="well sidebar-nav"&amp;gt;
+              &amp;lt;ul class="nav" id="index_page_idx"&amp;gt;
+                &amp;lt;li&amp;gt;Documents in this section&amp;lt;/li&amp;gt;
+              &amp;lt;/ul&amp;gt;
+            &amp;lt;/div&amp;gt;
+          &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+      &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;!-- Bootstrap core JavaScript
+    ================================================== --&amp;gt;
+    &amp;lt;!-- Placed at the end of the document so the pages load faster --&amp;gt;
+    &amp;lt;!--&amp;lt;script type="text/javascript" src="/custom_/js/jquery.js"&amp;gt;&amp;lt;/script&amp;gt;--&amp;gt;
+    &amp;lt;script type="text/javascript" src="//code.jquery.com/jquery.min.js"&amp;gt;&amp;lt;/script&amp;gt;
+    &amp;lt;!--&amp;lt;script type="text/javascript" src="/twbs_/js/bootstrap.min.js"&amp;gt;&amp;lt;/script&amp;gt;--&amp;gt;
+    &amp;lt;script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"&amp;gt;&amp;lt;/script&amp;gt;
+    &amp;lt;script type="text/javascript" src="/custom_/js/custom_jquery_twbs.js"&amp;gt;&amp;lt;/script&amp;gt;
+  &amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+nt + div.title {
+  margin-top: 0.0em;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.sidebarblock &amp;gt; div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.listingblock &amp;gt; div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.quoteblock &amp;gt; div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.verseblock &amp;gt; pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock &amp;gt; div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.exampleblock &amp;gt; div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd &amp;gt; *:first-child {
+  margin-top: 0.1em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;tfoot {
+  font-weight: bold;
+}
+td &amp;gt; div.verse {
+  white-space: pre;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="title"&gt;comment {&lt;/div&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;  background: yellow;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="title"&gt;footnote, .footnoteref {&lt;/div&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;  font-size: 0.8em;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;span.footnote, span.footnoteref {
+  vertical-align: super;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;@media print {
+  #footer-badges { display: none; }
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;#toc {
+  margin-bottom: 2.5em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.unbreakable { page-break-inside: avoid; }&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;/*
+ * xhtml11 specific
+ *
+ * */&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock &amp;gt; table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock &amp;gt; table[frame="void"] {
+  border-style: none;
+}
+div.tableblock &amp;gt; table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock &amp;gt; table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;/*
+ * html5 specific
+ *
+ * */&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;/*
+ * manpage specific
+ *
+ * */&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;@media print {
+  body.manpage div#toc { display: none; }
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;&amp;lt;/style&amp;gt;
+&amp;lt;script type="text/javascript"&amp;gt;
+/&lt;strong&gt;&amp;lt;![CDATA[&lt;/strong&gt;/
+var asciidoc = {  // Namespace.&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;/* Author: Mihai Bazon, September 2002
+ * &lt;a href="http://students.infoiasi.ro/~mishoo"&gt;http://students.infoiasi.ro/~mishoo&lt;/a&gt;
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */&lt;/p&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;/* modified by Troy D. Hanson, September 2006. License: GPL */
+/* modified by Stuart Rackham, 2006, 2009. License: GPL */&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;toc: function (toclevels) {&lt;/p&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;function getText(el) {
+  var text = "";
+  for (var i = el.firstChild; i != null; i = i.nextSibling) {
+    if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+      text += i.data;
+    else if (i.firstChild != null)
+      text += getText(i);
+  }
+  return text;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;function TocEntry(el, text, toclevel) {
+  this.element = el;
+  this.text = text;
+  this.toclevel = toclevel;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;function tocEntries(el, toclevels) {
+  var result = new Array;
+  var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+  // Function that scans the DOM tree for header elements (the DOM2
+  // nodeIterator API would be a better technique but not supported by all
+  // browsers).
+  var iterate = function (el) {
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+        var mo = re.exec(i.tagName);
+        if (mo &amp;amp;&amp;amp; (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+          result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+        }
+        iterate(i);
+      }
+    }
+  }
+  iterate(el);
+  return result;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;var toc = document.getElementById("toc");
+if (!toc) {
+  return;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;// Delete existing TOC entries in case we're reloading the TOC.
+var tocEntriesToRemove = [];
+var i;
+for (i = 0; i &amp;lt; toc.childNodes.length; i++) {
+  var entry = toc.childNodes[i];
+  if (entry.nodeName.toLowerCase() == 'div'
+   &amp;amp;&amp;amp; entry.getAttribute("class")
+   &amp;amp;&amp;amp; entry.getAttribute("class").match(/^toclevel/))
+    tocEntriesToRemove.push(entry);
+}
+for (i = 0; i &amp;lt; tocEntriesToRemove.length; i++) {
+  toc.removeChild(tocEntriesToRemove[i]);
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i &amp;lt; entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;/* Based on footnote generation code from:
+ * &lt;a href="http://www.brandspankingnew.net/archive/2005/07/format_footnote.html"&gt;http://www.brandspankingnew.net/archive/2005/07/format_footnote.html&lt;/a&gt;
+ */&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;footnotes: function () {
+  // Delete existing footnote entries in case we&amp;#8217;re reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i &amp;lt; noteholder.childNodes.length; i&lt;code&gt;) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == &lt;em&gt;div&lt;/em&gt; &amp;amp;&amp;amp; entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i &amp;lt; entriesToRemove.length; i&lt;/code&gt;) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }&lt;/p&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i&amp;lt;spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[&amp;lt;a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'&amp;gt;" + n + "&amp;lt;/a&amp;gt;]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "&amp;lt;div class='footnote' id='_footnote_" + n + "'&amp;gt;" +
+        "&amp;lt;a href='#_footnoteref_" + n + "' title='Return to text'&amp;gt;" +
+        n + "&amp;lt;/a&amp;gt;. " + note + "&amp;lt;/div&amp;gt;";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i&amp;lt;spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[&amp;lt;a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'&amp;gt;" + n + "&amp;lt;/a&amp;gt;]";
+      }
+    }
+  }
+},&lt;</code></pre>
+</div></div>
+<div class="paragraph"><p>/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;install: function(toclevels) {
+  var timerId;&lt;/p&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;function reinstall() {
+  asciidoc.footnotes();
+  if (toclevels) {
+    asciidoc.toc(toclevels);
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;function reinstallAndRemoveTimer() {
+  clearInterval(timerId);
+  reinstall();
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;}
+asciidoc.install();
+/&lt;strong&gt;]]&gt;&lt;/strong&gt;/
+&lt;/script&gt;
+&lt;!-- Bootstrap core CSS -&#8594;
+&lt;!--&lt;link href="/twbs_/css/bootstrap.css" rel="stylesheet" /&gt;-&#8594;
+&lt;link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" /&gt;
+&lt;!-- Bootstrap theme -&#8594;
+&lt;!--&lt;link href="/twbs_/css/bootstrap-theme.min.css" rel="stylesheet" /&gt;-&#8594;
+&lt;link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" /&gt;
+&lt;!-- Custom styles for this template -&#8594;
+&lt;link href="/custom_/css/theme.css" rel="stylesheet" /&gt;
+&lt;/head&gt;
+&lt;body class="article"&gt;
+   &lt;!-- Fixed navbar -&#8594;
+    &lt;div class="navbar navbar-inverse navbar-fixed-top"&gt;
+      &lt;button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"&gt;
+        &lt;span class="icon-bar"&gt;&lt;/span&gt;
+        &lt;span class="icon-bar"&gt;&lt;/span&gt;
+        &lt;span class="icon-bar"&gt;&lt;/span&gt;
+      &lt;/button&gt;&lt;/p&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;      &lt;div class="container"&gt;
+        &lt;div class="navbar-header"&gt;
+          &lt;a class="navbar-brand" href="/"&gt;aerostitch&#8217;s tips&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div class="navbar-collapse collapse"&gt;
+          &lt;ul class="nav navbar-nav" id="menu_left"&gt;
+          &lt;li&gt;&lt;/li&gt;
+          &lt;!-- Here will stand the menu bar generated on page load by a jquery script --&gt;
+          &lt;/ul&gt;
+          &lt;!--
+          &lt;ul class="nav navbar-nav navbar-right"&gt;
+            &lt;li&gt;&lt;a href=""&gt;Bla&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=""&gt;Bla&lt;/a&gt;&lt;/li&gt;
+            &lt;li class="active"&gt;&lt;a href="./"&gt;Active&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+          --&gt;
+        &lt;/div&gt;&lt;!--/.nav-collapse --&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+&lt;div id="content"&gt;
+    &lt;div class="container theme-showcase"&gt;
+    &lt;div class="row row-offcanvas row-offcanvas-right"&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;      &lt;div class="col-xs-12 col-sm-9 col-md-9 cold-lg-9"&gt;
+      &lt;!-- Main jumbotron for a primary marketing message or call to action --&gt;
+      &lt;div class="jumbotron"&gt;
+&lt;div id="header"&gt;
+&lt;/div&gt;
+      &lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+  &amp;lt;head&amp;gt;
+    &amp;lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&amp;gt;
+    &amp;lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&amp;gt;
+    &amp;lt;meta name="author" content="Joseph HERLANT" /&amp;gt;
+    &amp;lt;link rel="shortcut icon" href="/custom_/ico/favicon.png" /&amp;gt;
+    &amp;lt;title&amp;gt;Aerostitch tips - Index page for this category&amp;lt;/title&amp;gt;
+    &amp;lt;!-- Bootstrap core CSS -&amp;#8594;
+    &amp;lt;!--&amp;lt;link href="/twbs_/css/bootstrap.css" rel="stylesheet" /&amp;gt;-&amp;#8594;
+    &amp;lt;link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" /&amp;gt;
+    &amp;lt;!-- Bootstrap theme -&amp;#8594;
+    &amp;lt;!--&amp;lt;link href="/twbs_/css/bootstrap-theme.min.css" rel="stylesheet" /&amp;gt;-&amp;#8594;
+    &amp;lt;link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" /&amp;gt;
+    &amp;lt;!-- Custom styles for this template -&amp;#8594;
+    &amp;lt;link href="/custom_/css/theme.css" rel="stylesheet" /&amp;gt;
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body class="article"&amp;gt;
+    &amp;lt;!-- Fixed navbar -&amp;#8594;
+    &amp;lt;div class="navbar navbar-inverse navbar-fixed-top"&amp;gt;
+      &amp;lt;button type="button" class="navbar-toggle" data-toggle="collapse"
+        data-target=".navbar-collapse"&amp;gt;
+         &amp;lt;span class="icon-bar"&amp;gt;&amp;lt;/span&amp;gt;
+         &amp;lt;span class="icon-bar"&amp;gt;&amp;lt;/span&amp;gt;
+         &amp;lt;span class="icon-bar"&amp;gt;&amp;lt;/span&amp;gt;
+       &amp;lt;/button&amp;gt;&lt;/p&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;      &amp;lt;div class="container"&amp;gt;
+        &amp;lt;div class="navbar-header"&amp;gt;
+          &amp;lt;a class="navbar-brand" href="/"&amp;gt;aerostitch&#8217;s tips&amp;lt;/a&amp;gt;
+        &amp;lt;/div&amp;gt;
+        &amp;lt;div class="navbar-collapse collapse"&amp;gt;
+          &amp;lt;ul class="nav navbar-nav" id="menu_left"&amp;gt;
+            &amp;lt;li&amp;gt;&amp;lt;/li&amp;gt;
+            &amp;lt;!-- Here will stand the menu bar generated on page load by a jquery script --&amp;gt;
+          &amp;lt;/ul&amp;gt;
+        &amp;lt;/div&amp;gt;&amp;lt;!--/.nav-collapse --&amp;gt;
+      &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div id="content"&amp;gt;
+      &amp;lt;div class="container theme-showcase"&amp;gt;
+        &amp;lt;div class="row row-offcanvas row-offcanvas-right"&amp;gt;
+          &amp;lt;div class="col-xs-12 col-sm-6 col-md-6 cold-lg-6" id="Description"&amp;gt;
+          &amp;lt;/div&amp;gt;
+          &amp;lt;div class="col-xs-6 col-sm-6 col-md-6 cold-lg-6 sidebar-offcanvas" id="sidebar"&amp;gt; &amp;lt;!-- role="navigation"&amp;gt; --&amp;gt;
+            &amp;lt;div class="well sidebar-nav"&amp;gt;
+              &amp;lt;ul class="nav" id="index_page_idx"&amp;gt;
+                &amp;lt;li&amp;gt;Documents in this section&amp;lt;/li&amp;gt;
+              &amp;lt;/ul&amp;gt;
+            &amp;lt;/div&amp;gt;
+          &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+      &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;!-- Bootstrap core JavaScript
+    ================================================== --&amp;gt;
+    &amp;lt;!-- Placed at the end of the document so the pages load faster --&amp;gt;
+    &amp;lt;!--&amp;lt;script type="text/javascript" src="/custom_/js/jquery.js"&amp;gt;&amp;lt;/script&amp;gt;--&amp;gt;
+    &amp;lt;script type="text/javascript" src="//code.jquery.com/jquery.min.js"&amp;gt;&amp;lt;/script&amp;gt;
+    &amp;lt;!--&amp;lt;script type="text/javascript" src="/twbs_/js/bootstrap.min.js"&amp;gt;&amp;lt;/script&amp;gt;--&amp;gt;
+    &amp;lt;script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"&amp;gt;&amp;lt;/script&amp;gt;
+    &amp;lt;script type="text/javascript" src="/custom_/js/custom_jquery_twbs.js"&amp;gt;&amp;lt;/script&amp;gt;
+  &amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+nt + div.title {
+  margin-top: 0.0em;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.sidebarblock &amp;gt; div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.listingblock &amp;gt; div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.quoteblock &amp;gt; div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.verseblock &amp;gt; pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock &amp;gt; div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. <strong>/
+div.verseblock + div.attribution {
+  text-align: left;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.exampleblock &amp;gt; div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd &amp;gt; *:first-child {
+  margin-top: 0.1em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;tfoot {
+  font-weight: bold;
+}
+td &amp;gt; div.verse {
+  white-space: pre;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="title"&gt;comment {&lt;/div&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;  background: yellow;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="title"&gt;footnote, .footnoteref {&lt;/div&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;  font-size: 0.8em;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;span.footnote, span.footnoteref {
+  vertical-align: super;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;@media print {
+  #footer-badges { display: none; }
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;#toc {
+  margin-bottom: 2.5em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.unbreakable { page-break-inside: avoid; }&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;/</strong>
+ * xhtml11 specific
+ *
+ * <strong>/&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock &amp;gt; table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/</strong> Because the table frame attribute is overriden by CSS in most browsers. <strong>/
+div.tableblock &amp;gt; table[frame="void"] {
+  border-style: none;
+}
+div.tableblock &amp;gt; table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock &amp;gt; table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;/</strong>
+ * html5 specific
+ *
+ * <strong>/&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;/</strong>
+ * manpage specific
+ *
+ * <strong>/&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;@media print {
+  body.manpage div#toc { display: none; }
+}&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;&amp;lt;/style&amp;gt;
+&amp;lt;script type="text/javascript"&amp;gt;
+/&lt;strong&gt;&amp;lt;![CDATA[&lt;/strong&gt;/
+var asciidoc = {  // Namespace.&lt;/p&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;/</strong> Author: Mihai Bazon, September 2002
+ * &lt;a href="http://students.infoiasi.ro/<sub>mishoo"&gt;http://students.infoiasi.ro/</sub>mishoo&lt;/a&gt;
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ <strong>/&lt;/p&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;/</strong> modified by Troy D. Hanson, September 2006. License: GPL <strong>/
+/</strong> modified by Stuart Rackham, 2006, 2009. License: GPL <strong>/&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;toc: function (toclevels) {&lt;/p&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;function getText(el) {
+  var text = "";
+  for (var i = el.firstChild; i != null; i = i.nextSibling) {
+    if (i.nodeType == 3 /</strong> Node.TEXT_NODE <strong>/) // IE doesn&#8217;t speak constants.
+      text <code>= i.data;
+    else if (i.firstChild != null)
+      text += getText(i);
+  }
+  return text;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;function TocEntry(el, text, toclevel) {
+  this.element = el;
+  this.text = text;
+  this.toclevel = toclevel;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;function tocEntries(el, toclevels) {
+  var result = new Array;
+  var re = new RegExp(<em>[hH]([1-</em></code>(toclevels+1)<code><em>])</em>);
+  // Function that scans the DOM tree for header elements (the DOM2
+  // nodeIterator API would be a better technique but not supported by all
+  // browsers).
+  var iterate = function (el) {
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 1 /</strong> Node.ELEMENT_NODE */) {
+        var mo = re.exec(i.tagName);
+        if (mo &amp;amp;&amp;amp; (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+          result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+        }
+        iterate(i);
+      }
+    }
+  }
+  iterate(el);
+  return result;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;var toc = document.getElementById("toc");
+if (!toc) {
+  return;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="literalblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre&gt;&lt;code&gt;// Delete existing TOC entries in case we&#8217;re reloading the TOC.
+var tocEntriesToRemove = [];
+var i;
+for (i = 0; i &amp;lt; toc.childNodes.length; i</code>+) {
+  var entry = toc.childNodes[i];</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>  if (entry.nodeName.toLowerCase() == 'div'
+   &amp;amp;amp;&amp;amp;amp; entry.getAttribute("class")
+   &amp;amp;amp;&amp;amp;amp; entry.getAttribute("class").match(/^toclevel/))
+    tocEntriesToRemove.push(entry);
+}
+for (i = 0; i &amp;amp;lt; tocEntriesToRemove.length; i++) {
+  toc.removeChild(tocEntriesToRemove[i]);
+}&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="literalblock"&amp;gt;
+&amp;lt;div class="content"&amp;gt;
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i &amp;amp;lt; entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;/* Based on footnote generation code from:
+ * &amp;lt;a href="http://www.brandspankingnew.net/archive/2005/07/format_footnote.html"&amp;gt;http://www.brandspankingnew.net/archive/2005/07/format_footnote.html&amp;lt;/a&amp;gt;
+ */&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;footnotes: function () {
+  // Delete existing footnote entries in case we&amp;amp;#8217;re reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i &amp;amp;lt; noteholder.childNodes.length; i&amp;lt;code&amp;gt;) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == &amp;lt;em&amp;gt;div&amp;lt;/em&amp;gt; &amp;amp;amp;&amp;amp;amp; entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i &amp;amp;lt; entriesToRemove.length; i&amp;lt;/code&amp;gt;) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="literalblock"&amp;gt;
+&amp;lt;div class="content"&amp;gt;
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i&amp;amp;lt;spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[&amp;amp;lt;a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'&amp;amp;gt;" + n + "&amp;amp;lt;/a&amp;amp;gt;]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "&amp;amp;lt;div class='footnote' id='_footnote_" + n + "'&amp;amp;gt;" +
+        "&amp;amp;lt;a href='#_footnoteref_" + n + "' title='Return to text'&amp;amp;gt;" +
+        n + "&amp;amp;lt;/a&amp;amp;gt;. " + note + "&amp;amp;lt;/div&amp;amp;gt;";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i&amp;amp;lt;spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[&amp;amp;lt;a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'&amp;amp;gt;" + n + "&amp;amp;lt;/a&amp;amp;gt;]";
+      }
+    }
+  }
+},&amp;lt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;div class="paragraph"&gt;&lt;p&gt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;install: function(toclevels) {
+  var timerId;&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="literalblock"&amp;gt;
+&amp;lt;div class="content"&amp;gt;
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;function reinstall() {
+  asciidoc.footnotes();
+  if (toclevels) {
+    asciidoc.toc(toclevels);
+  }
+}&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="literalblock"&amp;gt;
+&amp;lt;div class="content"&amp;gt;
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;function reinstallAndRemoveTimer() {
+  clearInterval(timerId);
+  reinstall();
+}&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="literalblock"&amp;gt;
+&amp;lt;div class="content"&amp;gt;
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;}
+asciidoc.install();
+/&amp;lt;strong&amp;gt;]]&amp;gt;&amp;lt;/strong&amp;gt;/
+&amp;lt;/script&amp;gt;
+&amp;lt;!-- Bootstrap core CSS -&amp;#8594;
+&amp;lt;!--&amp;lt;link href="/twbs_/css/bootstrap.css" rel="stylesheet" /&amp;gt;-&amp;#8594;
+&amp;lt;link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" /&amp;gt;
+&amp;lt;!-- Bootstrap theme -&amp;#8594;
+&amp;lt;!--&amp;lt;link href="/twbs_/css/bootstrap-theme.min.css" rel="stylesheet" /&amp;gt;-&amp;#8594;
+&amp;lt;link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" /&amp;gt;
+&amp;lt;!-- Custom styles for this template -&amp;#8594;
+&amp;lt;link href="/custom_/css/theme.css" rel="stylesheet" /&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body class="article"&amp;gt;
+   &amp;lt;!-- Fixed navbar -&amp;#8594;
+    &amp;lt;div class="navbar navbar-inverse navbar-fixed-top"&amp;gt;
+      &amp;lt;button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"&amp;gt;
+        &amp;lt;span class="icon-bar"&amp;gt;&amp;lt;/span&amp;gt;
+        &amp;lt;span class="icon-bar"&amp;gt;&amp;lt;/span&amp;gt;
+        &amp;lt;span class="icon-bar"&amp;gt;&amp;lt;/span&amp;gt;
+      &amp;lt;/button&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="literalblock"&amp;gt;
+&amp;lt;div class="content"&amp;gt;
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;      &amp;lt;div class="container"&amp;gt;
+        &amp;lt;div class="navbar-header"&amp;gt;
+          &amp;lt;a class="navbar-brand" href="/"&amp;gt;aerostitch&amp;#8217;s tips&amp;lt;/a&amp;gt;
+        &amp;lt;/div&amp;gt;
+        &amp;lt;div class="navbar-collapse collapse"&amp;gt;
+          &amp;lt;ul class="nav navbar-nav" id="menu_left"&amp;gt;
+          &amp;lt;li&amp;gt;&amp;lt;/li&amp;gt;
+          &amp;lt;!-- Here will stand the menu bar generated on page load by a jquery script --&amp;gt;
+          &amp;lt;/ul&amp;gt;
+          &amp;lt;!--
+          &amp;lt;ul class="nav navbar-nav navbar-right"&amp;gt;
+            &amp;lt;li&amp;gt;&amp;lt;a href=""&amp;gt;Bla&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+            &amp;lt;li&amp;gt;&amp;lt;a href=""&amp;gt;Bla&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+            &amp;lt;li class="active"&amp;gt;&amp;lt;a href="./"&amp;gt;Active&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+          &amp;lt;/ul&amp;gt;
+          --&amp;gt;
+        &amp;lt;/div&amp;gt;&amp;lt;!--/.nav-collapse --&amp;gt;
+      &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+&amp;lt;div id="content"&amp;gt;
+    &amp;lt;div class="container theme-showcase"&amp;gt;
+    &amp;lt;div class="row row-offcanvas row-offcanvas-right"&amp;gt;&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="literalblock"&amp;gt;
+&amp;lt;div class="content"&amp;gt;
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;      &amp;lt;div class="col-xs-12 col-sm-9 col-md-9 cold-lg-9"&amp;gt;
+      &amp;lt;!-- Main jumbotron for a primary marketing message or call to action --&amp;gt;
+      &amp;lt;div class="jumbotron"&amp;gt;
+&amp;lt;div id="header"&amp;gt;
+&amp;lt;/div&amp;gt;
+      &amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;&amp;amp;lt;!DOCTYPE html&amp;amp;gt;
+&amp;amp;lt;html&amp;amp;gt;
+  &amp;amp;lt;head&amp;amp;gt;
+    &amp;amp;lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&amp;amp;gt;
+    &amp;amp;lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&amp;amp;gt;
+    &amp;amp;lt;meta name="author" content="Joseph HERLANT" /&amp;amp;gt;
+    &amp;amp;lt;link rel="shortcut icon" href="/custom_/ico/favicon.png" /&amp;amp;gt;
+    &amp;amp;lt;title&amp;amp;gt;Aerostitch tips - Index page for this category&amp;amp;lt;/title&amp;amp;gt;
+    &amp;amp;lt;!-- Bootstrap core CSS -&amp;amp;#8594;
+    &amp;amp;lt;!--&amp;amp;lt;link href="/twbs_/css/bootstrap.css" rel="stylesheet" /&amp;amp;gt;-&amp;amp;#8594;
+    &amp;amp;lt;link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" /&amp;amp;gt;
+    &amp;amp;lt;!-- Bootstrap theme -&amp;amp;#8594;
+    &amp;amp;lt;!--&amp;amp;lt;link href="/twbs_/css/bootstrap-theme.min.css" rel="stylesheet" /&amp;amp;gt;-&amp;amp;#8594;
+    &amp;amp;lt;link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" /&amp;amp;gt;
+    &amp;amp;lt;!-- Custom styles for this template -&amp;amp;#8594;
+    &amp;amp;lt;link href="/custom_/css/theme.css" rel="stylesheet" /&amp;amp;gt;
+  &amp;amp;lt;/head&amp;amp;gt;
+  &amp;amp;lt;body class="article"&amp;amp;gt;
+    &amp;amp;lt;!-- Fixed navbar -&amp;amp;#8594;
+    &amp;amp;lt;div class="navbar navbar-inverse navbar-fixed-top"&amp;amp;gt;
+      &amp;amp;lt;button type="button" class="navbar-toggle" data-toggle="collapse"
+        data-target=".navbar-collapse"&amp;amp;gt;
+         &amp;amp;lt;span class="icon-bar"&amp;amp;gt;&amp;amp;lt;/span&amp;amp;gt;
+         &amp;amp;lt;span class="icon-bar"&amp;amp;gt;&amp;amp;lt;/span&amp;amp;gt;
+         &amp;amp;lt;span class="icon-bar"&amp;amp;gt;&amp;amp;lt;/span&amp;amp;gt;
+       &amp;amp;lt;/button&amp;amp;gt;&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="literalblock"&amp;gt;
+&amp;lt;div class="content"&amp;gt;
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;      &amp;amp;lt;div class="container"&amp;amp;gt;
+        &amp;amp;lt;div class="navbar-header"&amp;amp;gt;
+          &amp;amp;lt;a class="navbar-brand" href="/"&amp;amp;gt;aerostitch&amp;#8217;s tips&amp;amp;lt;/a&amp;amp;gt;
+        &amp;amp;lt;/div&amp;amp;gt;
+        &amp;amp;lt;div class="navbar-collapse collapse"&amp;amp;gt;
+          &amp;amp;lt;ul class="nav navbar-nav" id="menu_left"&amp;amp;gt;
+            &amp;amp;lt;li&amp;amp;gt;&amp;amp;lt;/li&amp;amp;gt;
+            &amp;amp;lt;!-- Here will stand the menu bar generated on page load by a jquery script --&amp;amp;gt;
+          &amp;amp;lt;/ul&amp;amp;gt;
+        &amp;amp;lt;/div&amp;amp;gt;&amp;amp;lt;!--/.nav-collapse --&amp;amp;gt;
+      &amp;amp;lt;/div&amp;amp;gt;
+    &amp;amp;lt;/div&amp;amp;gt;
+    &amp;amp;lt;div id="content"&amp;amp;gt;
+      &amp;amp;lt;div class="container theme-showcase"&amp;amp;gt;
+        &amp;amp;lt;div class="row row-offcanvas row-offcanvas-right"&amp;amp;gt;
+          &amp;amp;lt;div class="col-xs-12 col-sm-6 col-md-6 cold-lg-6" id="Description"&amp;amp;gt;
+          &amp;amp;lt;/div&amp;amp;gt;
+          &amp;amp;lt;div class="col-xs-6 col-sm-6 col-md-6 cold-lg-6 sidebar-offcanvas" id="sidebar"&amp;amp;gt; &amp;amp;lt;!-- role="navigation"&amp;amp;gt; --&amp;amp;gt;
+            &amp;amp;lt;div class="well sidebar-nav"&amp;amp;gt;
+              &amp;amp;lt;ul class="nav" id="index_page_idx"&amp;amp;gt;
+                &amp;amp;lt;li&amp;amp;gt;Documents in this section&amp;amp;lt;/li&amp;amp;gt;
+              &amp;amp;lt;/ul&amp;amp;gt;
+            &amp;amp;lt;/div&amp;amp;gt;
+          &amp;amp;lt;/div&amp;amp;gt;
+        &amp;amp;lt;/div&amp;amp;gt;
+      &amp;amp;lt;/div&amp;amp;gt;
+    &amp;amp;lt;/div&amp;amp;gt;
+    &amp;amp;lt;!-- Bootstrap core JavaScript
+    ================================================== --&amp;amp;gt;
+    &amp;amp;lt;!-- Placed at the end of the document so the pages load faster --&amp;amp;gt;
+    &amp;amp;lt;!--&amp;amp;lt;script type="text/javascript" src="/custom_/js/jquery.js"&amp;amp;gt;&amp;amp;lt;/script&amp;amp;gt;--&amp;amp;gt;
+    &amp;amp;lt;script type="text/javascript" src="//code.jquery.com/jquery.min.js"&amp;amp;gt;&amp;amp;lt;/script&amp;amp;gt;
+    &amp;amp;lt;!--&amp;amp;lt;script type="text/javascript" src="/twbs_/js/bootstrap.min.js"&amp;amp;gt;&amp;amp;lt;/script&amp;amp;gt;--&amp;amp;gt;
+    &amp;amp;lt;script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"&amp;amp;gt;&amp;amp;lt;/script&amp;amp;gt;
+    &amp;amp;lt;script type="text/javascript" src="/custom_/js/custom_jquery_twbs.js"&amp;amp;gt;&amp;amp;lt;/script&amp;amp;gt;
+  &amp;amp;lt;/body&amp;amp;gt;
+&amp;amp;lt;/html&amp;amp;gt;
+nt + div.title {
+  margin-top: 0.0em;
+}&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;div.sidebarblock &amp;amp;gt; div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;div.listingblock &amp;amp;gt; div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;div.quoteblock &amp;amp;gt; div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;div.verseblock &amp;amp;gt; pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock &amp;amp;gt; div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. &lt;strong&gt;/
+div.verseblock + div.attribution {
+  text-align: left;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;div.exampleblock &amp;amp;gt; div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd &amp;amp;gt; *:first-child {
+  margin-top: 0.1em;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;tfoot {
+  font-weight: bold;
+}
+td &amp;amp;gt; div.verse {
+  white-space: pre;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="literalblock"&amp;gt;
+&amp;lt;div class="title"&amp;gt;comment {&amp;lt;/div&amp;gt;
+&amp;lt;div class="content"&amp;gt;
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;  background: yellow;
+}&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="literalblock"&amp;gt;
+&amp;lt;div class="title"&amp;gt;footnote, .footnoteref {&amp;lt;/div&amp;gt;
+&amp;lt;div class="content"&amp;gt;
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;  font-size: 0.8em;
+}&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;span.footnote, span.footnoteref {
+  vertical-align: super;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;@media print {
+  #footer-badges { display: none; }
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;#toc {
+  margin-bottom: 2.5em;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;div.unbreakable { page-break-inside: avoid; }&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;/&lt;/strong&gt;
+ * xhtml11 specific
+ *
+ * &lt;strong&gt;/&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock &amp;amp;gt; table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/&lt;/strong&gt; Because the table frame attribute is overriden by CSS in most browsers. &lt;strong&gt;/
+div.tableblock &amp;amp;gt; table[frame="void"] {
+  border-style: none;
+}
+div.tableblock &amp;amp;gt; table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock &amp;amp;gt; table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;/&lt;/strong&gt;
+ * html5 specific
+ *
+ * &lt;strong&gt;/&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;/&lt;/strong&gt;
+ * manpage specific
+ *
+ * &lt;strong&gt;/&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;@media print {
+  body.manpage div#toc { display: none; }
+}&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;&amp;amp;lt;/style&amp;amp;gt;
+&amp;amp;lt;script type="text/javascript"&amp;amp;gt;
+/&amp;lt;strong&amp;gt;&amp;amp;lt;![CDATA[&amp;lt;/strong&amp;gt;/
+var asciidoc = {  // Namespace.&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;/&lt;/strong&gt; Author: Mihai Bazon, September 2002
+ * &amp;lt;a href="http://students.infoiasi.ro/&lt;sub&gt;mishoo"&amp;gt;http://students.infoiasi.ro/&lt;/sub&gt;mishoo&amp;lt;/a&amp;gt;
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ &lt;strong&gt;/&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="literalblock"&amp;gt;
+&amp;lt;div class="content"&amp;gt;
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;/&lt;/strong&gt; modified by Troy D. Hanson, September 2006. License: GPL &lt;strong&gt;/
+/&lt;/strong&gt; modified by Stuart Rackham, 2006, 2009. License: GPL &lt;strong&gt;/&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="paragraph"&amp;gt;&amp;lt;p&amp;gt;toc: function (toclevels) {&amp;lt;/p&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="literalblock"&amp;gt;
+&amp;lt;div class="content"&amp;gt;
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;function getText(el) {
+  var text = "";
+  for (var i = el.firstChild; i != null; i = i.nextSibling) {
+    if (i.nodeType == 3 /&lt;/strong&gt; Node.TEXT_NODE &lt;strong&gt;/) // IE doesn&amp;#8217;t speak constants.
+      text &lt;code&gt;= i.data;
+    else if (i.firstChild != null)
+      text += getText(i);
+  }
+  return text;
+}&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="literalblock"&amp;gt;
+&amp;lt;div class="content"&amp;gt;
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;function TocEntry(el, text, toclevel) {
+  this.element = el;
+  this.text = text;
+  this.toclevel = toclevel;
+}&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="literalblock"&amp;gt;
+&amp;lt;div class="content"&amp;gt;
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;function tocEntries(el, toclevels) {
+  var result = new Array;
+  var re = new RegExp(&lt;em&gt;[hH]([1-&lt;/em&gt;&lt;/code&gt;(toclevels+1)&lt;code&gt;&lt;em&gt;])&lt;/em&gt;);
+  // Function that scans the DOM tree for header elements (the DOM2
+  // nodeIterator API would be a better technique but not supported by all
+  // browsers).
+  var iterate = function (el) {
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 1 /&lt;/strong&gt; Node.ELEMENT_NODE */) {
+        var mo = re.exec(i.tagName);
+        if (mo &amp;amp;amp;&amp;amp;amp; (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+          result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+        }
+        iterate(i);
+      }
+    }
+  }
+  iterate(el);
+  return result;
+}&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;div class="literalblock"&amp;gt;
+&amp;lt;div class="content"&amp;gt;
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;var toc = document.getElementById</code></pre>
+</div></div>
