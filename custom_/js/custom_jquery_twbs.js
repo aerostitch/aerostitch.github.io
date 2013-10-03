@@ -8,10 +8,21 @@
  * using twitter bootstrap 3.0.0
  */
 $(document).ready(function(){
+  proceed_offcanvas();
   build_top_menu();
   build_index_folder_content();
   include_description_index_page();
 });
+
+/*
+ * Function that comes from the tw offcanvas bootstrap examples
+ */
+function proceed_offcanvas() {
+  $('[data-toggle=offcanvas]').click(function() {
+    $('.row-offcanvas').toggleClass('active');
+  });
+}
+    
 
 /*
  * This function generates the menu of the page using twitter bootstrap 3.0.0
