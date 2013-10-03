@@ -70,13 +70,16 @@ body {
 .right-aligned-div {
   text-align: right;
 }
-.menu-indicator{
+.menu-indicator {
   color:      grey;
   font-style: italic;
 }
-.menu-indicator-asciidoc{
+.menu-indicator-asciidoc {
   float: right;
 }
-.panel{
+.panel {
   width: 100%;
+}
+.panel-title {
+  margin-left: 5px;
 }

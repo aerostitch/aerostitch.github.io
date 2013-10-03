@@ -33,6 +33,7 @@ provide you a script tag that looks like the example bellow (the character sente
 of the src attribute should vary). This is the part that will be included at the
 bottom of your website.
 
+[source, html]
 -----
 <script type="text/javascript"
 src="http://counter3.compteurdevisite.com/private/counter.js?c=vcneo8641651vpsdf57tinvqmdf864"></script>
@@ -48,6 +49,7 @@ folder relatively to the root of your directory.
 At the very end of this page, just before this following lines that represent
 the closing tags for the html and body tags...
 
+[source, html]
 -----
 </body>
 </html>
@@ -55,6 +57,7 @@ the closing tags for the html and body tags...
 
 add the following code:
 
+[source, html]
 -----
 <div style="width:100%; text-align:center">
 <script type="text/javascript" src="http://counter3.compteurdevisite.com/private/counter.js?c=vcneo8641651vpsdf57tinvqmdf864"></script>
@@ -73,6 +76,7 @@ directory (this is relative to the root of your website).
 There you'll need to find the declaration of the imagevue id that should be
 empty. It should look like this:
 
+[source, css]
 -----
 #imagevue { }
 -----
@@ -81,6 +85,7 @@ You need to modify this to change the size of the container to 95% of the whole
 page. You do it adding `height: 95%` in the brackets of the previously finded
 imagevue declaration tag. It should look like this:
 
+[source, css]
 -----
 #imagevue { height:95% }
 -----

@@ -32,3 +32,33 @@ CAUTION: These tags are freaky! :P
 [title="Title!", caption="Just another caption"]
 CAUTION: Pay attention!
 You also get a title and change the caption from "caution" to whatever you want! ;)
+
+What to do with tables?!
+------------------------
+
+[options="header"]
+|============================================================================================
+3+^|SGA mandatory structures                                       3+^|SGA
+Optionnal structures
+.5+^.^s| Buffer cache .5+^.^s| Log Buffer ^s| Shared Pool      .5+^.^s| Large
+pool   .5+^.^s| Java pool   .5+^.^s| Streams pool
+                                            | Library cache
+                                            | Data dictionnary cache
+                                            | PL/SQL cache
+                                            | PL/SQL functions / SQL Query cache
+|============================================================================================
+
+
+
+Showing some code highlighting
+------------------------------
+
+[source, C]
+--------------------------------------
+#include <stdio.h>
+
+int main() {
+   printf("Hello World!\n");
+   exit(0);
+}
+--------------------------------------

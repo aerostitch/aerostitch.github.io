@@ -10,40 +10,6 @@
 <link rel="shortcut icon" href="/custom_/ico/favicon.png" />
 <title>Adding a counter of visits on an imagevue based website</title>
 <style type="text/css">
-/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
-
-/* Default font. */
-/*
-body {
-  font-family: Georgia,serif;
-}
-*/
-
-/* Title font. */
-/*
-h1, h2, h3, h4, h5, h6,
-div.title, caption.title,
-thead, p.table.header,
-#toctitle,
-#author, #revnumber, #revdate, #revremark,
-#footer {
-  font-family: Arial,Helvetica,sans-serif;
-}
-*/
-
-body {
-  margin: 1em 5% 1em 5%;
-}
-
-/*
-a {
-  color: blue;
-  text-decoration: underline;
-}
-a:visited {
-  color: fuchsia;
-}
-*/
 em {
   font-style: italic;
   color: navy;
@@ -54,16 +20,10 @@ strong {
   color: #083194;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  /* color: #527bbd; */
-  margin-top: 1.2em;
-  margin-bottom: 0.5em;
-  line-height: 1.3;
-}
-
 h1, h2, h3 {
   border-bottom: 2px solid silver;
 }
+
 h2 {
   padding-top: 0.5em;
 }
@@ -96,6 +56,7 @@ ul, ol, li > p {
 ul > li     { color: #aaa; }
 ul > li > * { color: black; }
 
+
 .monospaced, code, pre {
   font-family: "Courier New", Courier, monospace;
   font-size: inherit;
@@ -103,6 +64,7 @@ ul > li > * { color: black; }
   padding: 0;
   margin: 0;
 }
+
 
 
 #author {
@@ -817,10 +779,12 @@ provide you a script tag that looks like the example bellow (the character sente
 of the src attribute should vary). This is the part that will be included at the
 bottom of your website.</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>&lt;script type="text/javascript"
-src="http://counter3.compteurdevisite.com/private/counter.js?c=vcneo8641651vpsdf57tinvqmdf864"&gt;&lt;/script&gt;</code></pre>
-</div></div>
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">&lt;script</span></span> <span style="color: #009900">type</span><span style="color: #990000">=</span><span style="color: #FF0000">"text/javascript"</span>
+<span style="color: #009900">src</span><span style="color: #990000">=</span><span style="color: #FF0000">"http://counter3.compteurdevisite.com/private/counter.js?c=vcneo8641651vpsdf57tinvqmdf864"</span><span style="font-weight: bold"><span style="color: #0000FF">&gt;&lt;/script&gt;</span></span></tt></pre></div></div>
 </div>
 </div>
 <div class="sect1">
@@ -831,17 +795,21 @@ folder relatively to the root of your directory.</p></div>
 <div class="paragraph"><p>At the very end of this page, just before this following lines that represent
 the closing tags for the html and body tags&#8230;</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>&lt;/body&gt;
-&lt;/html&gt;</code></pre>
-</div></div>
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">&lt;/body&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;/html&gt;</span></span></tt></pre></div></div>
 <div class="paragraph"><p>add the following code:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>&lt;div style="width:100%; text-align:center"&gt;
-&lt;script type="text/javascript" src="http://counter3.compteurdevisite.com/private/counter.js?c=vcneo8641651vpsdf57tinvqmdf864"&gt;&lt;/script&gt;
-&lt;/div&gt;</code></pre>
-</div></div>
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">&lt;div</span></span> <span style="color: #009900">style</span><span style="color: #990000">=</span><span style="color: #FF0000">"width:100%; text-align:center"</span><span style="font-weight: bold"><span style="color: #0000FF">&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;script</span></span> <span style="color: #009900">type</span><span style="color: #990000">=</span><span style="color: #FF0000">"text/javascript"</span> <span style="color: #009900">src</span><span style="color: #990000">=</span><span style="color: #FF0000">"http://counter3.compteurdevisite.com/private/counter.js?c=vcneo8641651vpsdf57tinvqmdf864"</span><span style="font-weight: bold"><span style="color: #0000FF">&gt;&lt;/script&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;/div&gt;</span></span></tt></pre></div></div>
 <div class="paragraph"><p>Then modify the css file as explained bellow.</p></div>
 </div>
 </div>
@@ -853,16 +821,20 @@ directory (this is relative to the root of your website).</p></div>
 <div class="paragraph"><p>There you&#8217;ll need to find the declaration of the imagevue id that should be
 empty. It should look like this:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>#imagevue { }</code></pre>
-</div></div>
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="color: #993399">#imagevue</span> <span style="color: #FF0000">{</span> <span style="color: #FF0000">}</span></tt></pre></div></div>
 <div class="paragraph"><p>You need to modify this to change the size of the container to 95% of the whole
 page. You do it adding <code>height: 95%</code> in the brackets of the previously finded
 imagevue declaration tag. It should look like this:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>#imagevue { height:95% }</code></pre>
-</div></div>
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="color: #993399">#imagevue</span> <span style="color: #FF0000">{</span> <span style="color: #0000FF">height:</span><span style="font-style: italic"><span style="color: #009900">95%</span></span> <span style="color: #FF0000">}</span></tt></pre></div></div>
 <div class="paragraph"><p>And that&#8217;s it!</p></div>
 </div>
 </div>
@@ -893,7 +865,7 @@ imagevue declaration tag. It should look like this:</p></div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br />
-Last updated 2013-10-02 23:32:03 CEST
+Last updated 2013-10-03 22:53:37 CEST
 </div>
 </div>
 </body>
