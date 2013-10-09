@@ -1,10 +1,11 @@
 Notes for exam 1Z0-047
 ======================
 Joseph HERLANT
-v1.0, 2013-02-16 : Creation of the document
+v1.0.1, 2013-10-09 : Adding tags for an easier website generation
 :encoding: UTF-8
 :description: This document is regrouping my personal notes I took while revising for the +
   1Z0-047 Oracle certification exam.
+:keywords: Oracle, Certified, Expert, SQL, Certification, exam, 1Z0-047
 :data-uri:
 :icons:
 :iconsdir: /usr/share/asciidoc/images/icons/
@@ -14,8 +15,7 @@ v1.0, 2013-02-16 : Creation of the document
 :quotes.%: underline
 
 /////
-asciidoc Notes_1Z0-047.txt
-a2x -fpdf -L Notes_1Z0-047.txt
+v1.0, 2013-02-16 : Creation of the document
 /////
 
 WARNING: This document is my personnal notes I took when preparing the 1Z0-047 exam. This is not a complete review of the exam topics, just the ones I either didn't konw or having hard time to remember.

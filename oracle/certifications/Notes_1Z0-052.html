@@ -1,11 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="generator" content="AsciiDoc 8.6.7" />
 <meta name="description" content="This document is regrouping my personal notes I took while revising for the 1Z0-052 Oracle certification exam." />
+<meta name="keywords" content="Oracle, Database, Certified, Administrator, Certification, exam, 1Z0-052, 11gR2" />
 <meta name="author" content="Joseph HERLANT" />
 <link rel="shortcut icon" href="/custom_/ico/favicon.png" />
 <title>Notes for exams 1Z0-052</title>
@@ -20,42 +20,23 @@ strong {
   color: #083194;
 }
 
-h1, h2, h3 {
-  border-bottom: 2px solid silver;
-}
+h1, h2, h3 { border-bottom: 2px solid silver; }
+h2 { padding-top: 0.5em; }
+h3 { float: left; }
+h3 + * { clear: left; }
+h5 { font-size: 1.0em; }
 
-h2 {
-  padding-top: 0.5em;
-}
-h3 {
-  float: left;
-}
-h3 + * {
-  clear: left;
-}
-h5 {
-  font-size: 1.0em;
-}
-
-div.sectionbody {
-  margin-left: 0;
-}
-
-hr {
-  border: 1px solid silver;
-}
+div.sectionbody { margin-left: 0; }
+hr { border: 1px solid silver; }
 
 p {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
 
-ul, ol, li > p {
-  margin-top: 0;
-}
+ul, ol, li > p { margin-top: 0; }
 ul > li     { color: #aaa; }
 ul > li > * { color: black; }
-
 
 .monospaced, code, pre {
   font-family: "Courier New", Courier, monospace;
@@ -65,16 +46,10 @@ ul > li > * { color: black; }
   margin: 0;
 }
 
-
-
 #author {
   color: #527bbd;
   font-weight: bold;
   font-size: 1.1em;
-}
-#email {
-}
-#revnumber, #revdate, #revremark {
 }
 
 #footer {
@@ -142,12 +117,6 @@ div.sidebarblock > div.content {
   padding: 0.5em;
 }
 
-div.listingblock > div.content {
-  border: 1px solid #dddddd;
-  border-left: 5px solid #f0f0f0;
-  background: #f8f8f8;
-  padding: 0.5em;
-}
 
 div.quoteblock, div.verseblock {
   padding-left: 1.0em;
@@ -171,9 +140,7 @@ div.verseblock > div.attribution {
   text-align: left;
 }
 /* DEPRECATED: Pre version 8.2.7 verse style literal block. */
-div.verseblock + div.attribution {
-  text-align: left;
-}
+div.verseblock + div.attribution { text-align: left; }
 
 div.admonitionblock .icon {
   vertical-align: top;
@@ -207,28 +174,16 @@ dt {
   font-style: normal;
   color: navy;
 }
-dd > *:first-child {
-  margin-top: 0.1em;
-}
+dd > *:first-child { margin-top: 0.1em; }
 
 ul, ol {
     list-style-position: outside;
 }
-ol.arabic {
-  list-style-type: decimal;
-}
-ol.loweralpha {
-  list-style-type: lower-alpha;
-}
-ol.upperalpha {
-  list-style-type: upper-alpha;
-}
-ol.lowerroman {
-  list-style-type: lower-roman;
-}
-ol.upperroman {
-  list-style-type: upper-roman;
-}
+ol.arabic { list-style-type: decimal; }
+ol.loweralpha { list-style-type: lower-alpha; }
+ol.upperalpha { list-style-type: upper-alpha; }
+ol.lowerroman { list-style-type: lower-roman; }
+ol.upperroman { list-style-type: upper-roman; }
 
 div.compact ul, div.compact ol,
 div.compact p, div.compact p,
@@ -237,57 +192,37 @@ div.compact div, div.compact div {
   margin-bottom: 0.1em;
 }
 
-tfoot {
-  font-weight: bold;
-}
-td > div.verse {
-  white-space: pre;
-}
+tfoot { font-weight: bold; }
+td > div.verse { white-space: pre; }
 
 div.hdlist {
   margin-top: 0.8em;
   margin-bottom: 0.8em;
 }
-div.hdlist tr {
-  padding-bottom: 15px;
-}
-dt.hdlist1.strong, td.hdlist1.strong {
-  font-weight: bold;
-}
+div.hdlist tr { padding-bottom: 15px; }
+dt.hdlist1.strong, td.hdlist1.strong { font-weight: bold; }
 td.hdlist1 {
   vertical-align: top;
   font-style: normal;
   padding-right: 0.8em;
   color: navy;
 }
-td.hdlist2 {
-  vertical-align: top;
-}
+td.hdlist2 { vertical-align: top; }
 div.hdlist.compact tr {
   margin: 0;
   padding-bottom: 0;
 }
 
-.comment {
-  background: yellow;
-}
-
-.footnote, .footnoteref {
-  font-size: 0.8em;
-}
-
-span.footnote, span.footnoteref {
-  vertical-align: super;
-}
+.comment { background: yellow; }
+.footnote, .footnoteref { font-size: 0.8em; }
+span.footnote, span.footnoteref { vertical-align: super; }
 
 #footnotes {
   margin: 20px 0 20px 0;
   padding: 7px 0 0 0;
 }
 
-#footnotes div.footnote {
-  margin: 0 0 5px 0;
-}
+#footnotes div.footnote { margin: 0 0 5px 0; }
 
 #footnotes hr {
   border: none;
@@ -308,14 +243,9 @@ div.colist td img {
   margin-top: 0.3em;
 }
 
-@media print {
-  #footer-badges { display: none; }
-}
+@media print { #footer-badges { display: none; } }
 
-#toc {
-  margin-bottom: 2.5em;
-}
-
+#toc { margin-bottom: 2.5em; }
 #toctitle {
   color: #527bbd;
   font-size: 1.1em;
@@ -323,7 +253,6 @@ div.colist td img {
   margin-top: 1.0em;
   margin-bottom: 0.1em;
 }
-
 div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
   margin-top: 0;
   margin-bottom: 0;
@@ -394,20 +323,14 @@ div.tableblock {
   margin-top: 1.0em;
   margin-bottom: 1.5em;
 }
-div.tableblock > table {
-  border: 3px solid #527bbd;
-}
+div.tableblock > table { border: 3px solid #527bbd; }
 thead, p.table.header {
   font-weight: bold;
   color: #527bbd;
 }
-p.table {
-  margin-top: 0;
-}
+p.table { margin-top: 0; }
 /* Because the table frame attribute is overriden by CSS in most browsers. */
-div.tableblock > table[frame="void"] {
-  border-style: none;
-}
+div.tableblock > table[frame="void"] { border-style: none; }
 div.tableblock > table[frame="hsides"] {
   border-left-style: none;
   border-right-style: none;
@@ -743,16 +666,16 @@ asciidoc.install(2);
 
       <div class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
         <div class="right-aligned-div menu-indicator menu-indicator-asciidoc">
-          Navigation menu and tocs are just that way
+          Navigation menu and tocs are just this way
           <span class="glyphicon glyphicon-chevron-right"></span>
         </div>
 
 <div>
   <span id="author">Joseph HERLANT</span>
   <br />
-  <span id="revnumber">version 1.0.5,</span>
-  <span id="revdate">2013-05-16</span>
-  <span id="revremark">: Minor corrections</span>
+  <span id="revnumber">version 1.0.6,</span>
+  <span id="revdate">2013-10-09</span>
+  <span id="revremark">: Adding tags to help website generation</span>
 </div>
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
@@ -2034,6 +1957,7 @@ ORACLE_HOME/log (if ORACLE_BASE environment variable is not set)
       </div>
     </div>
   </div>
+</div>
   <!-- Bootstrap core JavaScript
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
@@ -2044,8 +1968,9 @@ ORACLE_HOME/log (if ORACLE_BASE environment variable is not set)
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.5<br />
-Last updated 2013-10-02 23:29:59 CEST
+Version 1.0.6<br />
+Last updated 2013-10-09 05:21:44 CEST
+</div>
 </div>
 </div>
 </body>
