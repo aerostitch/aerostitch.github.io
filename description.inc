@@ -10,7 +10,7 @@
     </p>
     <p>
       <span class="glyphicon glyphicon-warning-sign"></span>
-    As you can notice, the work is in progress. Some ajustments have to be done.
+    As you can notice, the work is in progress. Some adjustments are to be done.
     Some content has to be added. It will come as the time passes by.
     </p>
   </div>
