@@ -40,10 +40,14 @@ example:
 create directory MY_DIRECTORY as '/local/mount/point';
 -----
 
-You can check the available Oracle directories using:
+You can check the available Oracle directories using the following in sqlplus:
 
 [source,SQL]
 -----
+set lines 200 pages 1024;
+col owner for a20;
+col DIRECTORY_NAME for a25;
+col DIRECTORY_PATH for a50;
 select OWNER, DIRECTORY_NAME, DIRECTORY_PATH from DBA_DIRECTORIES;
 -----
 
