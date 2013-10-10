@@ -83,3 +83,4 @@ body {
 .panel-title {
   margin-left: 5px;
 }
+.panel-body > .ulist > ul > li > p { color: rgb(96, 96, 96); }
