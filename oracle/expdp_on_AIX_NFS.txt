@@ -42,7 +42,7 @@ In this procedure, you change to change all the reference to:
 Also note that all the procedure is to be executed on the server where Oracle runs.
 =====
 
-First, verify that the remote mount point is available for you using ` showmount`.
+First, verify that the remote mount point is available for you using `showmount`.
 
 [source,ksh]
 -----
@@ -66,7 +66,7 @@ The clean way is to ensure your DNS and reverse are all correct, but before sout
 /etc/hosts thing, that if it works, it's a name resolution problem so you can ask your DNS team! ;)
 =====
 
-On the local node, then just mount the mount point using the ` bg,hard,intr,rsize=32768,wsize=32768,vers=3,proto=tcp,sec=sys,rw`
+On the local node, then just mount the mount point using the `bg,hard,intr,rsize=32768,wsize=32768,vers=3,proto=tcp,sec=sys,rw`
 options and add the own of the mount point to Oracle user.
 
 [source,ksh]
