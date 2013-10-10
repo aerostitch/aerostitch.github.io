@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset>
   <url>
+    <title>Expdp or rman on an NFS mount point in AIX</title>
+    <path>/oracle/expdp_on_AIX_NFS.html</path>
+  </url>
+  <url>
     <title>Certifications</title>
     <path>/oracle/certifications</path>
     <url>

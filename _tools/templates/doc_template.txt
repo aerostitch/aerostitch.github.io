@@ -1,0 +1,20 @@
+Document title!
+=======================
+Joseph HERLANT
+v1.0.0, 2013-10-10: Initial version
+:encoding: UTF-8
+:description: *********************** Document description ***********************
+:keywords: *********************** Document keywords ***********************
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+

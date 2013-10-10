@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
     <loc>http://aerostitch.github.io/index.html</loc>
-    <lastmod>2013-10-01T22:01:38+02:00</lastmod>
+    <lastmod>2013-10-09T13:00:07+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -14,13 +14,13 @@
   </url>
   <url>
     <loc>http://aerostitch.github.io/misc/imagevue/index.html</loc>
-    <lastmod>2013-10-09T05:05:59+02:00</lastmod>
+    <lastmod>2013-10-09T13:00:07+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://aerostitch.github.io/misc/index.html</loc>
-    <lastmod>2013-10-09T05:05:59+02:00</lastmod>
+    <lastmod>2013-10-10T12:09:17+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -44,13 +44,19 @@
   </url>
   <url>
     <loc>http://aerostitch.github.io/oracle/certifications/index.html</loc>
-    <lastmod>2013-10-02T22:05:29+02:00</lastmod>
+    <lastmod>2013-10-03T09:33:10+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://aerostitch.github.io/oracle/expdp_on_AIX_NFS.html</loc>
+    <lastmod>2013-10-10T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://aerostitch.github.io/oracle/index.html</loc>
-    <lastmod>2013-10-09T05:05:59+02:00</lastmod>
+    <lastmod>2013-10-10T12:09:17+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
