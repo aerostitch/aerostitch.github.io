@@ -13,6 +13,14 @@
     </url>
   </url>
   <url>
+    <title>Linux and unix</title>
+    <path>linux_and_unix</path>
+    <url>
+      <title>Aix</title>
+      <path>AIX</path>
+    </url>
+  </url>
+  <url>
     <title>Misc</title>
     <path>misc</path>
     <url>

@@ -22,7 +22,7 @@ def gen_subfolders_node(parent_dir, parent_node)
         # ti = child.add_element 'loc';
         # ti.text = fold;
         parent_node.send('url') do
-          parent_node.title(fold.capitalize)
+          parent_node.title(fold.gsub(/_/, " ").capitalize)
           parent_node.path(fold)
           gen_subfolders_node("#{current_fullpath}/#{fold}", parent_node);
         end

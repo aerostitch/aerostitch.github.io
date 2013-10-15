@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="generator" content="AsciiDoc 8.6.8" />
-<meta name="description" content="This document describes how to do datapump exports and rman backups on NFS mount points on AIX. It mainly describes how to correct ORA-01580 and ORA-27054 errors." />
-<meta name="keywords" content="Oracle, NFS, AIX, ORA-01580, ORA-27054, mount, expdp, rman, datapump" />
+<meta name="description" content="This document describes how to configure Kerberos authentication on AIX 5.3, 6.1 and 7.1 working with Windows 2008 R2 Active Directory servers." />
+<meta name="keywords" content="AIX, KDC, Kerberos, krb5, authentication, windows, AD, active directory" />
 <meta name="author" content="Joseph HERLANT" />
 <link rel="shortcut icon" href="/custom_/ico/favicon.png" />
-<title>Expdp or rman on an NFS mount point in AIX</title>
+<title>Kerberos authentication configuration for AIX servers</title>
 <style type="text/css">
 em {
   font-style: italic;
@@ -619,7 +619,7 @@ install: function(toclevels) {
 }
 
 }
-asciidoc.install(2);
+asciidoc.install(3);
 /*]]>*/
 </script>
 <!-- Bootstrap core CSS -->
@@ -673,108 +673,96 @@ asciidoc.install(2);
 <div>
   <span id="author">Joseph HERLANT</span>
   <br />
-  <span id="revnumber">version 1.0.1,</span>
-  <span id="revdate">2013-10-10</span>
-  <span id="revremark">: Adding forgotten prerequisites</span>
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2013-10-15</span>
+  <span id="revremark">: Initial revision</span>
 </div>
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
 <div id="header">
-<h1>Expdp or rman on an NFS mount point in AIX</h1>
-This document describes how to do datapump exports and rman backups on NFS mount points on AIX. It mainly describes how to correct ORA-01580 and ORA-27054 errors.
+<h1>Kerberos authentication configuration for AIX servers</h1>
+This document describes how to configure Kerberos authentication on AIX 5.3, 6.1 and 7.1 working with Windows 2008 R2 Active Directory servers.
 </div>
       </div>
 <div class="sect1">
 <h2 id="_introduction">1. Introduction</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>This document describes how to get the expdp datapump export and rman backup
-work on an NFS mount point in an AIX environment. It deals with the ORA-01580
-and ORA-27054 errors.</p></div>
+<div class="paragraph"><p>This document explains how to configure the authentication (for locally defined
+users) through an Active Directory 2008 R2 using Kerberos on AIX 5.3 and 7.1.</p></div>
+<div class="paragraph"><p>It is explained for the MyDomain.MyForest environment but is easily transposable
+to any other domains of the MyForest Active Directory forest.</p></div>
+<div class="paragraph"><p>WARNING:</p></div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph"><p>In the command lines, the values between "&lt;" and "&gt;" are to be replaced by values
+appropriated to your context. Example: <code>kinit &lt;user.name&gt;</code> can become <code>kinit
+joseph.herlant</code> in some environements.</p></div>
+</div></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_prerequisites">2. Prerequisites</h2>
+<h2 id="_procedure">2. Procedure</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>A prerequisite is to have created the oracle corresponding directory using, for
-example:</p></div>
+<div class="sect2">
+<h3 id="_preparing_environment">2.1. Preparing environment</h3>
+<div class="paragraph"><p>Install Kerberos filesets (aka NAS software). On AIX 5.3 as well as on AIX 7.1
+there are 3 filesets to install: the client (<code>krb5.client.rte</code>), the localized
+(english here) messages (<code>krb5.msg.en_US.client.rte</code>) and the license (<code>krb5.lic</code>).</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.6
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">create</span></span> directory MY_DIRECTORY <span style="font-weight: bold"><span style="color: #0000FF">as</span></span> <span style="color: #FF0000">'/local/mount/point'</span><span style="color: #990000">;</span></tt></pre></div></div>
-<div class="paragraph"><p>You can check the available Oracle directories using the following in sqlplus:</p></div>
-<div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">set</span></span> <span style="font-weight: bold"><span style="color: #0000FF">lines</span></span> <span style="color: #993399">200</span> pages <span style="color: #993399">1024</span><span style="color: #990000">;</span>
-col owner <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> a20<span style="color: #990000">;</span>
-col DIRECTORY_NAME <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> a25<span style="color: #990000">;</span>
-col DIRECTORY_PATH <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> a50<span style="color: #990000">;</span>
-<span style="font-weight: bold"><span style="color: #0000FF">select</span></span> OWNER<span style="color: #990000">,</span> DIRECTORY_NAME<span style="color: #990000">,</span> DIRECTORY_PATH <span style="font-weight: bold"><span style="color: #0000FF">from</span></span> DBA_DIRECTORIES<span style="color: #990000">;</span></tt></pre></div></div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_procedure">3. Procedure</h2>
-<div class="sectionbody">
-<div class="panel panel-primary admonitionblock">
-  <div class="panel-heading">
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># Install filesets from NIM using the commands bellow</span></span>
+/usr/sbin/nim -o allocate -a <span style="color: #009900">lpp_source</span><span style="color: #990000">=</span><span style="color: #FF0000">'&lt;LPPSOURCE_CONTAINING_FILESETS&gt;'</span> <span style="color: #990000">&lt;</span>SERVER_NAME<span style="color: #990000">&gt;</span>
+/usr/sbin/nim -o cust -a <span style="color: #009900">installp_flags</span><span style="color: #990000">=</span><span style="color: #FF0000">'-acgXNY'</span> -a <span style="color: #009900">filesets</span><span style="color: #990000">=</span><span style="color: #FF0000">'krb5.client.rte krb5.lic krb5.msg.en_US.client.rte'</span> <span style="color: #990000">&lt;</span>SERVER_NAME<span style="color: #990000">&gt;</span>
+/usr/sbin/nim -o deallocate -a <span style="color: #009900">lpp_source</span><span style="color: #990000">=</span><span style="color: #FF0000">'&lt;LPPSOURCE_CONTAINING_FILESETS&gt;'</span> <span style="color: #990000">&lt;</span>SERVER_NAME<span style="color: #990000">&gt;</span>
 
 
-
-
-<span class="glyphicon glyphicon-minus-sign"></span>
-    <b class="panel-title">
-    Important
-    </b>
-  </div>
-  <div class="panel-body">
-<div class="paragraph"><p>In this procedure, you change to change all the reference to:</p></div>
-<div class="ulist"><ul>
-<li>
-<p>
-"remote_host" with your NFS server name
-</p>
-</li>
-<li>
-<p>
-"local_host_node" with the server name you are trying to mount NFS mount point on
-</p>
-</li>
-<li>
-<p>
-"/remote/fs/path" with the path of the directory as available o the NFS server
-</p>
-</li>
-<li>
-<p>
-"/local/mount/point" with the path of the mount point you are trying to mount
-</p>
-</li>
-<li>
-<p>
-"oracle:dba" with the oracle account name and oracle group name (from chown things)
-</p>
-</li>
-</ul></div>
-<div class="paragraph"><p>Also note that all the procedure is to be executed on the server where Oracle runs.</p></div>
-  </div>
-</div>
-<div class="paragraph"><p>First, verify that the remote mount point is available for you using <code>showmount</code>.</p></div>
-<div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>showmount -e remote_host</tt></pre></div></div>
-<div class="paragraph"><p>Output should look like this.</p></div>
+<span style="font-style: italic"><span style="color: #9A1900"># or use smit and install these packages:</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># Alternatively you can use this command on a server</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># where the installation packages are available in/mnt"</span></span>
+installp -ac -SvYXgd /mnt krb5<span style="color: #990000">.</span>client<span style="color: #990000">.</span>rte krb5<span style="color: #990000">.</span>msg<span style="color: #990000">.</span>en_US<span style="color: #990000">.</span>client<span style="color: #990000">.</span>rte krb5<span style="color: #990000">.</span>lic</tt></pre></div></div>
+<div class="paragraph"><p>Check if the installation is successfull using <code>installp -s all</code> (to check
+all packages applied but not commited) and <code>lslpp -l krb5*</code> (to check whether
+the package is installed or not. Correct output example:</p></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>export list for remote_host:
-/remote/fs/path   local_host_node</code></pre>
+<pre><code># installp -s all
+installp:  No filesets were found in the Software
+        Vital Product Database in the APPLIED state.
+# lslpp -l krb5*
+  Fileset                      Level  State      Description
+  ----------------------------------------------------------------------------
+Path: /usr/lib/objrepos
+  krb5.client.rte            1.5.0.2  COMMITTED  Network Authentication Service
+                                                 Client
+  krb5.lic                   1.5.0.2  COMMITTED  Network Authentication Service
+                                                 License
+  krb5.msg.en_US.client.rte  1.5.0.2  COMMITTED  Network Auth Service Client
+                                                 Msgs - U.S. English
+
+Path: /etc/objrepos
+  krb5.client.rte            1.5.0.2  COMMITTED  Network Authentication Service
+                                                 Client</code></pre>
 </div></div>
+<div class="paragraph"><p>Add Kerberos binaries to the PATH variable and in /etc/environment:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># In current environment</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">export</span></span> <span style="color: #009900">PATH</span><span style="color: #990000">=</span><span style="color: #009900">$PATH</span><span style="color: #990000">:</span>/usr/krb<span style="color: #993399">5</span>/bin<span style="color: #990000">:</span>/usr/krb<span style="color: #993399">5</span>/sbin
+<span style="font-style: italic"><span style="color: #9A1900"># And for further configuration, add those to the PATH declaration in /etc/environment.</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># The lines bellow can do it for you automatically:</span></span>
+cp /etc/environment /etc/environment<span style="color: #990000">.</span>bak
+awk <span style="color: #FF0000">'{</span>
+<span style="color: #FF0000">    if($1 ~ /^PATH=.*/ &amp;&amp; $0 !~ /.*:</span><span style="color: #CC33CC">\/</span><span style="color: #FF0000">usr</span><span style="color: #CC33CC">\/</span><span style="color: #FF0000">krb5</span><span style="color: #CC33CC">\/</span><span style="color: #FF0000">bin.*/)</span>
+<span style="color: #FF0000">    {printf("%s:/usr/krb5/bin:/usr/krb5/sbin</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">",$0);}</span>
+<span style="color: #FF0000">    else { print $0;}</span>
+<span style="color: #FF0000">}'</span> /etc/environment<span style="color: #990000">.</span>bak <span style="color: #990000">&gt;</span> /etc/environment</tt></pre></div></div>
+<div class="paragraph"><p>Change max_logname for login length:</p></div>
 <div class="panel panel-warning admonitionblock">
   <div class="panel-heading">
 
@@ -786,57 +774,236 @@ http://www.gnu.org/software/src-highlite -->
     Warning
     </b>
   </div>
-  <div class="panel-body">
-<div class="paragraph"><p>If you have multiple IPs on the "local_host_node" server, verify that DNS and reverse DNS is working correctly.</p></div>
-<div class="paragraph"><p>If you have any issue while mounting the mount point, just add the name of both nodes (NFS server and client)
-on both local and remote servers in the /etc/hosts file. This generally solves the issues the quick and dirty way.
-The clean way is to ensure your DNS and reverse are all correct, but before souting at your DNS admins, do the
-/etc/hosts thing, that if it works, it&#8217;s a name resolution problem so you can ask your DNS team! ;)</p></div>
-  </div>
+  <div class="panel-body">this requires a restart of the server. The reboot can be skipped as
+long as you don&#8217;t want to create users with a login longer than the default
+length (that is 9 characters).  </div>
 </div>
-<div class="paragraph"><p>On the local node, then just mount the mount point using the <code>bg,hard,intr,rsize=32768,wsize=32768,vers=3,proto=tcp,sec=sys,rw</code>
-options and add the own of the mount point to Oracle user.</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.6
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt>mount -n remote_host -o <span style="font-weight: bold"><span style="color: #0000FF">bg</span></span><span style="color: #990000">,</span>hard<span style="color: #990000">,</span>intr<span style="color: #990000">,</span><span style="color: #009900">rsize</span><span style="color: #990000">=</span><span style="color: #993399">32768</span><span style="color: #990000">,</span><span style="color: #009900">wsize</span><span style="color: #990000">=</span><span style="color: #993399">32768</span><span style="color: #990000">,</span><span style="color: #009900">vers</span><span style="color: #990000">=</span><span style="color: #993399">3</span><span style="color: #990000">,</span><span style="color: #009900">proto</span><span style="color: #990000">=</span>tcp<span style="color: #990000">,</span><span style="color: #009900">sec</span><span style="color: #990000">=</span>sys<span style="color: #990000">,</span>rw /remote/fs/path /local/mount/point
-<span style="font-style: italic"><span style="color: #9A1900"># Don't forget to change the permissions...</span></span>
-chown oracle<span style="color: #990000">:</span>dba /local/mount/point</tt></pre></div></div>
-<div class="paragraph"><p>If you try a datapump export at this point, you could encounter this kind of
-issue:</p></div>
+<pre><tt>chdev -l sys0 -a <span style="color: #009900">max_logname</span><span style="color: #990000">=</span><span style="color: #993399">64</span>
+<span style="font-style: italic"><span style="color: #9A1900"># Requires a restart</span></span>
+shutdown -Fr</tt></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="_configuring_kerberos">2.2. Configuring Kerberos</h3>
+<div class="paragraph"><p>Generate Kerberos client configuration files using the <code>config.krb5</code> as
+following. Here we choose to have the realm name the same name as the domain.
+But notice that the realm name MUST be UPPER CASE!<br />
+Generally speaking, the kdc is on the active directory server, but that is not
+mandatory.</p></div>
 <div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># The value of the "-r" argument must be written in UPPER CASE!</span></span>
+config<span style="color: #990000">.</span>krb5 -C -r MYDOMAIN<span style="color: #990000">.</span>MYFOREST -d mydomain<span style="color: #990000">.</span>myforest -s my_active_directory_server_name  -c my_kdc_server_name</tt></pre></div></div>
+<div class="paragraph"><p>Adapt kerberos configuration files "/etc/krb5/krb5.conf" to change the
+<code>default_tkt_enctypes</code> and <code>default_tgs_enctypes</code> to match the windows 2008 R2
+Kerberos supported encrption types (cf.
+<a href="http://technet.microsoft.com/en-us/library/dd560670%28v=WS.10%29.aspx">http://technet.microsoft.com/en-us/library/dd560670%28v=WS.10%29.aspx</a>).
+This would determine which algorithm to use when exchaning informations with the
+Active Directory. By default, AES256 is available on Active Directory 2008 R2,
+so this configuration will use it to encrypt the communication channel.</p></div>
+<div class="paragraph"><p>It should look like this (Be carefull to the order, it determines which
+algorithm is used first. It MUST be THIS ordering):</p></div>
+<div class="literalblock">
 <div class="content">
-<pre><code>Export: Release 10.2.0.5.0 - 64bit Production on Thursday, 10 October, 2013 10:28:57
-
-Copyright (c) 2003, 2007, Oracle.  All rights reserved.
-
-Connected to: Oracle Database 10g Release 10.2.0.5.0 - 64bit Production
-ORA-39001: invalid argument value
-ORA-39000: bad dump file specification
-ORA-31641: unable to create dump file "/mount/point/20131010_expdp_file.dmp"
-ORA-27054: NFS file system where the file is created or resides is not mounted with correct options
-Additional information: 6</code></pre>
+<pre><code>        default_tkt_enctypes = aes256-cts aes128-cts arcfour-hmac
+        default_tgs_enctypes = aes256-cts aes128-cts arcfour-hmac</code></pre>
 </div></div>
-<div class="paragraph"><p>And this one with an RMAN backup:</p></div>
-<div class="listingblock">
+<div class="paragraph"><p>For AIX 7.1 and AIX 6.1 (not tested for 6.1), add the following block to the "/etc/methods.cfg" file:</p></div>
+<div class="literalblock">
 <div class="content">
-<pre><code>ORA-01580: error creating backup file /mount/point/My_backup_file.bkp</code></pre>
+<pre><code>KRB5:
+        program = /usr/lib/security/KRB5
+        program_64 = /usr/lib/security/KRB5_64
+        options = authonly,tgt_verify=no,is_kadmind_compat=no
+
+KRB5files:
+        options = db=BUILTIN,auth=KRB5</code></pre>
 </div></div>
-<div class="paragraph"><p>This is mainly caused by the fact that Oracle tools do not find the occurence fo
-the mount point in the /etc/filesystems file with the right options! To correct
-this, go to <code>/etc/filesystems</code> and add the following block (replacing the
-current directory path and host name with your own values!):</p></div>
+<div class="paragraph"><p>For AIX 5.3, add the following block to the "/usr/lib/security/methods.cfg" file:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>KRB5:
+        program = /usr/lib/security/KRB5A
+        options = tgt_verify=no
+
+KRB5files:
+        options = db=BUILTIN,auth=KRB5</code></pre>
+</div></div>
+<div class="paragraph"><p>Setup "Kerberos 5" as a valid authentication type for AIX to use:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># lsauthent</span></span>
+Standard Aix
+<span style="font-style: italic"><span style="color: #9A1900"># chauthent -k5 -std</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># lsauthent</span></span>
+Kerberos <span style="color: #993399">5</span>
+Standard Aix</tt></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_adapt_the_environment">3. Adapt the environment</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_enable_ad_users_to_connect_to_the_server">3.1. Enable AD users to connect to the server</h3>
+<div class="paragraph"><p>To enable Active directory users to log to the server, you should create a
+local account by doing the following.</p></div>
+<div class="paragraph"><p>Create a user locally with a login name that exists on the Active Directory
+(and that will be able to connect to the server in the future) using the
+following command (you should have a matrix of corresponding AD users and
+local userid):</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>mkuser <span style="color: #009900">registry</span><span style="color: #990000">=</span>KRB5files <span style="color: #009900">SYSTEM</span><span style="color: #990000">=</span>KRB5files <span style="color: #009900">id</span><span style="color: #990000">=&lt;</span>user_id<span style="color: #990000">&gt;</span>  <span style="color: #990000">&lt;</span>user<span style="color: #990000">.</span>name<span style="color: #990000">&gt;</span></tt></pre></div></div>
+<div class="paragraph"><p>Test an SSH connection on the lookup adress (to avoid any other network issue):</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>ssh <span style="color: #993399">127.0</span><span style="color: #990000">.</span><span style="color: #993399">0.1</span> -l <span style="color: #990000">&lt;</span>user<span style="color: #990000">.</span>name<span style="color: #990000">&gt;</span></tt></pre></div></div>
+<div class="panel panel-info admonitionblock">
+  <div class="panel-heading">
+
+
+<span class="glyphicon glyphicon-info-sign"></span>
+
+
+    <b class="panel-title">
+    Note
+    </b>
+  </div>
+  <div class="panel-body">If the above commands do not work, use <code>kinit</code> locally on the target
+server to check if the user can be authenticated against the Kerberos server
+(i.e: <code>kinit &lt;user.name&gt;</code>).  </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_integration_of_existing_local_users">3.2. Integration of existing local users</h3>
+<div class="paragraph"><p>To change the authentication parameters for your local users to use
+KRB5files (Kerberos):</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>chuser <span style="color: #009900">registry</span><span style="color: #990000">=</span>KRB5files <span style="color: #009900">SYSTEM</span><span style="color: #990000">=</span>KRB5files <span style="color: #990000">&lt;</span>user<span style="color: #990000">.</span>name<span style="color: #990000">&gt;</span></tt></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="_mapping_a_local_login_to_a_different_ad_login">3.3. Mapping a local login to a different AD login</h3>
+<div class="paragraph"><p>First of all, add the kerberos authentication mode to the user using
+<code>chuser registry=KRB5files SYSTEM=KRB5files &lt;user.name&gt;</code> command explained
+in the previous step.</p></div>
+<div class="paragraph"><p>It is possible to map a local login with an Active Directory account that
+is using another login name. For this, use the <code>auth_name</code> attribute of
+the local user like this :</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>chuser <span style="color: #009900">auth_name</span><span style="color: #990000">=&lt;</span>active<span style="color: #990000">.</span>directory<span style="color: #990000">.</span>login<span style="color: #990000">&gt;</span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">local</span></span><span style="color: #990000">.</span>user<span style="color: #990000">.</span>name<span style="color: #990000">&gt;</span></tt></pre></div></div>
+<div class="paragraph"><p>For example, to map the "joseph" local user to the remote "joseph.herlant" user,
+use the following (after the execution of the <code>chuser registry=KRB5files
+SYSTEM=KRB5files &lt;user.name&gt;</code> command explained in the previous step) :</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>chuser <span style="color: #009900">auth_name</span><span style="color: #990000">=</span>joseph<span style="color: #990000">.</span>herlant joseph</tt></pre></div></div>
+<div class="panel panel-info admonitionblock">
+  <div class="panel-heading">
+
+
+<span class="glyphicon glyphicon-info-sign"></span>
+
+
+    <b class="panel-title">
+    Note
+    </b>
+  </div>
+  <div class="panel-body">To map a local user to an Active Directory login that do not match
+the default domain realm, refer to the next step: "Cross domains
+authentication".  </div>
+</div>
+<div style="page-break-after:always"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cross_domains_authentication">4. Cross domains authentication</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The following procedure explains the integration of <strong>MySecondDomain.MyForest</strong>
+user authentication in an environment where <strong>MyDomain.MyForest</strong> is the default
+authentication domain.</p></div>
+<div class="paragraph"><p>In the /etc/methods file, verify that the "tgl_verify=no" option is set:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>KRB5:
+        program = /usr/lib/security/KRB5
+        program_64 = /usr/lib/security/KRB5_64
+        options = authonly,tgt_verify=no,is_kadmind_compat=no
+
+KRB5files:
+        options = db=BUILTIN,auth=KRB5</code></pre>
+</div></div>
+<div class="paragraph"><p>Then add the "dns_lookup_kdc = true" and "dns_lookup_realm = false" lines to the
+libdefaults stanza of the "/etc/krb5/krb5.conf" file and add your new realm and
+domain realms as follow (the following is to enable MySecondDomain domain users for
+a server configured for MyDomain):</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>[libdefaults]
+        default_realm = MYDOMAIN.MYFOREST
+        default_keytab_name = FILE:/etc/krb5/krb5.keytab
+        default_tkt_enctypes = arcfour-hmac aes256-cts aes128-cts
+        default_tgs_enctypes = arcfour-hmac aes256-cts aes128-cts
+        dns_lookup_kdc = true
+        dns_lookup_realm = false
+
+[realms]
+        MYDOMAIN.MYFOREST = {
+                kdc = &lt;my_kdc_server_name&gt;:88
+                admin_server = &lt;my_active_directory_server&gt;:749
+                default_domain = &lt;MyDomain&gt;
+        }
+
+        MYSECONDDOMAIN.MYFOREST = {
+                kdc = &lt;my_kdc_for_mySecodaryDomain&gt;:88
+                admin_server = &lt;my_ad_server&gt;:749
+                default_domain = &lt;mySecondDomain&gt;
+        }
+
+[domain_realm]
+        .mydomain.myforest = MYDOMAIN.MYFOREST
+        mydomain.myforest = MYDOMAIN.MYFOREST
+        .myseconddomain.myforest = MYSECONDDOMAIN.MYFOREST
+        myseconddomain.myforest = MYSECONDDOMAIN.MYFOREST
+
+[logging]
+        kdc = FILE:/var/krb5/log/krb5kdc.log
+        admin_server = FILE:/var/krb5/log/kadmin.log
+        kadmin_local = FILE:/var/krb5/log/kadmin_local.log
+        default = FILE:/var/krb5/log/krb5lib.log</code></pre>
+</div></div>
+<div class="paragraph"><p>Then change the <code>auth_name</code> and <code>auth_domain</code> attribute to match the realm corresponding to you. For example:</p></div>
 <div class="listingblock">
 <div class="content">
-<pre><code>/local/mount/point:
-  dev             = "/remote/fs/path"
-  vfs             = nfs
-  nodename        = remote_host
-  mount           = true
-  options         = bg,hard,intr,rsize=32768,wsize=32768,proto=udp,sec=sys,rw
-  account         = false</code></pre>
+<pre><code>chuser auth_domain=MYSECONDDOMAIN.MYFOREST auth_name=&lt;active.directory.login&gt; &lt;local.user.name&gt;</code></pre>
 </div></div>
 </div>
 </div>
@@ -867,8 +1034,8 @@ current directory path and host name with your own values!):</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.1<br />
-Last updated 2013-10-10 15:26:23 CEST
+Version 1.0.0<br />
+Last updated 2013-10-15 16:19:04 CEST
 </div>
 </div>
 </div>

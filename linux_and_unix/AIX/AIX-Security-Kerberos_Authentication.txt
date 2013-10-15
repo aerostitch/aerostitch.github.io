@@ -1,0 +1,334 @@
+Kerberos authentication configuration for AIX servers
+=====================================================
+Joseph HERLANT
+v1.0.0, 2013-10-15: Initial revision
+:Author Initials: Joseph HERLANT
+:toc:
+:toclevels: 3
+:doctype: article
+:data-uri:
+:icons:
+:numbered:
+:lang: en
+:encoding: UTF-8
+:website: http://aerostitch.github.io
+:description: This document describes how to configure Kerberos authentication +
+on AIX 5.3, 6.1 and 7.1 working with Windows 2008 R2 Active Directory servers.
+:keywords: AIX, KDC, Kerberos, krb5, authentication, windows, AD, active +
+directory
+
+
+Introduction
+------------
+
+This document explains how to configure the authentication (for locally defined
+users) through an Active Directory 2008 R2 using Kerberos on AIX 5.3 and 7.1.
+
+It is explained for the MyDomain.MyForest environment but is easily transposable
+to any other domains of the MyForest Active Directory forest.
+
+WARNING:
+=====
+In the command lines, the values between "<" and ">" are to be replaced by values
+appropriated to your context. Example: `kinit <user.name>` can become `kinit
+joseph.herlant` in some environements.
+=====
+
+
+
+Procedure
+---------
+
+Preparing environment
+~~~~~~~~~~~~~~~~~~~~~
+
+Install Kerberos filesets (aka NAS software). On AIX 5.3 as well as on AIX 7.1
+there are 3 filesets to install: the client (`krb5.client.rte`), the localized
+(english here) messages (`krb5.msg.en_US.client.rte`) and the license (`krb5.lic`).
+
+[source,ksh]
+---------
+# Install filesets from NIM using the commands bellow
+/usr/sbin/nim -o allocate -a lpp_source='<LPPSOURCE_CONTAINING_FILESETS>' <SERVER_NAME>
+/usr/sbin/nim -o cust -a installp_flags='-acgXNY' -a filesets='krb5.client.rte krb5.lic krb5.msg.en_US.client.rte' <SERVER_NAME>
+/usr/sbin/nim -o deallocate -a lpp_source='<LPPSOURCE_CONTAINING_FILESETS>' <SERVER_NAME>
+
+
+# or use smit and install these packages: 
+# Alternatively you can use this command on a server
+# where the installation packages are available in/mnt"
+installp -ac -SvYXgd /mnt krb5.client.rte krb5.msg.en_US.client.rte krb5.lic
+---------
+
+Check if the installation is successfull using `installp -s all` (to check
+all packages applied but not commited) and `lslpp -l krb5*` (to check whether
+the package is installed or not. Correct output example:
+
+-----
+# installp -s all
+installp:  No filesets were found in the Software
+        Vital Product Database in the APPLIED state.
+# lslpp -l krb5* 
+  Fileset                      Level  State      Description         
+  ----------------------------------------------------------------------------
+Path: /usr/lib/objrepos
+  krb5.client.rte            1.5.0.2  COMMITTED  Network Authentication Service
+                                                 Client
+  krb5.lic                   1.5.0.2  COMMITTED  Network Authentication Service
+                                                 License
+  krb5.msg.en_US.client.rte  1.5.0.2  COMMITTED  Network Auth Service Client
+                                                 Msgs - U.S. English
+
+Path: /etc/objrepos
+  krb5.client.rte            1.5.0.2  COMMITTED  Network Authentication Service
+                                                 Client
+-----
+
+
+Add Kerberos binaries to the PATH variable and in /etc/environment:
+
+[source,ksh]
+---------
+# In current environment
+export PATH=$PATH:/usr/krb5/bin:/usr/krb5/sbin
+# And for further configuration, add those to the PATH declaration in /etc/environment.
+# The lines bellow can do it for you automatically:
+cp /etc/environment /etc/environment.bak
+awk '{
+    if($1 ~ /^PATH=.*/ && $0 !~ /.*:\/usr\/krb5\/bin.*/)
+    {printf("%s:/usr/krb5/bin:/usr/krb5/sbin\n",$0);}
+    else { print $0;}
+}' /etc/environment.bak > /etc/environment
+---------
+
+
+
+Change max_logname for login length:
+
+WARNING: this requires a restart of the server. The reboot can be skipped as
+long as you don't want to create users with a login longer than the default
+length (that is 9 characters).
+
+[source,ksh]
+---------
+chdev -l sys0 -a max_logname=64
+# Requires a restart
+shutdown -Fr
+---------
+
+
+
+Configuring Kerberos
+~~~~~~~~~~~~~~~~~~~~
+
+
+Generate Kerberos client configuration files using the `config.krb5` as
+following. Here we choose to have the realm name the same name as the domain.
+But notice that the realm name MUST be UPPER CASE! +
+Generally speaking, the kdc is on the active directory server, but that is not
+mandatory.
+
+[source,ksh]
+---------
+# The value of the "-r" argument must be written in UPPER CASE!
+config.krb5 -C -r MYDOMAIN.MYFOREST -d mydomain.myforest -s my_active_directory_server_name  -c my_kdc_server_name
+---------
+
+Adapt kerberos configuration files "/etc/krb5/krb5.conf" to change the
+`default_tkt_enctypes` and `default_tgs_enctypes` to match the windows 2008 R2
+Kerberos supported encrption types (cf.
+http://technet.microsoft.com/en-us/library/dd560670%28v=WS.10%29.aspx).
+This would determine which algorithm to use when exchaning informations with the
+Active Directory. By default, AES256 is available on Active Directory 2008 R2,
+so this configuration will use it to encrypt the communication channel.
+
+It should look like this (Be carefull to the order, it determines which
+algorithm is used first. It MUST be THIS ordering):
+
+....
+        default_tkt_enctypes = aes256-cts aes128-cts arcfour-hmac
+        default_tgs_enctypes = aes256-cts aes128-cts arcfour-hmac
+....
+
+
+For AIX 7.1 and AIX 6.1 (not tested for 6.1), add the following block to the "/etc/methods.cfg" file:
+....
+KRB5:
+        program = /usr/lib/security/KRB5
+        program_64 = /usr/lib/security/KRB5_64
+        options = authonly,tgt_verify=no,is_kadmind_compat=no
+
+KRB5files:
+        options = db=BUILTIN,auth=KRB5
+
+....
+
+
+
+For AIX 5.3, add the following block to the "/usr/lib/security/methods.cfg" file:
+....
+
+KRB5:
+        program = /usr/lib/security/KRB5A
+        options = tgt_verify=no
+      
+KRB5files:
+        options = db=BUILTIN,auth=KRB5
+
+....
+
+
+Setup "Kerberos 5" as a valid authentication type for AIX to use:
+[source,ksh]
+---------
+# lsauthent
+Standard Aix
+# chauthent -k5 -std
+# lsauthent
+Kerberos 5
+Standard Aix
+---------
+
+
+
+
+Adapt the environment
+---------------------
+
+Enable AD users to connect to the server
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To enable Active directory users to log to the server, you should create a
+local account by doing the following.
+
+Create a user locally with a login name that exists on the Active Directory
+(and that will be able to connect to the server in the future) using the
+following command (you should have a matrix of corresponding AD users and
+local userid):
+[source,ksh]
+---------
+mkuser registry=KRB5files SYSTEM=KRB5files id=<user_id>  <user.name>
+---------
+
+Test an SSH connection on the lookup adress (to avoid any other network issue):
+[source,ksh]
+---------
+ssh 127.0.0.1 -l <user.name>
+---------
+
+
+NOTE: If the above commands do not work, use `kinit` locally on the target
+server to check if the user can be authenticated against the Kerberos server
+(i.e: `kinit <user.name>`).
+
+
+Integration of existing local users
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+To change the authentication parameters for your local users to use
+KRB5files (Kerberos):
+[source,ksh]
+---------
+chuser registry=KRB5files SYSTEM=KRB5files <user.name>
+---------
+
+
+
+Mapping a local login to a different AD login
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+First of all, add the kerberos authentication mode to the user using
+`chuser registry=KRB5files SYSTEM=KRB5files <user.name>` command explained
+in the previous step.
+
+It is possible to map a local login with an Active Directory account that
+is using another login name. For this, use the `auth_name` attribute of
+the local user like this :
+[source,ksh]
+---------
+chuser auth_name=<active.directory.login> <local.user.name>
+---------
+
+For example, to map the "joseph" local user to the remote "joseph.herlant" user,
+use the following (after the execution of the `chuser registry=KRB5files
+SYSTEM=KRB5files <user.name>` command explained in the previous step) :
+[source,ksh]
+---------
+chuser auth_name=joseph.herlant joseph
+---------
+
+NOTE: To map a local user to an Active Directory login that do not match
+the default domain realm, refer to the next step: "Cross domains
+authentication".
+
+
+<<<<
+
+
+Cross domains authentication
+----------------------------
+
+The following procedure explains the integration of *MySecondDomain.MyForest*
+user authentication in an environment where *MyDomain.MyForest* is the default
+authentication domain.
+
+In the /etc/methods file, verify that the "tgl_verify=no" option is set:
+....
+KRB5:
+        program = /usr/lib/security/KRB5
+        program_64 = /usr/lib/security/KRB5_64
+        options = authonly,tgt_verify=no,is_kadmind_compat=no
+
+KRB5files:
+        options = db=BUILTIN,auth=KRB5
+
+....
+
+
+Then add the "dns_lookup_kdc = true" and "dns_lookup_realm = false" lines to the
+libdefaults stanza of the "/etc/krb5/krb5.conf" file and add your new realm and
+domain realms as follow (the following is to enable MySecondDomain domain users for
+a server configured for MyDomain):
+....
+[libdefaults]
+        default_realm = MYDOMAIN.MYFOREST
+        default_keytab_name = FILE:/etc/krb5/krb5.keytab
+        default_tkt_enctypes = arcfour-hmac aes256-cts aes128-cts
+        default_tgs_enctypes = arcfour-hmac aes256-cts aes128-cts
+        dns_lookup_kdc = true
+        dns_lookup_realm = false
+
+[realms]
+        MYDOMAIN.MYFOREST = {
+                kdc = <my_kdc_server_name>:88
+                admin_server = <my_active_directory_server>:749
+                default_domain = <MyDomain>
+        }
+
+        MYSECONDDOMAIN.MYFOREST = {
+                kdc = <my_kdc_for_mySecodaryDomain>:88
+                admin_server = <my_ad_server>:749
+                default_domain = <mySecondDomain>
+        }
+
+[domain_realm]
+        .mydomain.myforest = MYDOMAIN.MYFOREST
+        mydomain.myforest = MYDOMAIN.MYFOREST
+        .myseconddomain.myforest = MYSECONDDOMAIN.MYFOREST
+        myseconddomain.myforest = MYSECONDDOMAIN.MYFOREST
+
+[logging]
+        kdc = FILE:/var/krb5/log/krb5kdc.log
+        admin_server = FILE:/var/krb5/log/kadmin.log
+        kadmin_local = FILE:/var/krb5/log/kadmin_local.log
+        default = FILE:/var/krb5/log/krb5lib.log
+....
+
+
+Then change the `auth_name` and `auth_domain` attribute to match the realm corresponding to you. For example:
+---------
+chuser auth_domain=MYSECONDDOMAIN.MYFOREST auth_name=<active.directory.login> <local.user.name>
+---------
+
+
