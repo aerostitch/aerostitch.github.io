@@ -1,13 +1,45 @@
-General
--------
-DONE: menu.xml automatic generation
-sitemap.xml automatic generation
-DONE: index.xml && index.html files generation (with tree content)
-Add google stats tracker???
+= TODO
 
-Asciidoc backend
-----------------
+== General
+
+DONE: menu.xml automatic generation
+DONE: sitemap.xml automatic generation
+DONE: index.xml && index.html files generation (with tree content)
+Add google stats tracker??? (use Nokogiri?)
+Integrate description to index ages using Nokogiri
+
+== Asciidoc backend
+
 DONE: sidebar index generation using index.xml && jquery
-correct code blocks rendering issue
+DONE: correct code blocks rendering issue
 enhance backend
 integrate asciidoc js & css to custom_ folder
+
+
+== Docs
+
+=== Python
+Nose tests functions & fixtures
+Doctests doc
+Capture input/output + nose & doctests integration
+setup.py system
+skel generator
+
+=== Javascript
+Jquery include page in html node
+
+=== Oracle
+Manual dataguard / db replication using rman duplicate (with and without target)
+Manual dataguard / db replication using archivelogs recovery
+Tablespaces
+Sessions
+AWR reports
+AWR tables custom querying
+
+=== AIX
+Disable IP V6
+==== Nim scripts
+Create LPAR using command line
+Install LPAR using command line
+Update LPP_SOURCE
+
