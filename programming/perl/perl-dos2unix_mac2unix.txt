@@ -1,0 +1,58 @@
+dos2unix and mac2unix as Perl one-liners
+========================================
+Joseph HERLANT
+v1.0.0, 2013-10-17: Initial version
+:encoding: UTF-8
+:description: The equivalent of the dos2unix and mac2unix file conversion +
+ commands, written in one line using Perl!
+:keywords: perl, dos2unix, linux, command-line, regex, regular expression, +
+ mac2unix, conversion
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+dos2unix
+--------
+
+Usefull command to convert a windows-formatted text file to the unix/linux
+format from the command-line. It converts in-place ("-i" switch) the "\r\n" to
+"\n" characters using a regular expression.
+
+[source, perl]
+-----
+perl -pi -e's/\015\012/\012/g' dos_formated_file.txt
+-----
+
+mac2unix
+--------
+
+Usefull command to convert a mac-formatted text file to the unix/linux
+format from the command-line. It converts in-place ("-i" switch) the "\r" that
+is the end of line character in mac to "\n" characters using perl built-in
+capabilities.
+
+[source, perl]
+-----
+perl -w015l12pi -e1 mac_formated_file.txt
+-----
+
+which is equivalent to the following but adds a new line at the end:
+
+[source, perl]
+-----
+perl -pi -e's/\012/\015/g' mac_formated_file.txt
+-----
+
+

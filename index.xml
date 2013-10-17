@@ -16,12 +16,12 @@
     <title>Misc</title>
     <path>/misc</path>
     <url>
+      <title>Adding a counter of visits on an imagevue based website</title>
+      <path>/misc/imageviue-adding_visit_counter_to_imagevue_website.html</path>
+    </url>
+    <url>
       <title>Imagevue</title>
       <path>/misc/imagevue</path>
-      <url>
-        <title>Adding a counter of visits on an imagevue based website</title>
-        <path>/misc/imagevue/Adding_visit_counter_to_imagevue_website.html</path>
-      </url>
     </url>
   </url>
   <url>
@@ -45,6 +45,18 @@
       <url>
         <title>Notes for exams 1Z0-053</title>
         <path>/oracle/certifications/Notes_1Z0-053.html</path>
+      </url>
+    </url>
+  </url>
+  <url>
+    <title>Programming</title>
+    <path>/programming</path>
+    <url>
+      <title>Perl</title>
+      <path>/programming/perl</path>
+      <url>
+        <title>dos2unix and mac2unix as Perl one-liners</title>
+        <path>/programming/perl/perl-dos2unix_mac2unix.html</path>
       </url>
     </url>
   </url>
