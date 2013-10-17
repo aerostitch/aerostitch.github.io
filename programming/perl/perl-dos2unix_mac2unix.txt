@@ -30,7 +30,7 @@ Usefull command to convert a windows-formatted text file to the unix/linux
 format from the command-line. It converts in-place ("-i" switch) the "\r\n" to
 "\n" characters using a regular expression.
 
-[source, perl]
+[source, shell]
 -----
 perl -pi -e's/\015\012/\012/g' dos_formated_file.txt
 -----
@@ -43,14 +43,14 @@ format from the command-line. It converts in-place ("-i" switch) the "\r" that
 is the end of line character in mac to "\n" characters using perl built-in
 capabilities.
 
-[source, perl]
+[source, shell]
 -----
 perl -w015l12pi -e1 mac_formated_file.txt
 -----
 
 which is equivalent to the following but adds a new line at the end:
 
-[source, perl]
+[source, shell]
 -----
 perl -pi -e's/\012/\015/g' mac_formated_file.txt
 -----

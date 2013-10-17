@@ -695,7 +695,7 @@ format from the command-line. It converts in-place ("-i" switch) the "\r\n" to
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt>perl <span style="color: #990000">-</span>pi <span style="color: #990000">-</span>e<span style="color: #FF0000">'s/\015\012/\012/g'</span> dos_formated_file<span style="color: #990000">.</span>txt</tt></pre></div></div>
+<pre><tt>perl -pi -e<span style="color: #FF0000">'s/</span><span style="color: #CC33CC">\0</span><span style="color: #FF0000">15</span><span style="color: #CC33CC">\0</span><span style="color: #FF0000">12/</span><span style="color: #CC33CC">\0</span><span style="color: #FF0000">12/g'</span> dos_formated_file<span style="color: #990000">.</span>txt</tt></pre></div></div>
 </div>
 </div>
 <div class="sect1">
@@ -710,14 +710,14 @@ capabilities.</p></div>
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt>perl <span style="color: #990000">-</span>w015l12pi <span style="color: #990000">-</span>e1 mac_formated_file<span style="color: #990000">.</span>txt</tt></pre></div></div>
+<pre><tt>perl -w015l12pi -e<span style="color: #993399">1</span> mac_formated_file<span style="color: #990000">.</span>txt</tt></pre></div></div>
 <div class="paragraph"><p>which is equivalent to the following but adds a new line at the end:</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.6
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt>perl <span style="color: #990000">-</span>pi <span style="color: #990000">-</span>e<span style="color: #FF0000">'s/\012/\015/g'</span> mac_formated_file<span style="color: #990000">.</span>txt</tt></pre></div></div>
+<pre><tt>perl -pi -e<span style="color: #FF0000">'s/</span><span style="color: #CC33CC">\0</span><span style="color: #FF0000">12/</span><span style="color: #CC33CC">\0</span><span style="color: #FF0000">15/g'</span> mac_formated_file<span style="color: #990000">.</span>txt</tt></pre></div></div>
 </div>
 </div>
     </div>
@@ -748,7 +748,7 @@ http://www.gnu.org/software/src-highlite -->
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br />
-Last updated 2013-10-17 23:10:14 CEST
+Last updated 2013-10-17 23:22:49 CEST
 </div>
 </div>
 </div>
