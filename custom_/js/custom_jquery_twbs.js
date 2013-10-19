@@ -11,7 +11,7 @@ $(document).ready(function(){
   proceed_offcanvas();
   build_top_menu();
   build_index_folder_content();
-  include_description_index_page();
+//  include_description_index_page();
 });
 
 /*

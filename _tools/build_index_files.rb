@@ -70,21 +70,50 @@ def build_index_files(idx_root)
       puts "[Error] Could not open file."
       puts e.message
     ensure
-      file.close unless file == nil
+      file.close unless file.nil?
     end
   end
 end
 
+
+# adds the description to the document if description.inc exists
+def update_index_html_description(fold_path)
+  idx_html = File.open("#{Website_root}/_tools/templates/index.html",'r')
+  doc = Nokogiri::HTML(idx_html) { |config| config.strict.nonet}
+  idx_html.close()  # File have to be closed to rewrite data in it
+  doc.search('//div[@id="Description"]').each do |node|
+    if File.exist?("#{fold_path}/description.inc")
+      node << File.read("#{fold_path}/description.inc") 
+    else
+      puts "[INFO] no description.inc file found for #{fold_path}"
+    end
+  end
+  # Writing result to the index.html file
+  begin
+    outfile = File.open("#{fold_path}/index.html",'w')
+    puts fold_path
+    outfile.write(doc.to_xml)
+  rescue IOError => e
+    puts "[Error] proceeding to update of file #{fold_path}/index.html:"
+    puts e.message
+  ensure
+    outfile.close unless outfile.nil?
+  end
+end
+
 build_index_files(Website_root)
-FileUtils.copy("#{Website_root}/_tools/templates/index.html",
-                             "#{Website_root}/index.html")
-Dir.glob('../**/*')
+# FileUtils.copy("#{Website_root}/_tools/templates/index.html",
+#                             "#{Website_root}/index.html")
+Dir.glob(['../','../**/*'])
   .delete_if { |fname| /(\/|^)_/.match(fname) or /_(\/|$)/.match(fname) }
   .select {|f| File.directory? f}
   .sort
   .each { |fold|
     build_index_files(fold)
-    # Then deploy index.html template file
-    FileUtils.copy("#{Website_root}/_tools/templates/index.html", 
-              "#{fold}/index.html")
+    # Then deploy index.html template file => Done while adding description.inc
+    # FileUtils.copy("#{Website_root}/_tools/templates/index.html", 
+    #           "#{fold}/index.html")
+    # and updating it with the content of the description.inc
+    update_index_html_description(fold)
   }
+
