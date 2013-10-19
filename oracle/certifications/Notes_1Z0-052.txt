@@ -1,7 +1,7 @@
 Notes for exams 1Z0-052
 =======================
 Joseph HERLANT
-v1.0.6, 2013-10-09: Adding tags to help website generation
+v1.0.7, 2013-10-19: tiny modifications in introduction warning
 :encoding: UTF-8
 :description: This document is regrouping my personal notes I took while +
   revising for the 1Z0-052 Oracle certification exam.
@@ -15,11 +15,16 @@ v1.0.6, 2013-10-09: Adding tags to help website generation
 :toc:
 
 /////
+:revinfo:
+v1.0.6, 2013-10-09: Adding tags to help website generation
 v1.0.5, 2013-05-16: Minor corrections
 /////
 
 
-WARNING: This document is my personnal notes I took when reading the "OCA/OCP Oracle Database 11g: All-in-One Exam Guide" to prepare 1Z0-052 exam. This is not a complete review of the exam topics, just the ones I either didn't know or having hard time to remember.
+WARNING: This document is my personnal notes I took when reading the
+"OCA/OCP Oracle Database 11g: All-in-One Exam Guide" to prepare 1Z0-052 exam. +
+This is not a complete review of the exam topics, just the ones I either 
+having hard time to remember or just found interesting to keep track of.
 
 
 

@@ -5,6 +5,18 @@
     <path/>
   </url>
   <url>
+    <title>Linux and unix</title>
+    <path>linux_and_unix</path>
+    <url>
+      <title>Aix</title>
+      <path>AIX</path>
+    </url>
+  </url>
+  <url>
+    <title>Misc</title>
+    <path>misc</path>
+  </url>
+  <url>
     <title>Programming</title>
     <path>programming</path>
     <url>
@@ -18,18 +30,6 @@
     <url>
       <title>Certifications</title>
       <path>certifications</path>
-    </url>
-  </url>
-  <url>
-    <title>Misc</title>
-    <path>misc</path>
-  </url>
-  <url>
-    <title>Linux and unix</title>
-    <path>linux_and_unix</path>
-    <url>
-      <title>Aix</title>
-      <path>AIX</path>
     </url>
   </url>
 </urlset>

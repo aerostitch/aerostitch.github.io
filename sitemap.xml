@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
     <loc>http://aerostitch.github.io/index.html</loc>
-    <lastmod>2013-10-14T21:52:15+02:00</lastmod>
+    <lastmod>2013-10-19T13:13:52+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -14,13 +14,13 @@
   </url>
   <url>
     <loc>http://aerostitch.github.io/linux_and_unix/AIX/index.html</loc>
-    <lastmod>2013-10-15T21:26:50+02:00</lastmod>
+    <lastmod>2013-10-18T23:49:56+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://aerostitch.github.io/linux_and_unix/index.html</loc>
-    <lastmod>2013-10-15T21:26:50+02:00</lastmod>
+    <lastmod>2013-10-18T23:49:56+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -31,32 +31,38 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>http://aerostitch.github.io/misc/imagevue-adding_visit_counter_to_imagevue_website.html</loc>
+    <lastmod>2013-10-09T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
     <loc>http://aerostitch.github.io/misc/index.html</loc>
-    <lastmod>2013-10-17T22:29:18+02:00</lastmod>
+    <lastmod>2013-10-18T23:49:56+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://aerostitch.github.io/oracle/certifications/Notes_1Z0-047.html</loc>
-    <lastmod>2013-10-09T00:00:00+00:00</lastmod>
+    <lastmod>2013-10-19T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://aerostitch.github.io/oracle/certifications/Notes_1Z0-052.html</loc>
-    <lastmod>2013-10-09T00:00:00+00:00</lastmod>
+    <lastmod>2013-10-19T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://aerostitch.github.io/oracle/certifications/Notes_1Z0-053.html</loc>
-    <lastmod>2013-10-09T00:00:00+00:00</lastmod>
+    <lastmod>2013-10-19T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://aerostitch.github.io/oracle/certifications/index.html</loc>
-    <lastmod>2013-10-06T19:18:45+02:00</lastmod>
+    <lastmod>2013-10-18T23:49:56+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -68,19 +74,19 @@
   </url>
   <url>
     <loc>http://aerostitch.github.io/oracle/index.html</loc>
-    <lastmod>2013-10-14T21:52:15+02:00</lastmod>
+    <lastmod>2013-10-18T23:49:56+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://aerostitch.github.io/programming/index.html</loc>
-    <lastmod>2013-10-17T22:32:02+02:00</lastmod>
+    <lastmod>2013-10-18T23:49:56+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://aerostitch.github.io/programming/perl/index.html</loc>
-    <lastmod>2013-10-17T22:31:50+02:00</lastmod>
+    <lastmod>2013-10-18T23:49:56+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>

@@ -1,7 +1,7 @@
 Notes for exam 1Z0-047
 ======================
 Joseph HERLANT
-v1.0.1, 2013-10-09 : Adding tags for an easier website generation
+v1.0.2, 2013-10-19 : changing a part of the intruduction warning
 :encoding: UTF-8
 :description: This document is regrouping my personal notes I took while revising for the +
   1Z0-047 Oracle certification exam.
@@ -15,10 +15,15 @@ v1.0.1, 2013-10-09 : Adding tags for an easier website generation
 :quotes.%: underline
 
 /////
-v1.0, 2013-02-16 : Creation of the document
+:revinfo:
+v1.0.1, 2013-10-09 : Adding tags for an easier website generation
+v1.0.0, 2013-02-16 : Creation of the document
 /////
 
-WARNING: This document is my personnal notes I took when preparing the 1Z0-047 exam. This is not a complete review of the exam topics, just the ones I either didn't konw or having hard time to remember.
+WARNING: This document is my personnal notes I took when preparing the 1Z0-047
+exam. +
+This is not a complete review of the exam topics, just the ones I either 
+having hard time to remember or just found interesting to keep track of.
 
 Create Table As Select copies CHECK and NOT NULL constraints but not PU, UK, FK, indexes.
 

@@ -27,12 +27,9 @@ users) through an Active Directory 2008 R2 using Kerberos on AIX 5.3 and 7.1.
 It is explained for the MyDomain.MyForest environment but is easily transposable
 to any other domains of the MyForest Active Directory forest.
 
-WARNING:
-=====
-In the command lines, the values between "<" and ">" are to be replaced by values
-appropriated to your context. Example: `kinit <user.name>` can become `kinit
-joseph.herlant` in some environements.
-=====
+WARNING: In the command lines, the values between "<" and ">" are to be replaced
+by values appropriated to your context. Example: `kinit <user.name>` can become
+`kinit joseph.herlant` in some environements.
 
 
 
