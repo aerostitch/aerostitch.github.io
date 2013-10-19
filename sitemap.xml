@@ -121,7 +121,19 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>http://aerostitch.github.io/programming/perl/perl-nl.html</loc>
+    <lastmod>2013-10-19T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
     <loc>http://aerostitch.github.io/programming/perl/perl-ol-password_generator.html</loc>
+    <lastmod>2013-10-19T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://aerostitch.github.io/programming/perl/perl-wc-l.html</loc>
     <lastmod>2013-10-19T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>

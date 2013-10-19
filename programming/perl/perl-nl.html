@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="generator" content="AsciiDoc 8.6.7" />
-<meta name="description" content="Perl one-liners to simulate the grep utility." />
-<meta name="keywords" content="perl, oneliner, grep" />
+<meta name="description" content="Perl one-liners to print out the line numbers at the begining of each lines while printing the line." />
+<meta name="keywords" content="perl, oneliner, extract, regex, regular expression, pattern" />
 <meta name="author" content="Joseph HERLANT" />
 <link rel="shortcut icon" href="/custom_/ico/favicon.png" />
-<title>grep utility using perl one-liners</title>
+<title>Add line numbers while printing a file line nl command</title>
 <style type="text/css">
 em {
   font-style: italic;
@@ -680,61 +680,29 @@ asciidoc.install(3);
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
 <div id="header">
-<h1>grep utility using perl one-liners</h1>
-Perl one-liners to simulate the grep utility.
+<h1>Add line numbers while printing a file line nl command</h1>
+Perl one-liners to print out the line numbers at the begining of each lines while printing the line.
 </div>
       </div>
-<div class="sect1">
-<h2 id="_grep_regexp">1. grep regexp</h2>
+<div id="preamble">
 <div class="sectionbody">
-<div class="paragraph"><p>This shell command do grep a regexp on the input you want (a file or stdin using
-pipes for example).</p></div>
+<div class="paragraph"><p>This shell command prints out the lines of the input, preceeding it with the
+line numbers, like the nl command do.</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.6
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt>perl -ne <span style="color: #FF0000">'/regexp/&amp;&amp;print'</span></tt></pre></div></div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_grep_i_regexp">2. grep -i regexp</h2>
-<div class="sectionbody">
-<div class="paragraph"><p>This shell command do grep a case insensitive regexp on the input you want (a file or
-stdin using pipes for example).</p></div>
+<pre><tt>perl -pe <span style="color: #FF0000">'s//$. /'</span> input</tt></pre></div></div>
+<div class="paragraph"><p>If you want exactly the same output than <code>nl</code> (meaning the same spacing at the
+begining of the line with a right-aligned line number), you can also use this
+command:</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.6
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt>perl -ne <span style="color: #FF0000">'/regexp/i&amp;&amp;print'</span></tt></pre></div></div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_grep_v_regexp">3. grep -v regexp</h2>
-<div class="sectionbody">
-<div class="paragraph"><p>This shell command do grep an exclusion regexp on the input you want (a file or
-stdin using pipes for example).</p></div>
-<div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>perl -ne <span style="color: #FF0000">'/regexp/||print'</span></tt></pre></div></div>
-<div class="panel panel-info admonitionblock">
-  <div class="panel-heading">
-
-
-<span class="glyphicon glyphicon-info-sign"></span>
-
-
-    <b class="panel-title">
-    Note
-    </b>
-  </div>
-  <div class="panel-body">If you want the regexp of the grep -v to be case insensitive, just add
-the "i" at the end of the /regexp/ like in the grep -i example.  </div>
-</div>
+<pre><tt>perl -pe <span style="color: #FF0000">'printf "% 6d  ",$.'</span> input</tt></pre></div></div>
 </div>
 </div>
     </div>
@@ -765,7 +733,7 @@ the "i" at the end of the /regexp/ like in the grep -i example.  </div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br />
-Last updated 2013-10-19 19:40:32 CEST
+Last updated 2013-10-19 22:43:33 CEST
 </div>
 </div>
 </div>

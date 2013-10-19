@@ -1,0 +1,45 @@
+wc -l using perl one-liners
+===========================
+Joseph HERLANT
+v1.0.0, 2013-10-19: Initial version
+:encoding: UTF-8
+:description: Perl one-liners to rewrite a wc -l.
+:keywords: perl, oneliner, wc -l
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+
+This shell command returns the number of lines contained by a file.
+
+[source, shell]
+-----
+include::perl_wc-l.sh[]
+-----
+
+The above command is the exact same one but in a more human readable way:
+
+[source, shell]
+-----
+include::perl_wc-l2.sh[]
+-----
+
+The `$.` variable contains the line number of the line currently been read.
+And as the END code block is executed after perl finished running the program
+and just before the interpreter is being exited, the `$.` variable contains the
+number of the last line of the file => the number of lines in the file. Easy! :) 
+
+http://perldoc.perl.org/perlmod.html#BEGIN%2c-UNITCHECK%2c-CHECK%2c-INIT-and-END[This
+link from official perldoc explains the usage of the END and other related code blocks.]

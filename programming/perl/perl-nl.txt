@@ -1,0 +1,42 @@
+Add line numbers while printing a file line nl command
+======================================================
+Joseph HERLANT
+v1.0.0, 2013-10-19: Initial version
+:encoding: UTF-8
+:description: Perl one-liners to print out the line numbers at the begining of +
+  each lines while printing the line. 
+:keywords: perl, oneliner, extract, regex, regular expression, pattern
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+
+This shell command prints out the lines of the input, preceeding it with the
+line numbers, like the nl command do.
+
+[source, shell]
+-----
+include::perl_nl.sh[]
+-----
+
+If you want exactly the same output than `nl` (meaning the same spacing at the
+begining of the line with a right-aligned line number), you can also use this
+command:
+
+[source, shell]
+-----
+include::perl_nl2.sh[]
+-----
+

@@ -1,5 +1,5 @@
-grep utility perl one-liners
-============================
+grep utility using perl one-liners
+==================================
 Joseph HERLANT
 v1.0.0, 2013-10-19: Initial version
 :encoding: UTF-8

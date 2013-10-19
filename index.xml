@@ -71,12 +71,20 @@
         <path>/programming/perl/perl-get_1st_available_uid.html</path>
       </url>
       <url>
-        <title>grep utility perl one-liners</title>
+        <title>grep utility using perl one-liners</title>
         <path>/programming/perl/perl-grep.html</path>
+      </url>
+      <url>
+        <title>Add line numbers while printing a file line nl command</title>
+        <path>/programming/perl/perl-nl.html</path>
       </url>
       <url>
         <title>Generate a random password using a one-liner</title>
         <path>/programming/perl/perl-ol-password_generator.html</path>
+      </url>
+      <url>
+        <title>wc -l using perl one-liners</title>
+        <path>/programming/perl/perl-wc-l.html</path>
       </url>
     </url>
   </url>
