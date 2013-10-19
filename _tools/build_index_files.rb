@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 #
 require 'nokogiri'
-require 'fileutils'
+# require 'fileutils'
 
 # This is to ensure we are in the same directory as the script
 # to enable people to run the script from another directory
@@ -91,7 +91,6 @@ def update_index_html_description(fold_path)
   # Writing result to the index.html file
   begin
     outfile = File.open("#{fold_path}/index.html",'w')
-    puts fold_path
     outfile.write(doc.to_xml)
   rescue IOError => e
     puts "[Error] proceeding to update of file #{fold_path}/index.html:"
@@ -101,7 +100,7 @@ def update_index_html_description(fold_path)
   end
 end
 
-build_index_files(Website_root)
+# build_index_files(Website_root)
 # FileUtils.copy("#{Website_root}/_tools/templates/index.html",
 #                             "#{Website_root}/index.html")
 Dir.glob(['../','../**/*'])
