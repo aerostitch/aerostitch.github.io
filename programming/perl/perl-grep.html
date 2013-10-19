@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="generator" content="AsciiDoc 8.6.7" />
-<meta name="description" content="The equivalent of the dos2unix and mac2unix file conversion commands, written in one line using Perl!" />
-<meta name="keywords" content="perl, dos2unix, linux, command-line, regex, regular expression, mac2unix, conversion" />
+<meta name="description" content="Perl one-liners to simulate the grep utility." />
+<meta name="keywords" content="perl, oneliner, grep" />
 <meta name="author" content="Joseph HERLANT" />
 <link rel="shortcut icon" href="/custom_/ico/favicon.png" />
-<title>dos2unix and mac2unix as Perl one-liners</title>
+<title>grep utility perl one-liners</title>
 <style type="text/css">
 em {
   font-style: italic;
@@ -674,50 +674,67 @@ asciidoc.install(3);
   <span id="author">Joseph HERLANT</span>
   <br />
   <span id="revnumber">version 1.0.0,</span>
-  <span id="revdate">2013-10-17</span>
+  <span id="revdate">2013-10-19</span>
   <span id="revremark">: Initial version</span>
 </div>
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
 <div id="header">
-<h1>dos2unix and mac2unix as Perl one-liners</h1>
-The equivalent of the dos2unix and mac2unix file conversion commands, written in one line using Perl!
+<h1>grep utility perl one-liners</h1>
+Perl one-liners to simulate the grep utility.
 </div>
       </div>
 <div class="sect1">
-<h2 id="_dos2unix">1. dos2unix</h2>
+<h2 id="_grep_regexp">1. grep regexp</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>Usefull command to convert a windows-formatted text file to the unix/linux
-format from the command-line. It converts in-place ("-i" switch) the "\r\n" to
-"\n" characters using a regular expression.</p></div>
+<div class="paragraph"><p>This shell command do grep a regexp on the input you want (a file or stdin using
+pipes for example).</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.6
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt>perl -pi -e<span style="color: #FF0000">'s/</span><span style="color: #CC33CC">\0</span><span style="color: #FF0000">15</span><span style="color: #CC33CC">\0</span><span style="color: #FF0000">12/</span><span style="color: #CC33CC">\0</span><span style="color: #FF0000">12/g'</span> dos_formated_file<span style="color: #990000">.</span>txt</tt></pre></div></div>
+<pre><tt>perl -ne <span style="color: #FF0000">'/regexp/&amp;&amp;print'</span></tt></pre></div></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_mac2unix">2. mac2unix</h2>
+<h2 id="_grep_i_regexp">2. grep -i regexp</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>Usefull command to convert a mac-formatted text file to the unix/linux
-format from the command-line. It converts in-place ("-i" switch) the "\r" that
-is the end of line character in mac to "\n" characters using perl built-in
-capabilities.</p></div>
+<div class="paragraph"><p>This shell command do grep a case insensitive regexp on the input you want (a file or
+stdin using pipes for example).</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.6
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt>perl -w015l12pi -e<span style="color: #993399">1</span> mac_formated_file<span style="color: #990000">.</span>txt</tt></pre></div></div>
-<div class="paragraph"><p>which is equivalent to the following but adds a new line at the end:</p></div>
+<pre><tt>perl -ne <span style="color: #FF0000">'/regexp/i&amp;&amp;print'</span></tt></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_grep_v_regexp">3. grep -v regexp</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This shell command do grep an exclusion regexp on the input you want (a file or
+stdin using pipes for example).</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.6
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt>perl -pi -e<span style="color: #FF0000">'s/</span><span style="color: #CC33CC">\0</span><span style="color: #FF0000">15/</span><span style="color: #CC33CC">\0</span><span style="color: #FF0000">12/g'</span> mac_formated_file<span style="color: #990000">.</span>txt</tt></pre></div></div>
+<pre><tt>perl -ne <span style="color: #FF0000">'/regexp/||print'</span></tt></pre></div></div>
+<div class="panel panel-info admonitionblock">
+  <div class="panel-heading">
+
+
+<span class="glyphicon glyphicon-info-sign"></span>
+
+
+    <b class="panel-title">
+    Note
+    </b>
+  </div>
+  <div class="panel-body">If you want the regexp of the grep -v to be case insensitive, just add
+the "i" at the end of the /regexp/ like in the grep -i example.  </div>
+</div>
 </div>
 </div>
     </div>
@@ -748,7 +765,7 @@ http://www.gnu.org/software/src-highlite -->
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br />
-Last updated 2013-10-19 17:31:16 CEST
+Last updated 2013-10-19 19:37:51 CEST
 </div>
 </div>
 </div>

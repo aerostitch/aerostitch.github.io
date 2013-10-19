@@ -85,8 +85,44 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>http://aerostitch.github.io/programming/perl/perl-common_lines_from_files.html</loc>
+    <lastmod>2013-10-19T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
     <loc>http://aerostitch.github.io/programming/perl/perl-dos2unix_mac2unix.html</loc>
     <lastmod>2013-10-17T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://aerostitch.github.io/programming/perl/perl-extract_lines_between_patterns.html</loc>
+    <lastmod>2013-10-19T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://aerostitch.github.io/programming/perl/perl-extract_paragraphs_containing.html</loc>
+    <lastmod>2013-10-19T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://aerostitch.github.io/programming/perl/perl-get_1st_available_uid.html</loc>
+    <lastmod>2013-10-19T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://aerostitch.github.io/programming/perl/perl-grep.html</loc>
+    <lastmod>2013-10-19T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://aerostitch.github.io/programming/perl/perl-ol-password_generator.html</loc>
+    <lastmod>2013-10-19T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>

@@ -1,0 +1,48 @@
+Lines present in different files (examples for 2 or 3)
+=====================================================
+Joseph HERLANT
+v1.0.0, 2013-10-19: Initial version
+:encoding: UTF-8
+:description: A perl one-liner to extract lines common to 2 or 3 files.
+:keywords: perl, oneliner, extract
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+Extracting lines conmmon in 2 files
+-----------------------------------
+
+This shell command returns all lines that are exactly the same in 2
+given files.
+
+Note that this command has been posted by Randal Schwartz on PerlMonks.
+
+[source, shell]
+-----
+include::common_to_2_files.sh[]
+-----
+
+
+
+Extracting lines conmmon in 3 files
+-----------------------------------
+
+This shell command returns all lines that are exactly the same in 3
+given files.
+
+[source, shell]
+-----
+include::common_to_3_files.sh[]
+-----

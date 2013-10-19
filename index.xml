@@ -51,8 +51,32 @@
       <title>Perl</title>
       <path>/programming/perl</path>
       <url>
+        <title>Lines present in different files (examples for 2 or 3)</title>
+        <path>/programming/perl/perl-common_lines_from_files.html</path>
+      </url>
+      <url>
         <title>dos2unix and mac2unix as Perl one-liners</title>
         <path>/programming/perl/perl-dos2unix_mac2unix.html</path>
+      </url>
+      <url>
+        <title>Extract lines between 2 specific patterns</title>
+        <path>/programming/perl/perl-extract_lines_between_patterns.html</path>
+      </url>
+      <url>
+        <title>Extract paragraphs containing a specific pattern</title>
+        <path>/programming/perl/perl-extract_paragraphs_containing.html</path>
+      </url>
+      <url>
+        <title>Get 1st system user id available</title>
+        <path>/programming/perl/perl-get_1st_available_uid.html</path>
+      </url>
+      <url>
+        <title>grep utility perl one-liners</title>
+        <path>/programming/perl/perl-grep.html</path>
+      </url>
+      <url>
+        <title>Generate a random password using a one-liner</title>
+        <path>/programming/perl/perl-ol-password_generator.html</path>
       </url>
     </url>
   </url>

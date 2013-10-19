@@ -1,0 +1,60 @@
+grep utility perl one-liners
+============================
+Joseph HERLANT
+v1.0.0, 2013-10-19: Initial version
+:encoding: UTF-8
+:description: Perl one-liners to simulate the grep utility.
+:keywords: perl, oneliner, grep
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+
+grep regexp
+-----------
+
+This shell command do grep a regexp on the input you want (a file or stdin using
+pipes for example).
+
+[source, shell]
+-----
+include::perl_grep.sh[]
+-----
+
+grep -i regexp
+--------------
+
+This shell command do grep a case insensitive regexp on the input you want (a file or
+stdin using pipes for example).
+
+[source, shell]
+-----
+include::perl_grep-i.sh[]
+-----
+
+
+grep -v regexp
+--------------
+
+This shell command do grep an exclusion regexp on the input you want (a file or
+stdin using pipes for example).
+
+[source, shell]
+-----
+include::perl_grep-v.sh[]
+-----
+
+NOTE: If you want the regexp of the grep -v to be case insensitive, just add
+the "i" at the end of the /regexp/ like in the grep -i example.

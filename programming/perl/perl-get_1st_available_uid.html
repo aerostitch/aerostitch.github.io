@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="generator" content="AsciiDoc 8.6.7" />
-<meta name="description" content="The equivalent of the dos2unix and mac2unix file conversion commands, written in one line using Perl!" />
-<meta name="keywords" content="perl, dos2unix, linux, command-line, regex, regular expression, mac2unix, conversion" />
+<meta name="description" content="A perl one-liner to get the first system uid available." />
+<meta name="keywords" content="perl, oneliner, uid, userid" />
 <meta name="author" content="Joseph HERLANT" />
 <link rel="shortcut icon" href="/custom_/ico/favicon.png" />
-<title>dos2unix and mac2unix as Perl one-liners</title>
+<title>Get 1st system user id available</title>
 <style type="text/css">
 em {
   font-style: italic;
@@ -674,50 +674,25 @@ asciidoc.install(3);
   <span id="author">Joseph HERLANT</span>
   <br />
   <span id="revnumber">version 1.0.0,</span>
-  <span id="revdate">2013-10-17</span>
+  <span id="revdate">2013-10-19</span>
   <span id="revremark">: Initial version</span>
 </div>
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
 <div id="header">
-<h1>dos2unix and mac2unix as Perl one-liners</h1>
-The equivalent of the dos2unix and mac2unix file conversion commands, written in one line using Perl!
+<h1>Get 1st system user id available</h1>
+A perl one-liner to get the first system uid available.
 </div>
       </div>
-<div class="sect1">
-<h2 id="_dos2unix">1. dos2unix</h2>
+<div id="preamble">
 <div class="sectionbody">
-<div class="paragraph"><p>Usefull command to convert a windows-formatted text file to the unix/linux
-format from the command-line. It converts in-place ("-i" switch) the "\r\n" to
-"\n" characters using a regular expression.</p></div>
+<div class="paragraph"><p>This shell command returns the first uid available on the system.</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.6
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt>perl -pi -e<span style="color: #FF0000">'s/</span><span style="color: #CC33CC">\0</span><span style="color: #FF0000">15</span><span style="color: #CC33CC">\0</span><span style="color: #FF0000">12/</span><span style="color: #CC33CC">\0</span><span style="color: #FF0000">12/g'</span> dos_formated_file<span style="color: #990000">.</span>txt</tt></pre></div></div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_mac2unix">2. mac2unix</h2>
-<div class="sectionbody">
-<div class="paragraph"><p>Usefull command to convert a mac-formatted text file to the unix/linux
-format from the command-line. It converts in-place ("-i" switch) the "\r" that
-is the end of line character in mac to "\n" characters using perl built-in
-capabilities.</p></div>
-<div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>perl -w015l12pi -e<span style="color: #993399">1</span> mac_formated_file<span style="color: #990000">.</span>txt</tt></pre></div></div>
-<div class="paragraph"><p>which is equivalent to the following but adds a new line at the end:</p></div>
-<div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt>perl -pi -e<span style="color: #FF0000">'s/</span><span style="color: #CC33CC">\0</span><span style="color: #FF0000">15/</span><span style="color: #CC33CC">\0</span><span style="color: #FF0000">12/g'</span> mac_formated_file<span style="color: #990000">.</span>txt</tt></pre></div></div>
+<pre><tt>perl -le <span style="color: #FF0000">'$i++ while getpwuid($i); print $i'</span></tt></pre></div></div>
 </div>
 </div>
     </div>
@@ -748,7 +723,7 @@ http://www.gnu.org/software/src-highlite -->
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br />
-Last updated 2013-10-19 17:31:16 CEST
+Last updated 2013-10-19 18:43:23 CEST
 </div>
 </div>
 </div>
