@@ -8,7 +8,9 @@
     <p>
     In this category you'll find things that I found interesting to keep in mind
     about Perl. Those are often things I use in AIX environments to simulate the
-    behaviour of some Linux commands I don't have there.
+    behaviour of some Linux commands I don't have there. I is also usefull when
+    working on windows (I use the perl version that ships with Oracle) to
+      find a more friendly/usual environement.
     </p>
   </div>
 </div>
