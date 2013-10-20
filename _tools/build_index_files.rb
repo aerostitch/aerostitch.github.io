@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 #
 require 'nokogiri'
-# require 'fileutils'
 
 # This is to ensure we are in the same directory as the script
 # to enable people to run the script from another directory
@@ -75,19 +74,32 @@ def build_index_files(idx_root)
   end
 end
 
+# Adds the content of a file (located at file_path) to the given html_obj
+# for all nodes matching the node_path
+def add_file_content_to_node(html_obj, node_path, file_path)
+  html_obj.search(node_path).each do |node|
+    if File.exist?(file_path)
+      node << File.read(file_path)
+    else
+      puts "[INFO] no #{file_path} file found"
+    end
+  end
+end
 
 # adds the description to the document if description.inc exists
 def update_index_html_description(fold_path)
   idx_html = File.open("#{Website_root}/_tools/templates/index.html",'r')
   doc = Nokogiri::HTML(idx_html) { |config| config.strict.nonet}
   idx_html.close()  # File have to be closed to rewrite data in it
-  doc.search('//div[@id="Description"]').each do |node|
-    if File.exist?("#{fold_path}/description.inc")
-      node << File.read("#{fold_path}/description.inc") 
-    else
-      puts "[INFO] no description.inc file found for #{fold_path}"
-    end
-  end
+  # Adding description content
+  add_file_content_to_node(doc, '//div[@id="Description"]',
+                           "#{fold_path}/description.inc")
+  # Adding the content of google_tags.inc
+  # which contains the html headers for google meta tag validation
+  # but could also contain google analytics code for example
+  # It is added to all index.html pages because 
+  add_file_content_to_node(doc, '/html/head',
+                           "#{Website_root}/_tools/google_tags.inc")
   # Writing result to the index.html file
   begin
     outfile = File.open("#{fold_path}/index.html",'w')
@@ -100,19 +112,15 @@ def update_index_html_description(fold_path)
   end
 end
 
-# build_index_files(Website_root)
-# FileUtils.copy("#{Website_root}/_tools/templates/index.html",
-#                             "#{Website_root}/index.html")
+# Now building index.xml files and customizing index.html files
 Dir.glob(['../','../**/*'])
   .delete_if { |fname| /(\/|^)_/.match(fname) or /_(\/|$)/.match(fname) }
   .select {|f| File.directory? f}
   .sort
   .each { |fold|
     build_index_files(fold)
-    # Then deploy index.html template file => Done while adding description.inc
-    # FileUtils.copy("#{Website_root}/_tools/templates/index.html", 
-    #           "#{fold}/index.html")
-    # and updating it with the content of the description.inc
+    # Then deploy index.html template file and adding customizations to
+    # index.html pages
     update_index_html_description(fold)
   }
 
