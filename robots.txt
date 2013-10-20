@@ -1,0 +1,4 @@
+user-agent: *
+allow: /*.html$
+sitemap: http://aerostitch.github.io/sitemap.xml
+
