@@ -1,4 +1,5 @@
-user-agent: *
-allow: /*.html$
+User-agent: *
+Allow: /*.html$
+Disallow: /tools_/
 sitemap: http://aerostitch.github.io/sitemap.xml
 
