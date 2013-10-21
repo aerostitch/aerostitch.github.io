@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset>
   <url>
+    <title>Databases</title>
+    <path>/databases</path>
+    <url>
+      <title>Oracle</title>
+      <path>/databases/oracle</path>
+      <url>
+        <title>Expdp or rman on an NFS mount point in AIX</title>
+        <path>/databases/oracle/expdp_on_AIX_NFS.html</path>
+      </url>
+      <url>
+        <title>Certifications</title>
+        <path>/databases/oracle/certifications</path>
+        <url>
+          <title>Notes for exam 1Z0-047</title>
+          <path>/databases/oracle/certifications/Notes_1Z0-047.html</path>
+        </url>
+        <url>
+          <title>Notes for exams 1Z0-052</title>
+          <path>/databases/oracle/certifications/Notes_1Z0-052.html</path>
+        </url>
+        <url>
+          <title>Notes for exams 1Z0-053</title>
+          <path>/databases/oracle/certifications/Notes_1Z0-053.html</path>
+        </url>
+      </url>
+    </url>
+  </url>
+  <url>
     <title>Linux_and_unix</title>
     <path>/linux_and_unix</path>
     <url>
@@ -18,30 +46,6 @@
     <url>
       <title>Adding a counter of visits on an imagevue based website</title>
       <path>/misc/imagevue-adding_visit_counter_to_imagevue_website.html</path>
-    </url>
-  </url>
-  <url>
-    <title>Oracle</title>
-    <path>/oracle</path>
-    <url>
-      <title>Expdp or rman on an NFS mount point in AIX</title>
-      <path>/oracle/expdp_on_AIX_NFS.html</path>
-    </url>
-    <url>
-      <title>Certifications</title>
-      <path>/oracle/certifications</path>
-      <url>
-        <title>Notes for exam 1Z0-047</title>
-        <path>/oracle/certifications/Notes_1Z0-047.html</path>
-      </url>
-      <url>
-        <title>Notes for exams 1Z0-052</title>
-        <path>/oracle/certifications/Notes_1Z0-052.html</path>
-      </url>
-      <url>
-        <title>Notes for exams 1Z0-053</title>
-        <path>/oracle/certifications/Notes_1Z0-053.html</path>
-      </url>
     </url>
   </url>
   <url>
@@ -81,6 +85,10 @@
       <url>
         <title>Generate a random password using a one-liner</title>
         <path>/programming/perl/perl-ol-password_generator.html</path>
+      </url>
+      <url>
+        <title>"uniq" command by lines and by columns using perl one-liners</title>
+        <path>/programming/perl/perl-uniq.html</path>
       </url>
       <url>
         <title>wc -l using perl one-liners</title>

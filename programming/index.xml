@@ -36,6 +36,10 @@
       <path>/programming/perl/perl-ol-password_generator.html</path>
     </url>
     <url>
+      <title>"uniq" command by lines and by columns using perl one-liners</title>
+      <path>/programming/perl/perl-uniq.html</path>
+    </url>
+    <url>
       <title>wc -l using perl one-liners</title>
       <path>/programming/perl/perl-wc-l.html</path>
     </url>

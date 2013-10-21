@@ -25,11 +25,15 @@
     </url>
   </url>
   <url>
-    <title>Oracle</title>
-    <path>oracle</path>
+    <title>Databases</title>
+    <path>databases</path>
     <url>
-      <title>Certifications</title>
-      <path>certifications</path>
+      <title>Oracle</title>
+      <path>oracle</path>
+      <url>
+        <title>Certifications</title>
+        <path>certifications</path>
+      </url>
     </url>
   </url>
 </urlset>

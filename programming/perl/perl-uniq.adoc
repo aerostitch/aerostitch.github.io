@@ -1,0 +1,40 @@
+"uniq" command by lines and by columns using perl one-liners
+============================================================
+Joseph HERLANT
+v1.0.0, 2013-10-10: Initial version
+:encoding: UTF-8
+:description: Rewriting the uniq shell command and going a little further with +
+  perl one-liners
+:keywords: perl, oneliner, uniq, shell, bash
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+This simple command removes duplicated lines from a given input (file or pipe),
+keeping only the 1st occurence.
+
+[source, shell]
+-----
+include::perl_unique.sh[]
+-----
+
+This command removes lines that have duplicated values in the 2nd column (F[1]),
+keeping only the first line of the duplicated values.
+
+[source, shell]
+-----
+include::perl_unique_by_column.sh[]
+-----
+

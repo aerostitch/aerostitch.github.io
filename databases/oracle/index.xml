@@ -2,22 +2,22 @@
 <urlset>
   <url>
     <title>Expdp or rman on an NFS mount point in AIX</title>
-    <path>/oracle/expdp_on_AIX_NFS.html</path>
+    <path>/databases/oracle/expdp_on_AIX_NFS.html</path>
   </url>
   <url>
     <title>Certifications</title>
-    <path>/oracle/certifications</path>
+    <path>/databases/oracle/certifications</path>
     <url>
       <title>Notes for exam 1Z0-047</title>
-      <path>/oracle/certifications/Notes_1Z0-047.html</path>
+      <path>/databases/oracle/certifications/Notes_1Z0-047.html</path>
     </url>
     <url>
       <title>Notes for exams 1Z0-052</title>
-      <path>/oracle/certifications/Notes_1Z0-052.html</path>
+      <path>/databases/oracle/certifications/Notes_1Z0-052.html</path>
     </url>
     <url>
       <title>Notes for exams 1Z0-053</title>
-      <path>/oracle/certifications/Notes_1Z0-053.html</path>
+      <path>/databases/oracle/certifications/Notes_1Z0-053.html</path>
     </url>
   </url>
 </urlset>
