@@ -87,6 +87,10 @@
         <path>/programming/perl/perl-ol-password_generator.html</path>
       </url>
       <url>
+        <title>The "strings" command using a perl one-liner</title>
+        <path>/programming/perl/perl-strings.html</path>
+      </url>
+      <url>
         <title>"uniq" command by lines and by columns using perl one-liners</title>
         <path>/programming/perl/perl-uniq.html</path>
       </url>

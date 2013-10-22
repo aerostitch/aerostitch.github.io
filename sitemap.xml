@@ -139,6 +139,12 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>http://aerostitch.github.io/programming/perl/perl-strings.html</loc>
+    <lastmod>2013-10-22T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
     <loc>http://aerostitch.github.io/programming/perl/perl-uniq.html</loc>
     <lastmod>2013-10-10T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>

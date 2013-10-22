@@ -5,8 +5,8 @@
 DONE: menu.xml automatic generation
 DONE: sitemap.xml automatic generation
 DONE: index.xml && index.html files generation (with tree content)
-Add google stats tracker??? (use Nokogiri?)
-Integrate description to index ages using Nokogiri
+DONE: Add google stats tracker??? (use Nokogiri?)
+DONE: Integrate description to index ages using Nokogiri
 
 == Asciidoc backend
 
@@ -42,4 +42,7 @@ Disable IP V6
 Create LPAR using command line
 Install LPAR using command line
 Update LPP_SOURCE
+
+===Debian
+Updates to https://wiki.debian.org/BSP/BeginnersHOWTO
 
