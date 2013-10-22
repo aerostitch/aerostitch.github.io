@@ -25,6 +25,10 @@ Capture input/output + nose & doctests integration
 setup.py system
 skel generator
 
+=== Ruby
+Memo Rails
+http + proxy snippet
+
 === Javascript
 Jquery include page in html node
 
