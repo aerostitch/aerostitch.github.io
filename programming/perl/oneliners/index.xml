@@ -44,4 +44,8 @@
     <title>wc -l using perl one-liners</title>
     <path>/programming/perl/oneliners/perl-wc-l.html</path>
   </url>
+  <url>
+    <title>Wanna know if your machine is little or big endian?</title>
+    <path>/programming/perl/oneliners/perl_get_machine_endian.html</path>
+  </url>
 </urlset>
