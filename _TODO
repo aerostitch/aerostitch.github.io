@@ -32,6 +32,14 @@ http + proxy snippet
 === Javascript
 Jquery include page in html node
 
+=== Other programming languages
+R introduction
+Lua introduction
+Lisp introduction
+C2 introduction
+C docs
+C++ docs
+
 === Oracle
 Manual dataguard / db replication using rman duplicate (with and without target)
 Manual dataguard / db replication using archivelogs recovery
