@@ -91,67 +91,73 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://aerostitch.github.io/programming/perl/perl-common_lines_from_files.html</loc>
+    <loc>http://aerostitch.github.io/programming/perl/oneliners/index.html</loc>
+    <lastmod>2013-10-23T22:07:26+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://aerostitch.github.io/programming/perl/oneliners/perl-common_lines_from_files.html</loc>
     <lastmod>2013-10-19T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://aerostitch.github.io/programming/perl/perl-dos2unix_mac2unix.html</loc>
+    <loc>http://aerostitch.github.io/programming/perl/oneliners/perl-dos2unix_mac2unix.html</loc>
     <lastmod>2013-10-17T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://aerostitch.github.io/programming/perl/perl-extract_lines_between_patterns.html</loc>
+    <loc>http://aerostitch.github.io/programming/perl/oneliners/perl-extract_lines_between_patterns.html</loc>
     <lastmod>2013-10-19T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://aerostitch.github.io/programming/perl/perl-extract_paragraphs_containing.html</loc>
+    <loc>http://aerostitch.github.io/programming/perl/oneliners/perl-extract_paragraphs_containing.html</loc>
     <lastmod>2013-10-19T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://aerostitch.github.io/programming/perl/perl-get_1st_available_uid.html</loc>
+    <loc>http://aerostitch.github.io/programming/perl/oneliners/perl-get_1st_available_uid.html</loc>
     <lastmod>2013-10-19T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://aerostitch.github.io/programming/perl/perl-grep.html</loc>
+    <loc>http://aerostitch.github.io/programming/perl/oneliners/perl-grep.html</loc>
     <lastmod>2013-10-19T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://aerostitch.github.io/programming/perl/perl-nl.html</loc>
+    <loc>http://aerostitch.github.io/programming/perl/oneliners/perl-nl.html</loc>
     <lastmod>2013-10-19T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://aerostitch.github.io/programming/perl/perl-ol-password_generator.html</loc>
+    <loc>http://aerostitch.github.io/programming/perl/oneliners/perl-ol-password_generator.html</loc>
     <lastmod>2013-10-19T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://aerostitch.github.io/programming/perl/perl-strings.html</loc>
+    <loc>http://aerostitch.github.io/programming/perl/oneliners/perl-strings.html</loc>
     <lastmod>2013-10-22T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://aerostitch.github.io/programming/perl/perl-uniq.html</loc>
+    <loc>http://aerostitch.github.io/programming/perl/oneliners/perl-uniq.html</loc>
     <lastmod>2013-10-10T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://aerostitch.github.io/programming/perl/perl-wc-l.html</loc>
+    <loc>http://aerostitch.github.io/programming/perl/oneliners/perl-wc-l.html</loc>
     <lastmod>2013-10-19T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>

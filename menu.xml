@@ -22,6 +22,10 @@
     <url>
       <title>Perl</title>
       <path>perl</path>
+      <url>
+        <title>Oneliners</title>
+        <path>oneliners</path>
+      </url>
     </url>
   </url>
   <url>
