@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="generator" content="AsciiDoc 8.6.7" />
-<meta name="description" content="This document describes how to do datapump exports and rman backups on NFS mount points on AIX. It mainly describes how to correct ORA-01580 and ORA-27054 errors." />
-<meta name="keywords" content="Oracle, NFS, AIX, ORA-01580, ORA-27054, mount, expdp, rman, datapump" />
+<meta name="description" content="One-liners to encode and decode input strings or text files using the "quoted-printable" (aka: qp) format." />
+<meta name="keywords" content="perl, one-liner, qp, quoted-printable, encode, decode" />
 <meta name="author" content="Joseph HERLANT" />
 <link rel="shortcut icon" href="/custom_/ico/favicon.png" />
-<title>Expdp or rman on an NFS mount point in AIX</title>
+<title>Encode and decode using quoted-printable in perl</title>
 <style type="text/css">
 em {
   font-style: italic;
@@ -619,7 +619,7 @@ install: function(toclevels) {
 }
 
 }
-asciidoc.install(2);
+asciidoc.install(3);
 /*]]>*/
 </script>
 <!-- Bootstrap core CSS -->
@@ -673,171 +673,61 @@ asciidoc.install(2);
 <div>
   <span id="author">Joseph HERLANT</span>
   <br />
-  <span id="revnumber">version 1.0.1,</span>
-  <span id="revdate">2013-10-10</span>
-  <span id="revremark">: Adding forgotten prerequisites</span>
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2013-10-24</span>
+  <span id="revremark">: Initial version</span>
 </div>
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
 <div id="header">
-<h1>Expdp or rman on an NFS mount point in AIX</h1>
-This document describes how to do datapump exports and rman backups on NFS mount points on AIX. It mainly describes how to correct ORA-01580 and ORA-27054 errors.
+<h1>Encode and decode using quoted-printable in perl</h1>
+One-liners to encode and decode input strings or text files using the "quoted-printable" (aka: qp) format.
 </div>
       </div>
-<div class="sect1">
-<h2 id="_introduction">1. Introduction</h2>
+<div id="preamble">
 <div class="sectionbody">
-<div class="paragraph"><p>This document describes how to get the expdp datapump export and rman backup
-work on an NFS mount point in an AIX environment. It deals with the ORA-01580
-and ORA-27054 errors.</p></div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_prerequisites">2. Prerequisites</h2>
-<div class="sectionbody">
-<div class="paragraph"><p>A prerequisite is to have created the oracle corresponding directory using, for
-example:</p></div>
-<div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">create</span></span> directory MY_DIRECTORY <span style="font-weight: bold"><span style="color: #0000FF">as</span></span> <span style="color: #FF0000">'/local/mount/point'</span><span style="color: #990000">;</span></tt></pre></div></div>
-<div class="paragraph"><p>You can check the available Oracle directories using the following in sqlplus:</p></div>
-<div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">set</span></span> <span style="font-weight: bold"><span style="color: #0000FF">lines</span></span> <span style="color: #993399">200</span> pages <span style="color: #993399">1024</span><span style="color: #990000">;</span>
-col owner <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> a20<span style="color: #990000">;</span>
-col DIRECTORY_NAME <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> a25<span style="color: #990000">;</span>
-col DIRECTORY_PATH <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> a50<span style="color: #990000">;</span>
-<span style="font-weight: bold"><span style="color: #0000FF">select</span></span> OWNER<span style="color: #990000">,</span> DIRECTORY_NAME<span style="color: #990000">,</span> DIRECTORY_PATH <span style="font-weight: bold"><span style="color: #0000FF">from</span></span> DBA_DIRECTORIES<span style="color: #990000">;</span></tt></pre></div></div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_procedure">3. Procedure</h2>
-<div class="sectionbody">
-<div class="panel panel-primary admonitionblock">
+<div class="panel panel-info admonitionblock">
   <div class="panel-heading">
 
 
+<span class="glyphicon glyphicon-info-sign"></span>
 
 
-<span class="glyphicon glyphicon-minus-sign"></span>
     <b class="panel-title">
-    Important
+    Note
     </b>
   </div>
-  <div class="panel-body">
-<div class="paragraph"><p>In this procedure, you change to change all the reference to:</p></div>
-<div class="ulist"><ul>
-<li>
-<p>
-"remote_host" with your NFS server name
-</p>
-</li>
-<li>
-<p>
-"local_host_node" with the server name you are trying to mount NFS mount point on
-</p>
-</li>
-<li>
-<p>
-"/remote/fs/path" with the path of the directory as available o the NFS server
-</p>
-</li>
-<li>
-<p>
-"/local/mount/point" with the path of the mount point you are trying to mount
-</p>
-</li>
-<li>
-<p>
-"oracle:dba" with the oracle account name and oracle group name (from chown things)
-</p>
-</li>
-</ul></div>
-<div class="paragraph"><p>Also note that all the procedure is to be executed on the server where Oracle runs.</p></div>
-  </div>
+  <div class="panel-body">We are using the "MIME" Perl module here. As it is a core module,
+it should normally be installed on every systems where perl is installed.  </div>
 </div>
-<div class="paragraph"><p>First, verify that the remote mount point is available for you using <code>showmount</code>.</p></div>
+<div class="paragraph"><p>For more informations about this encoding, consult the dedicated
+<a href="https://en.wikipedia.org/wiki/Quoted-printable">Wikipedia page</a></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_encoding">1. Encoding</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This sentence returns the qp encoded version of the input (from a file or a
+pipe.).</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.6
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt>showmount -e remote_host</tt></pre></div></div>
-<div class="paragraph"><p>Output should look like this.</p></div>
-<div class="listingblock">
-<div class="content">
-<pre><code>export list for remote_host:
-/remote/fs/path   local_host_node</code></pre>
-</div></div>
-<div class="panel panel-warning admonitionblock">
-  <div class="panel-heading">
-
-<span class="glyphicon glyphicon-warning-sign"></span>
-
-
-
-    <b class="panel-title">
-    Warning
-    </b>
-  </div>
-  <div class="panel-body">
-<div class="paragraph"><p>If you have multiple IPs on the "local_host_node" server, verify that DNS and reverse DNS is working correctly.</p></div>
-<div class="paragraph"><p>If you have any issue while mounting the mount point, just add the name of both nodes (NFS server and client)
-on both local and remote servers in the /etc/hosts file. This generally solves the issues the quick and dirty way.
-The clean way is to ensure your DNS and reverse are all correct, but before souting at your DNS admins, do the
-/etc/hosts thing, that if it works, it&#8217;s a name resolution problem so you can ask your DNS team! ;)</p></div>
-  </div>
+<pre><tt>perl -MMIME<span style="color: #990000">::</span><span style="color: #009900">QuotedPrint</span><span style="color: #990000">=</span>encode_qp -e <span style="color: #FF0000">'print encode_qp join"",&lt;&gt;'</span></tt></pre></div></div>
 </div>
-<div class="paragraph"><p>On the local node, then just mount the mount point using the <code>bg,hard,intr,rsize=32768,wsize=32768,vers=3,proto=tcp,sec=sys,rw</code>
-options and add the own of the mount point to Oracle user.</p></div>
+</div>
+<div class="sect1">
+<h2 id="_decoding">2. Decoding</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This sentence returns the decoded version of a qp encoded input (from a file or
+ a pipe.).</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.6
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt>mount -n remote_host -o <span style="font-weight: bold"><span style="color: #0000FF">bg</span></span><span style="color: #990000">,</span>hard<span style="color: #990000">,</span>intr<span style="color: #990000">,</span><span style="color: #009900">rsize</span><span style="color: #990000">=</span><span style="color: #993399">32768</span><span style="color: #990000">,</span><span style="color: #009900">wsize</span><span style="color: #990000">=</span><span style="color: #993399">32768</span><span style="color: #990000">,</span><span style="color: #009900">vers</span><span style="color: #990000">=</span><span style="color: #993399">3</span><span style="color: #990000">,</span><span style="color: #009900">proto</span><span style="color: #990000">=</span>tcp<span style="color: #990000">,</span><span style="color: #009900">sec</span><span style="color: #990000">=</span>sys<span style="color: #990000">,</span>rw /remote/fs/path /local/mount/point
-<span style="font-style: italic"><span style="color: #9A1900"># Don't forget to change the permissions...</span></span>
-chown oracle<span style="color: #990000">:</span>dba /local/mount/point</tt></pre></div></div>
-<div class="paragraph"><p>If you try a datapump export at this point, you could encounter this kind of
-issue:</p></div>
-<div class="listingblock">
-<div class="content">
-<pre><code>Export: Release 10.2.0.5.0 - 64bit Production on Thursday, 10 October, 2013 10:28:57
-
-Copyright (c) 2003, 2007, Oracle.  All rights reserved.
-
-Connected to: Oracle Database 10g Release 10.2.0.5.0 - 64bit Production
-ORA-39001: invalid argument value
-ORA-39000: bad dump file specification
-ORA-31641: unable to create dump file "/mount/point/20131010_expdp_file.dmp"
-ORA-27054: NFS file system where the file is created or resides is not mounted with correct options
-Additional information: 6</code></pre>
-</div></div>
-<div class="paragraph"><p>And this one with an RMAN backup:</p></div>
-<div class="listingblock">
-<div class="content">
-<pre><code>ORA-01580: error creating backup file /mount/point/My_backup_file.bkp</code></pre>
-</div></div>
-<div class="paragraph"><p>This is mainly caused by the fact that Oracle tools do not find the occurence fo
-the mount point in the /etc/filesystems file with the right options! To correct
-this, go to <code>/etc/filesystems</code> and add the following block (replacing the
-current directory path and host name with your own values!):</p></div>
-<div class="listingblock">
-<div class="content">
-<pre><code>/local/mount/point:
-  dev             = "/remote/fs/path"
-  vfs             = nfs
-  nodename        = remote_host
-  mount           = true
-  options         = bg,hard,intr,rsize=32768,wsize=32768,proto=udp,sec=sys,rw
-  account         = false</code></pre>
-</div></div>
+<pre><tt>perl -MMIME<span style="color: #990000">::</span><span style="color: #009900">QuotedPrint</span><span style="color: #990000">=</span>decode_qp -e <span style="color: #FF0000">'print decode_qp join"",&lt;&gt;'</span></tt></pre></div></div>
 </div>
 </div>
     </div>
@@ -867,8 +757,8 @@ current directory path and host name with your own values!):</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.1<br />
-Last updated 2013-10-24 21:34:28 CEST
+Version 1.0.0<br />
+Last updated 2013-10-24 22:37:42 CEST
 </div>
 </div>
 </div>

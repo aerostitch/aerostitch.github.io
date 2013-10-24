@@ -1,0 +1,31 @@
+Adding the date and time to any command output using perl
+=========================================================
+Joseph HERLANT
+v1.0.0, 2013-10-24 : Initial version
+:encoding: UTF-8
+:description: Add the date before every lines a program / command outputs is +
+  easy with perl!
+:keywords: perl, oneliner, localtime, command
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+This commands adds the date and time to each lines of the "my_command" output.
+
+[source,shell]
+-----
+include::perl-add_time_to_command_output.sh[]
+-----
+

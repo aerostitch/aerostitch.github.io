@@ -7,6 +7,11 @@ DONE: sitemap.xml automatic generation
 DONE: index.xml && index.html files generation (with tree content)
 DONE: Add google stats tracker??? (use Nokogiri?)
 DONE: Integrate description to index ages using Nokogiri
+index.xml only @ root? + Description as alt on links for sidebar?
+Add a search engine based on the index.xml (description, keywords, title)
+Add a Ariadne's thread generated on jquery based on current path and index.xml
+Generate html only if adoc changed date > html date
+Find a better idea than the sidebar
 
 == Asciidoc backend
 
@@ -40,6 +45,7 @@ C2 introduction
 C docs
 C++ docs
 Objective-C introduction
+Erlang introduction
 
 === Oracle
 Manual dataguard / db replication using rman duplicate (with and without target)
@@ -58,11 +64,38 @@ Create LPAR using command line
 Install LPAR using command line
 Update LPP_SOURCE
 
-===Debian
+=== Debian
 Updates to https://wiki.debian.org/BSP/BeginnersHOWTO
 
-===Asciidoc
+=== Asciidoc
 Modifying front page
 Adding graphs
 Adding revision info
 Adding author, editors, copyights,... infos
+
+=== MSSQL
+Add a section and scripts
+
+=== Postgresql
+Add a section and scripts
+
+=== MySQL
+Add a section and scripts
+
+=== Databases
+Intro to:
+ * Hiera
+ * Redis
+ * MongoDB
+ * CouchDB
+ * MariaDB
+ * ElasticSearch
+ * NoSQL
+ * Berkley DB
+ * SQLite
+ * Cassandra
+ * Memcached
+ * SimpleDB
+See if there's something interesting there: http://db-engines.com/en/ranking
+
+

@@ -102,8 +102,32 @@
           <path>/programming/perl/oneliners/perl-wc-l.html</path>
         </url>
         <url>
+          <title>Test if an url respond correctly using WLP Perl module</title>
+          <path>/programming/perl/oneliners/perl_LWP_test_url.html</path>
+        </url>
+        <url>
+          <title>Encoding and decoding using ROT13 cipher in perl</title>
+          <path>/programming/perl/oneliners/perl_ROT13.html</path>
+        </url>
+        <url>
+          <title>Adding the date and time to any command output using perl</title>
+          <path>/programming/perl/oneliners/perl_add_time_to_command_output.html</path>
+        </url>
+        <url>
+          <title>Encoding and decoding in base64 using perl</title>
+          <path>/programming/perl/oneliners/perl_base64.html</path>
+        </url>
+        <url>
           <title>Wanna know if your machine is little or big endian?</title>
           <path>/programming/perl/oneliners/perl_get_machine_endian.html</path>
+        </url>
+        <url>
+          <title>DNS translations using perl</title>
+          <path>/programming/perl/oneliners/perl_hostname_ip.html</path>
+        </url>
+        <url>
+          <title>Encode and decode using quoted-printable in perl</title>
+          <path>/programming/perl/oneliners/perl_quoted_printable.html</path>
         </url>
       </url>
     </url>

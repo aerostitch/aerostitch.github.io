@@ -1,0 +1,50 @@
+Encoding and decoding in base64 using perl
+==========================================
+Joseph HERLANT
+v1.0.0, 2013-10-24 : Initial version
+:encoding: UTF-8
+:description: One-liners to encode and decode input strings or text files +
+  using base64 encodings.
+:keywords: Perl, oneliner, base64, encode, decode
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+NOTE: We are using the "MIME" Perl module here. As it is a core module, 
+it should normally be installed on every systems where perl is installed.
+
+
+Encode
+------
+
+This sentence returns the base64 encoded version of the input (from a file or a
+pipe. Here, it is from the input_data file).
+
+[source, shell]
+-----
+include::perl-base64_encode.sh[]
+-----
+
+
+Decode
+------
+
+This command returns the decoded version of a base64 encoded input (from a
+file or a pipe. Here, it is from the encoded_input_data file).
+
+[source, shell]
+-----
+include::perl-base64_decode.sh[]
+-----

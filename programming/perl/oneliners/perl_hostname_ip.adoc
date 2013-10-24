@@ -1,0 +1,38 @@
+DNS translations using perl
+===========================
+Joseph HERLANT
+v1.0.0, 2013-10-24 : Initial version
+:encoding: UTF-8
+:description: One-liners to do DNS conversion
+:keywords: perl, oneliner, DNS, hostname, ip
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+To get the hostname of an IP (or for a file containing a list of IP, each on one
+line).
+
+[source, shell]
+-----
+include::perl-ip_to_hostname.sh[]
+-----
+
+To get the ip (v4) of the hostname (or for a file containing a list of 
+hostnames, each on a line).
+
+[source, shell]
+-----
+include::perl-hostname_to_ipv4.sh[]
+-----

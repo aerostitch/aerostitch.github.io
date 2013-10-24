@@ -1,0 +1,55 @@
+Encode and decode using quoted-printable in perl
+================================================
+Joseph HERLANT
+v1.0.0, 2013-10-24 : Initial version
+:encoding: UTF-8
+:description: One-liners to encode and decode input strings or text files +
+  using the "quoted-printable" (aka: qp) format.
+:keywords: perl, one-liner, qp, quoted-printable, encode, decode
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+
+NOTE: We are using the "MIME" Perl module here. As it is a core module,
+it should normally be installed on every systems where perl is installed.
+
+
+For more informations about this encoding, consult the dedicated
+https://en.wikipedia.org/wiki/Quoted-printable[Wikipedia page]
+
+Encoding
+--------
+
+This sentence returns the qp encoded version of the input (from a file or a
+pipe.).
+
+[source, shell]
+-----
+include::perl-qp_encoder.sh[]
+-----
+
+
+Decoding
+--------
+
+This sentence returns the decoded version of a qp encoded input (from a file or
+ a pipe.).
+
+[source, shell]
+-----
+include::perl-qp_decoder.sh[]
+-----
+
