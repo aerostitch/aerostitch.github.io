@@ -39,6 +39,7 @@ Lisp introduction
 C2 introduction
 C docs
 C++ docs
+Objective-C introduction
 
 === Oracle
 Manual dataguard / db replication using rman duplicate (with and without target)
@@ -50,6 +51,8 @@ AWR tables custom querying
 
 === AIX
 Disable IP V6
+Debugging disks issues with `lvmstat -v myvg` and `filemon -o file.out -0 all`
+
 ==== Nim scripts
 Create LPAR using command line
 Install LPAR using command line
@@ -58,3 +61,8 @@ Update LPP_SOURCE
 ===Debian
 Updates to https://wiki.debian.org/BSP/BeginnersHOWTO
 
+===Asciidoc
+Modifying front page
+Adding graphs
+Adding revision info
+Adding author, editors, copyights,... infos
