@@ -1,0 +1,55 @@
+The look-and-say sequence using a perl one-liner
+================================================
+Joseph HERLANT
+v1.0.0, 2013-10-25 : Initial version
+:encoding: UTF-8
+:description: Displays the begining of the look-and-say sequence until the +
+  line is more than 64 characters.
+:keywords: perl, oneliner, John Conway
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+The look-and-say mathematical sequence has been introduced and analyzed by John
+Conway. If you don't know this sequence, look at the explanations given on
+https://en.wikipedia.org/wiki/Look-and-say_sequence[Wikipedia]. It is also konw
+as the *Conway Sequence*.
+
+This one-liner calculates the sequence until the member length is 64 or more. If
+you want to change this, change the "64" at the end of the line.
+
+[source, shell]
+-----
+include::perl-look-and-say_sequence.sh[]
+-----
+
+Here is the output of the oneliner:
+
+-----
+1
+11
+21
+1211
+111221
+312211
+13112221
+1113213211
+31131211131221
+13211311123113112211
+11131221133112132113212221
+3113112221232112111312211312113211
+1321132132111213122112311311222113111221131221
+11131221131211131231121113112221121321132132211331222113112211
+-----

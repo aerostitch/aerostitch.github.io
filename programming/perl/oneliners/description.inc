@@ -12,5 +12,10 @@
     working on windows (I use the perl version that ships with Oracle) to
       find a more friendly/usual environement.
     </p>
+    <p>
+    Some are also just here for fun. Note that I did not build all those 
+    one-liners alone. Most of them come from internet and I tested them or 
+    change a little bit some to fit my needs.
+    </p>
   </div>
 </div>

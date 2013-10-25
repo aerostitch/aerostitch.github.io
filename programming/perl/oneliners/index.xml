@@ -49,6 +49,10 @@
     <path>/programming/perl/oneliners/perl_LWP_test_url.html</path>
   </url>
   <url>
+    <title>Draw a Mandelbrot set using a perl one-liner</title>
+    <path>/programming/perl/oneliners/perl_Mandelbrot_set.html</path>
+  </url>
+  <url>
     <title>Encoding and decoding using ROT13 cipher in perl</title>
     <path>/programming/perl/oneliners/perl_ROT13.html</path>
   </url>
@@ -61,12 +65,20 @@
     <path>/programming/perl/oneliners/perl_base64.html</path>
   </url>
   <url>
+    <title>Prime number detection</title>
+    <path>/programming/perl/oneliners/perl_check_prime_number.html</path>
+  </url>
+  <url>
     <title>Wanna know if your machine is little or big endian?</title>
     <path>/programming/perl/oneliners/perl_get_machine_endian.html</path>
   </url>
   <url>
     <title>DNS translations using perl</title>
     <path>/programming/perl/oneliners/perl_hostname_ip.html</path>
+  </url>
+  <url>
+    <title>The look-and-say sequence using a perl one-liner</title>
+    <path>/programming/perl/oneliners/perl_look-and-say_sequence.html</path>
   </url>
   <url>
     <title>Encode and decode using quoted-printable in perl</title>

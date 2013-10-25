@@ -1,0 +1,76 @@
+Draw a Mandelbrot set using a perl one-liner
+============================================
+Joseph HERLANT
+v1.0.0, 2013-10-25 : Initial version
+:encoding: UTF-8
+:description: Draws a Mandelbrot set in ascii art.
+:keywords: Perl, oneliner, ascii, art, Mandelbrot, mathematical, fractral
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+This one prints out a Mandelbrot set in ascii art. For more informations about
+Mandelbrot set which is a matematical set whose boundary is a recognizable
+two-dimensional fractral shape, check the
+https://en.wikipedia.org/wiki/Mandelbrot_set[dedicated wikipedia page]!
+
+[source, shell]
+-----
+include::perl-Mandelbrot_set.sh[]
+-----
+
+Output:
+
+-----
+ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+ddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeddddddddddddddd
+dddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedddddddd
+dddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedddd
+dddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+ddddddddddddddddddeeeellllllllllllllbbbbrroodeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+ddddddddddddddddllllllllllllllllbbbbbbbrrrrt!ndlMtobbeeeeeeeeeeeeeeeeeeeeeeeeee
+ddddddddddddddlllllllllllllllbbbbbbbbbrrrrMald e!!trrbbbbbeeeeeeeeeeeeeeeeeeeee
+ddddddddddddllllllllllllllbbbbbbbbbbrrot!n      Mletrrrrbbbbbleeeeeeeeeeeeeeeee
+ddddddddddllllllllllllllbbbbbbbbboooott!Mnt      na!ttorrrrrrbllleeeeeeeeeeeeee
+dddddddddlllllllllllllbbbbbbbMtlrnMMa !r  rtM  e    oebn!oottdMolllleeeeeeeeeee
+dddddddllllllllllllbbbbrrroot!na   r                    rla  Md!rllllleeeeeeeee
+ddddddlllllllllllrrrrrrrooooeano                            rltorrllllleeeeeeee
+dddddlllllllllrrrrrrrrooo!Mla                               M !ttrblllllleeeeee
+dddddllllllttt!rnMtttttt!!                                      enbllllllleeeee
+ddddrrot!MebtaMo  !leMMMad                                     M!obbllllllleeee
+ddddrrtttnr           arbt                                     dtrbbblllllleeee
+dddrrrMn!               o                                     etrrbbbllllllleee
+dddMe   b                                                    !torrbbbllllllleee
+dddMe   b                                                    !torrbbbllllllleee
+dddrrrMn!               o                                     etrrbbbllllllleee
+ddddrrtttnr           arbt                                     dtrbbblllllleeee
+ddddrrot!MebtaMo  !leMMMad                                     M!obbllllllleeee
+dddddllllllttt!rnMtttttt!!                                      enbllllllleeeee
+dddddlllllllllrrrrrrrrooo!Mla                               M !ttrblllllleeeeee
+ddddddlllllllllllrrrrrrrooooeano                            rltorrllllleeeeeeee
+dddddddllllllllllllbbbbrrroot!na   r                    rla  Md!rllllleeeeeeeee
+dddddddddlllllllllllllbbbbbbbMtlrnMMa !r  rtM  e    oebn!oottdMolllleeeeeeeeeee
+ddddddddddllllllllllllllbbbbbbbbboooott!Mnt      na!ttorrrrrrbllleeeeeeeeeeeeee
+ddddddddddddllllllllllllllbbbbbbbbbbrrot!n      Mletrrrrbbbbbleeeeeeeeeeeeeeeee
+ddddddddddddddlllllllllllllllbbbbbbbbbrrrrMald e!!trrbbbbbeeeeeeeeeeeeeeeeeeeee
+ddddddddddddddddllllllllllllllllbbbbbbbrrrrt!ndlMtobbeeeeeeeeeeeeeeeeeeeeeeeeee
+ddddddddddddddddddeeeellllllllllllllbbbbrroodeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+dddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+dddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedddd
+dddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedddddddd
+ddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeddddddddddddddd
+ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+-----

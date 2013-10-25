@@ -1,0 +1,29 @@
+Prime number detection
+======================
+Joseph HERLANT
+v1.0.0, 2013-10-25 : Initial version
+:encoding: UTF-8
+:description: A one-liner that returns "Prime" if the number given in output +
+  is a prime number. If not, it returns nothing.
+:keywords: perl, oneliner, prime, number, check
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+
+[source, shell]
+-----
+include::perl-check_prime.sh[]
+-----

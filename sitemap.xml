@@ -92,7 +92,7 @@
   </url>
   <url>
     <loc>http://aerostitch.github.io/programming/perl/oneliners/index.html</loc>
-    <lastmod>2013-10-23T22:07:26+02:00</lastmod>
+    <lastmod>2013-10-25T11:23:33+02:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -169,6 +169,12 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>http://aerostitch.github.io/programming/perl/oneliners/perl_Mandelbrot_set.html</loc>
+    <lastmod>2013-10-25T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
     <loc>http://aerostitch.github.io/programming/perl/oneliners/perl_ROT13.html</loc>
     <lastmod>2013-10-24T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -187,6 +193,12 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>http://aerostitch.github.io/programming/perl/oneliners/perl_check_prime_number.html</loc>
+    <lastmod>2013-10-25T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
     <loc>http://aerostitch.github.io/programming/perl/oneliners/perl_get_machine_endian.html</loc>
     <lastmod>2013-10-23T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -195,6 +207,12 @@
   <url>
     <loc>http://aerostitch.github.io/programming/perl/oneliners/perl_hostname_ip.html</loc>
     <lastmod>2013-10-24T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://aerostitch.github.io/programming/perl/oneliners/perl_look-and-say_sequence.html</loc>
+    <lastmod>2013-10-25T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
