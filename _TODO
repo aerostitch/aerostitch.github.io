@@ -7,6 +7,7 @@ DONE: sitemap.xml automatic generation
 DONE: index.xml && index.html files generation (with tree content)
 DONE: Add google stats tracker??? (use Nokogiri?)
 DONE: Integrate description to index ages using Nokogiri
+
 index.xml only @ root? + Description as alt on links for sidebar?
 Add a search engine based on the index.xml (description, keywords, title)
 Add a Ariadne's thread generated on jquery based on current path and index.xml
@@ -17,11 +18,17 @@ Find a better idea than the sidebar
 
 DONE: sidebar index generation using index.xml && jquery
 DONE: correct code blocks rendering issue
+
 enhance backend
 integrate asciidoc js & css to custom_ folder
 
 
 == Docs
+
+=== Perl
+Number conversions using hex and oct
+Oracle and other DB connection lib
+Excel generation examples using perl
 
 === Python
 Nose tests functions & fixtures
