@@ -1,0 +1,158 @@
+Converting numbers between octal, decimal, hexadecimal and binary formats
+=========================================================================
+Joseph HERLANT
+v1.0.0, 2013-10-25 : Initial version
+:encoding: UTF-8
+:description: Converting octal numbers to decimal and the opposite. Same for +
+  conversion of numbers in hexadecimal and binary formats.
+:keywords: perl, oneliner, decimal, octal, hexadecimal, binary, conversion
+:lang: en
+:data-uri:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+Decimal to hexadecimal
+----------------------
+
+Converts the given list of decimal numbers to their hexadecimal format. If lower
+case wanted, use %x instead of %X.
+
+[source, shell]
+-----
+include::perl-decimal_to_hexadecimal.sh[]
+-----
+
+Example:
+
+-----
+perl -e 'printf("0x%X\n",$_)for@ARGV' 10 12 1024
+0xA
+0xC
+0x400
+-----
+
+Hexadecimal to decimal
+----------------------
+
+Converts a given list of hexadecimal numbers to their decimal format. You can
+use 0x in front of the hexadecimal numbers or not as you want.
+
+[source, shell]
+-----
+include::perl-hex_to_decimal.sh[]
+-----
+
+Example:
+
+-----
+perl -e 'printf("%i\n",hex $_)for@ARGV' 10 12 AF 0xaf
+16
+18
+175
+175
+-----
+
+Decimal to octal
+----------------
+
+Converts the given list of decimal numbers to their octal format.
+
+[source, shell]
+-----
+include::perl-decimal_to_octal.sh[]
+-----
+
+Example:
+
+-----
+perl -e 'printf("%o\n",$_)for@ARGV' 5 6 7 8 9 10
+5
+6
+7
+10
+11
+12
+-----
+
+Octal to decimal
+----------------
+
+Converts the given list of octal numbers to their decimal format. You can also
+give hexadecimal formats as long as you put the 0x in front of them.
+
+[source, shell]
+-----
+include::perl-octal_to_decimal.sh[]
+-----
+
+Example:
+
+-----
+perl -e 'printf("%i\n",oct $_)for@ARGV' 10 18 0777 0xaf
+8
+1
+511
+175
+-----
+
+Decimal to binary
+-----------------
+
+Converts the given decimal numbers to their binary format. You can add a 0b in
+front of the %b in the expression to have the 0bXXX number format.
+
+[source, shell]
+-----
+include::perl-decimal_to_binary.sh[]
+-----
+
+Example:
+
+-----
+perl -e 'printf("%b\n",$_)for@ARGV' 0 1 2 3 4 5 6 7 8 9 10
+0
+1
+10
+11
+100
+101
+110
+111
+1000
+1001
+1010
+-----
+
+Binary to decimal
+-----------------
+
+Converts the given binary numbers to their decimal format. You can use "0b"
+formated binaries strings if you want.
+
+[source, shell]
+-----
+include::perl-binary_to_decimal.sh[]
+-----
+
+Example:
+
+-----
+perl -e 'printf("%i\n",oct("$_"=~/^0b\d/?$_:"0b".$_))for@ARGV' 10 11 101  1001 0b1011
+2
+3
+5
+9
+11
+-----
+

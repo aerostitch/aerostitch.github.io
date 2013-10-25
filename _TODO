@@ -13,6 +13,7 @@ Add a search engine based on the index.xml (description, keywords, title)
 Add a Ariadne's thread generated on jquery based on current path and index.xml
 Generate html only if adoc changed date > html date
 Find a better idea than the sidebar
+Add a google analyzer?
 
 == Asciidoc backend
 

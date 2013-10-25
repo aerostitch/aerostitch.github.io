@@ -81,6 +81,10 @@
     <path>/programming/perl/oneliners/perl_look-and-say_sequence.html</path>
   </url>
   <url>
+    <title>Converting numbers between octal, decimal, hexadecimal and binary formats</title>
+    <path>/programming/perl/oneliners/perl_numbers_conversion.html</path>
+  </url>
+  <url>
     <title>Encode and decode using quoted-printable in perl</title>
     <path>/programming/perl/oneliners/perl_quoted_printable.html</path>
   </url>
