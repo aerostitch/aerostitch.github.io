@@ -15,6 +15,10 @@
   <url>
     <title>Misc</title>
     <path>misc</path>
+    <url>
+      <title>Asciidoc</title>
+      <path>asciidoc</path>
+    </url>
   </url>
   <url>
     <title>Programming</title>

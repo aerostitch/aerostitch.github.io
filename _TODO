@@ -2,12 +2,6 @@
 
 == General
 
-DONE: menu.xml automatic generation
-DONE: sitemap.xml automatic generation
-DONE: index.xml && index.html files generation (with tree content)
-DONE: Add google stats tracker??? (use Nokogiri?)
-DONE: Integrate description to index ages using Nokogiri
-
 index.xml only @ root? + Description as alt on links for sidebar?
 Add a search engine based on the index.xml (description, keywords, title)
 Add a Ariadne's thread generated on jquery based on current path and index.xml
@@ -17,35 +11,38 @@ Add a google analyzer?
 
 == Asciidoc backend
 
-DONE: sidebar index generation using index.xml && jquery
-DONE: correct code blocks rendering issue
-
 enhance backend
 integrate asciidoc js & css to custom_ folder
 
 
+
+
+
 == Docs
 
-=== Perl
-Number conversions using hex and oct
+===Programming
+
+==== Perl
+Ensure your script is running the right perl exe. If not, relaunch it from
+there.
 Oracle and other DB connection lib
 Excel generation examples using perl
 
-=== Python
+==== Python
 Nose tests functions & fixtures
 Doctests doc
 Capture input/output + nose & doctests integration
 setup.py system
 skel generator
 
-=== Ruby
+==== Ruby
 Memo Rails
 http + proxy snippet
 
-=== Javascript
+==== Javascript
 Jquery include page in html node
 
-=== Other programming languages
+==== Other programming languages
 R introduction
 Lua introduction
 Lisp introduction
@@ -55,13 +52,10 @@ C++ docs
 Objective-C introduction
 Erlang introduction
 
-=== Oracle
-Manual dataguard / db replication using rman duplicate (with and without target)
-Manual dataguard / db replication using archivelogs recovery
-Tablespaces
-Sessions
-AWR reports
-AWR tables custom querying
+
+
+
+=== Linux / Unix
 
 === AIX
 Disable IP V6
@@ -75,22 +69,30 @@ Update LPP_SOURCE
 === Debian
 Updates to https://wiki.debian.org/BSP/BeginnersHOWTO
 
-=== Asciidoc
-Modifying front page
-Adding graphs
-Adding revision info
-Adding author, editors, copyights,... infos
 
-=== MSSQL
-Add a section and scripts
 
-=== Postgresql
-Add a section and scripts
 
-=== MySQL
-Add a section and scripts
 
 === Databases
+
+==== Oracle
+Manual dataguard / db replication using rman duplicate (with and without target)
+Manual dataguard / db replication using archivelogs recovery
+Tablespaces
+Sessions
+AWR reports
+AWR tables custom querying
+
+==== MSSQL
+Add a section and scripts
+
+==== Postgresql
+Add a section and scripts
+
+==== MySQL
+Add a section and scripts
+
+==== Other databases
 Intro to:
  * Hiera
  * Redis
@@ -107,3 +109,12 @@ Intro to:
 See if there's something interesting there: http://db-engines.com/en/ranking
 
 
+
+
+=== Misc
+
+==== Asciidoc
+Modifying front page
+Adding graphs
+Adding revision info
+Adding author, editors, copyights,... infos

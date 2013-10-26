@@ -1,0 +1,160 @@
+Using UTF-8 titles with a2x
+===========================
+Joseph HERLANT
+v1.0.0, 2013-10-26 : Initial version
+:encoding: UTF-8
+:description: This document describes how to take care of title containing +
+  non-ascii characters using a2x.
+:keywords: UTF-8, Asciidoc, ascii-ids, a2x
+:lang: en
+:data-uri:
+:ascii-ids:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+
+What's the issue with non-ascii characters?
+-------------------------------------------
+
+In asciidoc (and a2x), the documents are transformed in an xml file and then
+processed using dblatex, fop or other tools.
+
+In this xml file, a section has an id assigned that is the title with spaces
+replaced by underscores.
+
+If you generate a pdf with dblatex which is the default for an `a2x -f pdf`
+command) and that your title contains some non-ascii characters, the xml will
+render them correctly, but not dblatex by default.
+
+In this case, you will encounter an error as described in 
+http://bugs.debian.org/622359[this debian bug report]. To summarize, the
+non-verbose mode will render this:
+
+.....
+$ a2x -f pdf /tmp/test.txt 
+a2x: ERROR: "dblatex" -t pdf -p "/etc/asciidoc/dblatex/asciidoc-dblatex.xsl" -s "/etc/asciidoc/dblatex/asciidoc-dblatex.sty"   "/tmp/test.xml" returned non-zero exit status 1
+.....
+
+And the verbose mode will render something like this:
+
+.....
+$ a2x -v -f pdf /tmp/test.txt 
+a2x: args: ['-v', '-f', 'pdf', '/tmp/test.txt']
+a2x: resource files: []
+a2x: resource directories: ['/etc/asciidoc/images', '/etc/asciidoc/stylesheets']
+a2x: executing: "/usr/bin/asciidoc" --backend docbook -a "a2x-format=pdf"  --verbose  --out-file "/tmp/test.xml" "/tmp/test.txt"
+
+asciidoc: reading: /etc/asciidoc/asciidoc.conf
+asciidoc: reading: /etc/asciidoc/asciidoc.conf
+asciidoc: reading: /tmp/test.txt
+asciidoc: reading: /etc/asciidoc/docbook45.conf
+asciidoc: reading: /etc/asciidoc/filters/graphviz/graphviz-filter.conf
+asciidoc: reading: /etc/asciidoc/filters/source/source-highlight-filter.conf
+asciidoc: reading: /etc/asciidoc/filters/music/music-filter.conf
+asciidoc: reading: /etc/asciidoc/filters/code/code-filter.conf
+asciidoc: reading: /etc/asciidoc/filters/latex/latex-filter.conf
+asciidoc: reading: /etc/asciidoc/lang-en.conf
+asciidoc: writing: /tmp/test.xml
+
+a2x: executing: "xmllint" --nonet --noout --valid "/tmp/test.xml"
+
+
+a2x: executing: "dblatex" -t pdf -p "/etc/asciidoc/dblatex/asciidoc-dblatex.xsl" -s "/etc/asciidoc/dblatex/asciidoc-dblatex.sty"  -V  "/tmp/test.xml"
+
+Build the book set list...
+xsltproc -o /tmp/tmpAI1LA9/doclist.txt --xinclude --xincludestyle doclist.xsl /tmp/test.xml
+Build the listings...
+xsltproc -o /tmp/tmpAI1LA9/listings.xml --xinclude --xincludestyle --param current.dir '/tmp' /usr/share/dblatex/xsl/common/mklistings.xsl /tmp/test.xml
+xsltproc -o test.rtex --xinclude --xincludestyle --param current.dir '/tmp' --param listings.xml '/tmp/tmpAI1LA9/listings.xml' /tmp/tmpAI1LA9/custom.xsl /tmp/test.xml
+XSLT stylesheets DocBook - LaTeX 2e (0.3.4-3)
+===================================================
+Image 'dblatex' not found
+Build test.pdf
+built-in module pdftex registered
+no support found for ifthen
+no support found for ifxetex
+no support found for fontspec
+no support found for xltxtra
+no support found for fontenc
+no support found for inputenc
+no support found for fancybox
+built-in module makeidx registered
+no support found for asciidoc-dblatex
+building additional files...
+checking if compiling is necessary...
+the output file doesn't exist
+pdflatex -interaction=batchmode test.tex
+pdflatex failed
+test.aux:27: Missing \endcsname inserted.
+test.aux:27: leading text: ... e.g. � break a2x headlines}{section.1}{}}
+test.aux:27: Missing $ inserted.
+test.aux:27: leading text: ... e.g. � break a2x headlines}{section.1}{}}
+test.aux:60: Missing $ inserted.
+test.aux:60: leading text: \end{document}
+Unexpected error occured
+Error: pdflatex compilation failed
+
+a2x: ERROR: "dblatex" -t pdf -p "/etc/asciidoc/dblatex/asciidoc-dblatex.xsl" -s "/etc/asciidoc/dblatex/asciidoc-dblatex.sty"  -V  "/tmp/test.xml" returned non-zero exit status 1
+.....
+
+How to solve this issue?
+------------------------
+
+There's 2 ways to solve the issue. The one that I found much cleaner and
+convenient one is the second one but both have to be known.
+
+
+The dblatex option
+~~~~~~~~~~~~~~~~~~
+
+To make dblatex handle properly the non-ascii characters in ids, you have to
+install the cyrillic support for texlive. In debian, you can do:
+
+[source, shell]
+-----
+sudo apt-get install texlive-lang-cyrillic
+-----
+
+And then generate your documents modifying the latex.encoding parameter like
+this:
+
+[source, shell]
+-----
+a2x --dblatex-opts="--param=latex.encoding=utf8" --no-xmllint /tmp/test.txt
+-----
+
+Then you can modify your asciidoc dblatex options parameter file to add this.
+
+The built-in asciidoc (much cleaner) option
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+But if you want, asciidoc can do it for you with the built-in tag `:ascii-ids:`
+that transforms non-ascii characters to ascii characters using the "unicodedata"
+python module.
+
+Example of using this tag:
+
+.....
+This is an example asciidoc-file
+================================
+Gerhard Siegesmund <jerri@jerri.de>
+:ascii-ids:
+
+Umlauts e.g. ü break a2x headlines
+----------------------------------
+
+Stable asciidoc (8.5.x) has no problems with this file.
+.....
+
+

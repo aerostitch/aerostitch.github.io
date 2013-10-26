@@ -67,6 +67,18 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>http://aerostitch.github.io/misc/asciidoc/asciidoc-title_uft8.html</loc>
+    <lastmod>2013-10-26T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://aerostitch.github.io/misc/asciidoc/index.html</loc>
+    <lastmod>2013-10-26T19:55:20+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
     <loc>http://aerostitch.github.io/misc/imagevue-adding_visit_counter_to_imagevue_website.html</loc>
     <lastmod>2013-10-09T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
