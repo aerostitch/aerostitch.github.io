@@ -1,0 +1,459 @@
+Some git tips
+=============
+Joseph HERLANT
+v1.0.0, 2013-10-26 : Initial version
+:encoding: UTF-8
+:description: Here you'll find some stuffs I found to be kind of cool or some +
+  things that I usually forget about it. For example, how to edit commits +
+  history or what does rebase do.
+:keywords: git, hg, rebase, log, .gitattributes, config, crlf, stash, rebase, +
+  fetch, reset, branch, HEAD, origin, tag, cherry-pick, prune
+:lang: en
+:data-uri:
+:ascii-ids:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+NOTE: For more informations on GIT, consult the http://www.git-scm.com/[Official
+git website] where you can read the http://www.git-scm.com/book[Pro Git book for
+free], watch some videos and a lot of other resources. +
+You can also consult the http://gitready.com/[Git ready website] to find more 
+tips about this. +
+Another good and free book about git is
+http://ftp.newartisans.com/pub/git.from.bottom.up.pdf[Git from the bottom up]. +
+You can also use the `git help` command for more informations. +
+And watch the online courses about git on https://www.codeschool.com[Code
+school]!
+
+Equivalent between git and mercurial (hg) commands
+--------------------------------------------------
+
+Just go to this url:
+http://mercurial.selenic.com/wiki/GitConcepts#Command_equivalence_table
+
+
+Dealing with git logs
+---------------------
+
+To get a shorter and nice display for git commits history logs, use the
+"--online" option. There you'll get the logs in a "<commit id> <Commit message>"
+style.
+
+-----
+git log --oneline
+-----
+
+
+Output example:
+.....
+$git log --oneline
+e89195d Adding a tip on asciidoc using utf-8 titles
+4c666c1 Adding perl helpers for converting numbers
+d13b046 Adding some stuffs to do
+60a2477 Adding other perl one-liners
+dfd0f8f Adding some perl monks and some todo
+9596bb3 Updating todo
+.....
+
+Or use the "--pretty=format:" formatter like this:
+
+-----
+git log --pretty=format:"%h (%ad) [%an] - %s"
+-----
+
+Which will output something like this:
+
+.....
+$ git log --pretty=format:"%h (%ad) [%an] - %s"
+e89195d (Sat Oct 26 20:25:21 2013 +0200) [Joseph HERLANT] - Adding a tip on asciidoc using utf-8 titles
+4c666c1 (Fri Oct 25 12:54:59 2013 +0200) [Joseph HERLANT] - Adding perl helpers for converting numbers
+d13b046 (Fri Oct 25 11:32:01 2013 +0200) [Joseph HERLANT] - Adding some stuffs to do
+60a2477 (Fri Oct 25 11:24:55 2013 +0200) [Joseph HERLANT] - Adding other perl one-liners
+.....
+
+Or even add graphs to get branching graphs!
+
+-----
+git log --pretty=format:"%h [%an] %s" --decorate --graph
+-----
+
+or
+
+----
+git log --oneline --graph --decorate
+-----
+
+What does git rebase do?
+------------------------
+
+the `git rebase [branch_name]` command duplicates the head version of the given
+branch ("branch_name") just as if you did a brand new branch and then applies
+all the current branch's commit history on the top of the HEAD version of the
+branch.
+
+For example, if you had a commit "A1" and "A2" in the "A" branch and you do a
+`git rebase master` with a master branch that has a commit B1 done after the "A"
+branch creation, your command will create a new branch from the master branch's
+HEAD containing the "B1" commit, and then apply the "A1" and "A2" commit on top
+of this. This branch will replace the branch you've currently checked out
+(branch "A" here).
+
+It is often better to do the following instead of `git pull` (which will
+pollute the logs with merges):
+
+-----
+git fetch
+git rebase
+-----
+
+
+Edit commits
+------------
+
+Invert the order of 2 commits
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following command will open an editor containing the last 2 commands and let
+you alter them, so you will be able to edit them (and change their order).
+
+-----
+git rebase -i HEAD~2
+-----
+
+Rename a specific commit
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+To change the 5th last commit, use a `git rebase -i HEAD~5` and use the `reword`
+command in our editor.
+
+Merging 2 commits
+~~~~~~~~~~~~~~~~~
+
+To merge the last 2 commits, open a git editor using `git rebase -i HEAD~2`
+and use the `squash` command to merge one of the commits into the other.
+
+
+Reverting the last commit (not already pushed)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To remove the last commit from the local repository, use :
+
+-----
+git reset --soft HEAD^
+-----
+
+If you also want to remove the changes that were included in the last commit
+(and not only the commit from the timeline) from your local repository, use the
+"--hard" option instead of "--soft":
+
+-----
+git reset --hard HEAD^
+-----
+
+Adding some stuff to the last commit
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To add data to the last commit, use the "--amend" option:
+
+-----
+git commit --amend -m "New message for the last commit I want to add data to."
+-----
+
+Adding a particular commit from another branch
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to get only a particular change that is in a specific commit of
+another branch, use the following command (--edit is if you want to edit the
+commit message). Be carefull, this command directly commits to the local branch!
+
+-----
+git cherry-pick -x --signoff [--edit] <hash_of_the_commit>
+-----
+
+If you just want to apply the local branch, not commiting it, use the
+"--no-commit" option:
+
+-----
+git cherry-pick --no-commit <hash_of_the_commit>
+-----
+
+NOTE: You can cherry pick multiple commit by specifying multiple hashes at the
+end of the line, separated by spaces.
+
+Recover a dropped commit
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+WARNING: This has to be done on the local repo where the drop operation (reset)
+has heen done.
+
+List the logs of the local repo to retrieve the hash or the short name of the 
+operation that *preceeded* the operation of dropping the commit, using:
+
+-----
+git reflog
+-----
+
+Or the `git log --walk-reflogs` if you want a more verbose mode.
+
+Then, do a:
+
+-----
+git reset --hard <hash_retrieved>|<short_name>
+-----
+
+
+
+
+Dealing with branches
+---------------------
+
+List remote branches
+~~~~~~~~~~~~~~~~~~~~
+
+-----
+git branch -r
+-----
+
+or, with little more cool stuffs like which branch is out of date:
+
+-----
+git remote show origin
+-----
+
+
+Cleanup removed branches
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following command will remove all the local references of branches that do
+not exist anymore on the remote repository. Quite handy when working on big
+projects that have a lot of branching activity.
+
+-----
+git remote prune origin
+-----
+
+Recover a deleted branch
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+WARNING: This has to be done on the local repo where the drop operation (`git
+branch -D|-d <branch_name>`) has heen done.
+
+List the logs of the local repo to retrieve the hash or the short name of the 
+the last commit of the dropped branch, using:
+
+-----
+git reflog
+-----
+
+Or the `git log --walk-reflogs` if you want a more verbose mode.
+
+Then, recreate the branch (with the same name or a new name) using:
+
+-----
+git branch <branch_name> <hash_retrieved>|<short_name>
+-----
+
+
+Dealing with tags
+-----------------
+
+List tags
+~~~~~~~~~
+
+-----
+git tag
+-----
+
+Add new tag
+~~~~~~~~~~~
+
+-----
+git tag -a <tag_name> -m "<Message>"
+-----
+
+Push new tags
+~~~~~~~~~~~~~
+
+Classic git push won't push tags.If you don't want tags to stay only local, use
+the "--tags" option of the push command.
+
+-----
+git push --tags
+-----
+
+
+Temporarly save a branch modification without commiting
+-------------------------------------------------------
+
+Saving
+~~~~~~
+
+To save a current state of branch modifications (for example to go and work on
+another branch) but without having to commit, use the stash command.
+
+-----
+git stash save [<stash_message>]
+-----
+
+or without the save, it does the same thing:
+
+-----
+git stash
+-----
+
+WARNING: This will save both the staging area and the unstaged changes. If you
+don't want the staging area to be stashed, use the "--keep-index" option. +
+If you want also the untracked files to be stashed, use the
+"--include-untracked" option.
+
+And to create a branch directly from the stash, use `git stash branch
+<branch_name>`
+
+Listing backups
+~~~~~~~~~~~~~~~
+
+-----
+git stash list
+-----
+
+or, to get a little bit more infos on what changes are done on each stash, use
+the "--stat" option (or any other option of git log command) or use the 
+following command to get the informations on one particular stash
+
+-----
+git stash show [<stash_name>]
+-----
+
+
+Getting changes back
+~~~~~~~~~~~~~~~~~~~~
+
+Either do a:
+
+[source, shell]
+-----
+git stash apply [<stash_name>]
+git stash drop [<stash_name>]   # once you don't need the backup anymore
+-----
+
+or the following which do the both previous commands in one on the last stash:
+
+-----
+git stash pop
+-----
+
+
+Dealing with line endings
+-------------------------
+
+Using git config
+~~~~~~~~~~~~~~~~
+
+If you're on a Linux/unix machine and you want to ensure line endings are in
+unix format when you get committed files, use:
+
+-----
+git config --global core.autocrlf input
+-----
+
+If you're on a windows machine and you want to ensure line endings will be all
+in windows format (\r\n), use:
+
+-----
+git config --global core.autocrlf true
+-----
+
+Using  .gitattributes file
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Put a ".gitattributes" file in your repository to manage fine-grained line
+feeds. For example, This .gitattributes file manages automatically line endings
+by default but considers .bat files to need windows-style line endings, .sh
+files to be unix-style and .jpg to be binary files.
+
+.....
+*     text=auto
+*.py  text
+*.sh  text eol=lf
+*.bat text eol=crlf
+*.jpg binary
+.....
+
+Using submodules
+----------------
+
+Adding submodule to a project
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, submodules don't checkout any branch, so you need to do it
+explicitly.
+
+-----
+git submodule add <remote_repository_adress_of_submodule>
+git add --all
+cd <submodule_dir>
+git checkout <submodule_branch>
+-----
+
+Cloning a project with submodules
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[source, shell]
+-----
+git clone <parent_repository>
+git submodule init    # To add the submodules to the local configuration file
+git submodule update  # To checkout all configured submodule
+cd <submodule_dir>
+git checkout <submodule_branch>
+-----
+
+Pulling submodules
+~~~~~~~~~~~~~~~~~~
+
+-----
+git submodule update
+cd <submodule_dir>
+git checkout <submodule_branch>
+-----
+
+Integrating commits done outside of any branches
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you forget to checkout your submodules and you commit your submodules,
+these commits don't get into any branch, so you'll need to do:
+
+-----
+git checkout <branch_name>
+git merge <hash_of_the_unbranched_commit>
+-----
+
+Pushing submodules
+~~~~~~~~~~~~~~~~~~
+
+IMPORTANT: When commiting submodules, you also need to commit the parent 
+project to ensure it point to the latest version of the submodule.
+
+
+You can ensure to push your submodules using the "--recurse-submodules" option:
+
+-----
+git push --recurse-submodules=on-demand
+-----
+
+You can use alias to shorten this:
+
+-----
+git config --global alias.pushall "push --recurse-submodules=on-demand"
+git pushall     # Uses your newly created alias
+-----

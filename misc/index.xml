@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset>
   <url>
+    <title>Some git tips</title>
+    <path>/misc/git.html</path>
+  </url>
+  <url>
     <title>Adding a counter of visits on an imagevue based website</title>
     <path>/misc/imagevue-adding_visit_counter_to_imagevue_website.html</path>
   </url>
