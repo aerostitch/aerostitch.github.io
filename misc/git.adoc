@@ -1,7 +1,7 @@
 Some git tips
 =============
 Joseph HERLANT
-v1.0.0, 2013-10-26 : Initial version
+v1.0.1, 2013-10-27 : Adding archiving
 :encoding: UTF-8
 :description: Here you'll find some stuffs I found to be kind of cool or some +
   things that I usually forget about it. For example, how to edit commits +
@@ -22,7 +22,8 @@ v1.0.0, 2013-10-26 : Initial version
 :quotes.%: underline
 
 /////
-Comments
+:revinfo:
+v1.0.0, 2013-10-26 : Initial version
 /////
 
 NOTE: For more informations on GIT, consult the http://www.git-scm.com/[Official
@@ -457,3 +458,23 @@ You can use alias to shorten this:
 git config --global alias.pushall "push --recurse-submodules=on-demand"
 git pushall     # Uses your newly created alias
 -----
+
+
+Creating tarball from a branch or tag
+-------------------------------------
+
+Creates a gzipped tarball of a specific branch or tag in the parent directory:
+
+-----
+git archive -o ../<my_package>_<my_version>.tar.gz <branch_name>|<tag_name>
+-----
+
+To get the recognized files format, use the `git archive --list` command:
+
+.....
+$ git archive --list
+tar
+tgz
+tar.gz
+zip
+.....

@@ -673,9 +673,9 @@ asciidoc.install(3);
 <div>
   <span id="author">Joseph HERLANT</span>
   <br />
-  <span id="revnumber">version 1.0.0,</span>
-  <span id="revdate">2013-10-26</span>
-  <span id="revremark">: Initial version</span>
+  <span id="revnumber">version 1.0.1,</span>
+  <span id="revdate">2013-10-27</span>
+  <span id="revremark">: Adding archiving</span>
 </div>
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
@@ -1155,6 +1155,25 @@ git pushall     # Uses your newly created alias</code></pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_creating_tarball_from_a_branch_or_tag">10. Creating tarball from a branch or tag</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Creates a gzipped tarball of a specific branch or tag in the parent directory:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>git archive -o ../&lt;my_package&gt;_&lt;my_version&gt;.tar.gz &lt;branch_name&gt;|&lt;tag_name&gt;</code></pre>
+</div></div>
+<div class="paragraph"><p>To get the recognized files format, use the <code>git archive --list</code> command:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ git archive --list
+tar
+tgz
+tar.gz
+zip</code></pre>
+</div></div>
+</div>
+</div>
     </div>
     <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar"
         role="navigation">
@@ -1182,8 +1201,8 @@ git pushall     # Uses your newly created alias</code></pre>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.0<br />
-Last updated 2013-10-27 16:24:50 CET
+Version 1.0.1<br />
+Last updated 2013-10-27 17:05:41 CET
 </div>
 </div>
 </div>
