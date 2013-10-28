@@ -1,0 +1,208 @@
+Some CSS tips
+===============
+Joseph HERLANT
+v1.0.0, 2013-10-28 : Initial version
+:encoding: UTF-8
+:description: Some tips about CSS that I want to keep track of. 
+:keywords: CSS, margin, padding, collapsing, alignment
+:lang: en
+:data-uri:
+:ascii-ids:
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+Horizontal centering
+--------------------
+
+To horizontally center an element, use:
+
+[source, css]
+-----
+margin: 0 auto;
+-----
+
+To horizontally center the text inside an element, use
+
+[source, css]
+-----
+text-align: center;
+-----
+
+
+Shortening
+----------
+
+`margin` and `padding` properties can be set in oneline using the following pattern
+(just remember that it's clockwise):
+
+[source, css]
+-----
+margin: margin-top margin-right margin-bottom margin-left;
+padding: top-size right-size bottom-size left-size;
+-----
+
+or, if the top and bottom size are the same and that the left and  right size
+are the same, use:
+
+[source, css]
+-----
+margin: margin-top_and_bottom margin-right_and_left;
+padding: top_bottom-size right_left-size;
+-----
+
+
+`font` property can be set in one line using:
+
+[source, css]
+-----
+font: size/line-height text-weight font-style font-family;
+-----
+
+`background` propertie's template:
+
+[source, css]
+-----
+background: background-color background-image background repeat x-position y-position;
+-----
+
+`border` property template:
+
+[source, css]
+-----
+border: border-width border-style border-color;
+-----
+
+
+Margin collapsing
+-----------------
+
+Only blocks that have at least one of the following elements will not have
+margin collapsing:
+
+ * a padding or border property
+ * the position property set explicitly relative or absolute
+ * the float property set to either left or right
+
+For more informations on collapsing margins, see this
+http://www.w3.org/TR/CSS2/box.html#collapsing-margins[W3C website section]
+
+Resizing images proportionally
+------------------------------
+
+Apply the wished width and height to the container of the image and hide the
+overflow. The resize the biggest between width and height off the image and set
+the other one to "auto". Example:
+
+[source, css]
+-----
+img_container {
+  height: 250px;
+  width: 250px;
+  overflow: hidden;
+}
+img_container img {
+  height: 250px;
+  width:auto;
+}
+-----
+
+Simulate alt attribute on css background images
+-----------------------------------------------
+
+[source, html]
+-----
+<a href="#" class="my_class">This could be a alt text</a>
+-----
+
+with the following properties assigned to the element, the text of the a will be
+readable by helpers for blind peoples for example but will be sent hout of the
+window for a nicer look.
+
+[source, css]
+-----
+.my_class{
+  background: url(my_bg_image.jpg);
+  display: block;
+  width: 10px;
+  height: 20px;
+  text-indent: -9999px;
+}
+-----
+
+Moving background image when having the mouse over an element
+-------------------------------------------------------------
+
+Easy! In this example, the image bounces from 50px:
+
+[source, css]
+-----
+my_element:hover,  my_element.focus {
+  background-position: 0 -50px;
+}
+-----
+
+Usefull when combining images to get rid of the lag when loading the image for
+hover.
+
+Geting alternate background-color on a list
+-------------------------------------------
+
+[source, html]
+-----
+<ul>
+  <li>Test 1</li>
+  <li>Test 2</li>
+  <li>Test 3</li>
+  <li>Test 4</li>
+  <li>Test 5</li>
+</ul>
+-----
+
+[source, css]
+-----
+li:nth-child(even) {
+  background-color: orange;
+}
+li:nth-child(odd) {
+  background-color: yellow;
+}
+-----
+
+
+Or you can replace even by "2n" and odd by "2n+1" and play with this syntax for
+more complex patterns.
+
+Adding something at the begining of an element
+----------------------------------------------
+
+This is done by the ":before" pseudo element:
+
+[source, css]
+-----
+p:before {
+  content: '->';
+  margin: 5px;
+}
+-----
+
+Some usefull links about CSS
+----------------------------
+
+http://necolas.github.io/normalize.css/
+http://meyerweb.com/eric/tools/css/reset/
+http://clagnut.com/sandbox/imagetest
+http://css-tricks.com/pseudo-class-selectors/
+http://css-tricks.com/pseudo-element-roundup/
+
+

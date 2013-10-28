@@ -64,6 +64,10 @@
     <title>Programming</title>
     <path>/programming</path>
     <url>
+      <title>Some CSS tips</title>
+      <path>/programming/css3.html</path>
+    </url>
+    <url>
       <title>Perl</title>
       <path>/programming/perl</path>
       <url>
