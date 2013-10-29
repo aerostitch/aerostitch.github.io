@@ -242,4 +242,4 @@ http://clagnut.com/sandbox/imagetest
 http://css-tricks.com/pseudo-class-selectors/
 http://css-tricks.com/pseudo-element-roundup/
 
-
+http://hex2rgba.devoth.com/[A hex to RGBA color converter]
