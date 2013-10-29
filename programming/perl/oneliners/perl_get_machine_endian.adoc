@@ -8,6 +8,10 @@ or big-endian.
 :keywords: perl, oneliner, little-endian, big-endian
 :lang: en
 :data-uri:
+:ascii-ids:
+:linkcss:
+:stylesdir: /custom_/css
+:scriptsdir: /custom_/js
 :icons:
 :iconsdir: /usr/share/asciidoc/images/icons/
 :numbered:

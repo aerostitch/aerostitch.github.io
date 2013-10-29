@@ -7,6 +7,13 @@ v1.0.2, 2013-10-19 : changing a part of the intruduction warning
   1Z0-047 Oracle certification exam.
 :keywords: Oracle, Certified, Expert, SQL, Certification, exam, 1Z0-047
 :data-uri:
+:ascii-ids:
+:linkcss:
+:stylesdir: /custom_/css
+:scriptsdir: /custom_/js
+:linkcss:
+:stylesdir: /custom_/css
+:scriptsdir: /custom_/js
 :icons:
 :iconsdir: /usr/share/asciidoc/images/icons/
 :numbered:

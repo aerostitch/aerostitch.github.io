@@ -11,6 +11,9 @@ v1.0.1, 2013-10-27 : Adding archiving
 :lang: en
 :data-uri:
 :ascii-ids:
+:linkcss:
+:stylesdir: /custom_/css
+:scriptsdir: /custom_/js
 :icons:
 :iconsdir: /usr/share/asciidoc/images/icons/
 :numbered:

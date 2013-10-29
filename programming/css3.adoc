@@ -1,5 +1,5 @@
 Some CSS tips
-===============
+=============
 Joseph HERLANT
 v1.0.0, 2013-10-28 : Initial version
 :encoding: UTF-8
@@ -8,6 +8,9 @@ v1.0.0, 2013-10-28 : Initial version
 :lang: en
 :data-uri:
 :ascii-ids:
+:linkcss:
+:stylesdir: /custom_/css
+:scriptsdir: /custom_/js
 :icons:
 :iconsdir: /usr/share/asciidoc/images/icons/
 :numbered:
@@ -29,14 +32,14 @@ To horizontally center an element, use:
 
 [source, css]
 -----
-margin: 0 auto;
+my_element { margin: 0 auto; }
 -----
 
 To horizontally center the text inside an element, use
 
 [source, css]
 -----
-text-align: center;
+my_element { text-align: center; }
 -----
 
 
@@ -48,8 +51,10 @@ Shortening
 
 [source, css]
 -----
-margin: margin-top margin-right margin-bottom margin-left;
-padding: top-size right-size bottom-size left-size;
+my_element{
+  margin: margin-top margin-right margin-bottom margin-left;
+  padding: top-size right-size bottom-size left-size;
+}
 -----
 
 or, if the top and bottom size are the same and that the left and  right size
@@ -57,8 +62,10 @@ are the same, use:
 
 [source, css]
 -----
-margin: margin-top_and_bottom margin-right_and_left;
-padding: top_bottom-size right_left-size;
+my_element {
+  margin: margin-top_and_bottom margin-right_and_left;
+  padding: top_bottom-size right_left-size;
+}
 -----
 
 
@@ -66,21 +73,23 @@ padding: top_bottom-size right_left-size;
 
 [source, css]
 -----
-font: size/line-height text-weight font-style font-family;
+my_element { font: size/line-height text-weight font-style font-family; }
 -----
 
 `background` propertie's template:
 
 [source, css]
 -----
-background: background-color background-image background repeat x-position y-position;
+my_element {
+  background: background-color background-image background repeat x-position y-position;
+}
 -----
 
 `border` property template:
 
 [source, css]
 -----
-border: border-width border-style border-color;
+my_element { border: border-width border-style border-color; }
 -----
 
 
@@ -195,6 +204,34 @@ p:before {
   margin: 5px;
 }
 -----
+
+Make a rounded-angles border element
+------------------------------------
+
+Just add the border-radius (and the several vendors-specific versions) css
+property to the element:
+
+[source, css]
+-----
+my_element {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+-----
+
+Get transparency on text
+------------------------
+
+Use the rgba color declaration instead of the hex version, passing it a 4th
+parameter which is the transparency:
+
+[source, css]
+-----
+my_element { color: rgba(100, 35, 360, .5); }
+-----
+
+or try out the HSLa color declaration.
 
 Some usefull links about CSS
 ----------------------------

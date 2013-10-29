@@ -9,6 +9,13 @@ v1.0.7, 2013-10-19: tiny modifications in introduction warning
   1Z0-052, 11gR2
 :lang: en
 :data-uri:
+:ascii-ids:
+:linkcss:
+:stylesdir: /custom_/css
+:scriptsdir: /custom_/js
+:linkcss:
+:stylesdir: /custom_/css
+:scriptsdir: /custom_/js
 :icons:
 :iconsdir: /usr/share/asciidoc/images/icons/
 :numbered:

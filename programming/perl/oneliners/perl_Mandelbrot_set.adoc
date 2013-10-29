@@ -7,6 +7,10 @@ v1.0.0, 2013-10-25 : Initial version
 :keywords: Perl, oneliner, ascii, art, Mandelbrot, mathematical, fractral
 :lang: en
 :data-uri:
+:ascii-ids:
+:linkcss:
+:stylesdir: /custom_/css
+:scriptsdir: /custom_/js
 :icons:
 :iconsdir: /usr/share/asciidoc/images/icons/
 :numbered:
