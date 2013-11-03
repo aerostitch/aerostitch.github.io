@@ -34,6 +34,7 @@ Doctests doc
 Capture input/output + nose & doctests integration
 setup.py system
 skel generator
+Pydoc
 
 ==== Ruby
 Memo Rails
@@ -51,6 +52,7 @@ C docs
 C++ docs
 Objective-C introduction
 Erlang introduction
+Documentation using Doxygen (& others?)
 
 
 

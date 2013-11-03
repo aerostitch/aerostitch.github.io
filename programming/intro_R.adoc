@@ -1,0 +1,418 @@
+Introduction to the R programming language
+==========================================
+Joseph HERLANT
+v1.0.0, 2013-11-03 : Initial version
+:encoding: UTF-8
+:description: This is an introduction to the R programming language. +
+R is a free software programming language and software environment for +
+statistical computing and graphics.
+:keywords: R, programming langauge, free, statistics, graphics, vector
+:lang: en
+:data-uri:
+:ascii-ids:
+:linkcss:
+:stylesdir: /custom_/css
+:scriptsdir: /custom_/js
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+
+
++++++
+<!-- Used for google chart graphs -->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
++++++
+
+Variables
+---------
+
+Basics
+~~~~~~
+
+Variables are assigned using the `<-` operator.
+
+
+-----
+x <- 2
+y <- "Bla bla bla"
+-----
+
+Booleans are: `TRUE` and `FALSE` which can be shorten as `T` and `F`
+respectively.
+
+`NA` is the equivalent of a null or nil in other languages. It indicates that no
+data is available. Note that a sum containing at least a NA value will render
+NA. To get rid of these values when calculating a sum, use the `na.rm = TRUE`
+option available in a lot of R functions.
+
+Vectors
+~~~~~~~
+
+Create vectors using the `Combine`function on a coma-separated list of elements
+of the SAME TYPE. This function has a shortcut: `c`. Example:
+
+
+-----
+x <- c(1, 2, 3)
+y <- c('a', 'b', 'c')
+-----
+
+To create a vector which is a sequence, use either the `start:end` notation or
+the `seq` function. The advantage of using seq is that you can specify a 3rd
+parameter which is the step increment to catever value you want.
+
+You can see that the simple vector is just like what's called an array in many
+programming languages.
+
+The above example output exactly the same:
+
+
+-----
+s1 <- 2:11
+s2 <- seq(2,11)
+-----
+
+To access something in a vector, use its index just like an array in other
+programming languages. In the above example, we are extracting 'c', replacing
+'b' by 'o' and adding a new strings as 4th value. Be carefull, vector's index
+start with 1!
+
+
+-----
+x <- c('a', 'b', 'c')
+x[3]
+x[2] <- 'o'
+x[4] <- 'is good!'
+-----
+
+You also can extract a vector from the vector using a sequence as parameter. The
+following will extract a vector of 'b' 'c' and 'd', and then extend the vector
+with 'f' 'g' and 'h'.
+
+
+-----
+x <- c('a', 'b', 'c', 'd', 'e')
+x[2:4]
+x[6:8] <- 'f':'h'
+-----
+
+A vector can have a named index just like an hashtable in other programming
+languages. For this, assign the vector as usual and the assign its names using
+the `names` function.
+
+
+-----
+hash_equivalent <- c("Val1", "Val2", "Val3")
+names(hash_equivalent) <- c("first val", "2nd val", "3rd val")
+hash_equivalent{"first val")
+-----
+
+Matrix
+~~~~~~
+
+To create a zero-filled matrix, use the `matrix` function on the 0 number like
+this (3 is the number of lines, 4 the number of columns):
+
+-----
+x <- matrix(0, 3, 4)
+-----
+
+To create a matrix from a vector, use the same as above:
+
+-----
+x <- 1:12
+matrix(x, 3, 4)
+-----
+
+which will render:
+
+*****
+     [,1] [,2] [,3] [,4]
+[1,]    1    4    7   10
+[2,]    2    5    8   11
+[3,]    3    6    9   12
+*****
+
+To assign dimensions to a vector, transforming it to a matrix. The example
+bellow will render exactly the same as the previous example but the vector
+himself is converted in-place to a matrix (in the previous example, it is not
+the case).
+
+-----
+x <- 1:12
+dim(x) <- c(3,4)
+-----
+
+Matrix works the same as a multidimensionnal array that you can find in other
+programming languages. The example below shows how to get the 3rd row, 4th
+column element of a matrix:
+
+-----
+my_matrix|3,4]
+-----
+
+To get an antire row, omit the 2nd index. To get an entire column, omit the
+1st index. To get multiple lines/rows, put a sequence in the corresponding index
+place.
+
+-----
+my_matrix|3, ]
+my_matrix|, 4]
+my_matrix|3:5, ]
+my_matrix|, 2:4]
+-----
+
+Assignment of a single element works the same way:
+
+-----
+my_matrix|3,4] <- 11
+-----
+
+Data frames
+~~~~~~~~~~~
+
+Data frames are just like a matrix with title colums or just like an excel
+stylesheet.
+
+Let's say you have 3 vectors: country, population, age. You can do a data frame like
+this:
+
+-----
+countries <- c("France", "Germany", "Italy")
+population <- c(65806000, 80523700, 59772978)
+age <- c(40, 45, 43)
+my_frame <- data.frame(countries, population, age)
+-----
+
+A `print(my_frame)` would, in this case, give:
+
+*****
+    countries population  age
+1      France   65806000   40
+2     Germany   80523700   45
+3       Italy   59772978   43
+*****
+
+You can get a column on a data frame by giving its index between double brackets
+or giving its name between double brackets or even passing it after a dollar.
+All the lines above give the same result in our example:
+
+-----
+my_frame[[2]]
+my_frame[["population"]]
+my_frame$population
+-----
+
+To merge data frames, you can use the `merge` function.
+
+
+
+
+Operations
+----------
+
+Classic math operations can be done on numbers like:
+
+ * `+` for addition
+ * `-` for substraction
+ * `/` for division
+ * `*` for multiplication
+
+Doing such operation on a vector will do the operation on all the elements of
+the vector.
+
+Comparing 2 strings / numbers or whatever you want using `==`. You can also
+compare vectors using the `==` operator which will return a vector of the result
+of the comparision for each elements. +
+All of this is also true for `>`, `<`, `>=`, `<=`.
+
+The `mean` function will display the average value of a vector.
+
+The `median` function will display the median value. (Value of the vector
+that is at the middle of the sorted list or the average of both middle values
+for even numbered vectors).
+
+
+The standard deviation of a vector is given by the `sd` function. To summarize:
++
+sd = sqrt(average(for each vector's value ( sqrt(mean of vector - value))))
+
+R can try to find correlation between vectors using the `cor.test(vector1,
+vector2)` function.
+
+It can also try and calculate the linear model using the `lm(vector1 ~ vector2)`
+function.
+
+
+
+Working with files
+------------------
+
+To list local files, use:
+
+
+-----
+list.files()
+-----
+
+Run a ".R" file from the interpreter using:
+
+
+-----
+source("MyFile.R")
+-----
+
+To load a csv file, use the `read.csv` function. This will return a Data Frame
+structure.
+
+-----
+read.csv("my_data_file.csv")
+-----
+
+A tab-separated file can be loaded using the `read.table` function, specifying
+the separator and wether or not the file contains a header. If header is set to
+false, a new header will be created. It will return a data frame structure.
+
+-----
+read.table("a_tsv_file.txt", sep="\t", header=TRUE)
+-----
+
+
+
+Getting help
+------------
+
+To get some help on a function, use the following command:
+
+
+-----
+help(function_I_wanna_learn_about)
+-----
+
+If you only want examples of it, use:
+
+
+-----
+example(function_I_want_examples_about)
+-----
+
+Drawing charts
+--------------
+
+Create a bar chart with a vector using the `barplot` function. You can set the
+name on the vector to have values on y-axis as shown in the above example.
+
+
+-----
+my_vect <- c(3, 9, 2)
+names(my_vect) <- c("France", "US", "UK")
+barplot(my_vect)
+-----
+
+Which would give a graph similar to this (this one is actually generated by
+google graph for this website needs):
+
++++++
+  <script type="text/javascript">
+
+    google.load("visualization", "1", \{packages:["corechart"]\});
+      google.setOnLoadCallback(drawVisualization);
+
+    function drawVisualization() {
+      // Create and populate the data table.
+      var data = google.visualization.arrayToDataTable([
+        ['', 0],
+        ['France', 3],
+        ['US',  9],
+        ['UK',  2]
+      ]);
+    
+      // Create and draw the visualization.
+    var options =  \{title:"", width:600, height:400,  hAxis: \{title: ""\} \}
+    var chart = new
+google.visualization.ColumnChart(document.getElementById('barplot_example_div'));
+    chart.draw(data, options);
+    }
+    
+  </script>
+<div id="barplot_example_div" style="width: 600px; height: 400px;"></div>
+
++++++
+
+Create a plot chart using the `plot` function. You must provide 2 vectors for
+this: one for the x-axis values and one for the y-axis values.
+
+
+-----
+x <- seq(20, 100, 0.9)
+y <- sqrt(x)
+plot(x, y)
+-----
+
+Add a line on a graph using `abline(h = value_of_the_line)̀`.
+
+
+Draw a contour map of a matrix by usong the `contour` function.
+
+-----
+m <- matrix(1, 10, 10)
+m[2, 3] <- 0
+contour(m)
+-----
+
+Draw a 3D perspective with the `persp` function, setting the height with the
+`expand` parameter.
+
+-----
+m <- matrix(1, 10, 10)
+m[2, 3] <- 0
+persp(m, expand=0.3)
+-----
+
+
+The image dunction will display a 2D "heat" graph representation of the matrix.
+
+-----
+m <- matrix(1, 10, 10)
+m[2, 3] <- 0
+image(m)
+-----
+
+
+NOTE: You can use the "volcano" matrix that contains a sample data set to play
+with those functions.
+
+
+
+
+
+
+Resources
+---------
+
+R project official site: http://www.r-project.org/
+
+Wikipedia page: https://en.wikipedia.org/wiki/R_%28programming_language%29
+
+Codeschool introduction to the R programming language (it's free, you really
+should do that if you're interested in R):
+http://tryr.codeschool.com
+
+Another usefull resource:
+http://www.johndcook.com/R_language_for_programmers.html
+
+ggplot2 is a graphics package to install new packages from the Comprehensive R
+Archive Network (CRAN). You can get some help with the `help(package =
+"ggplot2")` command... Give it a try!
+
