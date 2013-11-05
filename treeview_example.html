@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+  <TITLE> ZTREE DEMO - Standard Data </TITLE>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <!--  <link rel="stylesheet" href="./ztree/css/demo.css" type="text/css"> -->
+  <link rel="stylesheet" href="/custom_/css/zTreeStyle.css" type="text/css">
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="/custom_/js/jquery.ztree.core-3.5.min.js"></script>
+  <SCRIPT type="text/javascript">
+    <!--
+    var setting = { data: {simpleData: {enable: true } } };
+
+    var zNodes =[
+      { name:"pNode 01", open:true, url:"index.html", target:"_self",
+        children: [
+          { name:"pNode 11",
+            children: [
+              { name:"leaf node 111", url:"index.html", target:"_self"},
+              { name:"leaf node 112"},
+              { name:"leaf node 113"},
+              { name:"leaf node 114"}
+            ]},
+          { name:"pNode 12",
+            children: [
+              { name:"leaf node 121"},
+              { name:"leaf node 122"},
+              { name:"leaf node 123"},
+              { name:"leaf node 124"}
+            ]},
+          { name:"pNode 13 - no child", isParent:true}
+        ]},
+      { name:"pNode 02", open:true,
+        children: [
+          { name:"pNode 21", open:true,
+            children: [
+              { name:"leaf node 211"},
+              { name:"leaf node 212"},
+              { name:"leaf node 213"},
+              { name:"leaf node 214"}
+            ]},
+          { name:"pNode 22",
+            children: [
+              { name:"leaf node 221"},
+              { name:"leaf node 222"},
+              { name:"leaf node 223"},
+              { name:"leaf node 224"}
+            ]},
+          { name:"pNode 23",
+            children: [
+              { name:"leaf node 231"},
+              { name:"leaf node 232"},
+              { name:"leaf node 233"},
+              { name:"leaf node 234"}
+            ]}
+        ]},
+      { name:"pNode 3 - no child", isParent:true}
+
+    ];
+
+    $(document).ready(function(){
+      $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+    });
+    //-->
+  </SCRIPT>
+</HEAD>
+
+<BODY>
+<div class="content_wrap">
+  <div>
+    <ul id="treeDemo" class="ztree"></ul>
+  </div>
+</div>
+</BODY>
+</HTML>
