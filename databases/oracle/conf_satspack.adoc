@@ -1,0 +1,318 @@
+Installing and configuring Statspack
+====================================
+Joseph HERLANT
+v1.0.0, 2013-11-05 : Initial version
+:encoding: UTF-8
+:description: This post is about installation and configuration of Statspack +
+  reports, the AWR's ancestor which has the advantage to be free of charge and +
+  available in all editions of Oracle since Oracle Database 8i. Yes, even if a +
+  lot of people forget it, the "Oracle Diagnostics Pack" license is necessary +
+  to use the AWR and ASH tools.
+:keywords: Statspack, diagnostics, diagnosis, diag, AWR, perf, performance, +
+  monitor
+:lang: en
+:data-uri:
+:ascii-ids:
+:linkcss:
+:stylesdir: /custom_/css
+:scriptsdir: /custom_/js
+:icons:
+:iconsdir: /usr/share/asciidoc/images/icons/
+:numbered:
+:toc:
+:toclevels: 3
+:doctype: article
+:website: http://aerostitch.github.io
+:tags.underline: <u>|</u>
+:quotes.%: underline
+
+/////
+Comments
+/////
+
+WARNING: This document describes the installation of Statspack on Oracle
+instances version 8.1.7 and later. To get the scripts names for the versions
+between 8.0 and 8.1.7, go to the following website:
+http://www.dba-oracle.com/t_statspack_install_scripts.htm
+
+Installation
+------------
+
+Prerequisites
+~~~~~~~~~~~~~
+
+First thing is to isolate the data in a specific tablespace. The installation
+script of Statspack will ask you for one, so let's create it! (I usually name it
+"PERFSTAT", but you can choose whatever name you want)
+
+The best thing to do would be to set its size to its final size if you know it.
+I prefer to set it to its target size and let it extend a little bit if needed.
+
+For databases with low activity, statspack snapshots every 1 hour and keeping 8
+days of history, I usually have statspack data around 1G.
+
+[source, SQL]
+-----
+create tablespace PERFSTAT
+  datafile '/u01/app/oracle/oradata/MYINSTANCE/perfstat_01.dbf' 
+  size 1G autoextend on next 128M maxsize 2G;
+-----
+
+IMPORTANT: You should monitor this tablespace's size to ensure
+there will always be enough space for the statspack to run correctly.
+
+User and tables creation
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The `spcreate.sql` will create the PERFSTAT user, packages and tables. This
+script will call the following subscripts:
+
+ * `spcusr.sql` which creates the user and assigns it the required rights
+ * `spctab.sql` which creates the statspack tables (around 146 tables prefixed
+    by "STATS$"). It is executed as PERFSTAT user.
+ * `spcpkg.sql` which creates the STATSPACK package and its STATSPACK package
+   body. It is executed as PERFSTAT user.
+
+
+You can either install Statspack in interactive mode using the command line
+bellow which will prompt for:
+
+ * PERFSTAT user password
+ * The tablespace where to put Statpack's data
+ * The temporary tablespace to use
+
+[source, SQL]
+-----
+sqlplus "/ as sysdba" @?/rdbms/admin/spcreate.sql
+-----
+
+To install Statspack in batch mode, just assign the variables in sqlplus as
+show in the example below. Adapt the variables values to fit your environment.
+
+[source, SQL]
+-----
+CONNECT / AS SYSDBA
+define perfstat_password='A_Pr3tty_Pwd'
+define default_tablespace='PERFSTAT'
+define temporary_tablespace='TEMP'
+@?/rdbms/admin/spcreate
+-----
+
+Configuration
+-------------
+
+Automatic statistics gathering
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+spauto.sql - Schedule a dbms_job to automate the collection of STATPACK statistics 
+
+or
+
+SQL> BEGIN
+  2    DBMS_SCHEDULER.CREATE_SCHEDULE(
+  3     schedule_name => 'perfstat.statspack_every20',
+  4     repeat_interval => 'FREQ=MINUTELY;BYMINUTE=10,30,50');
+  5
+  6    DBMS_SCHEDULER.CREATE_JOB(
+  7     job_name => 'perfstat.sp_snapshot',
+  8     job_type => 'STORED_PROCEDURE',
+  9     job_action => 'perfstat.statspack.snap',
+ 10     schedule_name => 'perfstat.statspack_every20',
+ 11     comments => 'Statspack collection');
+ 12
+ 13    DBMS_SCHEDULER.ENABLE('perfstat.sp_snapshot');
+ 14  END;
+ 15  /
+
+
+Automatic history purge
+~~~~~~~~~~~~~~~~~~~~~~~
+
+sppurge.sql - Purge (delete) a range of Snapshot Id's between the specified
+begin and end Snap Id's 
+
+-- set transaction use rollback segment big_rbs;
+
+--select min(snap_id) as losnapid, max(snap_id) hisnapid from stats$snapshot
+where SNAP_TIME<trunc(sysdate-15);
+define losnapid=902;
+define hisnapid = 2794;
+@?/rdbms/admin/sppurge.sql
+
+
+Changing default parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+exec statspack.modify_statspack_parameter(i_snap_level=>7,
+i_modify_parameter=>’true’);
+Keep in mind that the higher the snapshot levels require more time and resources
+to execute than the lower snapshot levels.
+
+Manual operations
+-----------------
+
+Generating report
+~~~~~~~~~~~~~~~~~
+
+select SNAP_ID, SNAP_TIME from STATS$SNAPSHOT; 
+
+spreport.sql - Report on differences between values recorded in two snapshots
+
+5 is the default
+SQL> select * from stats$level_description;
+ 
+SNAP_LEVEL  DESCRIPTION
+----------  --------------------------------------------------------------------
+         0  This level captures general statistics, including rollback segment,
+            row cache, SGA, system events, background events, session events,
+            system statistics, wait statistics, lock statistics, and Latch
+            information
+ 
+         5  This level includes capturing high resource usage SQL Statements,
+            along with all data captured by lower levels
+ 
+         6  This level includes capturing SQL plan and SQL plan usage
+            information for high resource usage SQL Statements, along with all
+            data captured by lower levels
+ 
+         7  This level captures segment level statistics, including logical and
+            physical reads, row lock, itl and buffer busy waits, along with all
+            data captured by lower levels
+ 
+        10  This level includes capturing Child Latch statistics, along with
+            all data captured by lower levels
+ 
+SQL>
+
+
+Creating snapshot manually
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+sqlplus perfstat/perfstat
+exec statspack.snap;         -- Take a performance snapshots
+-- or instruct statspack to do gather more details in the snapshot
+-- (look up which oracle version supports which level).
+exec perfstat.statspack.snap(i_snap_level=>10);
+
+
+Purging history manually
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+sptrunc.sql - Truncates all data in Statspack tables
+
+Exporting PERFSTAT user
+~~~~~~~~~~~~~~~~~~~~~~~
+
+spuexp.par
+
+
+Uninstallation
+--------------
+
+The `spdrop.sql` will drop the PERFSTAT user after dropping its tables. This
+script will call the following subscripts:
+
+ * `spdtab.sql` which drops the PERFSTAT tables (executed as sysdba)
+ * `spdusr.sql` which drops the PERFSTAT user (executed as sysdba)
+
+[source, SQL]
+-----
+sqlplus "/ as sysdba" @?/rdbms/admin/spdrop.sql
+-----
+
+
+
+
+Playing directly in PERFSTAT tables
+-----------------------------------
+
+
+
+Potential problems
+
+Statpack reporting suffers from the following problems:
+
+    Some statistics may only be reported on COMPLETION of a query. For example,
+if a query runs for 12 hours, its processing won't be reported during any of the
+snapshots taken while the query was busy executing. 
+
+    If queries are aged out of the shared pool, the stats from V$SQL are reset.
+This can throw off the delta calculations and even make it negative. For
+example, query A has 10,000 buffer_gets at snapshot 1, but at snapshot #2, it
+has been aged out of the pool and reloaded and now shows only 1,000 buffer_gets.
+So, when you run spreport.sql from snapshot 1 to 2, you'll get 1,000-10,000 =
+-9,000 for this query. 
+
+External links
+
+  http://docs.oracle.com/cd/B10500_01/server.920/a96533/statspac.htm
+  http://www.orafaq.com/wiki/Statspack
+  http://www.oracledistilled.com/oracle-database/performance/installing-and-configuring-statspack/
+  http://www.fadalti.com/oracle/database/how_to_statspack.htm
+    OraPerf.com, upload your STATSPACK file to get performance recommendations -
+no more exists.
+    www.spviewer.com, website with software tools for Oracle tuning based on
+statspack and AWR. (70$/db)
+    statspackanalyzer - website that can analyze statspack reports - no more
+exists.
+    stori.orapub.com - transform Statspack data into an understandable story;
+well organized, in paragraph form with charts, specific and ranked
+recommendations and in plain English. (500$/db) 
+  http://www-03.ibm.com/systems/tools/databaseinsight/
+
+
+
+/* ********************* Attention : Statpack et RAC *********************
+On trouve de plus en plus souvent des config RAC en version standard, et depuis
+la version 11 tout est fermé (diag pack & co...), dons les vues de l'awr,
+dba_hist & co n'existent pas ou sont vides. 
+
+Le seul moyen pour avoir des billes sur les instances en rac (en version
+standard) consiste à installer le statpack.
+
+Petit rappel :
+Création du package : @/rdbms/admin/spcreate.sql
+Création du job de collecte : @/rdbms/admin/spauto.sql
+Création d'un rapport : @/rdbms/admin/spreport.sql
+
+dans la table stat$snapshot, il y a une colonne instance_number (qui correspond
+au select instance_number from v$instance)
+les datas collectées sont donc propres à chaque noeuds !
+
+il faut donc executer spauto.sql sur chacun des noeuds.
+
+
+sinon vous aurez l'erreur suivante : 
+
+16:19:06 rdexploit@pmarketp >
+@C:\Users\osiadmpmp\scripts_sql\catalog\spreport.sql
+
+Current Instance
+~~~~~~~~~~~~~~~~
+
+   DB Id    DB Name      Inst Num Instance
+----------- ------------ -------- ------------
+ 3307352092 PMARKETP            2 PMARKETP2
+
+1 row selected.
+
+
+
+Instances in this Statspack schema
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   DB Id    Inst Num DB Name      Instance     Host
+----------- -------- ------------ ------------ ------------
+ 3307352092        1 PMARKETP     PMARKETP1    rac5ppl2.sie
+                                               ge.red
+
+Using 3307352092 for database Id
+Using          2 for instance number
+declare
+*
+ERROR at line 1:
+ORA-20200: Database/Instance 3307352092/2 does not exist in
+STATS$DATABASE_INSTANCE
+ORA-06512: at line 23
+*/
+
