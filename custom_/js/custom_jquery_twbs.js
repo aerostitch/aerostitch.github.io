@@ -163,12 +163,34 @@ function build_sidebar_treeview_ztree(){
     url: "/index.json" ,
     dataType: "json" ,
     success: function(json_tree){
+      $.each(json_tree, function(i, node){ cmp_url_lvl(node, 1) })
       $.fn.zTree.init($("#index_page_idx"), setting, json_tree);
     }
   });
 }
 
+/*
+ * This function expands the node when clicking on it
+ */
 function ztree_node_onClick(e,treeId, treeNode) {
   var zTree = $.fn.zTree.getZTreeObj("index_page_idx");
   zTree.expandNode(treeNode);
 }
+
+/*
+ * This function modifies the dom on load to auto-open the path of the current
+ * file in the tree
+ */
+function cmp_url_lvl(json_node, url_index){
+  node_path = json_node.name.toLowerCase().replace(/ /,'_');
+  loc = $(location).attr('pathname').split('/')[url_index].toLowerCase().replace(/ /,'_');
+  if(node_path == loc) {
+    json_node.open=true;
+    if(json_node.children){
+      $.each(json_node.children, function(i, node){
+        cmp_url_lvl(node, url_index +1);
+      })
+    }
+  }
+}
+
