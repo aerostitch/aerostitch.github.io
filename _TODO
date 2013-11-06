@@ -2,17 +2,14 @@
 
 == General
 
-Making treeview open automatically on current page location
-Add a search engine based on the index.xml (description, keywords, title)
+Add a search engine based on description, keywords, title of files
 Add a Ariadne's thread generated on jquery based on current path and index.xml
-Generate html only if adoc changed date > html date
+Generate html only if adoc changed date > html date and templates did not change
 Add a google analyzer?
 
 == Asciidoc backend
 
 enhance backend
-integrate asciidoc js & css to custom_ folder
-
 
 
 
