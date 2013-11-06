@@ -1,0 +1,98 @@
+/*
+ * Style twaks
+ * --------------------------------------------------
+ */
+body {
+  padding-top: 70px;
+}
+footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/*
+ * Off Canvas
+ * --------------------------------------------------
+ */
+@media screen and (max-width: 768px) {
+  .row-offcanvas {
+    position: relative;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+  }
+
+  .row-offcanvas-right
+  .sidebar-offcanvas {
+    right: -50%; /* 6 columns */
+  }
+
+  .row-offcanvas-left
+  .sidebar-offcanvas {
+    left: -50%; /* 6 columns */
+  }
+
+  .row-offcanvas-right.active {
+    right: 50%; /* 6 columns */
+  }
+
+  .row-offcanvas-left.active {
+    left: 50%; /* 6 columns */
+  }
+
+  .sidebar-offcanvas {
+    position: absolute;
+    top: 0;
+    width: 50%; /* 6 columns */
+  }
+}
+
+
+/*
+ * Theme
+ * --------------------------------------------------
+ */
+body {
+  padding-top: 70px;
+  padding-bottom: 30px;
+}
+
+.theme-dropdown .dropdown-menu {
+  display: block;
+  position: static;
+  margin-bottom: 20px;
+}
+
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+
+.right-aligned-div {
+  text-align: right;
+}
+.menu-indicator {
+  color:      grey;
+  font-style: italic;
+}
+.menu-indicator-asciidoc {
+  float: right;
+}
+.panel {
+  width: 100%;
+}
+.panel-title {
+  margin-left: 5px;
+}
+.panel-body > .ulist > ul > li > p { color: rgb(96, 96, 96); }
+.panel-title { border-bottom-style: none;}
+.container .jumbotron, 
+.jumbotron {
+  margin:10px;
+  padding:10px;
+  font-size:16px;
+}
+.jumbotron h1 {
+  font-size: 42px;
+  text-align:center;
+}
+
