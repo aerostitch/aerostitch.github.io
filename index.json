@@ -1,13 +1,9 @@
 [
   {
     "name": "Databases",
-    "url": "/databases",
-    "target": "_self",
     "children": [
       {
         "name": "Oracle",
-        "url": "/databases/oracle",
-        "target": "_self",
         "children": [
           {
             "name": "Expdp or rman on an NFS mount point in AIX",
@@ -16,8 +12,6 @@
           },
           {
             "name": "Certifications",
-            "url": "/databases/oracle/certifications",
-            "target": "_self",
             "children": [
               {
                 "name": "Notes for exam 1Z0-047",
@@ -42,13 +36,9 @@
   },
   {
     "name": "Linux_and_unix",
-    "url": "/linux_and_unix",
-    "target": "_self",
     "children": [
       {
         "name": "Aix",
-        "url": "/linux_and_unix/AIX",
-        "target": "_self",
         "children": [
           {
             "name": "Kerberos authentication configuration for AIX servers",
@@ -61,8 +51,6 @@
   },
   {
     "name": "Misc",
-    "url": "/misc",
-    "target": "_self",
     "children": [
       {
         "name": "Some git tips",
@@ -76,8 +64,6 @@
       },
       {
         "name": "Asciidoc",
-        "url": "/misc/asciidoc",
-        "target": "_self",
         "children": [
           {
             "name": "Using UTF-8 titles with a2x",
@@ -90,8 +76,6 @@
   },
   {
     "name": "Programming",
-    "url": "/programming",
-    "target": "_self",
     "children": [
       {
         "name": "Some CSS tips",
@@ -105,13 +89,9 @@
       },
       {
         "name": "Perl",
-        "url": "/programming/perl",
-        "target": "_self",
         "children": [
           {
             "name": "Oneliners",
-            "url": "/programming/perl/oneliners",
-            "target": "_self",
             "children": [
               {
                 "name": "Lines present in different files (examples for 2 or 3)",

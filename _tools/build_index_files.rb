@@ -24,10 +24,9 @@ def gen_subfolders_node(parent_path)
       .each { |fold|
         f_childs =  gen_files_nodes("#{current_fullpath}/#{fold}");
         d_childs = gen_subfolders_node("#{current_fullpath}/#{fold}");
+        #  name: fold.capitalize, url: "#{current_fullpath}/#{fold}".gsub(Www_root,''), target: :_self,
         nodes << {
           name: fold.capitalize,
-          url: "#{current_fullpath}/#{fold}".gsub(Www_root,''),
-          target: :_self,
           children: f_childs + d_childs
         }
       }

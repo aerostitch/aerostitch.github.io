@@ -154,7 +154,11 @@ function include_description_index_page(){
  * This function is meant to create the treeview in the sidebar using ztree
  */
 function build_sidebar_treeview_ztree(){
-  var setting = { data: {simpleData: {enable: true } } };
+  var setting = {
+    view: { dblClickExpand: false, showLine: false },
+    data: { simpleData: {enable: true } },
+    callback: { onClick: ztree_node_onClick }
+  };
   $.ajax({type: "GET" ,
     url: "/index.json" ,
     dataType: "json" ,
@@ -162,4 +166,9 @@ function build_sidebar_treeview_ztree(){
       $.fn.zTree.init($("#index_page_idx"), setting, json_tree);
     }
   });
+}
+
+function ztree_node_onClick(e,treeId, treeNode) {
+  var zTree = $.fn.zTree.getZTreeObj("index_page_idx");
+  zTree.expandNode(treeNode);
 }
