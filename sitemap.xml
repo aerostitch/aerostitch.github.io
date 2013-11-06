@@ -31,6 +31,12 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>http://aerostitch.github.io/databases/oracle/conf_satspack.html</loc>
+    <lastmod>2013-11-05T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
     <loc>http://aerostitch.github.io/databases/oracle/expdp_on_AIX_NFS.html</loc>
     <lastmod>2013-10-10T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>

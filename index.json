@@ -1,0 +1,232 @@
+[
+  {
+    "name": "Databases",
+    "url": "/databases",
+    "target": "_self",
+    "children": [
+      {
+        "name": "Oracle",
+        "url": "/databases/oracle",
+        "target": "_self",
+        "children": [
+          {
+            "name": "Expdp or rman on an NFS mount point in AIX",
+            "url": "/databases/oracle/expdp_on_AIX_NFS.html",
+            "target": "_self"
+          },
+          {
+            "name": "Certifications",
+            "url": "/databases/oracle/certifications",
+            "target": "_self",
+            "children": [
+              {
+                "name": "Notes for exam 1Z0-047",
+                "url": "/databases/oracle/certifications/Notes_1Z0-047.html",
+                "target": "_self"
+              },
+              {
+                "name": "Notes for exams 1Z0-052",
+                "url": "/databases/oracle/certifications/Notes_1Z0-052.html",
+                "target": "_self"
+              },
+              {
+                "name": "Notes for exams 1Z0-053",
+                "url": "/databases/oracle/certifications/Notes_1Z0-053.html",
+                "target": "_self"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Linux_and_unix",
+    "url": "/linux_and_unix",
+    "target": "_self",
+    "children": [
+      {
+        "name": "Aix",
+        "url": "/linux_and_unix/AIX",
+        "target": "_self",
+        "children": [
+          {
+            "name": "Kerberos authentication configuration for AIX servers",
+            "url": "/linux_and_unix/AIX/AIX-Security-Kerberos_Authentication.html",
+            "target": "_self"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Misc",
+    "url": "/misc",
+    "target": "_self",
+    "children": [
+      {
+        "name": "Some git tips",
+        "url": "/misc/git.html",
+        "target": "_self"
+      },
+      {
+        "name": "Adding a counter of visits on an imagevue based website",
+        "url": "/misc/imagevue-adding_visit_counter_to_imagevue_website.html",
+        "target": "_self"
+      },
+      {
+        "name": "Asciidoc",
+        "url": "/misc/asciidoc",
+        "target": "_self",
+        "children": [
+          {
+            "name": "Using UTF-8 titles with a2x",
+            "url": "/misc/asciidoc/asciidoc-title_uft8.html",
+            "target": "_self"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Programming",
+    "url": "/programming",
+    "target": "_self",
+    "children": [
+      {
+        "name": "Some CSS tips",
+        "url": "/programming/css3.html",
+        "target": "_self"
+      },
+      {
+        "name": "Introduction to the R programming language",
+        "url": "/programming/intro_R.html",
+        "target": "_self"
+      },
+      {
+        "name": "Perl",
+        "url": "/programming/perl",
+        "target": "_self",
+        "children": [
+          {
+            "name": "Oneliners",
+            "url": "/programming/perl/oneliners",
+            "target": "_self",
+            "children": [
+              {
+                "name": "Lines present in different files (examples for 2 or 3)",
+                "url": "/programming/perl/oneliners/perl-common_lines_from_files.html",
+                "target": "_self"
+              },
+              {
+                "name": "dos2unix and mac2unix as Perl one-liners",
+                "url": "/programming/perl/oneliners/perl-dos2unix_mac2unix.html",
+                "target": "_self"
+              },
+              {
+                "name": "Extract lines between 2 specific patterns",
+                "url": "/programming/perl/oneliners/perl-extract_lines_between_patterns.html",
+                "target": "_self"
+              },
+              {
+                "name": "Extract paragraphs containing a specific pattern",
+                "url": "/programming/perl/oneliners/perl-extract_paragraphs_containing.html",
+                "target": "_self"
+              },
+              {
+                "name": "Get 1st system user id available",
+                "url": "/programming/perl/oneliners/perl-get_1st_available_uid.html",
+                "target": "_self"
+              },
+              {
+                "name": "grep utility using perl one-liners",
+                "url": "/programming/perl/oneliners/perl-grep.html",
+                "target": "_self"
+              },
+              {
+                "name": "Add line numbers while printing a file line nl command",
+                "url": "/programming/perl/oneliners/perl-nl.html",
+                "target": "_self"
+              },
+              {
+                "name": "Generate a random password using a one-liner",
+                "url": "/programming/perl/oneliners/perl-ol-password_generator.html",
+                "target": "_self"
+              },
+              {
+                "name": "The \"strings\" command using a perl one-liner",
+                "url": "/programming/perl/oneliners/perl-strings.html",
+                "target": "_self"
+              },
+              {
+                "name": "\"uniq\" command by lines and by columns using perl one-liners",
+                "url": "/programming/perl/oneliners/perl-uniq.html",
+                "target": "_self"
+              },
+              {
+                "name": "wc -l using perl one-liners",
+                "url": "/programming/perl/oneliners/perl-wc-l.html",
+                "target": "_self"
+              },
+              {
+                "name": "Test if an url respond correctly using WLP Perl module",
+                "url": "/programming/perl/oneliners/perl_LWP_test_url.html",
+                "target": "_self"
+              },
+              {
+                "name": "Draw a Mandelbrot set using a perl one-liner",
+                "url": "/programming/perl/oneliners/perl_Mandelbrot_set.html",
+                "target": "_self"
+              },
+              {
+                "name": "Encoding and decoding using ROT13 cipher in perl",
+                "url": "/programming/perl/oneliners/perl_ROT13.html",
+                "target": "_self"
+              },
+              {
+                "name": "Adding the date and time to any command output using perl",
+                "url": "/programming/perl/oneliners/perl_add_time_to_command_output.html",
+                "target": "_self"
+              },
+              {
+                "name": "Encoding and decoding in base64 using perl",
+                "url": "/programming/perl/oneliners/perl_base64.html",
+                "target": "_self"
+              },
+              {
+                "name": "Prime number detection",
+                "url": "/programming/perl/oneliners/perl_check_prime_number.html",
+                "target": "_self"
+              },
+              {
+                "name": "Wanna know if your machine is little or big endian?",
+                "url": "/programming/perl/oneliners/perl_get_machine_endian.html",
+                "target": "_self"
+              },
+              {
+                "name": "DNS translations using perl",
+                "url": "/programming/perl/oneliners/perl_hostname_ip.html",
+                "target": "_self"
+              },
+              {
+                "name": "The look-and-say sequence using a perl one-liner",
+                "url": "/programming/perl/oneliners/perl_look-and-say_sequence.html",
+                "target": "_self"
+              },
+              {
+                "name": "Converting numbers between octal, decimal, hexadecimal and binary formats",
+                "url": "/programming/perl/oneliners/perl_numbers_conversion.html",
+                "target": "_self"
+              },
+              {
+                "name": "Encode and decode using quoted-printable in perl",
+                "url": "/programming/perl/oneliners/perl_quoted_printable.html",
+                "target": "_self"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

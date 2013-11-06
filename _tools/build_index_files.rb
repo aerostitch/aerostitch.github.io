@@ -1,14 +1,19 @@
 #!/usr/bin/env ruby
 #
 require 'nokogiri'
+require 'json'
 
 # This is to ensure we are in the same directory as the script
 # to enable people to run the script from another directory
 script_path = File.dirname(File.expand_path($0))
 Dir.chdir(script_path)
-Website_root = File.expand_path(script_path +'/..')
+Www_root = File.expand_path(script_path +'/..')
 
-def gen_subfolders_node(parent_path, parent_node)
+
+# Tansforms a subfolder into a hashtable conatining its files and folders
+# It uses a recursive call
+def gen_subfolders_node(parent_path)
+  nodes = []
   # Going back from the tool dir to the root dir
   Dir.chdir(parent_path) do
     current_fullpath = Dir.pwd
@@ -17,17 +22,23 @@ def gen_subfolders_node(parent_path, parent_node)
       .select {|f| File.directory? f}
       .sort
       .each { |fold|
-        parent_node.send('url') do
-          parent_node.title(fold.capitalize)
-          parent_node.path("#{current_fullpath}/#{fold}".gsub(Website_root,''))
-          gen_files_nodes("#{current_fullpath}/#{fold}", parent_node)
-          gen_subfolders_node("#{current_fullpath}/#{fold}", parent_node);
-        end
+        f_childs =  gen_files_nodes("#{current_fullpath}/#{fold}");
+        d_childs = gen_subfolders_node("#{current_fullpath}/#{fold}");
+        nodes << {
+          name: fold.capitalize,
+          url: "#{current_fullpath}/#{fold}".gsub(Www_root,''),
+          target: :_self,
+          children: f_childs + d_childs
+        }
       }
   end
+  nodes
 end
 
-def gen_files_nodes(dir, parent_node)
+# Transforms the files of the given directory into an hashtable
+# Filters files begining or ending with an "_" and the "index.html" files
+def gen_files_nodes(dir)
+  nodes = []
   Dir.chdir(dir) do
     current_fullpath = Dir.pwd
     Dir.glob('*.html')
@@ -37,34 +48,28 @@ def gen_files_nodes(dir, parent_node)
       }
       .sort
       .each { |file|
-        parent_node.url{
-          doc = Nokogiri::HTML(File.open(file)) { |config| config.strict.nonet}
-          parent_node.title(doc.search('//html/head/title').text)
-          parent_node.path("#{current_fullpath}/#{file}"
-                           .gsub(/\.\./,'')
-                          .gsub(Website_root,'')
-                          )
-        }
+        doc = Nokogiri::HTML(File.open(file)) { |config| config.strict.nonet}
+        title = doc.search('//html/head/title').text
+        url = "#{current_fullpath}/#{file}".gsub(/\.\./,'').gsub(Www_root,'')
+        nodes << { name: title, url: url, target: :_self }
       }
   end
+  nodes
 end
 
 # This gets all the html files and their modification date
 def build_index_files(idx_root)
   Dir.chdir(idx_root) do
     idx_root = Dir.pwd
-    doc = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
-      xml.urlset{
-          gen_files_nodes(idx_root,xml)
-          gen_subfolders_node(idx_root,xml)
-      }
-    end
+    files = gen_files_nodes(idx_root)
+    folders = gen_subfolders_node(idx_root)
+    json_content = files + folders
     
-    # Finally writing index.xml file
-    idx_file = "#{idx_root}/index.xml"
+    # Finally writing index.json file
+    idx_file = "#{idx_root}/index.json"
     begin
       file = File.open(idx_file, "w")
-      file.write(doc.to_xml)
+      file.write(JSON.pretty_generate(json_content))
     rescue IOError => e
       puts "[Error] Could not open file."
       puts e.message
@@ -88,7 +93,7 @@ end
 
 # adds the description to the document if description.inc exists
 def update_index_html_description(fold_path)
-  idx_html = File.open("#{Website_root}/_tools/templates/index.html",'r')
+  idx_html = File.open("#{Www_root}/_tools/templates/index.html",'r')
   doc = Nokogiri::HTML(idx_html) { |config| config.strict.nonet}
   idx_html.close()  # File have to be closed to rewrite data in it
   # Adding description content
@@ -99,7 +104,7 @@ def update_index_html_description(fold_path)
   # but could also contain google analytics code for example
   # It is added to all index.html pages because 
   add_file_content_to_node(doc, '/html/head',
-                           "#{Website_root}/_tools/google_tags.inc")
+                           "#{Www_root}/_tools/google_tags.inc")
   # Writing result to the index.html file
   begin
     outfile = File.open("#{fold_path}/index.html",'w')
@@ -113,13 +118,13 @@ def update_index_html_description(fold_path)
 end
 
 # Now building index.xml files and customizing index.html files
-Dir.glob(['../','../**/*'])
+build_index_files(Www_root)
+Dir.glob([Www_root,"#{Www_root}/**/*"])
   .delete_if { |fname| /(\/|^)_/.match(fname) or /_(\/|$)/.match(fname) }
-  .select {|f| File.directory? f}
+  .select { |f| File.directory? f }
   .sort
   .each { |fold|
-    build_index_files(fold)
-    # Then deploy index.html template file and adding customizations to
+    # Deploying index.html template file and adding customizations to
     # index.html pages
     update_index_html_description(fold)
   }
