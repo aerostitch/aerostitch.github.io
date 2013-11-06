@@ -96,6 +96,10 @@ body {
   text-align:center;
 }
 
+.ztree {
+  overflow-x: auto;
+}
+
 @media screen and (min-width: 1200px) {
   .container {
     max-width: 1800px;
