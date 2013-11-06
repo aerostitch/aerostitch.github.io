@@ -83,6 +83,9 @@ Tablespaces
 Sessions
 AWR reports
 AWR tables custom querying
+STATSPACK package details
+STATSPACK on RAC
+STATSPACK auto generation of reports
 
 ==== MSSQL
 Add a section and scripts

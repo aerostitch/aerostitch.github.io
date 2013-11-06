@@ -9,7 +9,7 @@ v1.0.0, 2013-11-05 : Initial version
   lot of people forget it, the "Oracle Diagnostics Pack" license is necessary +
   to use the AWR and ASH tools.
 :keywords: Statspack, diagnostics, diagnosis, diag, AWR, perf, performance, +
-  monitor
+  monitor, Oracle
 :lang: en
 :data-uri:
 :ascii-ids:
@@ -104,49 +104,227 @@ Configuration
 Automatic statistics gathering
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-spauto.sql - Schedule a dbms_job to automate the collection of STATPACK statistics 
+To schedule the automatic collection of statspack statistics, you can use the
+`spauto.sql` script. This script creates a job (using `DBMS_JOB` package),
+scheduled to run once an hour at 00.
 
-or
+[source, SQL]
+-----
+sqlplus "/ as sysdba" @?/rdbms/admin/spauto.sql
+-----
 
-SQL> BEGIN
-  2    DBMS_SCHEDULER.CREATE_SCHEDULE(
-  3     schedule_name => 'perfstat.statspack_every20',
-  4     repeat_interval => 'FREQ=MINUTELY;BYMINUTE=10,30,50');
-  5
-  6    DBMS_SCHEDULER.CREATE_JOB(
-  7     job_name => 'perfstat.sp_snapshot',
-  8     job_type => 'STORED_PROCEDURE',
-  9     job_action => 'perfstat.statspack.snap',
- 10     schedule_name => 'perfstat.statspack_every20',
- 11     comments => 'Statspack collection');
- 12
- 13    DBMS_SCHEDULER.ENABLE('perfstat.sp_snapshot');
- 14  END;
- 15  /
+As this script is quite static and uses the old job scheduler of Oracle, you can
+choose to create a job manually using the `DBMS_SCHEDULER` package and customize
+the snapshot capture frequency. In the above example, we create a job as SYS to
+schedule the statspack statistics collection every 15 minutes. Be carefull that
+thaking frequent snapshots will generate a large amount of data. In this case,
+you should reduce the history retention.
+
+[source, SQL]
+-----
+CONNECT / AS SYSDBA
+BEGIN
+  DBMS_SCHEDULER.CREATE_SCHEDULE(
+   schedule_name => 'PERFSTAT.statspack_snap_15min',
+   repeat_interval => 'FREQ=MINUTELY;BYMINUTE=00,15,30,45'
+  );
+
+  DBMS_SCHEDULER.CREATE_JOB(
+   job_name => 'PERFSTAT.sp_snapshot',
+   job_type => 'STORED_PROCEDURE',
+   job_action => 'PERFSTAT.statspack.snap',
+   schedule_name => 'PERFSTAT.statspack_snap_15min',
+   auto_drop => FALSE,
+   comments => 'Statspack collection'
+  );
+
+  DBMS_SCHEDULER.ENABLE('perfstat.sp_snapshot');
+END;
+/
+-----
+
+
+If you want to create this kind of job directly using the PERFSTAT user (which
+is, according to me, a cleaner way to work), you will need to grant the `create
+job` system privilege. The above example creates a job with the same settings as
+the previous one, but with the correct privileges:
+
+[source, SQL]
+-----
+CONNECT / AS SYSDBA
+grant create job to perfstat;
+DISCONNECT;
+CONNECT PERFSTAT/A_Pr3tty_Pwd
+BEGIN
+  DBMS_SCHEDULER.CREATE_SCHEDULE(
+   schedule_name => 'statspack_snap_15min',
+   repeat_interval => 'FREQ=MINUTELY;BYMINUTE=00,15,30,45'
+  );
+
+  DBMS_SCHEDULER.CREATE_JOB (
+    job_name => 'sp_snapshot',
+    job_type => 'STORED_PROCEDURE',
+    job_action => 'statspack.snap',
+    schedule_name => 'statspack_snap_15min',
+    auto_drop => FALSE,
+    comments => 'Statspack collection'
+  );
+
+  DBMS_SCHEDULER.ENABLE('sp_snapshot');
+END;
+/
+
+/* Then check the job creation: */
+set lines 200 pages 1024;
+col JOB_NAME for a20;
+col JOB_ACTION for a20;
+col SCHEDULE_NAME for a20;
+select JOB_NAME
+  , JOB_TYPE, JOB_ACTION
+  , SCHEDULE_NAME, ENABLED
+    , AUTO_DROP, STATE
+  , TO_CHAR(NEXT_RUN_DATE,'YYYY-MM-DD HH24:MI') as NEXT_RUN
+from USER_SCHEDULER_JOBS;
+-----
+
+The last query should output like this:
+
+.....
+JOB_NAME        JOB_TYPE         JOB_ACTION           SCHEDULE_NAME        ENABL AUTO_ STATE           NEXT_RUN
+--------------- ---------------- -------------------- -------------------- ----- ----- --------------- ----------------
+SP_SNAPSHOT     STORED_PROCEDURE statspack.snap       STATSPACK_SNAP_1H    TRUE FALSE SCHEDULED       2013-11-06 10:00
+
+1 row selected.
+.....
 
 
 Automatic history purge
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-sppurge.sql - Purge (delete) a range of Snapshot Id's between the specified
-begin and end Snap Id's 
+There is no script like the spauto to automatically purge statspack snapshots.
 
--- set transaction use rollback segment big_rbs;
+The best thing to do is to use the `PURGE` method of the `STATSPACK` package.
+This method can be called with various parameters, but the one that is
+interesting for us now is the `` which specifies how many days you want to keep
+(setting it to 0 will only raise an error and do nothing. See the manual purge
+paragraph for more information about truncating tables).
 
---select min(snap_id) as losnapid, max(snap_id) hisnapid from stats$snapshot
-where SNAP_TIME<trunc(sysdate-15);
-define losnapid=902;
-define hisnapid = 2794;
-@?/rdbms/admin/sppurge.sql
+In the example below, we schedule a job that will run every day at 1:56 PM to
+purge every data older than 8 days.
+
+WARNING: if you aleady have a huge amount of snapsots history, refer to the
+paragraph explaining how to purge manually snapshots first.
+
+[source, SQL]
+-----
+CONNECT PERFSTAT/A_Pr3tty_Pwd
+BEGIN
+  DBMS_SCHEDULER.CREATE_JOB (
+    job_name            => 'sp_purge_snapshots',
+    job_type             => 'PLSQL_BLOCK',
+    job_action           => 'STATSPACK.PURGE(I_NUM_DAYS => 8);',
+    repeat_interval     => 'FREQ=DAILY; BYHOUR=13; BYMINUTE=56',
+    auto_drop           => FALSE,
+    comments            => 'Statspack snapshots purge'
+  );
+  DBMS_SCHEDULER.ENABLE('sp_purge_snapshots');
+END;
+/
+-----
+
+NOTE: I know this is ugly to hard code parameters values in jobs, but this is
+the quickest way to workaround the limitations of DBMS_SCHEDULER's lack of named
+arguments support.
+
+To list currently scheduled jobs for the given user, use the following query as
+in the previous paragraph:
+
+[source, SQL]
+-----
+col JOB_NAME for a20;
+col JOB_ACTION for a20;
+col SCHEDULE_NAME for a20;
+select JOB_NAME
+  , JOB_TYPE, JOB_ACTION
+  , SCHEDULE_NAME, ENABLED
+    , AUTO_DROP, STATE
+  , TO_CHAR(NEXT_RUN_DATE,'YYYY-MM-DD HH24:MI') as NEXT_RUN
+from USER_SCHEDULER_JOBS;
+-----
+
+To change the retention, you will need to change the job_action attribute like
+this (here you set it to 10 days):
+
+[source, SQL]
+-----
+CONNECT PERFSTAT/A_Pr3tty_Pwd
+BEGIN
+  DBMS_SCHEDULER.SET_ATTRIBUTE (
+    name        => 'sp_purge_snapshots',
+    attribute   => 'job_action',
+    value       => 'STATSPACK.PURGE(I_NUM_DAYS => 10);'
+  );
+END;
+/
+-----
 
 
 Changing default parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-exec statspack.modify_statspack_parameter(i_snap_level=>7,
-i_modify_parameter=>’true’);
-Keep in mind that the higher the snapshot levels require more time and resources
+You can modify the statspack parameters like using the
+`modify_statspack_parameter` of the STATSPACK package. This method will be
+explained in another post.
+
+
+The most commonly modified parameter is the snapshot detail level which default
+to the level 5. Setting the level to a higher one is usefull when debugging, but
+it is not really advisable to have a level 10 for example on a running
+production server.
+
+[source, sql]
+-----
+BEGIN
+  statspack.modify_statspack_parameter(i_snap_level=>7, i_modify_parameter=>'true');
+END;
+/
+-----
+
+WARNING: Keep in mind that the higher the snapshot levels require more time and resources
 to execute than the lower snapshot levels.
+
+To have the detail of what the levels correspond to, use the following query:
+
+[source, sql]
+-----
+select * from stats$level_description;
+-----
+
+Which returns:
+
+.....
+SNAP_LEVEL  DESCRIPTION
+----------  --------------------------------------------------------------------
+         0  This level captures general statistics, including rollback segment,
+            row cache, SGA, system events, background events, session events,
+            system statistics, wait statistics, lock statistics, and Latch
+            information
+
+         5  This level includes capturing high resource usage SQL Statements,
+            along with all data captured by lower levels
+
+         6  This level includes capturing SQL plan and SQL plan usage
+            information for high resource usage SQL Statements, along with all
+            data captured by lower levels
+
+         7  This level captures segment level statistics, including logical and
+            physical reads, row lock, itl and buffer busy waits, along with all
+            data captured by lower levels
+
+        10  This level includes capturing Child Latch statistics, along with
+            all data captured by lower levels
+.....
+
 
 Manual operations
 -----------------
@@ -156,33 +334,10 @@ Generating report
 
 select SNAP_ID, SNAP_TIME from STATS$SNAPSHOT; 
 
-spreport.sql - Report on differences between values recorded in two snapshots
+begin_snap
+end_snap
+@?/rdbms/admin/spreport.sql - Report on differences between values recorded in two snapshots
 
-5 is the default
-SQL> select * from stats$level_description;
- 
-SNAP_LEVEL  DESCRIPTION
-----------  --------------------------------------------------------------------
-         0  This level captures general statistics, including rollback segment,
-            row cache, SGA, system events, background events, session events,
-            system statistics, wait statistics, lock statistics, and Latch
-            information
- 
-         5  This level includes capturing high resource usage SQL Statements,
-            along with all data captured by lower levels
- 
-         6  This level includes capturing SQL plan and SQL plan usage
-            information for high resource usage SQL Statements, along with all
-            data captured by lower levels
- 
-         7  This level captures segment level statistics, including logical and
-            physical reads, row lock, itl and buffer busy waits, along with all
-            data captured by lower levels
- 
-        10  This level includes capturing Child Latch statistics, along with
-            all data captured by lower levels
- 
-SQL>
 
 
 Creating snapshot manually
@@ -197,6 +352,20 @@ exec perfstat.statspack.snap(i_snap_level=>10);
 
 Purging history manually
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+WARNING: Must be run using the PERFSTAT user!
+
+sppurge.sql - Purge (delete) a range of Snapshot Id's between the specified
+begin and end Snap Id's 
+
+-- set transaction use rollback segment big_rbs;
+
+--select min(snap_id) as losnapid, max(snap_id) hisnapid from stats$snapshot
+where SNAP_TIME<trunc(sysdate-15);
+define losnapid=902;
+define hisnapid = 2794;
+@?/rdbms/admin/sppurge.sql
 
 sptrunc.sql - Truncates all data in Statspack tables
 
