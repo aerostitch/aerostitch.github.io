@@ -99,6 +99,15 @@ body {
 .ztree {
   overflow-x: auto;
 }
+/* Customizing scrollbars for chromium in th nav panel */
+.nav::-webkit-scrollbar { width: 5px; height: 5px;}
+.nav::-webkit-scrollbar-button {  display: none; }
+.nav::-webkit-scrollbar-track {  background-color: #999;}
+.nav::-webkit-scrollbar-track-piece { background-color: #ffffff;}
+.nav::-webkit-scrollbar-thumb { height: 50px; background-color: #666; border-radius: 3px;}
+.nav::-webkit-scrollbar-corner { background-color: #999;}
+.nav::-webkit-resizer { background-color: #666;}
+
 
 @media screen and (min-width: 1200px) {
   .container {
