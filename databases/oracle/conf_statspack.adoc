@@ -173,7 +173,10 @@ BEGIN
   DBMS_SCHEDULER.ENABLE('sp_snapshot');
 END;
 /
+-----
 
+[source, SQL]
+-----
 /* Then check the job creation: */
 set lines 200 pages 1024;
 col JOB_NAME for a20;
@@ -332,42 +335,150 @@ Manual operations
 Generating report
 ~~~~~~~~~~~~~~~~~
 
-select SNAP_ID, SNAP_TIME from STATS$SNAPSHOT; 
+This part can be either executed by the PERFSTAT user or any DBA user.
 
-begin_snap
-end_snap
-@?/rdbms/admin/spreport.sql - Report on differences between values recorded in two snapshots
+To launch a report on the instance you are currently working on, use the
+following sql script. It will ask for the snapshot number you want to start your
+report on, the one you want to stop your report on and the name of your report.
 
+[source, sql]
+-----
+@?/rdbms/admin/spreport.sql
+-----
 
+If you want to automate this, you just have to set the `begin_snap`, `end_snap`
+and `report_name` PL/SQL variables. To get the snapshots available, use the
+`STATS$SNAPSHOT` table. the SQL query below retrieves all the snapshots
+available and their corresponding date. You can then define the 3 variables
+using the `define` command or just go to the next example to have a much more
+automated method.
+
+[source, sql]
+-----
+select SNAP_ID, TO_CHAR(SNAP_TIME, 'YYYY-MM-DD HH24:MI'), UCOMMENT
+  from PERFSTAT.STATS$SNAPSHOT
+order by SNAP_ID;
+-----
+
+The above example show how to launch a statspack report over the last 12 hours.
+This won't prompt you for any value. The report name will be something like
+'201311062300-201311071000_MYINSTANCE_hostname.sprpt' (201311062300 is the first
+snapshot date of the report using the YYYYMMDDHH24MI format. 201311071000 is the
+same but for the last snapshot of the report) and lies in the current directory.
+
+To adapt this to what you want, you only have to change the WHERE clause... easy! :)
+
+[source, sql]
+-----
+set lines 200;
+column begin_snap heading "Begin snap" new_value begin_snap format 999999999;
+column end_snap heading "End snap" new_value end_snap format 999999999;
+column report_name heading "Report name" new_value report_name format a60;
+select min(s.SNAP_ID) as begin_snap, max(s.SNAP_ID) as end_snap,
+  TO_CHAR(MIN(s.SNAP_TIME), 'YYYYMMDDHH24MI') ||'-'|| 
+  TO_CHAR(MAX(s.SNAP_TIME), 'YYYYMMDDHH24MI') ||'_'||
+  i.INSTANCE_NAME ||'_'|| i.HOST_NAME ||
+  '.sprpt' as report_name
+  from PERFSTAT.STATS$SNAPSHOT s INNER JOIN V$INSTANCE i
+    ON s.INSTANCE_NUMBER = i.INSTANCE_NUMBER
+  where s.SNAP_TIME > SYSDATE - NUMTODSINTERVAL(12, 'HOUR')
+group by i.INSTANCE_NAME, i.HOST_NAME;
+@?/rdbms/admin/spreport.sql
+-----
+
+CAUTION: This execute a report on the *CURRENT* instance, so if you are on a RAC
+instance, using the spreport.sql script will only run a report for *the instance
+you are currently working on*!
 
 Creating snapshot manually
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-sqlplus perfstat/perfstat
-exec statspack.snap;         -- Take a performance snapshots
--- or instruct statspack to do gather more details in the snapshot
--- (look up which oracle version supports which level).
-exec perfstat.statspack.snap(i_snap_level=>10);
+To generate a snapshot in statspack, use the `SNAP` method of the `STATSPACK`
+package.
+
+[source, sql]
+-----
+exec PERFSTAT.statspack.snap;
+-----
+
+If, for debug purposes, you need to to temporarily use a snapshot with a more
+detailed level of informations, you can do it using the `I_SNAP_LEVEL` parameter
+of the `STATSPACK.SNAP`. It is advisable to comment this snapshot for later
+reference (use the `I_UCOMMENT` parameter of this method to do so).
+
+NOTE: The value of the parameters given to the `STATSPACK.SNAP` method is used
+only for the current snapshot taken; the new value is not saved as the default.
+
+[source, sql]
+-----
+BEGIN
+  PERFSTAT.statspack.snap(
+    i_snap_level => 10, 
+    i_ucomment => 'Level 10 snap for debugging at particular time'
+  );
+END;
+/
+-----
+
+For further informations about the options available in the SNAP method, see the
+post about the STATSPACK package (not done at the time I'm writing these lines).
 
 
 Purging history manually
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
+If you want to make some manual cleanup of the snapshots, use the `sppurge.sql`
+script which will ask for the first snap id to delete and the last snap of the
+range to delete.
 
-WARNING: Must be run using the PERFSTAT user!
-
-sppurge.sql - Purge (delete) a range of Snapshot Id's between the specified
-begin and end Snap Id's 
-
--- set transaction use rollback segment big_rbs;
-
---select min(snap_id) as losnapid, max(snap_id) hisnapid from stats$snapshot
-where SNAP_TIME<trunc(sysdate-15);
-define losnapid=902;
-define hisnapid = 2794;
+[source, sql]
+-----
+CONNECT PERFSTAT
 @?/rdbms/admin/sppurge.sql
+-----
 
-sptrunc.sql - Truncates all data in Statspack tables
+If you have a huge amount of snapshots to delete, you should really set the
+transaction to use big_rbs rollback segment as mentionned above:
+
+[source, sql]
+-----
+CONNECT PERFSTAT
+set transaction use rollback segment big_rbs;
+@?/rdbms/admin/sppurge.sql
+-----
+
+To automate the purge of the snapshots, you can either use the following kind of
+script which, in our case, deletes all statspack data associated with snapshots
+older than 10 days:
+
+[source, sql]
+-----
+set lines 200;
+column losnapid heading "First snap" new_value losnapid  format 999999999;
+column hisnapid heading "Last snap" new_value hisnapid format 999999999;
+select min(s.SNAP_ID) as losnapid, max(s.SNAP_ID) as hisnapid
+  from STATS$SNAPSHOT s
+  where s.SNAP_TIME < SYSDATE - NUMTODSINTERVAL(10, 'DAY');
+@?/rdbms/admin/sppurge.sql
+-----
+
+Or rather use the `PURGE` version of the `STATSPACK` package. The example below
+also deletes all statspack data associated with snapshots older than 10 days:
+
+[source, sql]
+-----
+BEGIN
+  STATSPACK.PURGE(I_NUM_DAYS => 10);
+END;
+/
+-----
+
+To truncate all statspack data, use the `sptrunc.sql` script.
+
+[source, sql]
+-----
+@?/rdbms/admin/sptrunc.sql
+-----
 
 Exporting PERFSTAT user
 ~~~~~~~~~~~~~~~~~~~~~~~
