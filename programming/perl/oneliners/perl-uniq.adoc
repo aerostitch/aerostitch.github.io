@@ -10,13 +10,13 @@ v1.0.0, 2013-10-10: Initial version
 :data-uri:
 :ascii-ids:
 :linkcss:
-:stylesdir: /custom_/css
-:scriptsdir: /custom_/js
+:stylesdir: /asciidoc_twbs_backend/css
+:scriptsdir: /asciidoc_twbs_backend/js
 :linkcss:
-:stylesdir: /custom_/css
-:scriptsdir: /custom_/js
+:stylesdir: /asciidoc_twbs_backend/css
+:scriptsdir: /asciidoc_twbs_backend/js
 :icons:
-:iconsdir: /usr/share/asciidoc/images/icons/
+:iconsdir: /asciidoc_twbs_backend/ico
 :numbered:
 :toc:
 :toclevels: 3

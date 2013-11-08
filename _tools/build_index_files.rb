@@ -19,6 +19,7 @@ def gen_subfolders_node(parent_path)
     current_fullpath = Dir.pwd
     Dir.glob('*')
       .delete_if { |fname| /(\/|^)_/.match(fname) or /_(\/|$)/.match(fname) }
+      .delete_if { |fname| /asciidoc_twbs_backend/.match(fname) }
       .select {|f| File.directory? f}
       .sort
       .each { |fold|
@@ -120,6 +121,7 @@ end
 build_index_files(Www_root)
 Dir.glob([Www_root,"#{Www_root}/**/*"])
   .delete_if { |fname| /(\/|^)_/.match(fname) or /_(\/|$)/.match(fname) }
+  .delete_if { |fname| /asciidoc_twbs_backend/.match(fname) }
   .select { |f| File.directory? f }
   .sort
   .each { |fold|

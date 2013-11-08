@@ -12,10 +12,10 @@ v1.0.2, 2013-11-06: Forgot a git fetch in submodules
 :data-uri:
 :ascii-ids:
 :linkcss:
-:stylesdir: /custom_/css
-:scriptsdir: /custom_/js
+:stylesdir: /asciidoc_twbs_backend/css
+:scriptsdir: /asciidoc_twbs_backend/js
 :icons:
-:iconsdir: /usr/share/asciidoc/images/icons/
+:iconsdir: /asciidoc_twbs_backend/ico
 :numbered:
 :toc:
 :toclevels: 3
@@ -404,13 +404,29 @@ Adding submodule to a project
 By default, submodules don't checkout any branch, so you need to do it
 explicitly.
 
+If the submodule you are adding is empty, use:
+
 -----
 git submodule add <remote_repository_adress_of_submodule>
 git add --all
 cd <submodule_dir>
-git fetch
 git checkout <submodule_branch>
 -----
+
+If the module you are adding contains some things, use:
+
+[source, shell]
+-----
+git submodule add <remote_repository_adress_of_submodule>
+git submodule init    # To add the submodules to the local configuration file
+git submodule update  # To checkout all configured submodule
+git add --all
+cd <submodule_dir>
+git checkout <submodule_branch>
+-----
+
+NOTE: to make a module work with Github pages, you have to use the HTTPS://
+version to add the submodule!
 
 Cloning a project with submodules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

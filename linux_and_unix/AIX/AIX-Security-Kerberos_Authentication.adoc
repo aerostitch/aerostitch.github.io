@@ -9,8 +9,8 @@ v1.0.0, 2013-10-15: Initial revision
 :data-uri:
 :ascii-ids:
 :linkcss:
-:stylesdir: /custom_/css
-:scriptsdir: /custom_/js
+:stylesdir: /asciidoc_twbs_backend/css
+:scriptsdir: /asciidoc_twbs_backend/js
 :icons:
 :numbered:
 :lang: en

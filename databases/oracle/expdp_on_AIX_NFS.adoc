@@ -11,13 +11,13 @@ v1.0.1, 2013-10-10: Adding forgotten prerequisites
 :data-uri:
 :ascii-ids:
 :linkcss:
-:stylesdir: /custom_/css
-:scriptsdir: /custom_/js
+:stylesdir: /asciidoc_twbs_backend/css
+:scriptsdir: /asciidoc_twbs_backend/js
 :linkcss:
-:stylesdir: /custom_/css
-:scriptsdir: /custom_/js
+:stylesdir: /asciidoc_twbs_backend/css
+:scriptsdir: /asciidoc_twbs_backend/js
 :icons:
-:iconsdir: /usr/share/asciidoc/images/icons/
+:iconsdir: /asciidoc_twbs_backend/ico
 :numbered:
 :toc:
 :tags.underline: <u>|</u>
