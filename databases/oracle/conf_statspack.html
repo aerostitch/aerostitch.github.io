@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="AsciiDoc 8.6.7" />
+<meta name="description" content="This post is about installation and configuration of Statspack reports, the AWR's ancestor which has the advantage to be free of charge and available in all editions of Oracle since Oracle Database 8i. Yes, even if a lot of people forget it, the "Oracle Diagnostics Pack" license is necessary to use the AWR and ASH tools." />
+<meta name="keywords" content="Statspack, diagnostics, diagnosis, diag, AWR, perf, performance, monitor, Oracle" />
+<meta name="author" content="Joseph HERLANT" />
+<link rel="shortcut icon" href="/custom_/ico/favicon.png" />
+<title>Installing and configuring Statspack</title>
+<link rel="stylesheet" href="/custom_/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/custom_/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<!--<link href="/twbs_/css/bootstrap.css" rel="stylesheet" />-->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<!--<link href="/twbs_/css/bootstrap-theme.min.css" rel="stylesheet" />-->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/custom_/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/custom_/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2pre/html5shiv.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+    <!-- These are for smartphones -->
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">aerostitch's tips</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav" id="menu_left">
+          <li></li>
+          <!-- Here will stand the menu bar generated on page load by a jquery script -->
+          </ul>
+          <!--
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Bla</a></li>
+            <li><a href="#">Bla</a></li>
+            <li class="active"><a href="./">Active</a></li>
+          </ul>
+          -->
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div class="row row-offcanvas row-offcanvas-right">
+
+      <div class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph HERLANT</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2013-11-05</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Installing and configuring Statspack</h1>
+This post is about installation and configuration of Statspack reports, the AWR's ancestor which has the advantage to be free of charge and available in all editions of Oracle since Oracle Database 8i. Yes, even if a lot of people forget it, the "Oracle Diagnostics Pack" license is necessary to use the AWR and ASH tools.
+</div>
+      </div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="panel panel-warning admonitionblock">
+  <div class="panel-heading">
+
+<span class="glyphicon glyphicon-warning-sign"></span>
+
+
+
+    <b class="panel-title">
+    Warning
+    </b>
+  </div>
+  <div class="panel-body">This document describes the installation of Statspack on Oracle
+instances version 8.1.7 and later. To get the scripts names for the versions
+between 8.0 and 8.1.7, go to the following website:
+<a href="http://www.dba-oracle.com/t_statspack_install_scripts.htm">http://www.dba-oracle.com/t_statspack_install_scripts.htm</a>  </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">1. Installation</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_prerequisites">1.1. Prerequisites</h3>
+<div class="paragraph"><p>First thing is to isolate the data in a specific tablespace. The installation
+script of Statspack will ask you for one, so let&#8217;s create it! (I usually name it
+"PERFSTAT", but you can choose whatever name you want)</p></div>
+<div class="paragraph"><p>The best thing to do would be to set its size to its final size if you know it.
+I prefer to set it to its target size and let it extend a little bit if needed.</p></div>
+<div class="paragraph"><p>For databases with low activity, statspack snapshots every 1 hour and keeping 8
+days of history, I usually have statspack data around 1G.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">create</span></span> tablespace PERFSTAT
+  datafile <span style="color: #FF0000">'/u01/app/oracle/oradata/MYINSTANCE/perfstat_01.dbf'</span>
+  size 1G autoextend <span style="font-weight: bold"><span style="color: #0000FF">on</span></span> next 128M maxsize 2G<span style="color: #990000">;</span></tt></pre></div></div>
+<div class="panel panel-primary admonitionblock">
+  <div class="panel-heading">
+
+
+
+
+<span class="glyphicon glyphicon-minus-sign"></span>
+    <b class="panel-title">
+    Important
+    </b>
+  </div>
+  <div class="panel-body">You should monitor this tablespace&#8217;s size to ensure
+there will always be enough space for the statspack to run correctly.  </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_user_and_tables_creation">1.2. User and tables creation</h3>
+<div class="paragraph"><p>The <code>spcreate.sql</code> will create the PERFSTAT user, packages and tables. This
+script will call the following subscripts:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>spcusr.sql</code> which creates the user and assigns it the required rights
+</p>
+</li>
+<li>
+<p>
+<code>spctab.sql</code> which creates the statspack tables (around 146 tables prefixed
+    by "STATS$"). It is executed as PERFSTAT user.
+</p>
+</li>
+<li>
+<p>
+<code>spcpkg.sql</code> which creates the STATSPACK package and its STATSPACK package
+   body. It is executed as PERFSTAT user.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>You can either install Statspack in interactive mode using the command line
+bellow which will prompt for:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+PERFSTAT user password
+</p>
+</li>
+<li>
+<p>
+The tablespace where to put Statpack&#8217;s data
+</p>
+</li>
+<li>
+<p>
+The temporary tablespace to use
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sqlplus <span style="color: #FF0000">"/ as sysdba"</span> @<span style="color: #990000">?/</span>rdbms<span style="color: #990000">/</span>admin<span style="color: #990000">/</span>spcreate<span style="color: #990000">.</span>sql</tt></pre></div></div>
+<div class="paragraph"><p>To install Statspack in batch mode, just assign the variables in sqlplus as
+show in the example below. Adapt the variables values to fit your environment.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>CONNECT <span style="color: #990000">/</span> <span style="font-weight: bold"><span style="color: #0000FF">AS</span></span> SYSDBA
+define perfstat_password<span style="color: #990000">=</span><span style="color: #FF0000">'A_Pr3tty_Pwd'</span>
+define default_tablespace<span style="color: #990000">=</span><span style="color: #FF0000">'PERFSTAT'</span>
+define temporary_tablespace<span style="color: #990000">=</span><span style="color: #FF0000">'TEMP'</span>
+@<span style="color: #990000">?/</span>rdbms<span style="color: #990000">/</span>admin<span style="color: #990000">/</span>spcreate</tt></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">2. Configuration</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_automatic_statistics_gathering">2.1. Automatic statistics gathering</h3>
+<div class="paragraph"><p>To schedule the automatic collection of statspack statistics, you can use the
+<code>spauto.sql</code> script. This script creates a job (using <code>DBMS_JOB</code> package),
+scheduled to run once an hour at 00.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sqlplus <span style="color: #FF0000">"/ as sysdba"</span> @<span style="color: #990000">?/</span>rdbms<span style="color: #990000">/</span>admin<span style="color: #990000">/</span>spauto<span style="color: #990000">.</span>sql</tt></pre></div></div>
+<div class="paragraph"><p>As this script is quite static and uses the old job scheduler of Oracle, you can
+choose to create a job manually using the <code>DBMS_SCHEDULER</code> package and customize
+the snapshot capture frequency. In the above example, we create a job as SYS to
+schedule the statspack statistics collection every 15 minutes. Be carefull that
+thaking frequent snapshots will generate a large amount of data. In this case,
+you should reduce the history retention.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>CONNECT <span style="color: #990000">/</span> <span style="font-weight: bold"><span style="color: #0000FF">AS</span></span> SYSDBA
+BEGIN
+  DBMS_SCHEDULER<span style="color: #990000">.</span>CREATE_SCHEDULE<span style="color: #990000">(</span>
+   schedule_name <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'PERFSTAT.statspack_snap_15min'</span><span style="color: #990000">,</span>
+   repeat_interval <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'FREQ=MINUTELY;BYMINUTE=00,15,30,45'</span>
+  <span style="color: #990000">);</span>
+
+  DBMS_SCHEDULER<span style="color: #990000">.</span>CREATE_JOB<span style="color: #990000">(</span>
+   job_name <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'PERFSTAT.sp_snapshot'</span><span style="color: #990000">,</span>
+   job_type <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'STORED_PROCEDURE'</span><span style="color: #990000">,</span>
+   job_action <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'PERFSTAT.statspack.snap'</span><span style="color: #990000">,</span>
+   schedule_name <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'PERFSTAT.statspack_snap_15min'</span><span style="color: #990000">,</span>
+   auto_drop <span style="color: #990000">=&gt;</span> FALSE<span style="color: #990000">,</span>
+   comments <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'Statspack collection'</span>
+  <span style="color: #990000">);</span>
+
+  DBMS_SCHEDULER<span style="color: #990000">.</span>ENABLE<span style="color: #990000">(</span><span style="color: #FF0000">'perfstat.sp_snapshot'</span><span style="color: #990000">);</span>
+END<span style="color: #990000">;</span>
+<span style="color: #990000">/</span></tt></pre></div></div>
+<div class="paragraph"><p>If you want to create this kind of job directly using the PERFSTAT user (which
+is, according to me, a cleaner way to work), you will need to grant the <code>create
+job</code> system privilege. The above example creates a job with the same settings as
+the previous one, but with the correct privileges:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>CONNECT <span style="color: #990000">/</span> <span style="font-weight: bold"><span style="color: #0000FF">AS</span></span> SYSDBA
+<span style="font-weight: bold"><span style="color: #0000FF">grant</span></span> <span style="font-weight: bold"><span style="color: #0000FF">create</span></span> job <span style="font-weight: bold"><span style="color: #0000FF">to</span></span> perfstat<span style="color: #990000">;</span>
+DISCONNECT<span style="color: #990000">;</span>
+CONNECT PERFSTAT<span style="color: #990000">/</span>A_Pr3tty_Pwd
+BEGIN
+  DBMS_SCHEDULER<span style="color: #990000">.</span>CREATE_SCHEDULE<span style="color: #990000">(</span>
+   schedule_name <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'statspack_snap_15min'</span><span style="color: #990000">,</span>
+   repeat_interval <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'FREQ=MINUTELY;BYMINUTE=00,15,30,45'</span>
+  <span style="color: #990000">);</span>
+
+  DBMS_SCHEDULER<span style="color: #990000">.</span>CREATE_JOB <span style="color: #990000">(</span>
+    job_name <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'sp_snapshot'</span><span style="color: #990000">,</span>
+    job_type <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'STORED_PROCEDURE'</span><span style="color: #990000">,</span>
+    job_action <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'statspack.snap'</span><span style="color: #990000">,</span>
+    schedule_name <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'statspack_snap_15min'</span><span style="color: #990000">,</span>
+    auto_drop <span style="color: #990000">=&gt;</span> FALSE<span style="color: #990000">,</span>
+    comments <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'Statspack collection'</span>
+  <span style="color: #990000">);</span>
+
+  DBMS_SCHEDULER<span style="color: #990000">.</span>ENABLE<span style="color: #990000">(</span><span style="color: #FF0000">'sp_snapshot'</span><span style="color: #990000">);</span>
+END<span style="color: #990000">;</span>
+<span style="color: #990000">/</span></tt></pre></div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">/* Then check the job creation: */</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">set</span></span> <span style="font-weight: bold"><span style="color: #0000FF">lines</span></span> <span style="color: #993399">200</span> pages <span style="color: #993399">1024</span><span style="color: #990000">;</span>
+col JOB_NAME <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> a20<span style="color: #990000">;</span>
+col JOB_ACTION <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> a20<span style="color: #990000">;</span>
+col SCHEDULE_NAME <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> a20<span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">select</span></span> JOB_NAME
+  <span style="color: #990000">,</span> JOB_TYPE<span style="color: #990000">,</span> JOB_ACTION
+  <span style="color: #990000">,</span> SCHEDULE_NAME<span style="color: #990000">,</span> ENABLED
+    <span style="color: #990000">,</span> AUTO_DROP<span style="color: #990000">,</span> STATE
+  <span style="color: #990000">,</span> TO_CHAR<span style="color: #990000">(</span>NEXT_RUN_DATE<span style="color: #990000">,</span><span style="color: #FF0000">'YYYY-MM-DD HH24:MI'</span><span style="color: #990000">)</span> <span style="font-weight: bold"><span style="color: #0000FF">as</span></span> NEXT_RUN
+<span style="font-weight: bold"><span style="color: #0000FF">from</span></span> USER_SCHEDULER_JOBS<span style="color: #990000">;</span></tt></pre></div></div>
+<div class="paragraph"><p>The last query should output like this:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>JOB_NAME        JOB_TYPE         JOB_ACTION           SCHEDULE_NAME        ENABL AUTO_ STATE           NEXT_RUN
+--------------- ---------------- -------------------- -------------------- ----- ----- --------------- ----------------
+SP_SNAPSHOT     STORED_PROCEDURE statspack.snap       STATSPACK_SNAP_1H    TRUE FALSE SCHEDULED       2013-11-06 10:00
+
+1 row selected.</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_automatic_history_purge">2.2. Automatic history purge</h3>
+<div class="paragraph"><p>There is no script like the spauto to automatically purge statspack snapshots.</p></div>
+<div class="paragraph"><p>The best thing to do is to use the <code>PURGE</code> method of the <code>STATSPACK</code> package.
+This method can be called with various parameters, but the one that is
+interesting for us now is the `` which specifies how many days you want to keep
+(setting it to 0 will only raise an error and do nothing. See the manual purge
+paragraph for more information about truncating tables).</p></div>
+<div class="paragraph"><p>In the example below, we schedule a job that will run every day at 1:56 PM to
+purge every data older than 8 days.</p></div>
+<div class="panel panel-warning admonitionblock">
+  <div class="panel-heading">
+
+<span class="glyphicon glyphicon-warning-sign"></span>
+
+
+
+    <b class="panel-title">
+    Warning
+    </b>
+  </div>
+  <div class="panel-body">if you aleady have a huge amount of snapsots history, refer to the
+paragraph explaining how to purge manually snapshots first.  </div>
+</div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>CONNECT PERFSTAT<span style="color: #990000">/</span>A_Pr3tty_Pwd
+BEGIN
+  DBMS_SCHEDULER<span style="color: #990000">.</span>CREATE_JOB <span style="color: #990000">(</span>
+    job_name            <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'sp_purge_snapshots'</span><span style="color: #990000">,</span>
+    job_type             <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'PLSQL_BLOCK'</span><span style="color: #990000">,</span>
+    job_action           <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'STATSPACK.PURGE(I_NUM_DAYS =&gt; 8);'</span><span style="color: #990000">,</span>
+    repeat_interval     <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'FREQ=DAILY; BYHOUR=13; BYMINUTE=56'</span><span style="color: #990000">,</span>
+    auto_drop           <span style="color: #990000">=&gt;</span> FALSE<span style="color: #990000">,</span>
+    comments            <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'Statspack snapshots purge'</span>
+  <span style="color: #990000">);</span>
+  DBMS_SCHEDULER<span style="color: #990000">.</span>ENABLE<span style="color: #990000">(</span><span style="color: #FF0000">'sp_purge_snapshots'</span><span style="color: #990000">);</span>
+END<span style="color: #990000">;</span>
+<span style="color: #990000">/</span></tt></pre></div></div>
+<div class="panel panel-info admonitionblock">
+  <div class="panel-heading">
+
+
+<span class="glyphicon glyphicon-info-sign"></span>
+
+
+    <b class="panel-title">
+    Note
+    </b>
+  </div>
+  <div class="panel-body">I know this is ugly to hard code parameters values in jobs, but this is
+the quickest way to workaround the limitations of DBMS_SCHEDULER&#8217;s lack of named
+arguments support.  </div>
+</div>
+<div class="paragraph"><p>To list currently scheduled jobs for the given user, use the following query as
+in the previous paragraph:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>col JOB_NAME <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> a20<span style="color: #990000">;</span>
+col JOB_ACTION <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> a20<span style="color: #990000">;</span>
+col SCHEDULE_NAME <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> a20<span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">select</span></span> JOB_NAME
+  <span style="color: #990000">,</span> JOB_TYPE<span style="color: #990000">,</span> JOB_ACTION
+  <span style="color: #990000">,</span> SCHEDULE_NAME<span style="color: #990000">,</span> ENABLED
+    <span style="color: #990000">,</span> AUTO_DROP<span style="color: #990000">,</span> STATE
+  <span style="color: #990000">,</span> TO_CHAR<span style="color: #990000">(</span>NEXT_RUN_DATE<span style="color: #990000">,</span><span style="color: #FF0000">'YYYY-MM-DD HH24:MI'</span><span style="color: #990000">)</span> <span style="font-weight: bold"><span style="color: #0000FF">as</span></span> NEXT_RUN
+<span style="font-weight: bold"><span style="color: #0000FF">from</span></span> USER_SCHEDULER_JOBS<span style="color: #990000">;</span></tt></pre></div></div>
+<div class="paragraph"><p>To change the retention, you will need to change the job_action attribute like
+this (here you set it to 10 days):</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>CONNECT PERFSTAT<span style="color: #990000">/</span>A_Pr3tty_Pwd
+BEGIN
+  DBMS_SCHEDULER<span style="color: #990000">.</span>SET_ATTRIBUTE <span style="color: #990000">(</span>
+    name        <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'sp_purge_snapshots'</span><span style="color: #990000">,</span>
+    attribute   <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'job_action'</span><span style="color: #990000">,</span>
+    value       <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'STATSPACK.PURGE(I_NUM_DAYS =&gt; 10);'</span>
+  <span style="color: #990000">);</span>
+END<span style="color: #990000">;</span>
+<span style="color: #990000">/</span></tt></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="_changing_default_parameters">2.3. Changing default parameters</h3>
+<div class="paragraph"><p>You can modify the statspack parameters like using the
+<code>modify_statspack_parameter</code> of the STATSPACK package. This method will be
+explained in another post.</p></div>
+<div class="paragraph"><p>The most commonly modified parameter is the snapshot detail level which default
+to the level 5. Setting the level to a higher one is usefull when debugging, but
+it is not really advisable to have a level 10 for example on a running
+production server.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>BEGIN
+  statspack<span style="color: #990000">.</span>modify_statspack_parameter<span style="color: #990000">(</span>i_snap_level<span style="color: #990000">=&gt;</span><span style="color: #993399">7</span><span style="color: #990000">,</span> i_modify_parameter<span style="color: #990000">=&gt;</span><span style="color: #FF0000">'true'</span><span style="color: #990000">);</span>
+END<span style="color: #990000">;</span>
+<span style="color: #990000">/</span></tt></pre></div></div>
+<div class="panel panel-warning admonitionblock">
+  <div class="panel-heading">
+
+<span class="glyphicon glyphicon-warning-sign"></span>
+
+
+
+    <b class="panel-title">
+    Warning
+    </b>
+  </div>
+  <div class="panel-body">Keep in mind that the higher the snapshot levels require more time and resources
+to execute than the lower snapshot levels.  </div>
+</div>
+<div class="paragraph"><p>To have the detail of what the levels correspond to, use the following query:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">select</span></span> <span style="color: #990000">*</span> <span style="font-weight: bold"><span style="color: #0000FF">from</span></span> stats$level_description<span style="color: #990000">;</span></tt></pre></div></div>
+<div class="paragraph"><p>Which returns:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>SNAP_LEVEL  DESCRIPTION
+----------  --------------------------------------------------------------------
+         0  This level captures general statistics, including rollback segment,
+            row cache, SGA, system events, background events, session events,
+            system statistics, wait statistics, lock statistics, and Latch
+            information
+
+         5  This level includes capturing high resource usage SQL Statements,
+            along with all data captured by lower levels
+
+         6  This level includes capturing SQL plan and SQL plan usage
+            information for high resource usage SQL Statements, along with all
+            data captured by lower levels
+
+         7  This level captures segment level statistics, including logical and
+            physical reads, row lock, itl and buffer busy waits, along with all
+            data captured by lower levels
+
+        10  This level includes capturing Child Latch statistics, along with
+            all data captured by lower levels</code></pre>
+</div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_manual_operations">3. Manual operations</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_generating_report">3.1. Generating report</h3>
+<div class="paragraph"><p>This part can be either executed by the PERFSTAT user or any DBA user.</p></div>
+<div class="paragraph"><p>To launch a report on the instance you are currently working on, use the
+following sql script. It will ask for the snapshot number you want to start your
+report on, the one you want to stop your report on and the name of your report.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>@<span style="color: #990000">?/</span>rdbms<span style="color: #990000">/</span>admin<span style="color: #990000">/</span>spreport<span style="color: #990000">.</span>sql</tt></pre></div></div>
+<div class="paragraph"><p>If you want to automate this, you just have to set the <code>begin_snap</code>, <code>end_snap</code>
+and <code>report_name</code> PL/SQL variables. To get the snapshots available, use the
+<code>STATS$SNAPSHOT</code> table. the SQL query below retrieves all the snapshots
+available and their corresponding date. You can then define the 3 variables
+using the <code>define</code> command or just go to the next example to have a much more
+automated method.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">select</span></span> SNAP_ID<span style="color: #990000">,</span> TO_CHAR<span style="color: #990000">(</span>SNAP_TIME<span style="color: #990000">,</span> <span style="color: #FF0000">'YYYY-MM-DD HH24:MI'</span><span style="color: #990000">),</span> UCOMMENT
+  <span style="font-weight: bold"><span style="color: #0000FF">from</span></span> PERFSTAT<span style="color: #990000">.</span>STATS$SNAPSHOT
+<span style="font-weight: bold"><span style="color: #0000FF">order</span></span> <span style="font-weight: bold"><span style="color: #0000FF">by</span></span> SNAP_ID<span style="color: #990000">;</span></tt></pre></div></div>
+<div class="paragraph"><p>The above example show how to launch a statspack report over the last 12 hours.
+This won&#8217;t prompt you for any value. The report name will be something like
+<em>201311062300-201311071000_MYINSTANCE_hostname.sprpt</em> (201311062300 is the first
+snapshot date of the report using the YYYYMMDDHH24MI format. 201311071000 is the
+same but for the last snapshot of the report) and lies in the current directory.</p></div>
+<div class="paragraph"><p>To adapt this to what you want, you only have to change the WHERE clause&#8230; easy! :)</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">set</span></span> <span style="font-weight: bold"><span style="color: #0000FF">lines</span></span> <span style="color: #993399">200</span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">column</span></span> begin_snap heading <span style="color: #FF0000">"Begin snap"</span> new_value begin_snap format <span style="color: #993399">999999999</span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">column</span></span> end_snap heading <span style="color: #FF0000">"End snap"</span> new_value end_snap format <span style="color: #993399">999999999</span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">column</span></span> report_name heading <span style="color: #FF0000">"Report name"</span> new_value report_name format a60<span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">select</span></span> min<span style="color: #990000">(</span>s<span style="color: #990000">.</span>SNAP_ID<span style="color: #990000">)</span> <span style="font-weight: bold"><span style="color: #0000FF">as</span></span> begin_snap<span style="color: #990000">,</span> max<span style="color: #990000">(</span>s<span style="color: #990000">.</span>SNAP_ID<span style="color: #990000">)</span> <span style="font-weight: bold"><span style="color: #0000FF">as</span></span> end_snap<span style="color: #990000">,</span>
+  TO_CHAR<span style="color: #990000">(</span>MIN<span style="color: #990000">(</span>s<span style="color: #990000">.</span>SNAP_TIME<span style="color: #990000">),</span> <span style="color: #FF0000">'YYYYMMDDHH24MI'</span><span style="color: #990000">)</span> <span style="color: #990000">||</span><span style="color: #FF0000">'-'</span><span style="color: #990000">||</span>
+  TO_CHAR<span style="color: #990000">(</span>MAX<span style="color: #990000">(</span>s<span style="color: #990000">.</span>SNAP_TIME<span style="color: #990000">),</span> <span style="color: #FF0000">'YYYYMMDDHH24MI'</span><span style="color: #990000">)</span> <span style="color: #990000">||</span><span style="color: #FF0000">'_'</span><span style="color: #990000">||</span>
+  i<span style="color: #990000">.</span>INSTANCE_NAME <span style="color: #990000">||</span><span style="color: #FF0000">'_'</span><span style="color: #990000">||</span> i<span style="color: #990000">.</span>HOST_NAME <span style="color: #990000">||</span>
+  <span style="color: #FF0000">'.sprpt'</span> <span style="font-weight: bold"><span style="color: #0000FF">as</span></span> report_name
+  <span style="font-weight: bold"><span style="color: #0000FF">from</span></span> PERFSTAT<span style="color: #990000">.</span>STATS$SNAPSHOT s <span style="font-weight: bold"><span style="color: #0000FF">INNER</span></span> <span style="font-weight: bold"><span style="color: #0000FF">JOIN</span></span> V$INSTANCE i
+    <span style="font-weight: bold"><span style="color: #0000FF">ON</span></span> s<span style="color: #990000">.</span>INSTANCE_NUMBER <span style="color: #990000">=</span> i<span style="color: #990000">.</span>INSTANCE_NUMBER
+  <span style="font-weight: bold"><span style="color: #0000FF">where</span></span> s<span style="color: #990000">.</span>SNAP_TIME <span style="color: #990000">&gt;</span> SYSDATE <span style="color: #990000">-</span> NUMTODSINTERVAL<span style="color: #990000">(</span><span style="color: #993399">12</span><span style="color: #990000">,</span> <span style="color: #FF0000">'HOUR'</span><span style="color: #990000">)</span>
+<span style="font-weight: bold"><span style="color: #0000FF">group</span></span> <span style="font-weight: bold"><span style="color: #0000FF">by</span></span> i<span style="color: #990000">.</span>INSTANCE_NAME<span style="color: #990000">,</span> i<span style="color: #990000">.</span>HOST_NAME<span style="color: #990000">;</span>
+@<span style="color: #990000">?/</span>rdbms<span style="color: #990000">/</span>admin<span style="color: #990000">/</span>spreport<span style="color: #990000">.</span>sql</tt></pre></div></div>
+<div class="panel panel-danger admonitionblock">
+  <div class="panel-heading">
+<span class="glyphicon glyphicon-exclamation-sign"></span>
+
+
+
+
+    <b class="panel-title">
+    Caution
+    </b>
+  </div>
+  <div class="panel-body">This execute a report on the <strong>CURRENT</strong> instance, so if you are on a RAC
+instance, using the spreport.sql script will only run a report for <strong>the instance
+you are currently working on</strong>!  </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_snapshot_manually">3.2. Creating snapshot manually</h3>
+<div class="paragraph"><p>To generate a snapshot in statspack, use the <code>SNAP</code> method of the <code>STATSPACK</code>
+package.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>exec PERFSTAT<span style="color: #990000">.</span>statspack<span style="color: #990000">.</span>snap<span style="color: #990000">;</span></tt></pre></div></div>
+<div class="paragraph"><p>If, for debug purposes, you need to to temporarily use a snapshot with a more
+detailed level of informations, you can do it using the <code>I_SNAP_LEVEL</code> parameter
+of the <code>STATSPACK.SNAP</code>. It is advisable to comment this snapshot for later
+reference (use the <code>I_UCOMMENT</code> parameter of this method to do so).</p></div>
+<div class="panel panel-info admonitionblock">
+  <div class="panel-heading">
+
+
+<span class="glyphicon glyphicon-info-sign"></span>
+
+
+    <b class="panel-title">
+    Note
+    </b>
+  </div>
+  <div class="panel-body">The value of the parameters given to the <code>STATSPACK.SNAP</code> method is used
+only for the current snapshot taken; the new value is not saved as the default.  </div>
+</div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>BEGIN
+  PERFSTAT<span style="color: #990000">.</span>statspack<span style="color: #990000">.</span>snap<span style="color: #990000">(</span>
+    i_snap_level <span style="color: #990000">=&gt;</span> <span style="color: #993399">10</span><span style="color: #990000">,</span>
+    i_ucomment <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">'Level 10 snap for debugging at particular time'</span>
+  <span style="color: #990000">);</span>
+END<span style="color: #990000">;</span>
+<span style="color: #990000">/</span></tt></pre></div></div>
+<div class="paragraph"><p>For further informations about the options available in the SNAP method, see the
+post about the STATSPACK package (not done at the time I&#8217;m writing these lines).</p></div>
+</div>
+<div class="sect2">
+<h3 id="_purging_history_manually">3.3. Purging history manually</h3>
+<div class="paragraph"><p>If you want to make some manual cleanup of the snapshots, use the <code>sppurge.sql</code>
+script which will ask for the first snap id to delete and the last snap of the
+range to delete.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>CONNECT PERFSTAT
+@<span style="color: #990000">?/</span>rdbms<span style="color: #990000">/</span>admin<span style="color: #990000">/</span>sppurge<span style="color: #990000">.</span>sql</tt></pre></div></div>
+<div class="paragraph"><p>If you have a huge amount of snapshots to delete, you should really set the
+transaction to use big_rbs rollback segment as mentionned above:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>CONNECT PERFSTAT
+<span style="font-weight: bold"><span style="color: #0000FF">set</span></span> transaction <span style="font-weight: bold"><span style="color: #0000FF">use</span></span> rollback segment big_rbs<span style="color: #990000">;</span>
+@<span style="color: #990000">?/</span>rdbms<span style="color: #990000">/</span>admin<span style="color: #990000">/</span>sppurge<span style="color: #990000">.</span>sql</tt></pre></div></div>
+<div class="paragraph"><p>To automate the purge of the snapshots, you can either use the following kind of
+script which, in our case, deletes all statspack data associated with snapshots
+older than 10 days:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">set</span></span> <span style="font-weight: bold"><span style="color: #0000FF">lines</span></span> <span style="color: #993399">200</span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">column</span></span> losnapid heading <span style="color: #FF0000">"First snap"</span> new_value losnapid  format <span style="color: #993399">999999999</span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">column</span></span> hisnapid heading <span style="color: #FF0000">"Last snap"</span> new_value hisnapid format <span style="color: #993399">999999999</span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">select</span></span> min<span style="color: #990000">(</span>s<span style="color: #990000">.</span>SNAP_ID<span style="color: #990000">)</span> <span style="font-weight: bold"><span style="color: #0000FF">as</span></span> losnapid<span style="color: #990000">,</span> max<span style="color: #990000">(</span>s<span style="color: #990000">.</span>SNAP_ID<span style="color: #990000">)</span> <span style="font-weight: bold"><span style="color: #0000FF">as</span></span> hisnapid
+  <span style="font-weight: bold"><span style="color: #0000FF">from</span></span> STATS$SNAPSHOT s
+  <span style="font-weight: bold"><span style="color: #0000FF">where</span></span> s<span style="color: #990000">.</span>SNAP_TIME <span style="color: #990000">&lt;</span> SYSDATE <span style="color: #990000">-</span> NUMTODSINTERVAL<span style="color: #990000">(</span><span style="color: #993399">10</span><span style="color: #990000">,</span> <span style="color: #FF0000">'DAY'</span><span style="color: #990000">);</span>
+@<span style="color: #990000">?/</span>rdbms<span style="color: #990000">/</span>admin<span style="color: #990000">/</span>sppurge<span style="color: #990000">.</span>sql</tt></pre></div></div>
+<div class="paragraph"><p>Or rather use the <code>PURGE</code> version of the <code>STATSPACK</code> package. The example below
+also deletes all statspack data associated with snapshots older than 10 days:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>BEGIN
+  STATSPACK<span style="color: #990000">.</span>PURGE<span style="color: #990000">(</span>I_NUM_DAYS <span style="color: #990000">=&gt;</span> <span style="color: #993399">10</span><span style="color: #990000">);</span>
+END<span style="color: #990000">;</span>
+<span style="color: #990000">/</span></tt></pre></div></div>
+<div class="paragraph"><p>To truncate all statspack data, use the <code>sptrunc.sql</code> script.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>@<span style="color: #990000">?/</span>rdbms<span style="color: #990000">/</span>admin<span style="color: #990000">/</span>sptrunc<span style="color: #990000">.</span>sql</tt></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="_exporting_perfstat_user">3.4. Exporting PERFSTAT user</h3>
+<div class="paragraph"><p>You can export STATSPACK schema using the `spuexp.par`par file like this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>exp userid=perfstat/A_Pr3tty_Pwd parfile=spuexp.par</code></pre>
+</div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_uninstallation">4. Uninstallation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The <code>spdrop.sql</code> will drop the PERFSTAT user after dropping its tables. This
+script will call the following subscripts:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>spdtab.sql</code> which drops the PERFSTAT tables (executed as sysdba)
+</p>
+</li>
+<li>
+<p>
+<code>spdusr.sql</code> which drops the PERFSTAT user (executed as sysdba)
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sqlplus <span style="color: #FF0000">"/ as sysdba"</span> @<span style="color: #990000">?/</span>rdbms<span style="color: #990000">/</span>admin<span style="color: #990000">/</span>spdrop<span style="color: #990000">.</span>sql</tt></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_known_issues">5. Known issues</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Keep in mind the following issues when using statspak:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Some statistics may only be reported on COMPLETION of a query. For example,
+if a query runs for 12 hours, its processing won&#8217;t be reported during any of the
+snapshots taken while the query was busy executing.
+</p>
+</li>
+<li>
+<p>
+If queries are aged out of the shared pool, the stats from V$SQL are reset.
+This can throw off the delta calculations and even make it negative. For
+example, query A has 10,000 buffer_gets at snapshot 1, but at snapshot #2, it
+has been aged out of the pool and reloaded and now shows only 1,000 buffer_gets.
+So, when you run spreport.sql from snapshot 1 to 2, you&#8217;ll get 1,000-10,000 =
+-9,000 for this query.
+</p>
+</li>
+<li>
+<p>
+This post has to be adapted to RAC environments.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_external_resources">6. External resources</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><a href="http://docs.oracle.com/cd/B10500_01/server.920/a96533/statspac.htm">http://docs.oracle.com/cd/B10500_01/server.920/a96533/statspac.htm</a></p></div>
+<div class="paragraph"><p><a href="http://www.orafaq.com/wiki/Statspack">http://www.orafaq.com/wiki/Statspack</a></p></div>
+<div class="paragraph"><p><a href="http://www.oracledistilled.com/oracle-database/performance/installing-and-configuring-statspack/">http://www.oracledistilled.com/oracle-database/performance/installing-and-configuring-statspack/</a></p></div>
+<div class="paragraph"><p><a href="http://www.fadalti.com/oracle/database/how_to_statspack.htm">http://www.fadalti.com/oracle/database/how_to_statspack.htm</a></p></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar"
+        role="navigation">
+      <div class="well sidebar-nav">
+        <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+      </div><!--/.well -->
+      <div class="well sidebar-nav">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/custom_/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/custom_/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/custom_/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 1.0.0<br />
+Last updated 2013-11-08 10:26:15 CET
+</div>
+</div>
+</div>
+</body>
+</html>
