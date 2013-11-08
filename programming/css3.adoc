@@ -237,9 +237,13 @@ Some usefull links about CSS
 ----------------------------
 
 http://necolas.github.io/normalize.css/
+
 http://meyerweb.com/eric/tools/css/reset/
+
 http://clagnut.com/sandbox/imagetest
+
 http://css-tricks.com/pseudo-class-selectors/
+
 http://css-tricks.com/pseudo-element-roundup/
 
 http://hex2rgba.devoth.com/[A hex to RGBA color converter]

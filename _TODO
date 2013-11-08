@@ -80,7 +80,9 @@ Tablespaces
 Sessions
 AWR reports
 AWR tables custom querying
-STATSPACK package details
+Playing directly in PERFSTAT tables
+STATSPACK package details => Update the installation and configuration guide
+after it is finished
 STATSPACK on RAC
 STATSPACK auto generation of reports
 

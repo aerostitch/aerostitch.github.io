@@ -6,6 +6,11 @@
         "name": "Oracle",
         "children": [
           {
+            "name": "Installing and configuring Statspack",
+            "url": "/databases/oracle/conf_statspack.html",
+            "target": "_self"
+          },
+          {
             "name": "Expdp or rman on an NFS mount point in AIX",
             "url": "/databases/oracle/expdp_on_AIX_NFS.html",
             "target": "_self"

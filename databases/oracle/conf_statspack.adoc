@@ -483,8 +483,11 @@ To truncate all statspack data, use the `sptrunc.sql` script.
 Exporting PERFSTAT user
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-spuexp.par
+You can export STATSPACK schema using the `spuexp.par`par file like this:
 
+-----
+exp userid=perfstat/A_Pr3tty_Pwd parfile=spuexp.par
+-----
 
 Uninstallation
 --------------
@@ -502,97 +505,32 @@ sqlplus "/ as sysdba" @?/rdbms/admin/spdrop.sql
 
 
 
+Known issues
+------------
 
-Playing directly in PERFSTAT tables
------------------------------------
+Keep in mind the following issues when using statspak:
 
-
-
-Potential problems
-
-Statpack reporting suffers from the following problems:
-
-    Some statistics may only be reported on COMPLETION of a query. For example,
+ * Some statistics may only be reported on COMPLETION of a query. For example,
 if a query runs for 12 hours, its processing won't be reported during any of the
 snapshots taken while the query was busy executing. 
-
-    If queries are aged out of the shared pool, the stats from V$SQL are reset.
+ * If queries are aged out of the shared pool, the stats from V$SQL are reset.
 This can throw off the delta calculations and even make it negative. For
 example, query A has 10,000 buffer_gets at snapshot 1, but at snapshot #2, it
 has been aged out of the pool and reloaded and now shows only 1,000 buffer_gets.
 So, when you run spreport.sql from snapshot 1 to 2, you'll get 1,000-10,000 =
 -9,000 for this query. 
-
-External links
-
-  http://docs.oracle.com/cd/B10500_01/server.920/a96533/statspac.htm
-  http://www.orafaq.com/wiki/Statspack
-  http://www.oracledistilled.com/oracle-database/performance/installing-and-configuring-statspack/
-  http://www.fadalti.com/oracle/database/how_to_statspack.htm
-    OraPerf.com, upload your STATSPACK file to get performance recommendations -
-no more exists.
-    www.spviewer.com, website with software tools for Oracle tuning based on
-statspack and AWR. (70$/db)
-    statspackanalyzer - website that can analyze statspack reports - no more
-exists.
-    stori.orapub.com - transform Statspack data into an understandable story;
-well organized, in paragraph form with charts, specific and ranked
-recommendations and in plain English. (500$/db) 
-  http://www-03.ibm.com/systems/tools/databaseinsight/
+ * This post has to be adapted to RAC environments.
 
 
 
-/* ********************* Attention : Statpack et RAC *********************
-On trouve de plus en plus souvent des config RAC en version standard, et depuis
-la version 11 tout est fermé (diag pack & co...), dons les vues de l'awr,
-dba_hist & co n'existent pas ou sont vides. 
+External resources
+------------------
 
-Le seul moyen pour avoir des billes sur les instances en rac (en version
-standard) consiste à installer le statpack.
+http://docs.oracle.com/cd/B10500_01/server.920/a96533/statspac.htm
 
-Petit rappel :
-Création du package : @/rdbms/admin/spcreate.sql
-Création du job de collecte : @/rdbms/admin/spauto.sql
-Création d'un rapport : @/rdbms/admin/spreport.sql
+http://www.orafaq.com/wiki/Statspack
 
-dans la table stat$snapshot, il y a une colonne instance_number (qui correspond
-au select instance_number from v$instance)
-les datas collectées sont donc propres à chaque noeuds !
+http://www.oracledistilled.com/oracle-database/performance/installing-and-configuring-statspack/
 
-il faut donc executer spauto.sql sur chacun des noeuds.
-
-
-sinon vous aurez l'erreur suivante : 
-
-16:19:06 rdexploit@pmarketp >
-@C:\Users\osiadmpmp\scripts_sql\catalog\spreport.sql
-
-Current Instance
-~~~~~~~~~~~~~~~~
-
-   DB Id    DB Name      Inst Num Instance
------------ ------------ -------- ------------
- 3307352092 PMARKETP            2 PMARKETP2
-
-1 row selected.
-
-
-
-Instances in this Statspack schema
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-   DB Id    Inst Num DB Name      Instance     Host
------------ -------- ------------ ------------ ------------
- 3307352092        1 PMARKETP     PMARKETP1    rac5ppl2.sie
-                                               ge.red
-
-Using 3307352092 for database Id
-Using          2 for instance number
-declare
-*
-ERROR at line 1:
-ORA-20200: Database/Instance 3307352092/2 does not exist in
-STATS$DATABASE_INSTANCE
-ORA-06512: at line 23
-*/
+http://www.fadalti.com/oracle/database/how_to_statspack.htm
 
