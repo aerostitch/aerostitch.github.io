@@ -1,18 +1,4 @@
-= TODO
-
-== General
-
-Add a search engine based on description, keywords, title of files
-Add a Ariadne's thread generated on jquery based on current path and index.xml
-Generate html only if adoc changed date > html date and templates did not change
-Add a google analyzer?
-
-== Asciidoc backend
-
-enhance backend
-
-
-
+= TODO list for this website
 
 == Docs
 
