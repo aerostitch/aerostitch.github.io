@@ -534,3 +534,9 @@ http://www.oracledistilled.com/oracle-database/performance/installing-and-config
 
 http://www.fadalti.com/oracle/database/how_to_statspack.htm
 
+http://docs.oracle.com/cd/B10500_01/server.920/a96533/statspac.htm
+
+http://www.akadia.com/services/ora_statspack_survival_guide.html
+
+http://www.fadalti.com/oracle/database/how_to_statspack.htm
+
