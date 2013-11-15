@@ -2,25 +2,10 @@ Extract paragraphs containing a specific pattern
 ================================================
 Joseph HERLANT
 v1.0.0, 2013-10-19: Initial version
-:encoding: UTF-8
+:Author Initials: Joseph HERLANT
 :description: A perl one-liner to extract a given pattern to extract the +
   paragraphs containing a given pattern.
 :keywords: perl, oneliner, extract, regex, regular expression, pattern
-:lang: en
-:data-uri:
-:ascii-ids:
-:linkcss:
-:stylesdir: /asciidoc_twbs_backend/css
-:scriptsdir: /asciidoc_twbs_backend/js
-:icons:
-:iconsdir: /asciidoc_twbs_backend/ico
-:numbered:
-:toc:
-:toclevels: 3
-:doctype: article
-:website: http://aerostitch.github.io
-:tags.underline: <u>|</u>
-:quotes.%: underline
 
 /////
 Comments

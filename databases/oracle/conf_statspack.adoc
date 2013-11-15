@@ -2,7 +2,7 @@ Installing and configuring Statspack
 ====================================
 Joseph HERLANT
 v1.0.0, 2013-11-05 : Initial version
-:encoding: UTF-8
+:Author Initials: Joseph HERLANT
 :description: This post is about installation and configuration of Statspack +
   reports, the AWR's ancestor which has the advantage to be free of charge and +
   available in all editions of Oracle since Oracle Database 8i. Yes, even if a +
@@ -10,21 +10,7 @@ v1.0.0, 2013-11-05 : Initial version
   to use the AWR and ASH tools.
 :keywords: Statspack, diagnostics, diagnosis, diag, AWR, perf, performance, +
   monitor, Oracle
-:lang: en
-:data-uri:
-:ascii-ids:
-:linkcss:
-:stylesdir: /asciidoc_twbs_backend/css
-:scriptsdir: /asciidoc_twbs_backend/js
-:icons:
-:iconsdir: /asciidoc_twbs_backend/ico
-:numbered:
-:toc:
-:toclevels: 3
-:doctype: article
-:website: http://aerostitch.github.io
-:tags.underline: <u>|</u>
-:quotes.%: underline
+
 
 /////
 Comments

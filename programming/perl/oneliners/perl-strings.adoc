@@ -2,25 +2,10 @@ The "strings" command using a perl one-liner
 ============================================
 Joseph HERLANT
 v1.0.0, 2013-10-22 : Initial version
-:encoding: UTF-8
+:Author Initials: Joseph HERLANT
 :description: Rewriting the strings linux command that returns every human +
   readable strings in a binary that are longer than 4 characters.
 :keywords: perl, oneliner, strings
-:lang: en
-:data-uri:
-:ascii-ids:
-:linkcss:
-:stylesdir: /asciidoc_twbs_backend/css
-:scriptsdir: /asciidoc_twbs_backend/js
-:icons:
-:iconsdir: /asciidoc_twbs_backend/ico
-:numbered:
-:toc:
-:toclevels: 3
-:doctype: article
-:website: http://aerostitch.github.io
-:tags.underline: <u>|</u>
-:quotes.%: underline
 
 /////
 Comments

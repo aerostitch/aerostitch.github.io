@@ -2,25 +2,10 @@ Wanna know if your machine is little or big endian?
 ===================================================
 Joseph HERLANT
 v1.0.0, 2013-10-23 : Initial version
-:encoding: UTF-8
+:Author Initials: Joseph HERLANT
 :description: This one-liner tells you wether your computer uses little-endian +
-or big-endian.
+  or big-endian.
 :keywords: perl, oneliner, little-endian, big-endian
-:lang: en
-:data-uri:
-:ascii-ids:
-:linkcss:
-:stylesdir: /asciidoc_twbs_backend/css
-:scriptsdir: /asciidoc_twbs_backend/js
-:icons:
-:iconsdir: /asciidoc_twbs_backend/ico
-:numbered:
-:toc:
-:toclevels: 3
-:doctype: article
-:website: http://aerostitch.github.io
-:tags.underline: <u>|</u>
-:quotes.%: underline
 
 /////
 Comments

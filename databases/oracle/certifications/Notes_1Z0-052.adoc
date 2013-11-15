@@ -2,24 +2,11 @@ Notes for exams 1Z0-052
 =======================
 Joseph HERLANT
 v1.0.7, 2013-10-19: tiny modifications in introduction warning
-:encoding: UTF-8
+:Author Initials: Joseph HERLANT
 :description: This document is regrouping my personal notes I took while +
   revising for the 1Z0-052 Oracle certification exam.
 :keywords: Oracle, Database, Certified, Administrator, Certification, exam, +
   1Z0-052, 11gR2
-:lang: en
-:data-uri:
-:ascii-ids:
-:linkcss:
-:stylesdir: /asciidoc_twbs_backend/css
-:scriptsdir: /asciidoc_twbs_backend/js
-:linkcss:
-:stylesdir: /asciidoc_twbs_backend/css
-:scriptsdir: /asciidoc_twbs_backend/js
-:icons:
-:iconsdir: /asciidoc_twbs_backend/ico
-:numbered:
-:toc:
 
 /////
 :revinfo:

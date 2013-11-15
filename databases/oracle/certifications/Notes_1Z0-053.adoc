@@ -2,26 +2,11 @@ Notes for exams 1Z0-053
 =======================
 Joseph HERLANT
 v1.0.2, 2013-10-19: little modification in the introduction warning
-:encoding: UTF-8
+:Author Initials: Joseph HERLANT
 :description: This document is regrouping my personal notes I took while revising +
   for the 1Z0-053 Oracle certification exam.
 :keywords: Oracle, Database, Certified, Professionnal, Certification, exam, +
   1Z0-052, 11gR2
-:lang: en
-:data-uri:
-:ascii-ids:
-:linkcss:
-:stylesdir: /asciidoc_twbs_backend/css
-:scriptsdir: /asciidoc_twbs_backend/js
-:linkcss:
-:stylesdir: /asciidoc_twbs_backend/css
-:scriptsdir: /asciidoc_twbs_backend/js
-:icons:
-:iconsdir: /asciidoc_twbs_backend/ico
-:numbered:
-:toc:
-:tags.underline: <u>|</u>
-:quotes.%: underline
 
 /////
 :revinfo:

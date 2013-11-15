@@ -2,27 +2,12 @@ Some git tips
 =============
 Joseph HERLANT
 v1.0.2, 2013-11-06: Forgot a git fetch in submodules
-:encoding: UTF-8
+:Author Initials: Joseph HERLANT
 :description: Here you'll find some stuffs I found to be kind of cool or some +
   things that I usually forget about it. For example, how to edit commits +
   history or what does rebase do.
 :keywords: git, hg, rebase, log, .gitattributes, config, crlf, stash, rebase, +
   fetch, reset, branch, HEAD, origin, tag, cherry-pick, prune
-:lang: en
-:data-uri:
-:ascii-ids:
-:linkcss:
-:stylesdir: /asciidoc_twbs_backend/css
-:scriptsdir: /asciidoc_twbs_backend/js
-:icons:
-:iconsdir: /asciidoc_twbs_backend/ico
-:numbered:
-:toc:
-:toclevels: 3
-:doctype: article
-:website: http://aerostitch.github.io
-:tags.underline: <u>|</u>
-:quotes.%: underline
 
 /////
 :revinfo:

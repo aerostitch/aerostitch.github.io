@@ -2,28 +2,10 @@ Add line numbers while printing a file line nl command
 ======================================================
 Joseph HERLANT
 v1.0.0, 2013-10-19: Initial version
-:encoding: UTF-8
+:Author Initials: Joseph HERLANT
 :description: Perl one-liners to print out the line numbers at the begining of +
   each lines while printing the line. 
 :keywords: perl, oneliner, extract, regex, regular expression, pattern
-:lang: en
-:data-uri:
-:ascii-ids:
-:linkcss:
-:stylesdir: /asciidoc_twbs_backend/css
-:scriptsdir: /asciidoc_twbs_backend/js
-:linkcss:
-:stylesdir: /asciidoc_twbs_backend/css
-:scriptsdir: /asciidoc_twbs_backend/js
-:icons:
-:iconsdir: /asciidoc_twbs_backend/ico
-:numbered:
-:toc:
-:toclevels: 3
-:doctype: article
-:website: http://aerostitch.github.io
-:tags.underline: <u>|</u>
-:quotes.%: underline
 
 /////
 Comments

@@ -2,24 +2,10 @@ Notes for exam 1Z0-047
 ======================
 Joseph HERLANT
 v1.0.2, 2013-10-19 : changing a part of the intruduction warning
-:encoding: UTF-8
+:Author Initials: Joseph HERLANT
 :description: This document is regrouping my personal notes I took while revising for the +
   1Z0-047 Oracle certification exam.
 :keywords: Oracle, Certified, Expert, SQL, Certification, exam, 1Z0-047
-:data-uri:
-:ascii-ids:
-:linkcss:
-:stylesdir: /asciidoc_twbs_backend/css
-:scriptsdir: /asciidoc_twbs_backend/js
-:linkcss:
-:stylesdir: /asciidoc_twbs_backend/css
-:scriptsdir: /asciidoc_twbs_backend/js
-:icons:
-:iconsdir: /asciidoc_twbs_backend/ico
-:numbered:
-:toc:
-:tags.underline: <u>|</u>
-:quotes.%: underline
 
 /////
 :revinfo:
