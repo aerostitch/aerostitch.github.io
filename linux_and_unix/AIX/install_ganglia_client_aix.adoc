@@ -1,0 +1,371 @@
+Installing a Ganglia client on AIX
+==================================
+Joseph HERLANT
+v1.0.0, 2013-11-15: Initial revision
+:Author Initials: Joseph HERLANT
+:description: This procedure explains how to install and configure a Ganglia +
+  client on AIX.
+:keywords: Ganglia, monitoring, client, AIX, performance
+
+
+
+Installation
+------------
+
+Get RPM from perzl
+~~~~~~~~~~~~~~~~~~
+
+The Ganglia packages are available at:
+http://www.perzl.org/aix/index.php?n=Main.Ganglia-files-360
+
+Basic client installation
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A client needs at least gmond to be installed to send data to a gmetad host.
+RPM for gmond is ganglia-p6-gmond-3.6.0-2.aix5.3.ppc.rpm which depends on the
+ganglia-lib-3.6.0-2.aix5.3.ppc.rpm rpm.
+
+ganglia-lib requires bash, gettext, info, zlib, readline, bzip2, expat, apr,
+libconfuse and pcre to install correctly. Bellow is a typical installation of
+on the ganglia gmond on a blank AIX.
+
+.....
+# rpm -ivh bash-4.2-12.aix5.1.ppc.rpm
+bash                        ##################################################
+# rpm -ivh gettext-0.10.40-8.aix5.2.ppc.rpm
+gettext                     ##################################################
+# rpm -ivh info-5.1-1.aix5.1.ppc.rpm
+warning: /opt/freeware/info/dir created as /opt/freeware/info/dir.rpmnew
+info                        ##################################################
+Please check that /etc/info-dir does exist.
+You might have to rename it from /etc/info-dir.rpmsave to /etc/info-dir.
+# rpm -ivh zlib-1.2.8-1.aix5.1.ppc.rpm
+zlib                        ##################################################
+# rpm -ivh readline-6.2-4.aix5.1.ppc.rpm
+readline                    ##################################################
+# rpm -ivh bzip2-1.0.6-1.aix5.1.ppc.rpm
+bzip2                       ##################################################
+# rpm -ivh expat-2.1.0-1.aix5.1.ppc.rpm
+expat                       ##################################################
+# rpm -ivh apr-1.4.8-1.aix5.2.ppc.rpm 
+apr                         ##################################################
+# rpm -ivh libconfuse-2.7-1.aix5.1.ppc.rpm 
+libconfuse                  ##################################################
+# rpm -ivh pcre-8.33-1.aix5.1.ppc.rpm 
+pcre                        ##################################################
+# rpm -ivh ganglia-lib-3.6.0-2.aix5.3.ppc.rpm
+ganglia-lib                 ##################################################
+# rpm -ivh ganglia-p6-gmond-3.6.0-2.aix5.3.ppc.rpm
+ganglia-p6-gmond            ##################################################
+.....
+
+
+
+Adding extensions for IBM hardware
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can add extensions on IBM hardware to have better targetted metrics. Those
+extensions are also available on perzl.org at the same url as mentionned
+before.
+
+IMPORTANT: after installing extensions, you'll need to restart gmond on your
+client server for the new metrics to be taken in account.
+
+DSO for IBM POWER extensions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This extension adds a section for IBM Power metrics (14 metrics) including:
+
+ * Total Disk Read I/O per seconds
+ * Total Disk Write I/O per seconds
+ * Total number of I/O operations per seconds
+ * CPU entitlement
+ * CPU pool idle
+ * Ratio of core usage vs. Entitlement
+ * Pysical core used
+ * LPAR Weight
+ * Number of virtual CPU in the LPAR
+ * Number of cores in system pool
+ * Number of cores in pool
+ * Cores in Machine
+ * Shared processor pool ID of the LPAR
+ * LPAR Number
+
+Other metrics that are not part of graphs. Click on "Host view" (top left
+of the host report) to display them:
+
+ * Kernel 64 bit? (collected only once)
+ * LPAR Mode? (collected only once)
+ * Shared Processor LPAR? (collected only once)
+ * Firmware Version
+ * LPAR Name
+ * Machine Name
+ * Output of 'oslevel -s'
+ * System Serial Number
+ * Capped Mode?
+ * SMT enabled?
+
+
+The RPM is: ganglia-p6-mod_ibmpower-3.6.0-2.aix5.3.ppc.rpm
+
+To change the list of metreics you want to recieve, change the 
+`/etc/ganglia/conf.d/ibmpower.conf`, commenting out the metreics you're not
+interested in.
+
+
+
+DSO for IBM rPerf and SPEC CPU2006 metrics
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This extension adds a section for IBM rperf metrics. There are 2 metrics by
+default, but others available in the configuration file. Just uncomment the one
+you are iterested in. The default metrics are:
+
+ * Relative performance rPerf number
+ * SPECint_rate_base2006 value
+
+The other metrics available are:
+
+ * SPECfp_rate_base2006 value
+ * SPECfp_rate2006 value
+ * SPECint_rate2006 value
+
+WARNING:  This one is for AIX5L V5.3 TL 07 and higher, also Virtual I/O Server
+v1.5 and higher. Other versions are available on perzl.
+
+The RPM is: ganglia-p6-mod_ibmrperf-3.6.0-2.aix5.3.ppc.rpm
+
+The configuration file is: `/etc/ganglia/conf.d/ibmrperf.conf`
+
+
+
+AIX DSO for Active Memory Expansion (AME)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you have AME, this extension adds 
+
+--> ganglia-mod_ibmame-3.6.0-2.aix6.1.ppc.rpm
+
+
+
+DSO for Active Memory Sharing (AMS)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+--> ganglia-mod_ibmams-3.6.0-2.aix6.1.ppc.rpm
+
+AIX DSO for Fibre Channel devices
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+--> ganglia-mod_ibmfc-3.6.0-2.aix5.3.ppc.rpm
+
+AIX DSO for Network devices
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+ 
+
+--> ganglia-mod_ibmnet-3.6.0-2.aix5.1.ppc.rpm
+==> /etc/ganglia/conf.d/ibmnet.conf
+
+AIX DSO for Disk devices
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+25 metrics per disk!
+
+--> ganglia-mod_aixdisk-3.6.0-2.aix5.3.ppc.rpm
+==> /etc/ganglia/conf.d/aixdisk.conf
+
+
+
+Installation of extensions
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+.....
+# rpm -ivh ganglia-p6-mod_ibmpower-3.6.0-2.aix5.3.ppc.rpm ganglia-p6-mod_ibmrperf-3.6.0-2.aix5.3.ppc.rpm ganglia-mod_ibmfc-3.6.0-2.aix5.3.ppc.rpm ganglia-mod_ibmnet-3.6.0-2.aix5.1.ppc.rpm ganglia-mod_aixdisk-3.6.0-2.aix5.3.ppc.rpm
+ganglia-p6-mod_ibmpower     ##################################################
+ganglia-p6-mod_ibmrperf     ##################################################
+ganglia-mod_ibmfc           ##################################################
+ganglia-mod_ibmnet          ##################################################
+ganglia-mod_aixdisk         ##################################################
+.....
+
+
+
+
+.....
+# /etc/rc.d/init.d/gmond restart
+Shutting down GANGLIA gmond daemon... done.
+Sleeping for 1 second for graceful gmond shutdown ...
+Starting GANGLIA gmond... done.
+.....
+
+ + Click on "Get fresh data" + refresh page
+
+
+Configuration
+-------------
+
+-----
+vi /etc/ganglia/gmond.conf
+-----
+
+.....
+cluster {
+ name = "myTestCluster"
+ owner = "UnixTeam"
+ latlong = "unspecified"
+ url = "unspecified"
+}
+
+/* The host section describes attributes of the host, like the location */
+host {
+ location = "unspecified"
+}
+
+/* Feel free to specify as many udp_send_channels as you like.  Gmond
+  used to only support having a single channel */
+udp_send_channel {
+ host = myCentralGangliaServer
+ port = 8649
+ ttl = 1
+}
+
+/* You can specify as many udp_recv_channels as you like as well. */
+/* Comment this on client nodes */
+/*
+udp_recv_channel {
+  port = 8649
+}
+*/
+
+/* You can specify as many tcp_accept_channels as you like to share
+  an xml description of the state of the cluster */
+tcp_accept_channel {
+ port = 8649
+}
+.....
+
+
+
+.....
+# vi /etc/ganglia/gmond.conf 
+# /etc/rc.d/init.d/gmond start
+Starting GANGLIA gmond... done.
+# ps -ef | grep gmon
+  nobody 4915384       1   0 09:30:15      -  0:00 /opt/freeware/sbin/gmond -p /var/run/gmond.pid -c /etc/ganglia/gmond.conf
+.....
+
+
+NOTE: The RPM package creates symlinks to rc2.d and rc3.d to start and stop gmond on boot.
+
+.....
+# ll /etc/rc.d/rc3.d
+total 0
+lrwxrwxrwx    1 root     system           15 Nov 15 08:18 Kgmond -> ../init.d/gmond
+lrwxrwxrwx    1 root     system           15 Nov 15 08:18 Sgmond -> ../init.d/gmond
+# ll /etc/rc.d/rc2.d
+total 48
+lrwxrwxrwx    1 root     system           15 Nov 15 08:18 Kgmond -> ../init.d/gmond
+lrwxrwxrwx    1 root     system           15 Nov 15 08:18 Sgmond -> ../init.d/gmond
+.....
+
+
+
+
+Check client access from another server
+---------------------------------------
+
+~ 20 secs after starting gmond, you can test
+
+.....
+# telnet exampleServer 8649
+Trying...
+Connected to exampleServer.
+Escape character is '^]'.
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<!DOCTYPE GANGLIA_XML [
+   <!ELEMENT GANGLIA_XML (GRID|CLUSTER|HOST)*>
+      <!ATTLIST GANGLIA_XML VERSION CDATA #REQUIRED>
+      <!ATTLIST GANGLIA_XML SOURCE CDATA #REQUIRED>
+   <!ELEMENT GRID (CLUSTER | GRID | HOSTS | METRICS)*>
+      <!ATTLIST GRID NAME CDATA #REQUIRED>
+      <!ATTLIST GRID AUTHORITY CDATA #REQUIRED>
+      <!ATTLIST GRID LOCALTIME CDATA #IMPLIED>
+   <!ELEMENT CLUSTER (HOST | HOSTS | METRICS)*>
+      <!ATTLIST CLUSTER NAME CDATA #REQUIRED>
+      <!ATTLIST CLUSTER OWNER CDATA #IMPLIED>
+      <!ATTLIST CLUSTER LATLONG CDATA #IMPLIED>
+      <!ATTLIST CLUSTER URL CDATA #IMPLIED>
+      <!ATTLIST CLUSTER LOCALTIME CDATA #REQUIRED>
+   <!ELEMENT HOST (METRIC)*>
+      <!ATTLIST HOST NAME CDATA #REQUIRED>
+      <!ATTLIST HOST IP CDATA #REQUIRED>
+      <!ATTLIST HOST LOCATION CDATA #IMPLIED>
+      <!ATTLIST HOST TAGS CDATA #IMPLIED>
+      <!ATTLIST HOST REPORTED CDATA #REQUIRED>
+      <!ATTLIST HOST TN CDATA #IMPLIED>
+      <!ATTLIST HOST TMAX CDATA #IMPLIED>
+      <!ATTLIST HOST DMAX CDATA #IMPLIED>
+      <!ATTLIST HOST GMOND_STARTED CDATA #IMPLIED>
+   <!ELEMENT METRIC (EXTRA_DATA*)>
+      <!ATTLIST METRIC NAME CDATA #REQUIRED>
+      <!ATTLIST METRIC VAL CDATA #REQUIRED>
+      <!ATTLIST METRIC TYPE (string | int8 | uint8 | int16 | uint16 | int32 | uint32 | float | double | timestamp) #REQUIRED>
+      <!ATTLIST METRIC UNITS CDATA #IMPLIED>
+      <!ATTLIST METRIC TN CDATA #IMPLIED>
+      <!ATTLIST METRIC TMAX CDATA #IMPLIED>
+      <!ATTLIST METRIC DMAX CDATA #IMPLIED>
+      <!ATTLIST METRIC SLOPE (zero | positive | negative | both | unspecified) #IMPLIED>
+      <!ATTLIST METRIC SOURCE (gmond) 'gmond'>
+   <!ELEMENT EXTRA_DATA (EXTRA_ELEMENT*)>
+   <!ELEMENT EXTRA_ELEMENT EMPTY>
+      <!ATTLIST EXTRA_ELEMENT NAME CDATA #REQUIRED>
+      <!ATTLIST EXTRA_ELEMENT VAL CDATA #REQUIRED>
+   <!ELEMENT HOSTS EMPTY>
+      <!ATTLIST HOSTS UP CDATA #REQUIRED>
+      <!ATTLIST HOSTS DOWN CDATA #REQUIRED>
+      <!ATTLIST HOSTS SOURCE (gmond | gmetad) #REQUIRED>
+   <!ELEMENT METRICS (EXTRA_DATA*)>
+      <!ATTLIST METRICS NAME CDATA #REQUIRED>
+      <!ATTLIST METRICS SUM CDATA #REQUIRED>
+      <!ATTLIST METRICS NUM CDATA #REQUIRED>
+      <!ATTLIST METRICS TYPE (string | int8 | uint8 | int16 | uint16 | int32 | uint32 | float | double | timestamp) #REQUIRED>
+      <!ATTLIST METRICS UNITS CDATA #IMPLIED>
+      <!ATTLIST METRICS SLOPE (zero | positive | negative | both | unspecified) #IMPLIED>
+      <!ATTLIST METRICS SOURCE (gmond) 'gmond'>
+]>
+<GANGLIA_XML VERSION="3.6.0" SOURCE="gmond">
+<CLUSTER NAME="myTestCluster" LOCALTIME="1384503607" OWNER="UnixTeam" LATLONG="unspecified" URL="unspecified">
+</CLUSTER>
+</GANGLIA_XML>
+Connection closed.
+.....
+
+
+Troubleshooting
+---------------
+
+.....
+# tail -f /var/log/daemon.log
+.....
+
+
+View graphs
+-----------
+
+myCentralGangliaServer/ganglia/?c=vallourec&h=exampleServer
+
+Usefull resources
+-----------------
+
+http://public.dhe.ibm.com/systems/power/community/aix/Central-VUG-Replays/Files/VUG_Webinar_Ganglia_July_2012.pdf
+
+http://www.perzl.org/ganglia/bestpractices.html
+
+http://www.perzl.org/ganglia/devicespecific.html
+
+http://www-03.ibm.com/systems/power/hardware/notices/rperf.html
+
+http://www.ibm.com/developerworks/library/l-ganglia-nagios-1/
+
