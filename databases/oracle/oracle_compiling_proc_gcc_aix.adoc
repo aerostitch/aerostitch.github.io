@@ -1,0 +1,109 @@
+Compiling a pro*C file with GCC on AIX
+======================================
+Joseph HERLANT
+v1.0.0, 2013-11-27: Initial revision
+:Author Initials: Joseph HERLANT
+:description: This procedure explains how to compile a sample pro*C +
+  Oracle file using gcc on an AIX 64bits operating system.
+:keywords: Oracle, Pro*C, proc, gcc, AIX
+
+Used Pro*C source file
+----------------------
+
+Content of the "helloworld.pc" file:
+
+[source, C]
+-----
+/* Hello World in Pro*C, the Oracle's embedded SQL environment */
+
+#include <stdio.h>
+
+EXEC SQL INCLUDE SQLCA;
+
+int main() {
+  char hello[15];
+  /* TO CHANGE! */
+  char *user = "SCOTT";
+  char *password = "TIGER";
+  char *sid = "MY_BDD";
+
+  EXEC SQL CONNECT :user IDENTIFIED BY :password USING :sid;
+
+  EXEC SQL SELECT 'Hello World' INTO :hello FROM DUAL;
+
+  printf("%s\n", hello);
+
+  EXEC SQL COMMIT RELEASE;
+
+  return 0;
+}
+-----
+
+
+Compiling using gcc
+-------------------
+
+Prepare the environment by setting the `ORACLE_HOME`,`LIBPATH` and
+`LD_LIBRARY_PATH` variables
+
+-----
+export ORACLE_HOME=/u01/app/oracle/product/11.2.0/db_1
+export LIBPATH=/${ORACLE_HOME}/lib:$LIBPATH
+export LD_LIBRARY_PATH=${ORACLE_HOME}:$LD_LIBRARY_PATH
+-----
+
+Then compile the file:
+
+-----
+proc code=ANSI_C iname=helloworld.pc oname=helloworld.c parse=full
+gcc -maix64 -I${ORACLE_HOME}/precomp/public -L${ORACLE_HOME}/lib \
+  helloworld.c -o helloworld -lclntsh -lsql11
+-----
+
+Last, launch the executable file to test the result which should output
+someting like this:
+
+-----
+$ ./helloworld                                                                                            
+Hello World   
+-----
+
+
+Troubleshooting
+---------------
+
+"KPEDBG_HDL_POP_FCPTRKilled" error
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you have the following error, it means you did not configure your SID in the
+tnsnames.ora or have some issues connecting to the database.
+
+-----
+$ ./helloworld
+KPEDBG_HDL_POP_FCPTRKilled
+-----
+
+ * Verify that the provided SID (line 11 of the script) is correct
+ * Test the name resolution using a `tnsping`
+ * Test the connectivity using sqlplus providing the user name and password
+   you use in the script
+
+
+"Undefined symbol: .sqlcxt" error
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+At first, following some tutorials, I didn't use the "-maix64" and included
+other lib directories. This generated the following error. I solved this using
+the `gcc -maix64 -I${ORACLE_HOME}/precomp/public -L${ORACLE_HOME}/lib 
+helloworld.c -o helloworld -lclntsh -lsql11` command.
+
+-----
+$ gcc -o helloworld helloworld.c  -I${ORACLE_HOME}/precomp/public \
+       -I${ORACLE_HOME}/rdbms/lib -L${ORACLE_HOME}/rdbms/lib \
+       -I${ORACLE_HOME}/lib -L${ORACLE_HOME}/lib -lclntsh -lsql11
+ld: 0711-317 ERROR: Undefined symbol: .sqlcxt
+ld: 0711-345 Use the -bloadmap or -bnoquiet option to obtain more information.
+collect2: error: ld returned 8 exit status
+-----
+
+
