@@ -1,0 +1,26 @@
+Get hdisk size
+==============
+Joseph HERLANT
+v1.0.0, 2013-12-02 : Initial version
+:Author Initials: Joseph HERLANT
+:description: Getting the size of an hdiks on AIX, even if the hdisk +
+  is not in a VG.
+:keywords: AIX, hdisk, disk, getconf, size, volume group
+
+/////
+Comments
+/////
+
+
+Just use the `getconf DISK_SIZE /dev/hdiskX`command replacing the "X" by your
+hdisk number.
+
+It outputs the size in Mb.
+
+Example:
+
+.....
+# getconf DISK_SIZE /dev/hdisk1
+51200
+.....
+
