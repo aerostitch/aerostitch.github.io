@@ -1,0 +1,44 @@
+
+The two most common methods used to display the execution plan of a SQL
+statement are:
+EXPLAIN PLAN command - This displays an execution plan for a SQL statement
+without actually
+executing the statement.
+V$SQL_PLAN - A dynamic performance view introduced in Oracle 9i that shows the
+execution plan
+for a SQL statement that has been compiled into a cursor and stored in the
+cursor cache.
+
+Under certain conditions the plan shown when using EXPLAIN PLAN can be different
+from the plan
+shown using V$SQL_PLAN. For example, when the SQL statement contains bind
+variables the plan
+shown from using EXPLAIN PLAN ignores the bind variable values while the plan
+shown in
+V$SQL_PLAN takes the bind variable values into account in the plan generation
+process.
+
+Displaying an execution plan has been made easier since the introduction of the
+DBMS_XPLAN
+package in Oracle 9i and by the enhancements made to it in subsequent releases.
+This package provides
+several PL/SQL interfaces to display the plan from different sources:
+• EXPLAIN PLAN command
+• V$SQL_PLAN
+• Automatic Workload Repository (AWR)
+• SQL Tuning Set (STS)
+• SQL Plan Baseline (SPM)
+
+
+Alternatively the execution plan for an executed SQL statement can be generated
+and displayed by
+using the DBMS_XPLAN.DISPLAY_CURSOR function.
+Besides the privileges to actually run the SQL statement, the executing user
+needs SELECT privilege
+on V$SQL_PLAN, V$SQL_PLAN_DETAIL and SELECT_CATALOG_ROLE.
+
+SELECT plan_table_output
+FROM
+TABLE(DBMS_XPLAN.DISPLAY('plan_table',null,'basic +predicate
++cost'));
+

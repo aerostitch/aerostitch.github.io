@@ -75,6 +75,9 @@ STATSPACK package details => Update the installation and configuration guide
 after it is finished
 STATSPACK on RAC
 STATSPACK auto generation of reports
+RACCheck
+ACFS (available and supported from Oracle 11.2.0.2)
+
 
 ==== MSSQL
 Add a section and scripts
