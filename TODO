@@ -64,6 +64,7 @@ Updates to https://wiki.debian.org/BSP/BeginnersHOWTO
 === Databases
 
 ==== Oracle
+Oracle kernel prerequisite check scripts
 Manual dataguard / db replication using rman duplicate (with and without target)
 Manual dataguard / db replication using archivelogs recovery
 Tablespaces
