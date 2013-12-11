@@ -78,6 +78,10 @@ STATSPACK on RAC
 STATSPACK auto generation of reports
 RACCheck
 ACFS (available and supported from Oracle 11.2.0.2)
+Oracle standard accounts and their usage
+Multi-table inserts
+keep dense_rank (+ query plan)
+
 
 
 ==== MSSQL
