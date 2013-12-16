@@ -1,0 +1,92 @@
+Playing with ASM
+================
+Joseph HERLANT
+v1.0.0, 2013-12-16 : Initial version
+:Author Initials: Joseph HERLANT
+:description: *********************** Document description ***********************
+:keywords: *********************** Document keywords ***********************
+
+/////
+Comments
+/////
+
+
+
+Starting an ASM instance on a standaloneserver configuration
+------------------------------------------------------------
+
+$ id
+uid=679(grid) gid=678(oinstall) groups=679(dba),207(asmdba),208(asmadmin),209(asmoper)
+
+export ORACLE_HOME=/u01/app/grid/product/11.2.0/grid
+export ORACLE_SID=+ASM
+export PATH=$PATH:${ORACLE_HOME}/bin
+
+$ ps -ef | grep ASM
+
+$ sqlplus / as sysasm
+
+SQL*Plus: Release 11.2.0.3.0 Production on Mon Dec 16 16:13:29 2013
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+
+Connected to an idle instance.
+
+SQL> startup
+ORA-01078: failure in processing system parameters
+ORA-29701: unable to connect to Cluster Synchronization Service
+SQL> Disconnected
+
+
+$ asmcmd startup
+Connected to an idle instance.
+ORA-01078: failure in processing system parameters
+
+$ crsctl check has
+CRS-4638: Oracle High Availability Services is online
+
+That is normal because you are on a standalone configuration!
+
+$ crsctl check css
+CRS-4530: Communications failure contacting Cluster Synchronization Services
+daemon
+
+Start ASM instance using srvctl command!
+
+$ srvctl start asm
+$ ps -ef | grep ASM
+    grid 3211384       1   0 16:38:02      -  0:00 asm_dbw0_+ASM
+    grid 3604668       1   0 16:38:02      -  0:00 asm_lgwr_+ASM
+    grid 4325608       1   0 16:38:03      -  0:00 asm_ckpt_+ASM
+    grid 6029546       1   0 16:38:03      -  0:00 asm_rbal_+ASM
+    grid 6553796       1   1 16:38:01      -  0:00 asm_vktm_+ASM
+    grid 6750434       1   0 16:38:03      -  0:00 asm_gmon_+ASM
+    grid 6815832       1   0 16:38:03      -  0:00 asm_smon_+ASM
+    grid 6946932       1   0 16:38:01      -  0:00 asm_gen0_+ASM
+    grid 7012370       1   0 16:38:00      -  0:00 asm_psp0_+ASM
+    grid 7077958       1   0 16:38:00      -  0:00 asm_pmon_+ASM
+    grid 7340160       1   0 16:38:02      -  0:00 asm_diag_+ASM
+    grid 7536642       1   0 16:38:02      -  0:00 asm_mman_+ASM
+    grid 7733362 7667752   0 16:38:23  pts/1  0:00 grep ASM
+    grid 8192064       1   0 16:38:02      -  0:00 asm_dia0_+ASM
+    grid 8716310       1   0 16:38:04      -  0:00 asm_mmnl_+ASM
+    grid 9240616       1   0 16:38:04      -  0:00 asm_mmon_+ASM
+    grid 9306154       1   0 16:38:04      -  0:00 oracle+ASM (DESCRIPTION=(LOCAL=YES)(ADDRESS=(PROTOCOL=beq)))
+
+List ASM disks
+--------------
+
+$ id
+uid=679(grid) gid=678(oinstall) groups=679(dba),207(asmdba),208(asmadmin),209(asmoper)
+
+export ORACLE_HOME=/u01/app/grid/product/11.2.0/grid
+export ORACLE_SID=+ASM
+export PATH=$PATH:${ORACLE_HOME}/bin
+
+$ asmcmd lsdg
+State    Type    Rebal  Sector  Block       AU  Total_MB  Free_MB Req_mir_free_MB  Usable_file_MB  Offline_disks  Voting_files  Name
+MOUNTED  NORMAL  N         512   4096  1048576     81920    81800 0           40900              0             N  DATA/
+
+OR
+
+$ asmca
