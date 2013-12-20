@@ -90,3 +90,20 @@ MOUNTED  NORMAL  N         512   4096  1048576     81920    81800 0           40
 OR
 
 $ asmca
+
+OR
+
+$ sqlplus /nolog
+
+SQL*Plus: Release 11.2.0.3.0 Production on Mon Dec 16 17:13:00 2013
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+
+SQL> connect / as sysasm
+Connected.
+SQL> SELECT NAME,TYPE,TOTAL_MB,FREE_MB FROM V$ASM_DISKGROUP;
+
+NAME                           TYPE     TOTAL_MB    FREE_MB
+------------------------------ ------ ---------- ----------
+DATA                           NORMAL      81920      81800
+
