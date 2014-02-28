@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<meta name="description" content="This procedure explains how to compile a sample pro*C Oracle file using gcc on an AIX 64bits operating system." />
+<meta name="keywords" content="Oracle, Pro*C, proc, gcc, AIX" />
+<meta name="author" content="Joseph HERLANT" />
+<link rel="shortcut icon" href="/asciidoc_twbs_backend/ico/favicon.png" />
+<title>Compiling a pro*C file with GCC on AIX</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(2);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2pre/html5shiv.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph HERLANT</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2013-11-27</span>
+  <span id="revremark">: Initial revision</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Compiling a pro*C file with GCC on AIX</h1>
+This procedure explains how to compile a sample pro*C Oracle file using gcc on an AIX 64bits operating system.
+</div>
+      </div>
+<div class="sect1">
+<h2 id="_used_pro_c_source_file">1. Used Pro*C source file</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Content of the "helloworld.pc" file:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">/* Hello World in Pro*C, the Oracle's embedded SQL environment */</span></span>
+
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;stdio.h&gt;</span>
+
+EXEC SQL <span style="color: #008080">INCLUDE</span> SQLCA<span style="color: #990000">;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span> <span style="color: #FF0000">{</span>
+  <span style="color: #009900">char</span> hello<span style="color: #990000">[</span><span style="color: #993399">15</span><span style="color: #990000">];</span>
+  <span style="font-style: italic"><span style="color: #9A1900">/* TO CHANGE! */</span></span>
+  <span style="color: #009900">char</span> <span style="color: #990000">*</span>user <span style="color: #990000">=</span> <span style="color: #FF0000">"SCOTT"</span><span style="color: #990000">;</span>
+  <span style="color: #009900">char</span> <span style="color: #990000">*</span>password <span style="color: #990000">=</span> <span style="color: #FF0000">"TIGER"</span><span style="color: #990000">;</span>
+  <span style="color: #009900">char</span> <span style="color: #990000">*</span>sid <span style="color: #990000">=</span> <span style="color: #FF0000">"MY_BDD"</span><span style="color: #990000">;</span>
+
+  EXEC <span style="color: #008080">SQL</span> CONNECT <span style="color: #990000">:</span>user <span style="color: #008080">IDENTIFIED</span> BY <span style="color: #990000">:</span><span style="color: #008080">password</span> USING <span style="color: #990000">:</span>sid<span style="color: #990000">;</span>
+
+  EXEC <span style="color: #008080">SQL</span> SELECT <span style="color: #FF0000">'Hello World'</span> INTO <span style="color: #990000">:</span>hello <span style="color: #008080">FROM</span> DUAL<span style="color: #990000">;</span>
+
+  <span style="font-weight: bold"><span style="color: #000000">printf</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"%s</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">,</span> hello<span style="color: #990000">);</span>
+
+  EXEC SQL <span style="color: #008080">COMMIT</span> RELEASE<span style="color: #990000">;</span>
+
+  <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #993399">0</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_compiling_using_gcc">2. Compiling using gcc</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Prepare the environment by setting the <code>ORACLE_HOME</code>,<code>LIBPATH</code> and
+<code>LD_LIBRARY_PATH</code> variables</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>export ORACLE_HOME=/u01/app/oracle/product/11.2.0/db_1
+export LIBPATH=/${ORACLE_HOME}/lib:$LIBPATH
+export LD_LIBRARY_PATH=${ORACLE_HOME}:$LD_LIBRARY_PATH</code></pre>
+</div></div>
+<div class="paragraph"><p>Then compile the file:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>proc code=ANSI_C iname=helloworld.pc oname=helloworld.c parse=full
+gcc -maix64 -I${ORACLE_HOME}/precomp/public -L${ORACLE_HOME}/lib \
+  helloworld.c -o helloworld -lclntsh -lsql11</code></pre>
+</div></div>
+<div class="paragraph"><p>Last, launch the executable file to test the result which should output
+someting like this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ ./helloworld
+Hello World</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_troubleshooting">3. Troubleshooting</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_kpedbg_hdl_pop_fcptrkilled_error">3.1. "KPEDBG_HDL_POP_FCPTRKilled" error</h3>
+<div class="paragraph"><p>If you have the following error, it means you did not configure your SID in the
+tnsnames.ora or have some issues connecting to the database.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ ./helloworld
+KPEDBG_HDL_POP_FCPTRKilled</code></pre>
+</div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Verify that the provided SID (line 11 of the script) is correct
+</p>
+</li>
+<li>
+<p>
+Test the name resolution using a <code>tnsping</code>
+</p>
+</li>
+<li>
+<p>
+Test the connectivity using sqlplus providing the user name and password
+   you use in the script
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_undefined_symbol_sqlcxt_error">3.2. "Undefined symbol: .sqlcxt" error</h3>
+<div class="paragraph"><p>At first, following some tutorials, I didn&#8217;t use the "-maix64" and included
+other lib directories. This generated the following error. I solved this using
+the <code>gcc -maix64 -I${ORACLE_HOME}/precomp/public -L${ORACLE_HOME}/lib
+helloworld.c -o helloworld -lclntsh -lsql11</code> command.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ gcc -o helloworld helloworld.c  -I${ORACLE_HOME}/precomp/public \
+       -I${ORACLE_HOME}/rdbms/lib -L${ORACLE_HOME}/rdbms/lib \
+       -I${ORACLE_HOME}/lib -L${ORACLE_HOME}/lib -lclntsh -lsql11
+ld: 0711-317 ERROR: Undefined symbol: .sqlcxt
+ld: 0711-345 Use the -bloadmap or -bnoquiet option to obtain more information.
+collect2: error: ld returned 8 exit status</code></pre>
+</div></div>
+</div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 1.0.0<br />
+Last updated 2013-11-27 11:23:17 CET
+</div>
+</div>
+</div>
+</body>
+</html>
