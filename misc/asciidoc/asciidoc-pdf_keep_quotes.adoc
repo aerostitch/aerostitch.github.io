@@ -13,12 +13,12 @@ Issue
 When you write some block of code with apostrophes, these are transformed by
 pdflatex to backquotes. For example, this asciidoc block:
 
-+++++
-[source,bash]
 -----
-awk '{print $1}'
+ [source,bash]
+ -----
+ awk '{print $1}'
+ -----
 -----
-+++++
 
 Gets transformed to:
 -----
@@ -43,7 +43,6 @@ of it.
 
 To generate the document using the custom style file, do it this way:
 -----
-a2x -fpdf -L --dblatex-opts=" -s <PATH_TO_CUSTOM_STYLE_FILE>"
-<ASCIIDOC_TEXT_FILE>
+a2x -fpdf -L --dblatex-opts=" -s <CUSTOM_STYLE_FILE_PATH>" <ASCIIDOC_TEXT_FILE>
 -----
 
