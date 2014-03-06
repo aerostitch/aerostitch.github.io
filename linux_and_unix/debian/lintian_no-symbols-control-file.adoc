@@ -1,0 +1,54 @@
+Lintiani: Get rid of the no-symbols-control-file info
+=====================================================
+Joseph HERLANT
+v1.0.0, 2014-03-06 : Initial version
+:Author Initials: Joseph HERLANT
+:description: When packaging a C or C++ library, you sometimes have to face a
+  lintian complaining about "no-symbols-control-file". This tutorial will help
+  you to get correct this.
+:keywords: Lintian, no-symbols-control-file, debian, packaging, library
+
+
+
+The "no-symbols-control-file" explains that the symbols of your library has not
+been exported yet. To fix this:
+
+First, build the package (the symbol generation needs a compiled library to
+work):
+
+[source, bash]
+-----
+debuild -uc -us
+-----
+
+Then, use `dpkg-gensymbols` to generate the symbol file. Let's say here your 
+library name is *mylib* (replace mylib in the following examples).
+From the root of your debian package's source, execute the following command
+line:
+
+[source, bash]
+-----
+dpkg-gensymbols -pmylib -Odebian/mylib.symbols -q
+-----
+
+This las command will create or update the `debian/mylib.symbols` file (replace
+*mylib* with the name of your package). But there's still an issue because with
+this you'll have the debian version after the upstream version in the file which
+will generate a *symbols-file-contains-current-version-with-debian-revision*
+lintian error. To avoid this, You need to remove everything that's after the
+upstream version. Let's say the package version is 2.0-1, you'll need to remove
+all the "-1" after the "2.0" in the symbol file. You can use this command to do
+the job:
+
+[source, bash]
+-----
+sed -e 's/\( [0-9\.]\+\)\-.\+$/\1/g' -i debian/mylib.symbols
+-----
+
+Then, recompile your package and check again with:
+
+[source, bash]
+-----
+debuild -uc -us
+lintian -c --color auto -L ">=pedantic"
+-----
