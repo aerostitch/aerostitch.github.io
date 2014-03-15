@@ -1,0 +1,40 @@
+Packaging tips for debian
+=========================
+Joseph Herlant
+v1.0.0, 2014-03-13 : Initial version
+:Author Initials: Joseph HERLANT
+:description:  These are links to several interesting documents about Debian
+  packaging
+:keywords: Debian, .deb, sbuild, pbuilder, cowbuilder
+
+
+General topcis
+--------------
+
+Where to begin: an ontroduction of packaging process in Debian:
+http://mentors.debian.net/intro-maintainers
+
+Build environments are restricted environments. To have and overview of that,
+see: https://wiki.debian.org/buildd
+
+Look at what's on your computer that needs help, install the 'devscripts' and
+'how-can-i-help' packages. From the first, use the `rc-alert` and `wnpp-alert`
+scripts. From the later, use the `how-can-i-help -o` or (if you want to help on
+packages not installed on your computer yet) `how-can-i-help -a`.
+
+Tools for testing your packages
+-------------------------------
+
+Pbuilder:
+http://www.netfort.gr.jp/~dancer/software/pbuilder-doc/pbuilder-doc.html
+
+https://wiki.ubuntu.com/PbuilderHowto
+
+https://wiki.debian.org/PbuilderTricks
+
+
+Cowbuilder: https://wiki.debian.org/cowbuilder
+
+Sbuild: https://wiki.debian.org/sbuild
+
+Qemubuilder: https://wiki.debian.org/qemubuilder
