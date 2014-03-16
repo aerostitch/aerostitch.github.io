@@ -272,6 +272,19 @@ Add new tag
 git tag -a <tag_name> -m "<Message>"
 -----
 
+Delete a tag
+~~~~~~~~~~~~
+
+If you want to delete a tag named "tag_I_want_to_delete" from origin, use the
+following commands.
+
+-----
+# Remove from local repository
+git tag -d tag_I_want_to_delete
+# Push change to remote repository
+git push origin :refs/tags/tag_I_want_to_delete
+-----
+
 Push new tags
 ~~~~~~~~~~~~~
 
