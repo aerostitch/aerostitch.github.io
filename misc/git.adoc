@@ -1,7 +1,7 @@
 Some git tips
 =============
 Joseph HERLANT
-v1.0.2, 2013-11-06: Forgot a git fetch in submodules
+v1.0.3, 2014-03-16: Adding a way to delete a tag
 :Author Initials: Joseph HERLANT
 :description: Here you'll find some stuffs I found to be kind of cool or some +
   things that I usually forget about it. For example, how to edit commits +
@@ -11,6 +11,7 @@ v1.0.2, 2013-11-06: Forgot a git fetch in submodules
 
 /////
 :revinfo:
+v1.0.2, 2013-11-06: Forgot a git fetch in submodules
 v1.0.1, 2013-10-27: Adding archiving
 v1.0.0, 2013-10-26: Initial version
 /////
