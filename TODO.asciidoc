@@ -2,7 +2,7 @@
 
 == Docs
 
-===Programming
+=== Programming
 Explaining "em" in CSS
 
 ==== Perl
@@ -90,7 +90,7 @@ Add a section and scripts
 ==== Postgresql
 Add a section and scripts
 
-==== MySQL
+==== MySQL & MariaDB
 Add a section and scripts
 
 ==== Other databases
@@ -98,8 +98,8 @@ Intro to:
  * Hiera
  * Redis
  * MongoDB
- * CouchDB
- * MariaDB
+ * CouchBase
+ * HBase
  * ElasticSearch
  * NoSQL
  * Berkley DB
@@ -107,6 +107,7 @@ Intro to:
  * Cassandra
  * Memcached
  * SimpleDB
+ * Vertica
 See if there's something interesting there: http://db-engines.com/en/ranking
 
 
@@ -135,36 +136,6 @@ Adding author, editors, copyights,... infos
 
 
 
-
-***********************************
-
-
-
-AIX 5.3
-
-export XPG_SUS_ENV=ON
-export XPG_UNIX98=OFF
-
-
-
-
-Note: The definition of -mtime has changed to comply with the Single UNIX
-Specification, Version 3. The previous behavior of -mtime evaluated as True if
-the file had been modified in n-1 to n multiples of 24 hours. By default, find
--mtime works like it did beforeUNIX03. The UNIX03 behavior can be obtained by
-setting the environment variables XPG_SUS_ENV to ON and XPG_UNIX98 to OFF.
-
-The previous behavior for this option can be obtained by setting the XPG_UNIX98
-variable to ON.
-
-            Files modified after the find command start time will not be taken
-into account. However, when the find command is used within
-            the unary NOT operator for non-UNIX03 behavior, the files modified
-after the command start time will be displayed until the
-            value of n.
-
-
-***********************************
 
 ***********************************
 :linkcss:
