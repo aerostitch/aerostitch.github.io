@@ -95,6 +95,7 @@
 
 ==== Other databases
 Intro to:
+
  * Hiera
  * Redis
  * MongoDB
@@ -108,6 +109,7 @@ Intro to:
  * Memcached
  * SimpleDB
  * Vertica
+
 See if there's something interesting there: http://db-engines.com/en/ranking
 
 
@@ -137,7 +139,7 @@ See if there's something interesting there: http://db-engines.com/en/ranking
 
 
 
-***********************************
+-----
 :linkcss:
 :stylesdir: /custom_/css
 :scriptsdir: /custom_/js
@@ -152,4 +154,4 @@ s/:linkcss:\n:stylesdir: \/custom_\/css\n:scriptsdir: \/custom_\/js\n//g' {}
 find -name '*.adoc' | xargs -I {} perl -pe
 's/:data-uri:/:data-uri:\n:ascii-ids:\n:linkcss:\n:stylesdir:
 \/custom_\/css\n:scriptsdir: \/custom_\/js/' -i {}
-***********************************
+-----
