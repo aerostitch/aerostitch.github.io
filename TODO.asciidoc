@@ -3,42 +3,42 @@
 == Docs
 
 === Programming
-Explaining "em" in CSS
+ * Explaining "em" in CSS
 
 ==== Perl
-Ensure your script is running the right perl exe. If not, relaunch it from
-there.
-Oracle and other DB connection lib
-Excel generation examples using perl
+ * Ensure your script is running the right perl exe. If not, relaunch it from
+ there.
+ * Oracle and other DB connection lib
+ * Excel generation examples using perl
 
 ==== Python
-Nose tests functions & fixtures
-Doctests doc
-Capture input/output + nose & doctests integration
-setup.py system
-skel generator
-Pydoc
+ * Nose tests functions & fixtures
+ * Doctests doc
+ * Capture input/output + nose & doctests integration
+ * setup.py system
+ * skel generator
+ * Pydoc
 
 ==== Ruby
-Memo Rails
-http + proxy snippet
-rspec
+ * Memo Rails
+ * http + proxy snippet
+ * rspec
 
 ==== Javascript
-Jquery include page in html node
+ * Jquery include page in html node
 
 ==== Other programming languages
-R introduction
-Lua introduction
-TCL/Tk Introdutction
-Lisp introduction
-Haskell introduction
-C2 introduction
-C docs
-C++ docs
-Objective-C introduction
-Erlang introduction
-Documentation using Doxygen (& others?)
+ * R introduction
+ * Lua introduction
+ * TCL/Tk Introdutction
+ * Lisp introduction
+ * Haskell introduction
+ * C2 introduction
+ * C docs
+ * C++ docs
+ * Objective-C introduction
+ * Erlang introduction
+ * Documentation using Doxygen (& others?)
 
 
 
@@ -46,16 +46,16 @@ Documentation using Doxygen (& others?)
 === Linux / Unix
 
 === AIX
-Disable IP V6
-Debugging disks issues with `lvmstat -v myvg` and `filemon -o file.out -0 all`
+ * Disable IP V6
+ * Debugging disks issues with `lvmstat -v myvg` and `filemon -o file.out -0 all`
 
 ==== Nim scripts
-Create LPAR using command line
-Install LPAR using command line
-Update LPP_SOURCE
+ * Create LPAR using command line
+ * Install LPAR using command line
+ * Update LPP_SOURCE
 
 === Debian
-Updates to https://wiki.debian.org/BSP/BeginnersHOWTO
+ * Updates to https://wiki.debian.org/BSP/BeginnersHOWTO
 
 
 
@@ -64,34 +64,34 @@ Updates to https://wiki.debian.org/BSP/BeginnersHOWTO
 === Databases
 
 ==== Oracle
-Oracle kernel prerequisite check scripts
-Manual dataguard / db replication using rman duplicate (with and without target)
-Manual dataguard / db replication using archivelogs recovery
-Tablespaces
-Sessions
-AWR reports
-AWR tables custom querying
-Playing directly in PERFSTAT tables
-STATSPACK package details => Update the installation and configuration guide
-after it is finished
-STATSPACK on RAC
-STATSPACK auto generation of reports
-RACCheck
-ACFS (available and supported from Oracle 11.2.0.2)
-Oracle standard accounts and their usage
-Multi-table inserts
-keep dense_rank (+ query plan)
+ * Oracle kernel prerequisite check scripts
+ * Manual dataguard / db replication using rman duplicate (with and without target)
+ * Manual dataguard / db replication using archivelogs recovery
+ * Tablespaces
+ * Sessions
+ - AWR reports
+ * AWR tables custom querying
+ * Playing directly in PERFSTAT tables
+ * STATSPACK package details => Update the installation and configuration guide
+ after it is finished
+ * STATSPACK on RAC
+ * STATSPACK auto generation of reports
+ * RACCheck
+ * ACFS (available and supported from Oracle 11.2.0.2)
+ * Oracle standard accounts and their usage
+ * Multi-table inserts
+ * keep dense_rank (+ query plan)
 
 
 
 ==== MSSQL
-Add a section and scripts
+ * Add a section and scripts
 
 ==== Postgresql
-Add a section and scripts
+ * Add a section and scripts
 
 ==== MySQL & MariaDB
-Add a section and scripts
+ * Add a section and scripts
 
 ==== Other databases
 Intro to:
@@ -116,10 +116,10 @@ See if there's something interesting there: http://db-engines.com/en/ranking
 === Misc
 
 ==== Asciidoc
-Modifying front page
-Adding graphs
-Adding revision info
-Adding author, editors, copyights,... infos
+ * Modifying front page
+ * Adding graphs
+ * Adding revision info
+ * Adding author, editors, copyights,... infos
 
 
 
