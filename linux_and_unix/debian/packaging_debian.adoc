@@ -25,6 +25,7 @@ packages not installed on your computer yet) `how-can-i-help -a`.
 
 To have a complete overview of how to maintain a package, refer to the official
 maintainer guide: http://www.debian.org/doc/manuals/maint-guide
+*This document is a gold mine!*
 
 Tools for testing your packages
 -------------------------------
@@ -51,6 +52,17 @@ Tips
 NMU is more considered as something quite rude than a grood practice.
 If you have corrected a bug, provide the patch. An upload will be 
 made by the maintainer when he founds some time and enough bugs to
-make a release.
+make a release. So when you provide a patch, go and work on others.
 
-*Take your time* ! 
+*Take your time* ! Test your pach on several environment, play with 
+the patched package a few days to check for any side effect.
+Some bugs can stay open for years. If you set yourself as the owner
+of the bug, there's no need to hurry!
+
+*Begin small*. If you want to maintain packages, begin with correcting
+some bugs first (that's my own advise). 20 or more on different packages
+could be a good start in my mind. That helps understanding how
+packages are made and how Debian developement works. Then cleanup and
+adopt an orphaned or a package in RFA state or if you want to be part
+of a packageing team, see the RFH bugs.
+
