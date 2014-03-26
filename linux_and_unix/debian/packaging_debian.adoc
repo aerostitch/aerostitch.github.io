@@ -42,3 +42,15 @@ Cowbuilder: https://wiki.debian.org/cowbuilder
 Sbuild: https://wiki.debian.org/sbuild
 
 Qemubuilder: https://wiki.debian.org/qemubuilder
+
+
+Tips
+----
+
+*Don't do NMU* (Non Maintainer Uploads) on packages with maintainers.
+NMU is more considered as something quite rude than a grood practice.
+If you have corrected a bug, provide the patch. An upload will be 
+made by the maintainer when he founds some time and enough bugs to
+make a release.
+
+*Take your time* ! 
