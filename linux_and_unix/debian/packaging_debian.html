@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="These are links to several interesting documents about Debian packaging" />
+<meta name="keywords" content="Debian, .deb, sbuild, pbuilder, cowbuilder, packaging, maintaining, package" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/home/theolediable/git/perso/asciidoc/images/icons/favicon.png" />
+<title>Packaging tips for debian</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2pre/html5shiv.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-03-13</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Packaging tips for debian</h1>
+These are links to several interesting documents about Debian packaging
+</div>
+      </div>
+<div class="sect1">
+<h2 id="_general_topcis">1. General topcis</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Where to begin: an ontroduction of packaging process in Debian:
+<a href="http://mentors.debian.net/intro-maintainers">http://mentors.debian.net/intro-maintainers</a></p></div>
+<div class="paragraph"><p>Build environments are restricted environments. To have and overview of that,
+see: <a href="https://wiki.debian.org/buildd">https://wiki.debian.org/buildd</a></p></div>
+<div class="paragraph"><p>Look at what&#8217;s on your computer that needs help, install the <em>devscripts</em> and
+<em>how-can-i-help</em> packages. From the first, use the <code>rc-alert</code> and <code>wnpp-alert</code>
+scripts. From the later, use the <code>how-can-i-help -o</code> or (if you want to help on
+packages not installed on your computer yet) <code>how-can-i-help -a</code>.</p></div>
+<div class="paragraph"><p>To have a complete overview of how to maintain a package, refer to the official
+maintainer guide: <a href="http://www.debian.org/doc/manuals/maint-guide">http://www.debian.org/doc/manuals/maint-guide</a>
+<strong>This document is a gold mine!</strong></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tools_for_testing_your_packages">2. Tools for testing your packages</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Pbuilder:
+<a href="http://www.netfort.gr.jp/~dancer/software/pbuilder-doc/pbuilder-doc.html">http://www.netfort.gr.jp/~dancer/software/pbuilder-doc/pbuilder-doc.html</a></p></div>
+<div class="paragraph"><p><a href="https://wiki.ubuntu.com/PbuilderHowto">https://wiki.ubuntu.com/PbuilderHowto</a></p></div>
+<div class="paragraph"><p><a href="https://wiki.debian.org/PbuilderTricks">https://wiki.debian.org/PbuilderTricks</a></p></div>
+<div class="paragraph"><p>Cowbuilder: <a href="https://wiki.debian.org/cowbuilder">https://wiki.debian.org/cowbuilder</a></p></div>
+<div class="paragraph"><p>Sbuild: <a href="https://wiki.debian.org/sbuild">https://wiki.debian.org/sbuild</a></p></div>
+<div class="paragraph"><p>Qemubuilder: <a href="https://wiki.debian.org/qemubuilder">https://wiki.debian.org/qemubuilder</a></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tips">3. Tips</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><strong>Don&#8217;t do NMU</strong> (Non Maintainer Uploads) on packages with maintainers.
+NMU is more considered as something quite rude than a grood practice.
+If you have corrected a bug, provide the patch. An upload will be
+made by the maintainer when he founds some time and enough bugs to
+make a release. So when you provide a patch, go and work on others.</p></div>
+<div class="paragraph"><p><strong>Take your time</strong> ! Test your pach on several environment, play with
+the patched package a few days to check for any side effect.
+Some bugs can stay open for years. If you set yourself as the owner
+of the bug, there&#8217;s no need to hurry!</p></div>
+<div class="paragraph"><p><strong>Begin small</strong>. If you want to maintain packages, begin with correcting
+some bugs first (that&#8217;s my own advise). 20 or more on different packages
+could be a good start in my mind. That helps understanding how
+packages are made and how Debian developement works. Then cleanup and
+adopt an orphaned or a package in RFA state or if you want to be part
+of a packageing team, see the RFH bugs.</p></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

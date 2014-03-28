@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="This script adds one or more proxy exception(s) for IE at the begining of the ProxyOverride registery key if it does not already exists. IE must be restarted for the changes to be taken in account." />
+<meta name="keywords" content="VBScript, vbs, proxy, exception" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/home/theolediable/git/perso/asciidoc/images/icons/favicon.png" />
+<title>Adding proxy exception to IE using VBScript</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2pre/html5shiv.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-03-25</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Adding proxy exception to IE using VBScript</h1>
+This script adds one or more proxy exception(s) for IE at the begining of the ProxyOverride registery key if it does not already exists. IE must be restarted for the changes to be taken in account.
+</div>
+      </div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">' This script adds one or more proxy exception(s) for IE</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">' at the begining of the ProxyOverride registery key if</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">' it does not already exists. IE must be restarted for the</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">' changes to be taken in account.</span></span>
+
+exceptions<span style="color: #990000">=</span><span style="font-weight: bold"><span style="color: #000000">Array</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"*.domain1"</span><span style="color: #990000">,</span><span style="color: #FF0000">"*.domain2"</span><span style="color: #990000">)</span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="font-weight: bold"><span style="color: #0000FF">each</span></span> sException in exceptions
+        <span style="font-style: italic"><span style="color: #9A1900">' Creating the regex to check if the exception to add</span></span>
+        <span style="font-style: italic"><span style="color: #9A1900">' already exists in the key</span></span>
+        <span style="font-weight: bold"><span style="color: #0000FF">set</span></span> oRe<span style="color: #990000">=</span>New RegExp<span style="color: #990000">:</span> oRe<span style="color: #990000">.</span>IgnoreCase<span style="color: #990000">=</span><span style="font-weight: bold"><span style="color: #0000FF">True</span></span>
+        oRe<span style="color: #990000">.</span>Pattern<span style="color: #990000">=</span><span style="color: #FF0000">"(^|;)"</span> <span style="color: #990000">&amp;</span> _
+                <span style="font-weight: bold"><span style="color: #000000">Replace</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #000000">Replace</span></span><span style="color: #990000">(</span>sException<span style="color: #990000">,</span><span style="color: #FF0000">"."</span><span style="color: #990000">,</span><span style="color: #FF0000">"</span><span style="color: #CC33CC">\.</span><span style="color: #FF0000">"</span><span style="color: #990000">),</span><span style="color: #FF0000">"*"</span><span style="color: #990000">,</span><span style="color: #FF0000">"</span><span style="color: #CC33CC">\*</span><span style="color: #FF0000">"</span><span style="color: #990000">)</span> <span style="color: #990000">&amp;</span> _
+                <span style="color: #FF0000">"(;|$)"</span>
+
+        <span style="font-style: italic"><span style="color: #9A1900">' Reading the registry</span></span>
+        <span style="font-weight: bold"><span style="color: #0000FF">set</span></span> oSh<span style="color: #990000">=</span><span style="font-weight: bold"><span style="color: #0000FF">CreateObject</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"WScript.Shell"</span><span style="color: #990000">)</span>
+        sRegKey<span style="color: #990000">=</span> <span style="color: #FF0000">"HKCU</span><span style="color: #CC33CC">\S</span><span style="color: #FF0000">oftware</span><span style="color: #CC33CC">\M</span><span style="color: #FF0000">icrosoft</span><span style="color: #CC33CC">\W</span><span style="color: #FF0000">indows</span><span style="color: #CC33CC">\"</span><span style="color: #FF0000"> &amp; _</span>
+<span style="color: #FF0000">                "</span>CurrentVersion<span style="color: #990000">\</span>Internet Settings<span style="color: #990000">\</span>ProxyOverride<span style="color: #FF0000">"</span>
+<span style="color: #FF0000">        sProxy=oSh.RegRead(sRegKey)</span>
+
+<span style="color: #FF0000">        ' Adding the exception if it does not already exists</span>
+<span style="color: #FF0000">        if not oRe.Test(sProxy) then</span>
+<span style="color: #FF0000">                oSh.RegWrite sRegKey, sException &amp; "</span><span style="color: #990000">;</span><span style="color: #FF0000">" &amp; sProxy</span>
+<span style="color: #FF0000">                WScript.Echo "</span>Exception <span style="color: #990000">[</span><span style="color: #FF0000">" &amp; sException &amp; "</span><span style="color: #990000">]</span> added<span style="color: #FF0000">"</span>
+<span style="color: #FF0000">        end if</span>
+<span style="color: #FF0000">next</span></tt></pre></div></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

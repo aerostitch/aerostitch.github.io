@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="generator" content="AsciiDoc 8.6.7" />
 <meta name="description" content="This document describes how to configure Kerberos authentication on AIX 5.3, 6.1 and 7.1 working with Windows 2008 R2 Active Directory servers." />
 <meta name="keywords" content="AIX, KDC, Kerberos, krb5, authentication, windows, AD, active directory" />
 <meta name="author" content="Joseph HERLANT" />
-<link rel="shortcut icon" href="./images/icons/favicon.png" />
+<link rel="shortcut icon" href="/home/theolediable/git/perso/asciidoc/images/icons/favicon.png" />
 <title>Kerberos authentication configuration for AIX servers</title>
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
-<link rel="stylesheet" href="/asciidoc_twbs_backend/css/pygments.css" type="text/css">
 
 
 <script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
@@ -94,7 +92,7 @@ by values appropriated to your context. Example: <code>kinit &lt;user.name&gt;</
 there are 3 filesets to install: the client (<code>krb5.client.rte</code>), the localized
 (english here) messages (<code>krb5.msg.en_US.client.rte</code>) and the license (<code>krb5.lic</code>).</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
@@ -133,7 +131,7 @@ Path: /etc/objrepos
 </div></div>
 <div class="paragraph"><p>Add Kerberos binaries to the PATH variable and in /etc/environment:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
@@ -164,7 +162,7 @@ long as you don&#8217;t want to create users with a login longer than the defaul
 length (that is 9 characters).  </div>
 </div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
@@ -180,7 +178,7 @@ But notice that the realm name MUST be UPPER CASE!<br />
 Generally speaking, the kdc is on the active directory server, but that is not
 mandatory.</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
@@ -223,7 +221,7 @@ KRB5files:
 </div></div>
 <div class="paragraph"><p>Setup "Kerberos 5" as a valid authentication type for AIX to use:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
@@ -248,14 +246,14 @@ local account by doing the following.</p></div>
 following command (you should have a matrix of corresponding AD users and
 local userid):</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt>mkuser <span style="color: #009900">registry</span><span style="color: #990000">=</span>KRB5files <span style="color: #009900">SYSTEM</span><span style="color: #990000">=</span>KRB5files <span style="color: #009900">id</span><span style="color: #990000">=&lt;</span>user_id<span style="color: #990000">&gt;</span>  <span style="color: #990000">&lt;</span>user<span style="color: #990000">.</span>name<span style="color: #990000">&gt;</span></tt></pre></div></div>
 <div class="paragraph"><p>Test an SSH connection on the lookup adress (to avoid any other network issue):</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
@@ -281,7 +279,7 @@ server to check if the user can be authenticated against the Kerberos server
 <div class="paragraph"><p>To change the authentication parameters for your local users to use
 KRB5files (Kerberos):</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
@@ -296,7 +294,7 @@ in the previous step.</p></div>
 is using another login name. For this, use the <code>auth_name</code> attribute of
 the local user like this :</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
@@ -305,7 +303,7 @@ http://www.gnu.org/software/src-highlite -->
 use the following (after the execution of the <code>chuser registry=KRB5files
 SYSTEM=KRB5files &lt;user.name&gt;</code> command explained in the previous step) :</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
@@ -416,10 +414,6 @@ a server configured for MyDomain):</p></div>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
 <div id="footnotes"><hr /></div>
 <div id="footer">
-<div id="footer-text">
-Version 1.0.0<br />
-Last updated 2013-11-08 11:31:27 CET
-</div>
 </div>
 </div>
 </body>

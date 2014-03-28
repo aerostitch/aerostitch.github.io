@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="generator" content="AsciiDoc 8.6.7" />
 <meta name="description" content="Here you'll find some stuffs I found to be kind of cool or some things that I usually forget about it. For example, how to edit commits history or what does rebase do." />
 <meta name="keywords" content="git, hg, rebase, log, .gitattributes, config, crlf, stash, rebase, fetch, reset, branch, HEAD, origin, tag, cherry-pick, prune" />
 <meta name="author" content="Joseph HERLANT" />
-<link rel="shortcut icon" href="/asciidoc_twbs_backend/ico/favicon.png" />
+<link rel="shortcut icon" href="/home/theolediable/git/perso/asciidoc/images/icons/favicon.png" />
 <title>Some git tips</title>
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
-<link rel="stylesheet" href="/asciidoc_twbs_backend/css/pygments.css" type="text/css">
 
 
 <script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
@@ -50,9 +48,9 @@ asciidoc.install(3);
 <div>
   <span id="author">Joseph HERLANT</span>
   <br />
-  <span id="revnumber">version 1.0.2,</span>
-  <span id="revdate">2013-11-06</span>
-  <span id="revremark">: Forgot a git fetch in submodules</span>
+  <span id="revnumber">version 1.0.3,</span>
+  <span id="revdate">2014-03-16</span>
+  <span id="revremark">: Adding a way to delete a tag</span>
 </div>
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
@@ -343,7 +341,19 @@ the last commit of the dropped branch, using:</p></div>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_push_new_tags">6.3. Push new tags</h3>
+<h3 id="_delete_a_tag">6.3. Delete a tag</h3>
+<div class="paragraph"><p>If you want to delete a tag named "tag_I_want_to_delete" from origin, use the
+following commands.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code># Remove from local repository
+git tag -d tag_I_want_to_delete
+# Push change to remote repository
+git push origin :refs/tags/tag_I_want_to_delete</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_push_new_tags">6.4. Push new tags</h3>
 <div class="paragraph"><p>Classic git push won&#8217;t push tags.If you don&#8217;t want tags to stay only local, use
 the "--tags" option of the push command.</p></div>
 <div class="listingblock">
@@ -406,7 +416,7 @@ following command to get the informations on one particular stash</p></div>
 <h3 id="_getting_changes_back">7.3. Getting changes back</h3>
 <div class="paragraph"><p>Either do a:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
@@ -472,7 +482,7 @@ git checkout &lt;submodule_branch&gt;</code></pre>
 </div></div>
 <div class="paragraph"><p>If the module you are adding contains some things, use:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
@@ -500,7 +510,7 @@ version to add the submodule!  </div>
 <div class="sect2">
 <h3 id="_cloning_a_project_with_submodules">9.2. Cloning a project with submodules</h3>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
@@ -602,10 +612,6 @@ zip</code></pre>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
 <div id="footnotes"><hr /></div>
 <div id="footer">
-<div id="footer-text">
-Version 1.0.2<br />
-Last updated 2013-11-08 13:41:26 CET
-</div>
 </div>
 </div>
 </body>

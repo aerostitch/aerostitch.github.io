@@ -3,11 +3,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Add the date before every lines a program / command outputs is easy with perl!" />
-<meta name="keywords" content="perl, oneliner, localtime, command" />
+<meta name="description" content="When packaging a C or C++ library, you sometimes have to face a" />
+<meta name="keywords" content="Lintian, no-symbols-control-file, debian, packaging, library" />
 <meta name="author" content="Joseph HERLANT" />
 <link rel="shortcut icon" href="/home/theolediable/git/perso/asciidoc/images/icons/favicon.png" />
-<title>Adding the date and time to any command output using perl</title>
+<title>Lintiani: Get rid of the no-symbols-control-file info</title>
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
 
 
@@ -49,25 +49,62 @@ asciidoc.install(3);
   <span id="author">Joseph HERLANT</span>
   <br />
   <span id="revnumber">version 1.0.0,</span>
-  <span id="revdate">2013-10-24</span>
-  <span id="revremark">: Initial version</span>
+  <span id="revdate">2014-03-06</span>
+  <span id="revremark">: Initial version
+  lintian complaining about "no-symbols-control-file". This tutorial will help
+  you to get correct this.</span>
 </div>
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
 <div id="header">
-<h1>Adding the date and time to any command output using perl</h1>
-Add the date before every lines a program / command outputs is easy with perl!
+<h1>Lintiani: Get rid of the no-symbols-control-file info</h1>
+When packaging a C or C++ library, you sometimes have to face a
 </div>
       </div>
 <div id="preamble">
 <div class="sectionbody">
-<div class="paragraph"><p>This commands adds the date and time to each lines of the "my_command" output.</p></div>
+<div class="paragraph"><p>The "no-symbols-control-file" explains that the symbols of your library has not
+been exported yet. To fix this:</p></div>
+<div class="paragraph"><p>First, build the package (the symbol generation needs a compiled library to
+work):</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt>my_command <span style="color: #990000">|</span> perl -pe<span style="color: #FF0000">'$_=localtime()." $_"'</span></tt></pre></div></div>
+<pre><tt>debuild -uc -us</tt></pre></div></div>
+<div class="paragraph"><p>Then, use <code>dpkg-gensymbols</code> to generate the symbol file. Let&#8217;s say here your
+library name is <strong>mylib</strong> (replace mylib in the following examples).
+From the root of your debian package&#8217;s source, execute the following command
+line:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>dpkg-gensymbols -pmylib -Odebian/mylib<span style="color: #990000">.</span>symbols -q</tt></pre></div></div>
+<div class="paragraph"><p>This las command will create or update the <code>debian/mylib.symbols</code> file (replace
+<strong>mylib</strong> with the name of your package). But there&#8217;s still an issue because with
+this you&#8217;ll have the debian version after the upstream version in the file which
+will generate a <strong>symbols-file-contains-current-version-with-debian-revision</strong>
+lintian error. To avoid this, You need to remove everything that&#8217;s after the
+upstream version. Let&#8217;s say the package version is 2.0-1, you&#8217;ll need to remove
+all the "-1" after the "2.0" in the symbol file. You can use this command to do
+the job:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sed -e <span style="color: #FF0000">'s/</span><span style="color: #CC33CC">\(</span><span style="color: #FF0000"> [0-9</span><span style="color: #CC33CC">\.</span><span style="color: #FF0000">]</span><span style="color: #CC33CC">\+\)\-</span><span style="color: #FF0000">.</span><span style="color: #CC33CC">\+</span><span style="color: #FF0000">$/</span><span style="color: #CC33CC">\1</span><span style="color: #FF0000">/g'</span> -i debian/mylib<span style="color: #990000">.</span>symbols</tt></pre></div></div>
+<div class="paragraph"><p>Then, recompile your package and check again with:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>debuild -uc -us
+lintian -c --color auto -L <span style="color: #FF0000">"&gt;=pedantic"</span></tt></pre></div></div>
 </div>
 </div>
     </div>

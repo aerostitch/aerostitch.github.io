@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="generator" content="AsciiDoc 8.6.7" />
 <meta name="description" content="This document describes how to do datapump exports and rman backups on NFS mount points on AIX. It mainly describes how to correct ORA-01580 and ORA-27054 errors." />
 <meta name="keywords" content="Oracle, NFS, AIX, ORA-01580, ORA-27054, mount, expdp, rman, datapump" />
 <meta name="author" content="Joseph HERLANT" />
-<link rel="shortcut icon" href="/asciidoc_twbs_backend/ico/favicon.png" />
+<link rel="shortcut icon" href="/home/theolediable/git/perso/asciidoc/images/icons/favicon.png" />
 <title>Expdp or rman on an NFS mount point in AIX</title>
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
-<link rel="stylesheet" href="/asciidoc_twbs_backend/css/pygments.css" type="text/css">
 
 
 <script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
 <script type="text/javascript">
 /*<![CDATA[*/
-asciidoc.install(2);
+asciidoc.install(3);
 /*]]>*/
 </script>
 <!-- Bootstrap core CSS -->
@@ -75,14 +73,14 @@ and ORA-27054 errors.</p></div>
 <div class="paragraph"><p>A prerequisite is to have created the oracle corresponding directory using, for
 example:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-weight: bold"><span style="color: #0000FF">create</span></span> directory MY_DIRECTORY <span style="font-weight: bold"><span style="color: #0000FF">as</span></span> <span style="color: #FF0000">'/local/mount/point'</span><span style="color: #990000">;</span></tt></pre></div></div>
 <div class="paragraph"><p>You can check the available Oracle directories using the following in sqlplus:</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
@@ -141,7 +139,7 @@ col DIRECTORY_PATH <span style="font-weight: bold"><span style="color: #0000FF">
 </div>
 <div class="paragraph"><p>First, verify that the remote mount point is available for you using <code>showmount</code>.</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
@@ -174,7 +172,7 @@ The clean way is to ensure your DNS and reverse are all correct, but before sout
 <div class="paragraph"><p>On the local node, then just mount the mount point using the <code>bg,hard,intr,rsize=32768,wsize=32768,vers=3,proto=tcp,sec=sys,rw</code>
 options and add the own of the mount point to Oracle user.</p></div>
 <div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
@@ -241,10 +239,6 @@ current directory path and host name with your own values!):</p></div>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
 <div id="footnotes"><hr /></div>
 <div id="footer">
-<div id="footer-text">
-Version 1.0.1<br />
-Last updated 2013-11-08 11:31:27 CET
-</div>
 </div>
 </div>
 </body>

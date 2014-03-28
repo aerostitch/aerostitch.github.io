@@ -61,6 +61,21 @@
             "target": "_self"
           }
         ]
+      },
+      {
+        "name": "Debian",
+        "children": [
+          {
+            "name": "Lintiani: Get rid of the no-symbols-control-file info",
+            "url": "/linux_and_unix/debian/lintian_no-symbols-control-file.html",
+            "target": "_self"
+          },
+          {
+            "name": "Packaging tips for debian",
+            "url": "/linux_and_unix/debian/packaging_debian.html",
+            "target": "_self"
+          }
+        ]
       }
     ]
   },
@@ -97,6 +112,11 @@
   {
     "name": "Programming",
     "children": [
+      {
+        "name": "Adding proxy exception to IE using VBScript",
+        "url": "/programming/VBScript-add_proxy_exception.html",
+        "target": "_self"
+      },
       {
         "name": "Some CSS tips",
         "url": "/programming/css3.html",
