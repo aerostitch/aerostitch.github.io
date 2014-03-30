@@ -18,6 +18,7 @@
  * setup.py system
  * skel generator
  * Pydoc
+ * Manpage generation from docutils' (pydoc enhancement?)
 
 ==== Ruby
  * Memo Rails
@@ -28,7 +29,6 @@
  * Jquery include page in html node
 
 ==== Other programming languages
- * R introduction
  * Lua introduction
  * TCL/Tk Introdutction
  * Lisp introduction
@@ -123,35 +123,3 @@ See if there's something interesting there: http://db-engines.com/en/ranking
  * Adding revision info
  * Adding author, editors, copyights,... infos
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
------
-:linkcss:
-:stylesdir: /custom_/css
-:scriptsdir: /custom_/js
-
-find -name '*.adoc' | xargs -I {} perl -pe
-'s/:data-uri:/:data-uri:\n:linkcss:\n:stylesdir: \/custom_\/css\n:scriptsdir:
-\/custom_\/js/' -i {}
-
-find -name '*.adoc' | xargs -I {} perl -pe 's/:ascii-ids:\n//' -i {}
-find -name '*.adoc' | xargs -I {} perl -pi.bak -e 'undef $/;
-s/:linkcss:\n:stylesdir: \/custom_\/css\n:scriptsdir: \/custom_\/js\n//g' {}
-find -name '*.adoc' | xargs -I {} perl -pe
-'s/:data-uri:/:data-uri:\n:ascii-ids:\n:linkcss:\n:stylesdir:
-\/custom_\/css\n:scriptsdir: \/custom_\/js/' -i {}
------
