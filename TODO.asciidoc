@@ -2,63 +2,13 @@
 
 == Docs
 
-=== Programming
- * Explaining "em" in CSS
+=== Misc
 
-==== Perl
- * Ensure your script is running the right perl exe. If not, relaunch it from
- there.
- * Oracle and other DB connection lib
- * Excel generation examples using perl
-
-==== Python
- * Nose tests functions & fixtures
- * Doctests doc
- * Capture input/output + nose & doctests integration
- * setup.py system
- * skel generator
- * Pydoc
- * Manpage generation from docutils' (pydoc enhancement?)
-
-==== Ruby
- * Memo Rails
- * http + proxy snippet
- * rspec
-
-==== Javascript
- * Jquery include page in html node
-
-==== Other programming languages
- * Lua introduction
- * TCL/Tk Introdutction
- * Lisp introduction
- * Haskell introduction
- * C2 introduction
- * C docs
- * C++ docs
- * Objective-C introduction
- * Erlang introduction
- * Documentation using Doxygen (& others?)
-
-
-
-
-=== Linux / Unix
-
-=== AIX
- * Disable IP V6
- * Debugging disks issues with `lvmstat -v myvg` and `filemon -o file.out -0 all`
-
-==== Nim scripts
- * Create LPAR using command line
- * Install LPAR using command line
- * Update LPP_SOURCE
-
-=== Debian
- * Updates to https://wiki.debian.org/BSP/BeginnersHOWTO
-
-
-
+==== Asciidoc
+ * Modifying front page
+ * Adding graphs
+ * Adding revision info
+ * Adding author, editors, copyights,... infos
 
 
 === Databases
@@ -114,12 +64,58 @@ See if there's something interesting there: http://db-engines.com/en/ranking
 
 
 
+=== Linux / Unix
 
-=== Misc
+=== Debian
+ * Updates to https://wiki.debian.org/BSP/BeginnersHOWTO
+ 
+=== AIX
+ * Disable IP V6
+ * Debugging disks issues with `lvmstat -v myvg` and `filemon -o file.out -0 all`
 
-==== Asciidoc
- * Modifying front page
- * Adding graphs
- * Adding revision info
- * Adding author, editors, copyights,... infos
+==== Nim scripts
+ * Create LPAR using command line
+ * Install LPAR using command line
+ * Update LPP_SOURCE
+
+
+
+=== Programming
+ * Explaining "em" in CSS
+
+==== Perl
+ * Ensure your script is running the right perl exe. If not, relaunch it from
+ there.
+ * Oracle and other DB connection lib
+ * Excel generation examples using perl
+
+==== Python
+ * Nose tests functions & fixtures
+ * Doctests doc
+ * Capture input/output + nose & doctests integration
+ * setup.py system
+ * skel generator
+ * Pydoc
+ * Manpage generation from docutils' (pydoc enhancement?)
+
+==== Ruby
+ * Memo Rails
+ * http + proxy snippet
+ * rspec
+
+==== Javascript
+ * Jquery include page in html node
+
+==== Other programming languages
+ * Lua introduction
+ * TCL/Tk Introdutction
+ * Lisp introduction
+ * Haskell introduction
+ * C2 introduction
+ * C docs
+ * C++ docs
+ * Objective-C introduction
+ * Erlang introduction
+ * Documentation using Doxygen (& others?)
+
 
