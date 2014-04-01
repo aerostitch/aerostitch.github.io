@@ -45,8 +45,8 @@ Sbuild: https://wiki.debian.org/sbuild
 Qemubuilder: https://wiki.debian.org/qemubuilder
 
 
-Tips
-----
+General tips
+------------
 
 *Don't do NMU* (Non Maintainer Uploads) on packages with maintainers.
 NMU is more considered as something quite rude than a grood practice.
@@ -65,4 +65,45 @@ could be a good start in my mind. That helps understanding how
 packages are made and how Debian developement works. Then cleanup and
 adopt an orphaned or a package in RFA state or if you want to be part
 of a packageing team, see the RFH bugs.
+
+
+Packaging tips
+--------------
+
+debian/control file
+~~~~~~~~~~~~~~~~~~~
+
+When you have no architecture-specific files, use "Architecture: all"
+instead of "Architecture: any". This way the package won't be rebuilt
+for each platforms, saving time and resources. It will also produce one
+binary package for all the platforms instead of one for each architecture.
+Example: for packaged based on python, ruby, javascript or other
+interpreted languages.
+
+Description synopsis should be 80 chars max (Policy 3.4.1)
+and not end by a period (Developper reference 6.2.2).
+
+When changing the description, it's always better to validate it by sending
+a mail to debian-l10n-english@lists.debian.org
+
+Priority should generally be set to "optional".
+
+Use the `wrap-and-sort -s` command from devscripts to have a clean and
+sorted debian/control file.other files are also cleaned during this process.
+Beware: it removes the commented lines!
+
+debian/patches
+~~~~~~~~~~~~~~
+
+When doing a patch, don't forget to use DEP-3 headers.
+
+When using a debian/source/format containing '3.0 quilt', you don't need:
+
+ * the `--with quilt` after the `dh $@` in the debian/rules file
+ * to set quilt as a build-dep in debian/control file.
+ * to use the dh_quilt_patch / dh_quilt_unpatch (it's done automatically)
+
+
+
+
 
