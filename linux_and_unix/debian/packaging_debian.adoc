@@ -95,7 +95,7 @@ Beware: it removes the commented lines!
 debian/patches
 ~~~~~~~~~~~~~~
 
-When doing a patch, don't forget to use DEP-3 headers.
+When doing a patch, don't forget to add DEP-3 headers using `quilt header -e`.
 
 When using a debian/source/format containing '3.0 quilt', you don't need:
 
