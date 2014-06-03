@@ -17,8 +17,8 @@ set lines 200 pages 0;
 define _editor=gvim;
 set sqlprompt "&_user@&_CONNECT_IDENTIFIER> ";
 alter session set NLS_LANGUAGE='AMERICAN' NLS_TERRITORY='AMERICA';
-alter session set NLS_CURRENCY= '$' NLS_ISO_CURRENCY= 'AMERICA' NLS_NUMERIC_CHARACTERS= '.,';
-alter session set NLS_DATE_LANGUAGE= 'AMERICAN' NLS_DATE_FORMAT='YYYY-MM-DD HH24:MI:SS';
+alter session set NLS_CURRENCY='$' NLS_ISO_CURRENCY='AMERICA' NLS_NUMERIC_CHARACTERS='.,';
+alter session set NLS_DATE_LANGUAGE='AMERICAN' NLS_COMP='BINARY' NLS_DATE_FORMAT='YYYY-MM-DD HH24:MI:SS';
 
 SELECT '*********** Current connection details ***********' FROM DUAL
 UNION ALL
