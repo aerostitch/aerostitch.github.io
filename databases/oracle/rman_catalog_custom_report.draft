@@ -1,0 +1,77 @@
+Custom report on RMAN catalog views
+===================================
+Joseph HERLANT
+v1.0.0, 2013-12-16 : Initial version
+:Author Initials: Joseph HERLANT
+:description: Some custom reports on RMAN catalog views
+:keywords: Oracle, Database, RMAN, catalog, report, views
+
+
+First, I generally use this configuration in my sessions to get a correct fortmat:
+
+[source, sql]
+-----
+alter session set NLS_DATE_FORMAT='YYYY-MM-DD HH24:MI:SS';
+set lines 200 pages 1024
+-----
+
+Getting all the DB (with all their incarnations) of an RMAN repository schema:
+
+[source, sql]
+-----
+select DB_KEY, DBINC_KEY, DBID, NAME, RESETLOGS_CHANGE#, RESETLOGS_TIME from RC_DATABASE order by name, RESETLOGS_CHANGE#;
+-----
+
+Getting all the DB with only their last incarnations of an RMAN repository schema
+
+[source, sql]
+-----
+select MAX(DB_KEY) KEEP (DENSE_RANK last order by RESETLOGS_TIME) as DB_KEY
+  , MAX(DBID) KEEP (DENSE_RANK last order by RESETLOGS_TIME) as DBID
+  , NAME, MAX(RESETLOGS_TIME)
+ from RC_DATABASE group by NAME order by name;
+-----
+
+Backup report of the databases backups in an RMAN repository schema over the last 7 days:
+
+[source, sql]
+-----
+col OBJECT_TYPE for a30;
+col STATUS for a30;
+col DURATION for a12;
+select DB_KEY, DB_NAME, OBJECT_TYPE, OUTPUT_DEVICE_TYPE, STATUS, START_TIME
+  , CAST(NUMTODSINTERVAL(END_TIME - START_TIME, 'DAY') as interval day(2) to second(0) ) AS DURATION
+  , TRUNC(INPUT_BYTES/1024/1024) AS INPUT_MB, ROUND(OUTPUT_BYTES/1024/1024/1024,2) AS OUTPUT_MB
+from RC_RMAN_STATUS
+where operation='BACKUP'
+  AND START_TIME > SYSDATE-7
+order by START_TIME
+;
+-----
+
+Backup summary of the databases backups (not running) in an RMAN repository 
+schema over the last 30 days.
+
+This report only takes the last incarnation of the databases 
+and also shows databases that have not been backed up in this period.
+
+[source, sql]
+-----
+col OBJECT_TYPE for a30;
+col STATUS for a30;
+col AVERAGE_DURATION for a12;
+select d.DBID, d.NAME, s.OBJECT_TYPE, s.OUTPUT_DEVICE_TYPE, s.STATUS
+  , COUNT(*) AS OCCURRENCES
+  , CAST(NUMTODSINTERVAL(AVG(s.END_TIME - s.START_TIME), 'DAY') as interval day(2) to second(0) ) AS AVERAGE_DURATION
+  , TRUNC(AVG(s.INPUT_BYTES)/1024/1024) AS AVERAGE_INPUT_MB, ROUND(AVG(s.OUTPUT_BYTES)/1024/1024/1024,2) AS AVERAGE_OUTPUT_MB
+from 
+  (select MAX(DB_KEY) KEEP (DENSE_RANK last order by RESETLOGS_TIME) as DB_KEY
+    , MAX(DBID) KEEP (DENSE_RANK last order by RESETLOGS_TIME) as DBID, NAME 
+	from RC_DATABASE group by NAME) d
+  LEFT OUTER JOIN RC_RMAN_STATUS s ON d.DB_KEY = s.DB_KEY
+where s.operation='BACKUP'
+  AND s.START_TIME > SYSDATE-30
+GROUP BY d.DBID, d.NAME, s.OBJECT_TYPE, s.OUTPUT_DEVICE_TYPE, s.STATUS
+ORDER BY d.NAME, s.STATUS
+;
+-----
