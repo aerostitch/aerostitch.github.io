@@ -25,13 +25,17 @@ from RC_DATABASE_INCARNATION
 order by name, RESETLOGS_CHANGE#;
 -----
 
-Getting all the DB with only their current incarnation of an RMAN repository schema:
+Getting all the DB with only their current incarnation of an RMAN repository schema 
+(which is what RC_DATABASE also does):
 
 [source, sql]
 -----
 select DB_KEY, DBID, NAME, STATUS, RESETLOGS_CHANGE#, RESETLOGS_TIME 
 from RC_DATABASE_INCARNATION WHERE CURRENT_INCARNATION='YES'
 order by name, RESETLOGS_CHANGE#;
+
+/* OR */
+select * from RC_DATABASE;
 -----
 
 Backup report of the databases backups in an RMAN repository schema over the last 7 days:
@@ -69,6 +73,8 @@ schema over the last 30 days.
 This report only takes the last incarnation of the databases 
 and also shows databases that are registered and have not been backed up in this period.
 
+Note that the databases 9i will be shown as 'NOT BACKED UP!' here.
+
 [source, sql]
 -----
 col OBJECT_TYPE for a30;
@@ -76,7 +82,7 @@ col STATUS for a30;
 col AVERAGE_DURATION for a12;
 
 select d.DBID, d.NAME, s.OBJECT_TYPE, s.OUTPUT_DEVICE_TYPE
-  , NVL(s.STATUS, 'NOT BACKUED UP!') as STATUS
+  , NVL(s.STATUS, 'NOT BACKED UP!') as STATUS
   , COUNT(s.START_TIME) AS OCCURRENCES
   , CAST(NUMTODSINTERVAL(AVG(s.END_TIME - s.START_TIME), 'DAY') as interval day(2) to second(0) ) AS AVERAGE_DURATION
   , TRUNC(AVG(s.INPUT_BYTES)/1024/1024) AS AVERAGE_INPUT_MB, ROUND(AVG(s.OUTPUT_BYTES)/1024/1024,2) AS AVERAGE_OUTPUT_MB
@@ -87,6 +93,120 @@ where NVL(s.START_TIME, SYSDATE) > SYSDATE-30
 GROUP BY d.DBID, d.NAME, s.OBJECT_TYPE, s.OUTPUT_DEVICE_TYPE, s.STATUS
 ORDER BY d.NAME, s.STATUS
 ;
+-----
+
+If you still have Oracle Database 9i registered, you will need to use this query instead:
+
+[source, sql]
+-----
+col BACKUP_TYPE for a25;
+col STATUS for a30;
+col AVERAGE_DURATION for a12;
+col DEVICE_TYPE for a20;
+
+select d.DBID, d.NAME
+  , CASE s.BACKUP_TYPE WHEN 'D' THEN 'INCR LVL 0 OR FULL'
+    WHEN 'I' THEN 'INCR LVL 1' WHEN 'L' THEN 'ARCHIVELOG'
+    END as BACKUP_TYPE
+  , p.DEVICE_TYPE
+  , COUNT(s.START_TIME) AS OCCURRENCES
+  , CAST(NUMTODSINTERVAL(AVG(s.ELAPSED_SECONDS), 'SECOND') as interval day(2) to second(0) ) as AVERAGE_DURATION
+  , CASE s.STATUS
+    WHEN 'A' THEN 'AVAILABLE'
+    WHEN 'D' THEN 'DELETED'
+    WHEN 'O' THEN 'UNUSABLE' 
+    ELSE 'NO BACKUP SET AVAILABLE!' END AS BACKUPSET_STATUS
+  , TRUNC(AVG(p.bytes)/1024/1024) AS AVERAGE_BACKUP_SIZE_MB
+from RC_DATABASE d 
+  LEFT OUTER JOIN RC_BACKUP_SET s ON d.DB_KEY = s.DB_KEY AND s.START_TIME > SYSDATE-30 
+  LEFT OUTER JOIN 
+  (select DB_KEY, BS_KEY, DEVICE_TYPE, SUM(BYTES) as bytes
+    FROM RC_BACKUP_PIECE group by DB_KEY, BS_KEY, DEVICE_TYPE
+  ) p ON p.DB_KEY=d.DB_KEY and s.BS_KEY=s.BS_KEY
+group by d.DBID, d.NAME, s.BACKUP_TYPE, p.DEVICE_TYPE, s.STATUS
+ORDER BY d.NAME, s.STATUS;
+-----
+
+Which you can compute in 1 global query:
+
+[source, sql]
+-----
+alter session set NLS_DATE_FORMAT='YYYY-MM-DD HH24:MI:SS';
+set lines 200 pages 1024
+col OBJECT_TYPE for a30;
+col STATUS for a30;
+col AVERAGE_DURATION for a12;
+col OUTPUT_DEVICE_TYPE for a12;
+
+SELECT * FROM 
+(
+select d.DBID, d.NAME, s.OBJECT_TYPE, s.OUTPUT_DEVICE_TYPE
+  , NVL(s.STATUS, 'NOT BACKED UP!') as STATUS
+  , COUNT(s.START_TIME) AS OCCURRENCES
+  , CAST(NUMTODSINTERVAL(AVG(s.END_TIME - s.START_TIME), 'DAY') as interval day(2) to second(0) ) AS AVERAGE_DURATION
+  , TRUNC(AVG(s.INPUT_BYTES)/1024/1024) AS AVERAGE_INPUT_MB, TRUNC(AVG(s.OUTPUT_BYTES)/1024/1024) AS AVERAGE_OUTPUT_MB
+from 
+  RC_DATABASE d
+  LEFT OUTER JOIN RC_RMAN_STATUS s 
+    ON d.DB_KEY = s.DB_KEY AND s.operation='BACKUP' AND STATUS != 'RUNNING'
+where NVL(s.START_TIME, SYSDATE) > SYSDATE-30
+GROUP BY d.DBID, d.NAME, s.OBJECT_TYPE, s.OUTPUT_DEVICE_TYPE, s.STATUS
+) where DBID NOT IN (3404319572, 3408635495)
+UNION ALL
+(
+select d.DBID, d.NAME
+  , CASE s.BACKUP_TYPE WHEN 'D' THEN 'INCR LVL 0 OR FULL'
+    WHEN 'I' THEN 'INCR LVL 1' WHEN 'L' THEN 'ARCHIVELOG'
+    END as BACKUP_TYPE
+  , p.DEVICE_TYPE
+  , CASE s.STATUS
+    WHEN 'A' THEN 'AVAILABLE'
+    WHEN 'D' THEN 'DELETED'
+    WHEN 'O' THEN 'UNUSABLE' 
+    ELSE 'NO BACKUP SET AVAILABLE!' END AS BACKUPSET_STATUS
+  , COUNT(s.START_TIME) AS OCCURRENCES
+  , CAST(NUMTODSINTERVAL(AVG(s.ELAPSED_SECONDS), 'SECOND') as interval day(2) to second(0) ) as AVERAGE_DURATION
+  , -1
+  , TRUNC(AVG(NVL(p.bytes,0))/1024/1024) AS AVERAGE_BACKUP_SIZE_MB
+from RC_DATABASE d 
+  LEFT OUTER JOIN RC_BACKUP_SET s 
+  ON d.DB_KEY = s.DB_KEY AND s.START_TIME > SYSDATE-30 
+  LEFT OUTER JOIN 
+  (select DB_KEY, BS_KEY, DEVICE_TYPE, SUM(BYTES) as bytes
+    FROM RC_BACKUP_PIECE 
+    where DB_ID IN (3404319572, 3408635495) AND NVL(START_TIME, SYSDATE) > SYSDATE-30
+    group by DB_KEY, BS_KEY, DEVICE_TYPE
+  ) p ON p.DB_KEY=d.DB_KEY and s.BS_KEY=s.BS_KEY  
+WHERE DB_ID IN (3404319572, 3408635495) AND NVL(s.START_TIME, SYSDATE) > SYSDATE-30
+group by d.DBID, d.NAME, s.BACKUP_TYPE, p.DEVICE_TYPE, s.STATUS
+)
+ORDER BY 2, 5
+;
+-----
+
+
+To get the report about the available backupsets for all targets, use:
+
+[source, sql]
+-----
+col BACKUP_TYPE for a25;
+col STATUS for a30;
+col DURATION for a12;
+
+select d.DBID, d.NAME
+  , CASE s.BACKUP_TYPE WHEN 'D' THEN 'INCR LVL 0 OR FULL'
+    WHEN 'I' THEN 'INCR LVL 1' WHEN 'L' THEN 'ARCHIVELOG'
+    END as BACKUP_TYPE
+  , s.START_TIME
+  , CAST(NUMTODSINTERVAL(s.ELAPSED_SECONDS, 'SECOND') as interval day(2) to second(0) ) as DURATION
+  , CASE s.STATUS
+    WHEN 'A' THEN 'AVAILABLE'
+    WHEN 'D' THEN 'DELETED'
+    WHEN 'O' THEN 'UNUSABLE' END AS STATUS
+from RC_DATABASE d 
+  LEFT OUTER JOIN RC_BACKUP_SET s ON d.DB_KEY = s.DB_KEY
+where s.START_TIME > SYSDATE-7 
+order by START_TIME;
 -----
 
 
