@@ -54,7 +54,7 @@ Backup summary of the databases backups (not running) in an RMAN repository
 schema over the last 30 days.
 
 This report only takes the last incarnation of the databases 
-and also shows databases that have not been backed up in this period.
+and also shows databases that are registered and have not been backed up in this period.
 
 [source, sql]
 -----
@@ -62,17 +62,17 @@ col OBJECT_TYPE for a30;
 col STATUS for a30;
 col AVERAGE_DURATION for a12;
 
-select d.DBID, d.NAME, s.OBJECT_TYPE, s.OUTPUT_DEVICE_TYPE, s.STATUS
-  , COUNT(*) AS OCCURRENCES
+select d.DBID, d.NAME, s.OBJECT_TYPE, s.OUTPUT_DEVICE_TYPE
+  , NVL(s.STATUS, 'NOT BACKUED UP!') as STATUS
+  , COUNT(s.START_TIME) AS OCCURRENCES
   , CAST(NUMTODSINTERVAL(AVG(s.END_TIME - s.START_TIME), 'DAY') as interval day(2) to second(0) ) AS AVERAGE_DURATION
   , TRUNC(AVG(s.INPUT_BYTES)/1024/1024) AS AVERAGE_INPUT_MB, ROUND(AVG(s.OUTPUT_BYTES)/1024/1024/1024,2) AS AVERAGE_OUTPUT_MB
 from 
   (select MAX(DB_KEY) KEEP (DENSE_RANK last order by RESETLOGS_TIME) as DB_KEY
     , MAX(DBID) KEEP (DENSE_RANK last order by RESETLOGS_TIME) as DBID, NAME 
 	from RC_DATABASE group by NAME) d
-  LEFT OUTER JOIN RC_RMAN_STATUS s ON d.DB_KEY = s.DB_KEY
-where s.operation='BACKUP' and STATUS != 'RUNNING'
-  AND s.START_TIME > SYSDATE-30
+  LEFT OUTER JOIN RC_RMAN_STATUS s ON d.DB_KEY = s.DB_KEY AND s.operation='BACKUP' and STATUS != 'RUNNING'
+where NVL(s.START_TIME, SYSDATE) > SYSDATE-30
 GROUP BY d.DBID, d.NAME, s.OBJECT_TYPE, s.OUTPUT_DEVICE_TYPE, s.STATUS
 ORDER BY d.NAME, s.STATUS
 ;
