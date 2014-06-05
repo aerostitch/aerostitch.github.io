@@ -19,17 +19,19 @@ Getting all the DB (with all their incarnations) of an RMAN repository schema:
 
 [source, sql]
 -----
-select DB_KEY, DBINC_KEY, DBID, NAME, RESETLOGS_CHANGE#, RESETLOGS_TIME from RC_DATABASE order by name, RESETLOGS_CHANGE#;
+select DB_KEY, DBINC_KEY, DBID, NAME, RESETLOGS_CHANGE#, RESETLOGS_TIME 
+  , CURRENT_INCARNATION, PARENT_DBINC_KEY, STATUS
+from RC_DATABASE_INCARNATION
+order by name, RESETLOGS_CHANGE#;
 -----
 
-Getting all the DB with only their last incarnations of an RMAN repository schema
+Getting all the DB with only their current incarnation of an RMAN repository schema:
 
 [source, sql]
 -----
-select MAX(DB_KEY) KEEP (DENSE_RANK last order by RESETLOGS_TIME) as DB_KEY
-  , MAX(DBID) KEEP (DENSE_RANK last order by RESETLOGS_TIME) as DBID
-  , NAME, MAX(RESETLOGS_TIME)
- from RC_DATABASE group by NAME order by name;
+select DB_KEY, DBID, NAME, STATUS, RESETLOGS_CHANGE#, RESETLOGS_TIME 
+from RC_DATABASE_INCARNATION WHERE CURRENT_INCARNATION='YES'
+order by name, RESETLOGS_CHANGE#;
 -----
 
 Backup report of the databases backups in an RMAN repository schema over the last 7 days:
@@ -40,7 +42,7 @@ col OBJECT_TYPE for a30;
 col STATUS for a30;
 col DURATION for a12;
 
-select DB_KEY, DB_NAME, OBJECT_TYPE, OUTPUT_DEVICE_TYPE, STATUS, START_TIME
+select RSR_KEY, DB_KEY, DB_NAME, OBJECT_TYPE, OUTPUT_DEVICE_TYPE, STATUS, START_TIME
   , CAST(NUMTODSINTERVAL(END_TIME - START_TIME, 'DAY') as interval day(2) to second(0) ) AS DURATION
   , TRUNC(INPUT_BYTES/1024/1024) AS INPUT_MB, ROUND(OUTPUT_BYTES/1024/1024/1024,2) AS OUTPUT_MB
 from RC_RMAN_STATUS
@@ -48,6 +50,17 @@ where operation='BACKUP'
   AND START_TIME > SYSDATE-7
 order by START_TIME
 ;
+-----
+
+Getting the output of a given RMAN backup listed by the previous query (replace the DB_KEY and RSR_KEY by your own values).
+
+For reminder:
+ * DB_KEY is the primary key for the target database. Use this column to form a join with almost any other catalog view.
+ * RSR_KEY is the unique key for the row in RC_RMAN_STATUS corresponding to the job that created this output.
+ 
+[source, sql]
+-----
+select output from RC_RMAN_OUTPUT where DB_KEY='1086074' and RSR_KEY='8278411' order by STAMP;
 -----
 
 Backup summary of the databases backups (not running) in an RMAN repository 
@@ -68,12 +81,12 @@ select d.DBID, d.NAME, s.OBJECT_TYPE, s.OUTPUT_DEVICE_TYPE
   , CAST(NUMTODSINTERVAL(AVG(s.END_TIME - s.START_TIME), 'DAY') as interval day(2) to second(0) ) AS AVERAGE_DURATION
   , TRUNC(AVG(s.INPUT_BYTES)/1024/1024) AS AVERAGE_INPUT_MB, ROUND(AVG(s.OUTPUT_BYTES)/1024/1024,2) AS AVERAGE_OUTPUT_MB
 from 
-  (select MAX(DB_KEY) KEEP (DENSE_RANK last order by RESETLOGS_TIME) as DB_KEY
-    , MAX(DBID) KEEP (DENSE_RANK last order by RESETLOGS_TIME) as DBID, NAME 
-	from RC_DATABASE group by NAME) d
+  RC_DATABASE d
   LEFT OUTER JOIN RC_RMAN_STATUS s ON d.DB_KEY = s.DB_KEY AND s.operation='BACKUP' and STATUS != 'RUNNING'
 where NVL(s.START_TIME, SYSDATE) > SYSDATE-30
 GROUP BY d.DBID, d.NAME, s.OBJECT_TYPE, s.OUTPUT_DEVICE_TYPE, s.STATUS
 ORDER BY d.NAME, s.STATUS
 ;
 -----
+
+
