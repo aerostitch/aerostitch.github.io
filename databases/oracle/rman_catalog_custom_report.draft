@@ -39,6 +39,7 @@ Backup report of the databases backups in an RMAN repository schema over the las
 col OBJECT_TYPE for a30;
 col STATUS for a30;
 col DURATION for a12;
+
 select DB_KEY, DB_NAME, OBJECT_TYPE, OUTPUT_DEVICE_TYPE, STATUS, START_TIME
   , CAST(NUMTODSINTERVAL(END_TIME - START_TIME, 'DAY') as interval day(2) to second(0) ) AS DURATION
   , TRUNC(INPUT_BYTES/1024/1024) AS INPUT_MB, ROUND(OUTPUT_BYTES/1024/1024/1024,2) AS OUTPUT_MB
@@ -60,6 +61,7 @@ and also shows databases that have not been backed up in this period.
 col OBJECT_TYPE for a30;
 col STATUS for a30;
 col AVERAGE_DURATION for a12;
+
 select d.DBID, d.NAME, s.OBJECT_TYPE, s.OUTPUT_DEVICE_TYPE, s.STATUS
   , COUNT(*) AS OCCURRENCES
   , CAST(NUMTODSINTERVAL(AVG(s.END_TIME - s.START_TIME), 'DAY') as interval day(2) to second(0) ) AS AVERAGE_DURATION
@@ -69,7 +71,7 @@ from
     , MAX(DBID) KEEP (DENSE_RANK last order by RESETLOGS_TIME) as DBID, NAME 
 	from RC_DATABASE group by NAME) d
   LEFT OUTER JOIN RC_RMAN_STATUS s ON d.DB_KEY = s.DB_KEY
-where s.operation='BACKUP'
+where s.operation='BACKUP' and STATUS != 'RUNNING'
   AND s.START_TIME > SYSDATE-30
 GROUP BY d.DBID, d.NAME, s.OBJECT_TYPE, s.OUTPUT_DEVICE_TYPE, s.STATUS
 ORDER BY d.NAME, s.STATUS
