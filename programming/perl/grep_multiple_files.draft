@@ -1,0 +1,53 @@
+Grep a string in files using Perl
+=================================
+Joseph HERLANT
+v1.0.0, 2014-05-13 : Initial version
+:Author Initials: Joseph HERLANT
+:description: Simple example of how to find strings or pattern in all
+ the files in one or more directories using Perl. 
+:keywords: Perl, find, File::Find, directory, subdirectories, grep
+
+
+
+If you have the File::Find::Rule module, you can simply use
+this command line (looks in a "C:\\perso" windows directory
+for the ToTo string). Not tested yet:
+
+[source, shell]
+-----
+perl -MFile::Find::Rule -e 'print File::Find::Rule->file->in("C:\\perso")->grep("ToTo");'
+-----
+
+
+If you do not have the File::Find::Rule module or you want to do some custom
+actions while searching in the files (This example searches every line 
+begining with a "#" followed by one or more space in "/tmp" and "/home"
+directories):
+
+[source, perl]
+-----
+#!/usr/bin/perl
+use strict;
+use warnings;
+use File::Find;
+
+#Pattern to find
+my $pattern_to_find = qr/^#\s+/i;
+# Set that to 0 for no debug messages or 1 for debug messages.
+my $DEBUG = 0;
+# Directories where to search
+my @target_dirs = ("/tmp","/home");
+
+sub find_in_file
+{
+  my $file = $File::Find::name;
+  if(! -f $file ){ return;}
+  print "[DEBUG] ". $file ."\n" if $DEBUG;
+  open FILE, "<", "$file" or die "[ERROR] cannot open $file\n";
+  while (<FILE>) {
+    print "$file - $_" if $_ =~ $pattern_to_find;
+  }
+  close FILE;
+}
+find(\&find_in_file, @target_dirs);
+-----
