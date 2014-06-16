@@ -9,9 +9,24 @@ v1.0.0, 2014-06-16 : Initial version
 
 
 If you're using cdbs, it's simple: use the "$(DEB_UPSTREAM_VERSION)" variable
-defined in the /usr/share/cdbs/1/rules/buildvars.mk file.
+defined in the `/usr/share/cdbs/1/rules/buildvars.mk` file.
 
-Else, you'll have to redefine it. I personally use:
+
+If you're using debhelper, you can use `/usr/share/dpkg/pkg-info.mk` file from
+dpkg-dev which defines this "$(DEB_UPSTREAM_VERSION)" variable.
+
+This last file defines some usefull variables as:
+ * DEB_SOURCE: the source package name
+ * DEB_VERSION: the full version of the package (epoch + upstream vers. +
+ revision)
+ * DEB_VERSION_EPOCH_UPSTREAM: the package's version without the Debian revision
+ * DEB_VERSION_UPSTREAM_REVISION: the package's version without the Debian epoch
+ * DEB_VERSION_UPSTREAM: the package's upstream version
+ * DEB_DISTRIBUTION: the distribution(s) listed in the current entry of
+ debian/changelog
+
+
+If you still want to redefine it. You can use, for example:
 
 -----
 DEB_UPSTREAM_VERSION ?= $(shell dpkg-parsechangelog \
