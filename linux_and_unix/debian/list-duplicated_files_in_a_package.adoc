@@ -1,0 +1,22 @@
+Finding udplicated files in a package
+=====================================
+Joseph Herlant
+v1.0.0, 2014-06-16 : Initial version
+:Author Initials: Joseph Herlant
+:description: This page describes how to easily find duplicated files in a
+  debian package.
+:keywords: duplicates, linux, debian
+
+This little shell script helps you to find duplicated files in a given package
+(named "my_package" here) installed on your computer.
+
+[source, shell]
+-----
+#!/bin/sh
+set -eu
+
+for f in $(dpkg -L my_package); do
+    [ -f $f -a ! -h $f ] || continue
+    sha256sum $f
+done | sort | uniq --all-repeated=separate --check-chars=64
+-----
