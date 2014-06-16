@@ -1,8 +1,8 @@
 Encoding and decoding in base64 using perl
 ==========================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-24 : Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: One-liners to encode and decode input strings or text files +
   using base64 encodings.
 :keywords: Perl, oneliner, base64, encode, decode

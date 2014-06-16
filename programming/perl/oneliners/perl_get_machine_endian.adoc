@@ -1,8 +1,8 @@
 Wanna know if your machine is little or big endian?
 ===================================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-23 : Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: This one-liner tells you wether your computer uses little-endian +
   or big-endian.
 :keywords: perl, oneliner, little-endian, big-endian

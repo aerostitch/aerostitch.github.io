@@ -1,8 +1,8 @@
 Notes for exams 1Z0-053
 =======================
-Joseph HERLANT
+Joseph Herlant
 v1.0.2, 2013-10-19: little modification in the introduction warning
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: This document is regrouping my personal notes I took while revising +
   for the 1Z0-053 Oracle certification exam.
 :keywords: Oracle, Database, Certified, Professionnal, Certification, exam, +

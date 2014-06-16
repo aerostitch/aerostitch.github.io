@@ -1,8 +1,8 @@
 Kerberos authentication configuration for AIX servers
 =====================================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-15: Initial revision
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: This document describes how to configure Kerberos authentication +
   on AIX 5.3, 6.1 and 7.1 working with Windows 2008 R2 Active Directory servers.
 :keywords: AIX, KDC, Kerberos, krb5, authentication, windows, AD, active +

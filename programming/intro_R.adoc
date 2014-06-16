@@ -1,6 +1,6 @@
 Introduction to the R programming language
 ==========================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-11-03 : Initial version
 :encoding: UTF-8
 :description: This is an introduction to the R programming language. +

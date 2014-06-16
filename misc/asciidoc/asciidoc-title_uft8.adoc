@@ -1,8 +1,8 @@
 Using UTF-8 titles with a2x
 ===========================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-26 : Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: This document describes how to take care of title containing +
   non-ascii characters using a2x.
 :keywords: UTF-8, Asciidoc, ascii-ids, a2x

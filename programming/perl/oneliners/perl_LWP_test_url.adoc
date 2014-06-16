@@ -1,8 +1,8 @@
 Test if an url respond correctly using WLP Perl module
 ======================================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-24 : Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: This one-liner tests that the header document can be retrieved +
   correctly, so that the url is joignale. It uses the WLP module. This can be +
   used for quick and dirty monitoring.

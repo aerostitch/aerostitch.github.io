@@ -1,8 +1,8 @@
 Some CSS tips
 =============
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-28 : Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: Some tips about CSS that I want to keep track of. 
 :keywords: CSS, margin, padding, collapsing, alignment
 

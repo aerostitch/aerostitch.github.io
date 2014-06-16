@@ -1,8 +1,8 @@
 Prime number detection
 ======================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-25 : Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: A one-liner that returns "Prime" if the number given in output +
   is a prime number. If not, it returns nothing.
 :keywords: perl, oneliner, prime, number, check

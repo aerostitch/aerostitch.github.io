@@ -1,8 +1,8 @@
 Encode and decode using quoted-printable in perl
 ================================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-24 : Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: One-liners to encode and decode input strings or text files +
   using the "quoted-printable" (aka: qp) format.
 :keywords: perl, one-liner, qp, quoted-printable, encode, decode

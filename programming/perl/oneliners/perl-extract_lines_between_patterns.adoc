@@ -1,8 +1,8 @@
 Extract lines between 2 specific patterns
 =========================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-19: Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: A perl one-liner to extract  lines between 2 given patterns +
   including the lines where the pattern stands.
 :keywords: perl, oneliner, extract, regex, regular expression, pattern

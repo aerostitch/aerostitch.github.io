@@ -1,8 +1,8 @@
 dos2unix and mac2unix as Perl one-liners
 ========================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-17: Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: The equivalent of the dos2unix and mac2unix file conversion +
  commands, written in one line using Perl!
 :keywords: perl, dos2unix, linux, command-line, regex, regular expression, +

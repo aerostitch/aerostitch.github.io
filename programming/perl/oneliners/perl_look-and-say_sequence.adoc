@@ -1,8 +1,8 @@
 The look-and-say sequence using a perl one-liner
 ================================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-25 : Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: Displays the begining of the look-and-say sequence until the +
   line is more than 64 characters.
 :keywords: perl, oneliner, John Conway

@@ -1,8 +1,8 @@
 Expdp or rman on an NFS mount point in AIX
 ==========================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.1, 2013-10-10: Adding forgotten prerequisites
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: This document describes how to do datapump exports and rman +
   backups on NFS mount points on AIX. It mainly describes how to correct +
   ORA-01580 and ORA-27054 errors.

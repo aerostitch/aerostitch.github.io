@@ -2,7 +2,7 @@ Packaging tips for debian
 =========================
 Joseph Herlant
 v1.0.0, 2014-03-13 : Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description:  These are links to several interesting documents about Debian +
   packaging
 :keywords: Debian, .deb, sbuild, pbuilder, cowbuilder, packaging, +

@@ -1,8 +1,8 @@
 Add line numbers while printing a file line nl command
 ======================================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-19: Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: Perl one-liners to print out the line numbers at the begining of +
   each lines while printing the line. 
 :keywords: perl, oneliner, extract, regex, regular expression, pattern

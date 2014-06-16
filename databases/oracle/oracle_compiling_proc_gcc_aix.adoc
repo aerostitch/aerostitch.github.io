@@ -1,8 +1,8 @@
 Compiling a pro*C file with GCC on AIX
 ======================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-11-27: Initial revision
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: This procedure explains how to compile a sample pro*C +
   Oracle file using gcc on an AIX 64bits operating system.
 :keywords: Oracle, Pro*C, proc, gcc, AIX

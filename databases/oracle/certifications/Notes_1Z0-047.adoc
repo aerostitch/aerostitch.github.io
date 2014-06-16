@@ -1,8 +1,8 @@
 Notes for exam 1Z0-047
 ======================
-Joseph HERLANT
+Joseph Herlant
 v1.0.2, 2013-10-19 : changing a part of the intruduction warning
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: This document is regrouping my personal notes I took while revising for the +
   1Z0-047 Oracle certification exam.
 :keywords: Oracle, Certified, Expert, SQL, Certification, exam, 1Z0-047

@@ -1,8 +1,8 @@
 Converting numbers between octal, decimal, hexadecimal and binary formats
 =========================================================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-25 : Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: Converting octal numbers to decimal and the opposite. Same for +
   conversion of numbers in hexadecimal and binary formats.
 :keywords: perl, oneliner, decimal, octal, hexadecimal, binary, conversion

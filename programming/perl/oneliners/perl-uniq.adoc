@@ -1,8 +1,8 @@
 "uniq" command by lines and by columns using perl one-liners
 ============================================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-10: Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: Rewriting the uniq shell command and going a little further with +
   perl one-liners
 :keywords: perl, oneliner, uniq, shell, bash

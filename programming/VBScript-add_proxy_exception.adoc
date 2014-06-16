@@ -2,7 +2,7 @@ Adding proxy exception to IE using VBScript
 ===========================================
 Joseph Herlant
 v1.0.0, 2014-03-25 : Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: This script adds one or more proxy +
   exception(s) for IE at the begining of the ProxyOverride +
   registery key if it does not already exists. IE must be +

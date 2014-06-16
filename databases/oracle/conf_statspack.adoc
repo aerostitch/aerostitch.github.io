@@ -1,8 +1,8 @@
 Installing and configuring Statspack
 ====================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-11-05 : Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: This post is about installation and configuration of Statspack +
   reports, the AWR's ancestor which has the advantage to be free of charge and +
   available in all editions of Oracle since Oracle Database 8i. Yes, even if a +

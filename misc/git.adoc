@@ -1,8 +1,8 @@
 Some git tips
 =============
-Joseph HERLANT
+Joseph Herlant
 v1.0.3, 2014-03-16: Adding a way to delete a tag
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: Here you'll find some stuffs I found to be kind of cool or some +
   things that I usually forget about it. For example, how to edit commits +
   history or what does rebase do.
@@ -67,10 +67,10 @@ Which will output something like this:
 
 .....
 $ git log --pretty=format:"%h (%ad) [%an] - %s"
-e89195d (Sat Oct 26 20:25:21 2013 +0200) [Joseph HERLANT] - Adding a tip on asciidoc using utf-8 titles
-4c666c1 (Fri Oct 25 12:54:59 2013 +0200) [Joseph HERLANT] - Adding perl helpers for converting numbers
-d13b046 (Fri Oct 25 11:32:01 2013 +0200) [Joseph HERLANT] - Adding some stuffs to do
-60a2477 (Fri Oct 25 11:24:55 2013 +0200) [Joseph HERLANT] - Adding other perl one-liners
+e89195d (Sat Oct 26 20:25:21 2013 +0200) [Joseph Herlant] - Adding a tip on asciidoc using utf-8 titles
+4c666c1 (Fri Oct 25 12:54:59 2013 +0200) [Joseph Herlant] - Adding perl helpers for converting numbers
+d13b046 (Fri Oct 25 11:32:01 2013 +0200) [Joseph Herlant] - Adding some stuffs to do
+60a2477 (Fri Oct 25 11:24:55 2013 +0200) [Joseph Herlant] - Adding other perl one-liners
 .....
 
 Or even add graphs to get branching graphs!

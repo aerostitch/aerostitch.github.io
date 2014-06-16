@@ -1,8 +1,8 @@
 Extract paragraphs containing a specific pattern
 ================================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-19: Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: A perl one-liner to extract a given pattern to extract the +
   paragraphs containing a given pattern.
 :keywords: perl, oneliner, extract, regex, regular expression, pattern

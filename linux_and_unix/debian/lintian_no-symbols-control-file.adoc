@@ -1,8 +1,8 @@
 Lintiani: Get rid of the no-symbols-control-file info
 =====================================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2014-03-06 : Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: When packaging a C or C++ library, you sometimes have to face a
   lintian complaining about "no-symbols-control-file". This tutorial will help
   you to get correct this.

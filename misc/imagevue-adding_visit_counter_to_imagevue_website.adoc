@@ -1,8 +1,8 @@
 Adding a counter of visits on an imagevue based website
 =======================================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.1, 2013-10-09: Tiny updates
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: This document explains how to easily add a counter for counting +
   visitors surfing on your website when using the 'imagevue' website builder.
 :keywords: website, blog, gallery, generator, imagevue, visit, counter

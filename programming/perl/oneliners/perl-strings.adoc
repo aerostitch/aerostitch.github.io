@@ -1,8 +1,8 @@
 The "strings" command using a perl one-liner
 ============================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-22 : Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: Rewriting the strings linux command that returns every human +
   readable strings in a binary that are longer than 4 characters.
 :keywords: perl, oneliner, strings

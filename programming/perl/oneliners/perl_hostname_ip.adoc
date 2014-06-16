@@ -1,8 +1,8 @@
 DNS translations using perl
 ===========================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-24 : Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: One-liners to do DNS conversion
 :keywords: perl, oneliner, DNS, hostname, ip
 

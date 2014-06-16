@@ -1,8 +1,8 @@
 Lines present in different files (examples for 2 or 3)
 =====================================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-19: Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: A perl one-liner to extract lines common to 2 or 3 files.
 :keywords: perl, oneliner, extract
 

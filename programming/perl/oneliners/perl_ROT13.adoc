@@ -1,8 +1,8 @@
 Encoding and decoding using ROT13 cipher in perl
 ================================================
-Joseph HERLANT
+Joseph Herlant
 v1.0.0, 2013-10-24 : Initial version
-:Author Initials: Joseph HERLANT
+:Author Initials: Joseph Herlant
 :description: ROT13 is an example of the Caesar cipher. It is indeed a simple +
   substution of the letters by the letter 13 letters after in the alphaber. +
   This is what this regexp in this one-liner do here!
