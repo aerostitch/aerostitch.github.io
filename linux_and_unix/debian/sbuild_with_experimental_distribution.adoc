@@ -1,0 +1,202 @@
+Building with sbuild for the experimental distribution
+======================================================
+Joseph Herlant
+v1.0.0, 2014-06-21 : Initial version
+:Author Initials: Joseph Herlant
+:description: This short tutorial explains how to build a package using sbuild
+  for the experimental distribution.
+:keywords: sbuild, debian, experimental
+
+/////
+Comments
+/////
+
+Introduction
+------------
+
+Experimental distribution is not a complete distribution, so you can't specify
+it when you create an sbuild chroot. I didn't find a complete documentation on
+how to do that so here's mine based on my own experience.
+
+For more informations about the experimental repository, see:
+https://wiki.debian.org/DebianExperimental
+
+Creating chroot
+---------------
+
+In my configuration, I had already a sbuild environment configured for unstable.
+For more informations about how to configurei a basic sbuild environement, see:
+https://wiki.debian.org/sbuild
+
+So, first add a new chroot with a tarball named experimental-$arch and with
+"unstable" as target.
+
+[source, shell]
+-----
+sudo sbuild-createchroot \ 
+  --make-sbuild-tarball=/var/lib/sbuild/experimental-amd64.tar.gz \
+  unstable `mktemp -d` http://ftp.debian.org/debian
+-----
+
+Now, you need to change the distribution in the chroot configuration file. Those
+files are located in "/etc/schroot/chroot.d/" directory. Edit each until you
+find the right one (the one with the "file" field having the name you gave to
+the tarball in the creation command).
+
+Mine was:
+
+-----
+$ cat /etc/schroot/chroot.d/unstable-amd64-sbuild-i6snHD
+[unstable-amd64-sbuild]
+type=file
+description=Debian unstable/amd64 autobuilder
+file=/var/lib/sbuild/experimental-amd64.tar.gz
+groups=root,sbuild
+root-groups=root,sbuild
+-----
+
+Edit it and replace the "unstable" sentences with "experimental". You can do it
+with the following command (replacing the file name with yours:
+
+[source, shell]
+-----
+sudo sed 's/unstable/experimental/g' -i /etc/schroot/chroot.d/unstable-amd64-sbuild-i6snHD
+-----
+
+You can also change the name of the file for a more explicit one:
+
+[source, shell]
+-----
+sudo mv /etc/schroot/chroot.d/unstable-amd64-sbuild-i6snHD /etc/schroot/chroot.d/experimental-amd64-sbuild-i6snHD
+-----
+
+Now the file you changed should look like this:
+
+-----
+$ cat /etc/schroot/chroot.d/experimental-amd64-sbuild-i6snHD
+[experimental-amd64-sbuild]
+type=file
+description=Debian experimental/amd64 autobuilder
+file=/var/lib/sbuild/experimental-amd64.tar.gz
+groups=root,sbuild
+root-groups=root,sbuild
+-----
+
+Configuring your chroot for experimental
+----------------------------------------
+
+First, to find your chroot, you have to use the `schroot -l | grep sbuild`
+command. This should display something like:
+
+-----
+$ schroot -l | grep sbuild
+chroot:experimental-amd64-sbuild
+chroot:unstable-amd64-sbuild
+source:experimental-amd64-sbuild
+source:unstable-amd64-sbuild
+-----
+
+When you use the "source:$distribution-$architecture-sbuild", all the changes
+you make to the chroot while editing it with `sbuild-shell` are *saved* on exit.
+
+When you use the "chroot:$distribution-$architecture-sbuild", all the changes
+you make to the chroot while editing it with `sbuild-shell` are *lost* on exit.
+
+So here you need to make the experimental repository available in the chroot and
+you need it saved for further usage. Here we will ad the experimental repo to
+the newly created /etc/apt/sources.list.d/experimental.list file, the pin the
+unstable distribution to a higher priority to ensure the build environment will
+be able to find a package and pin the experimental distribution to a lower one
+(doing the other way should not work - at least it didn't for me). Which gives:
+
+-----
+$ sudo sbuild-shell source:experimental-amd64-sbuild
+I: /bin/sh
+# cat /etc/apt/sources.list
+deb http://ftp.debian.org/debian unstable main
+deb-src http://ftp.debian.org/debian unstable main
+# ls -l /etc/apt/sources.list.d
+total 0
+# ls -l /etc/apt/preferences*
+total 0
+# echo "deb http://ftp.debian.org/debian experimental main" > /etc/apt/sources.list.d/experimental.list
+# echo "deb-src http://ftp.debian.org/debian experimental main" >> /etc/apt/sources.list.d/experimental.list
+# echo "Package: *\nPin: release a=unstable\nPin-Priority:900" > /etc/apt/preferences.d/unstable.pref
+# echo "Package: *\nPin: release a=experimental\nPin-Priority:800" > /etc/apt/preferences.d/experimental.pref
+# exit
+-----
+
+Then update your chroot (this does `apt-get update`, `apt-get dist-upgrade`,
+`apt-get clean`, `apt-get autoclean` and `apt-get autoremove`):
+
+[source, shell]
+-----
+sudo sbuild-update -udcar experimental-amd64-sbuild
+-----
+
+Now that you have an environment configured, you should backup your tarball:
+
+[source, shell]
+-----
+sudo cp /var/lib/sbuild/experimental-amd64.tar.gz /var/lib/sbuild/experimental-amd64.tar.gz.clean
+-----
+
+Building your package
+---------------------
+
+If you want, you can test your chroot as a sandbox (when exiting this shell all
+your changes will be lost) using:
+
+[source, shell]
+-----
+sudo sbuild-shell chroot:experimental-amd64-sbuild
+-----
+
+Before building your package with sbuild, there's one last thing you need to do:
+install all the dependencies needed by your package that are *AVAILABLE* in the
+experimental repository (not only the one whose version is needed to be at least
+the experimental version). You need to do that in your chroot and ensure that
+the changes are saved. but first, *you should ensure that you made a backup of
+the chroot tarball* as explained in the previous step.
+
+You don't need to install the dependencies of your package that are only
+available in the unstable repository.
+
+In my case, the dependencies that needed to be at least the version matching
+experimental were only gnome-common and libcanberra-dev, but other dependencies
+of my package were available in the experimental repository, so I needed to
+install them also. Which gave (don't forget the *-t experimental* in the `apt-get
+-t experimental install ...` command!):
+
+-----
+$ sudo sbuild-shell source:experimental-amd64-sbuild
+# apt-get -t experimental install gnome-common libcanberra-dev libglib2.0-dev libgnome-desktop-3-dev libgstreamer1.0-dev libupower-glib-dev
+# exit
+-----
+
+Then ensure the chroot is up-to-date using:
+
+[source, shell]
+-----
+sudo sbuild-update -udcar experimental-amd64-sbuild
+-----
+
+And now you can build your package!
+
+[source, shell]
+-----
+cd /path/to/my/package/source
+sbuild -d experimental -c experimental-amd64-sbuild
+-----
+
+Cleaning up the chroot
+----------------------
+
+When you're done with this package, don't forget to revert your changes made by
+the previous step in the experimental chroot by copying the clean tarball back:
+
+[source, shell]
+-----
+sudo cp /var/lib/sbuild/experimental-amd64.tar.gz.clean /var/lib/sbuild/experimental-amd64.tar.gz
+-----
+
