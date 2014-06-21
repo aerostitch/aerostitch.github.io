@@ -1,7 +1,7 @@
 Some git tips
 =============
 Joseph Herlant
-v1.0.3, 2014-03-16: Adding a way to delete a tag
+v1.0.4, 2014-06-21: Adding the --rebase option to the git pull
 :Author Initials: Joseph Herlant
 :description: Here you'll find some stuffs I found to be kind of cool or some +
   things that I usually forget about it. For example, how to edit commits +
@@ -11,6 +11,7 @@ v1.0.3, 2014-03-16: Adding a way to delete a tag
 
 /////
 :revinfo:
+v1.0.3, 2014-03-16: Adding a way to delete a tag
 v1.0.2, 2013-11-06: Forgot a git fetch in submodules
 v1.0.1, 2013-10-27: Adding archiving
 v1.0.0, 2013-10-26: Initial version
@@ -106,6 +107,15 @@ pollute the logs with merges):
 -----
 git fetch
 git rebase
+-----
+
+NOTE: In the latest versions of git, you also can (and should because it's
+quicker) just use the `--rebase` option of the `git pull` command which 
+does a `git fetch` followed by a `git rebase` instead of the usual `git fetch`
+and `git merge` combination.
+
+-----
+git pull --rebase
 -----
 
 
