@@ -10,9 +10,17 @@ v1.0.4, 2014-06-23: Initial version
 :revinfo:
 /////
 
+
 When the file is backed up using the default netbackup policy, use
 the following command line on the master server. (Use the
 `-S master_server` switch if you want to query another master server)
+
+[source, shell]
+-----
+bplist -l -R /path/to/the/file.extension
+-----
+
+You also can filter by netbackup client:
 
 [source, shell]
 -----
