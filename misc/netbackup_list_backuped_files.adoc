@@ -27,6 +27,13 @@ You also can filter by netbackup client:
 bplist -C netbackup_client_used_for_backup -l -R /path/to/the/file.extension
 -----
 
+If you want to filter by start date, use the `-s mm/dd/yyyy  [HH:MM:SS]` switch:
+
+[source, shell]
+-----
+bplist -C netbackup_client_used_for_backup  -s 06/20/2014 -l -R /path/to/the/file.extension
+-----
+
 If your file has not been backed up using the default policy, use:
 
 [source, shell]
