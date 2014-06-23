@@ -1,0 +1,27 @@
+List the backup of a file done with Netbackup
+=============================================
+Joseph Herlant
+v1.0.4, 2014-06-23: Initial version
+:Author Initials: Joseph Herlant
+:description: Command line to list backuped files on a netbackup server.
+:keywords: netbackup, bplist, command-line
+
+/////
+:revinfo:
+/////
+
+When the file is backed up using the default netbackup policy, use
+the following command line on the master server. (Use the
+`-S master_server` switch if you want to query another master server)
+
+[source, shell]
+-----
+bplist -C netbackup_client_used_for_backup -l -R /path/to/the/file.extension
+-----
+
+If your file has not been backed up using the default policy, use:
+
+[source, shell]
+-----
+bplist -C netbackup_client_used_for_backup -t netbackup_policy -l -R /path/to/the/file.extension
+-----
