@@ -11,6 +11,7 @@ v1.0.1, 2014-06-23: Adding official documentation & jnbSA reference.
 v1.0.0, 2014-06-23: Initial version
 /////
 
+IMPORTANT: The user that does the bplist must have rights to list the files of the target server!
 
 When the file is backed up using the default netbackup policy, use
 the following command line on the master server. (Use the
