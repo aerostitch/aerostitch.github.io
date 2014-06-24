@@ -1,7 +1,7 @@
 List the backup of a file done with Netbackup
 =============================================
 Joseph Herlant
-v1.0.1, 2014-06-23: Adding official documentation reference.
+v1.0.1, 2014-06-23: Adding official documentation & jnbSA reference.
 :Author Initials: Joseph Herlant
 :description: Command line to list backuped files on a netbackup server.
 :keywords: netbackup, bplist, command-line
@@ -46,3 +46,6 @@ bplist -C netbackup_client_used_for_backup -t netbackup_policy -b -l -R /path/to
 
 
 More details at: http://www.symantec.com/business/support/index?page=content&id=HOWTO72662
+
+NOTE: to have the graphical version, use the `/usr/openv/netbackup/bin/jnbSA` application from the netbackup server.
+
