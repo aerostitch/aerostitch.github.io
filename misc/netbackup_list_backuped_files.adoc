@@ -1,13 +1,14 @@
 List the backup of a file done with Netbackup
 =============================================
 Joseph Herlant
-v1.0.4, 2014-06-23: Initial version
+v1.0.1, 2014-06-23: Adding official documentation reference.
 :Author Initials: Joseph Herlant
 :description: Command line to list backuped files on a netbackup server.
 :keywords: netbackup, bplist, command-line
 
 /////
 :revinfo:
+v1.0.0, 2014-06-23: Initial version
 /////
 
 
@@ -15,28 +16,33 @@ When the file is backed up using the default netbackup policy, use
 the following command line on the master server. (Use the
 `-S master_server` switch if you want to query another master server)
 
+`-b` switch is for displaying the date of the backup rather than the date of the file modification.
+
 [source, shell]
 -----
-bplist -l -R /path/to/the/file.extension
+bplist -b -l -R /path/to/the/file.extension
 -----
 
 You also can filter by netbackup client:
 
 [source, shell]
 -----
-bplist -C netbackup_client_used_for_backup -l -R /path/to/the/file.extension
+bplist -C netbackup_client_used_for_backup -b -l -R /path/to/the/file.extension
 -----
 
 If you want to filter by start date, use the `-s mm/dd/yyyy  [HH:MM:SS]` switch:
 
 [source, shell]
 -----
-bplist -C netbackup_client_used_for_backup  -s 06/20/2014 -l -R /path/to/the/file.extension
+bplist -C netbackup_client_used_for_backup  -s 06/20/2014 -b -l -R /path/to/the/file.extension
 -----
 
-If your file has not been backed up using the default policy, use:
+To filter by policy, use:
 
 [source, shell]
 -----
-bplist -C netbackup_client_used_for_backup -t netbackup_policy -l -R /path/to/the/file.extension
+bplist -C netbackup_client_used_for_backup -t netbackup_policy -b -l -R /path/to/the/file.extension
 -----
+
+
+More details at: http://www.symantec.com/business/support/index?page=content&id=HOWTO72662
