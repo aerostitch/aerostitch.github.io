@@ -1,0 +1,32 @@
+Getting log_mode of multiple databases 
+====================================
+Joseph Herlant
+v1.0.0, 2014-06-25 : Initial version
+:Author Initials: Joseph Herlant
+:description: This little shell schript will provide the log_mode of all the +
+  databases of the linux/Unix server that are registered in the oratab file.
+:keywords: Oracle, database, log_mode, archivelog, noarchivelog, script
+
+
+It is supposed to be running in an sh environement.
+
+Tested on AIX, Solaris and linux.
+
+-----
+for oratab_path in /etc/oratab /var/opt/oracle/oratab ; do
+if [ -f $oratab_path ]; then
+  export ORAENV_ASK=NO
+  for instance in $(awk -F: '/^[^#]/ {print $1}' $oratab_path); do
+    export ORACLE_SID=$instance
+    . oraenv > /dev/null
+    ${ORACLE_HOME}/bin/sqlplus -S /nolog << __EOF__
+connect / as sysdba;
+set head off;
+set lines 200 pages 1024;
+select name, log_mode from v\$database;
+__EOF__
+  done
+  export ORAENV_ASK=YES
+fi
+done | grep -v '^\s*$' | sort
+-----
