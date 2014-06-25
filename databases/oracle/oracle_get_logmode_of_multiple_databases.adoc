@@ -8,7 +8,7 @@ v1.0.0, 2014-06-25 : Initial version
 :keywords: Oracle, database, log_mode, archivelog, noarchivelog, script
 
 
-It is supposed to be running in an sh environement.
+It is supposed to be running in an sh or ksh environement.
 
 Tested on AIX, Solaris and linux.
 
