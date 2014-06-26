@@ -3,7 +3,8 @@ Basic login script in sqlplus
 Joseph Herlant
 v1.0.0, 2014-05-03 : Initial version
 :Author Initials: Joseph Herlant
-:description: This document shows a simple [g]login.sql script to use with sqlplus
+:description: This document shows a simple [g]login.sql script to use with +
+  sqlplus.
 :keywords: sqlplus, glogin.sql, login.sql
 
 Example of `login.sql` file in the directory from where you execute sqlplus 

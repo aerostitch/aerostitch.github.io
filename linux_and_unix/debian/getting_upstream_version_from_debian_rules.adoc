@@ -3,7 +3,7 @@ How to get the upstream version from debian/rules file
 Joseph Herlant
 v1.0.0, 2014-06-16 : Initial version
 :Author Initials: Joseph Herlant
-:description: This tells you how to get the package's upstream from the
+:description: This tells you how to get the package's upstream from the +
   debian/rules file of a package.
 :keywords: debian, packaging, rules, makefile, cdbs, debhelpers
 

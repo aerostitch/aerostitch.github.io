@@ -3,7 +3,7 @@ Building with sbuild for the experimental distribution
 Joseph Herlant
 v1.0.0, 2014-06-21 : Initial version
 :Author Initials: Joseph Herlant
-:description: This short tutorial explains how to build a package using sbuild
+:description: This short tutorial explains how to build a package using sbuild +
   for the experimental distribution.
 :keywords: sbuild, debian, experimental
 

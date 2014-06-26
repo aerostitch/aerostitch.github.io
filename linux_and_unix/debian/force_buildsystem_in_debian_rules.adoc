@@ -3,8 +3,8 @@ Forcing CMake in debian/rules
 Joseph Herlant
 v1.0.0, 2014-06-22 : Initial version
 :Author Initials: Joseph Herlant
-:description: Explaining how to force a buildsystem in a debian/rules file using
-  dh.
+:description: Explaining how to force a buildsystem in a debian/rules file +
+  using dh.
 :keywords: dh, debian, rules, cmake, buildsystem
 
 /////

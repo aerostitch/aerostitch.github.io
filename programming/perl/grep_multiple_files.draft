@@ -3,7 +3,7 @@ Grep a string in files using Perl
 Joseph HERLANT
 v1.0.0, 2014-05-13 : Initial version
 :Author Initials: Joseph HERLANT
-:description: Simple example of how to find strings or pattern in all
+:description: Simple example of how to find strings or pattern in all +
  the files in one or more directories using Perl. 
 :keywords: Perl, find, File::Find, directory, subdirectories, grep
 

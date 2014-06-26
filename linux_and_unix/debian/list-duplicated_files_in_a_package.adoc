@@ -3,7 +3,7 @@ Finding udplicated files in a package
 Joseph Herlant
 v1.0.0, 2014-06-16 : Initial version
 :Author Initials: Joseph Herlant
-:description: This page describes how to easily find duplicated files in a
+:description: This page describes how to easily find duplicated files in a +
   debian package.
 :keywords: duplicates, linux, debian
 
