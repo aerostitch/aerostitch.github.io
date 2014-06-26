@@ -4,11 +4,11 @@ Joseph Herlant
 v1.0.0, 2014-06-26 : Initial version
 :Author Initials: Joseph Herlant
 :description: A simple example of how to combine pools +
-  and queues of the multiprocessing python module.
+  and queues using the multiprocessing python module.
 :keywords: Python, multiprocessing, queue, pool
 
 
-This script show how to simply use a queue to delegate tasks
+This script shows how to simply use a queue to delegate tasks
 to a pool of workers using the multiprocessing module.
 
 [source, python]
@@ -81,6 +81,4 @@ if __name__ == '__main__':
     # Waits a bit for the child processes to do some work
     # because when the parent exits, childs are terminated.
     sleep(5)
-    
-
 -----
