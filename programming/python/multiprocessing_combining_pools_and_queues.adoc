@@ -1,4 +1,4 @@
-Combining Queues and Pools of processes unsing the multiprocessing module
+Combining Queues and Pools of processes using the multiprocessing module
 =========================================================================
 Joseph Herlant
 v1.0.0, 2014-06-26 : Initial version
