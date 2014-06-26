@@ -49,9 +49,10 @@ class Testing_mp(object):
         This function writes some messages to the queue.
         """
         for i in range(50):
-            # print "Adding Hello!\n"
             self.add_to_queue("First item for loop %d" % i)
-            # print the_queue.__dict__
+            # Not really needed, just to show that some elements can be added
+            # to the queue whenever you want!
+            sleep(random()*2)
             self.add_to_queue("Second item for loop %d" % i)
             # Not really needed, just to show that some elements can be added
             # to the queue whenever you want!
