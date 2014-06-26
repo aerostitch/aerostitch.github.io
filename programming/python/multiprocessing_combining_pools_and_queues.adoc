@@ -1,5 +1,5 @@
-Combining Queues and Pools of the multiprocessing module
-========================================================
+Combining Queues and Pools of processes unsing the multiprocessing module
+=========================================================================
 Joseph Herlant
 v1.0.0, 2014-06-26 : Initial version
 :Author Initials: Joseph Herlant
@@ -72,6 +72,7 @@ class Testing_mp(object):
             # simulate some random length operations
             sleep(random())
 
+# Warning from Python documentation:
 # Functionality within this package requires that the __main__ module be 
 # importable by the children. This means that some examples, such as the 
 # multiprocessing.Pool examples will not work in the interactive interpreter.
