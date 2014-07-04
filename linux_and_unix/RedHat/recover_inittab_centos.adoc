@@ -1,0 +1,20 @@
+How to simply recover a lost inittab file
+=========================================
+Joseph Herlant
+v1.0.0, 2014-07-04 : Initial version
+:Author Initials: Joseph Herlant
+:description: How to recover a lost /etc/inittab file on Centos or RHEL?
+:keywords: RHEL, Centos, RedHat, inittab, initscripts
+
+If you've lost your `/etc/inittab` in a RHEL or Centos environement, recovering
+it is quite easy:
+
+ 1. Boot to single user mode (eg: add "single" at the end of your grub options)
+ 2. Mount your cdrom or iso to /mnt (`mount /dev/cdrom /mnt`)
+ 3. Find which package provides inittab (`yum -q --whatprovides /etc/inittab`)
+ 4. Go to /mnt and find your rpm package which is actually "initscripts"
+ (`find /mnt -name '*initscripts*'`)
+ 5. Reinstall your the corresponding package which, for centos 6.5 is located
+ in the `Packages` subdirectory if the cd.
+ (`rpm -Uv --force /mnt/Packages/initscripts-*.rpm`)
+
