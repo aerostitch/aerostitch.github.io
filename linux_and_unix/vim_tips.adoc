@@ -1,0 +1,96 @@
+Some vim tips
+=============
+Joseph Herlant
+v1.0.0, 2014-07-03 : Initial version
+:Author Initials: Joseph Herlant
+:description: Some tips for the vim text editor.
+:keywords: linux, vi, vim, text editor
+
+/////
+Comments
+/////
+
+
+Usefull vim command-line options
+--------------------------------
+
+Opening a file in read-only mode:
+
+-----
+vim -R my_file.ext
+-----
+
+Opening a file in binary mode:
+
+-----
+vim -b my_file.ext
+-----
+
+Opening a file and jumping directly to the last line:
+
+-----
+vim + my_file.ext
+-----
+
+Opening a file and jumping directly to the 50th line:
+
+-----
+vim +50 my_file.ext
+-----
+
+Usefull editor commands
+-----------------------
+
+ * `$` -> Go to the end of the line
+ * `H` -> Go to the 1st line of the script (H is for Head)
+ * `L` or `G` -> Go to the last line of the script (L is for Last)
+ * `A` -> Appends after the last letter of the current line
+ * `a` -> Appends after the cursor
+ * `i` -> Insert at the current cursor position
+ * `r` -> Replaces the current character by the one you will type after the `r`
+ * `R` -> Insert mode but for replacing current characters instead of adding new
+ until the Escape key is pressed
+ * `o` -> Opens a new line below the current in insert mode
+ * `O` -> Opens a new line above the current in insert mode
+ * `dd` -> Deletes current line
+ * `d5d` -> Delets the next 5 lines including current
+ * `x` -> Deletes character under the cursor
+ * `D` -> Deletes characters from the cursor to the end of the line
+ * `C` -> Deletes characters from the cursor to the end of the line and switch
+ to insert mode (C is for Change)
+ * `yy` -> Copies the current line (Y is for Yanks)
+ * `y6y` -> Copies the next 5 lines including the current one
+ * `p` -> Pastes the yanked lines
+ * `^` -> Moves to the 1st non-blank column of the current line
+ * `%` -> Moves to associated (), {}, []
+ * `w` or `W`-> Goes to the next word
+ * `wd` -> Deletes the current word starting from cursor position
+ * `wc` -> Changes current word (like a `wd` and a `i` combination)
+ * `m` + a char -> sets a mark
+ * `y'` + a marked char -> Copies lines from the current position to the given
+ mark (eg: `me` move to another position and do a `y'e` to copy the current block)
+ * `d'` + a marked char -> deletes lines from the current position to the mark
+ * `u` -> Undoes the last action
+ * `U` -> Undoes all commands on one line
+ * Ctrl + `r` -> Redo the last undone action
+ * `J` -> Joins the current line and the next one including a space between them
+ and setting cursor position to the joining point.
+ * `:3` -> Goes to the 3rd line
+
+ * `/` -> Searches forward in the document
+ * `?` -> Searches backward in the document
+
+ * `:set list` -> Prints escape characters (end of lines, etc.)
+ * `:set nu` -> Prints line numbers as 1st column
+ * `:set sm` -> Show matching { or ( as ) or } is typed
+
+ * `:!'cmd'` -> Executes 'cmd' command in a shell prompt
+ * `:r filename` -> Copies (reads) filename contents after cursor  in the
+ current document
+ * `:3,15w filename` -> Saves lines 3 to 15 to filename
+ * `:3,15w >> filename` -> Appends lines 3 to 15 to the end of filename
+ * `:e` -> Discards all unsaved changes and continue editing
+ * `:.=` -> Shows current line number
+ * `:=` -> Shows number of lines in file
+
+ * Ctrl + `v` -> Enters visual block mode
