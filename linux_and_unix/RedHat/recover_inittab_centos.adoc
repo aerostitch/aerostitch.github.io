@@ -16,5 +16,5 @@ it is quite easy:
  (`find /mnt -name '*initscripts*'`)
  5. Reinstall your the corresponding package which, for centos 6.5 is located
  in the `Packages` subdirectory if the cd.
- (`rpm -Uv --force /mnt/Packages/initscripts-*.rpm`)
+ (`rpm -Uv --noscripts --force /mnt/Packages/initscripts-*.rpm`)
 
