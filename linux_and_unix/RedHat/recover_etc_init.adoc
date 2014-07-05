@@ -10,14 +10,14 @@ v1.0.0, 2014-07-05 : Initial version
 
  1. Add "selinux=0 init=/bin/sh" at the end of the "kernel" line in grub
  2. Check if /var/lock is writable via `touch /var/lock/toto`
- 3. If not, remount the filesystem in writable mode via `mount -o rw,remount /` 
+ 3. If not, remount the filesystem in writable mode via `mount -o rw,remount /`
  (if your /var is on /...)
  4. Check which packages are to be reinstalled via `yum -C provides /etc/init*`
  5. Mount installation CD via `mount -t iso9660 /dev/sr0 /mnt`
  5. Reinstall upstart and initscripts via
  `rpm -Uv --force --noscripts /mnt/Packages/upstart*.rpm /mnt/Packages/initscripts*.rpm`
  6. Verify there is no more missing files from the packages via
- `rpm -V initscripts` and `rpm -V upstart`
+ `rpm -V initscripts` and `rpm -V upstart` and `rpm -Vf /etc/init`
  7. Unmount CD, eject disk and reboot (unsing `reboot -f`)
 
 NOTE: You can also boot from the cdrom rescue mode.

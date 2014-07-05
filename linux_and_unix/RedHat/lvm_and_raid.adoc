@@ -1,0 +1,171 @@
+LVM and RAID management commands on RedHat based distributions
+==============================================================
+Joseph Herlant
+v1.0.0, 2014-07-05 : Initial version
+:Author Initials: Joseph Herlant
+:description: These are various LVM-related commands you can find on a RedHat +
+ based Linux distribution. Logical RAID management commands are also included.
+:keywords: LVM, RedHat, Centos, logical volume, volume group, physical
+
+
+Raw commands
+------------
+
+.Basic display commands:
+ * `pvs` -> Displays physical volumes
+ * `vgs` -> Displays volume groups
+ * `lvs` -> Displays logical volumes
+
+.Detailed display commands:
+ * `pvdisplay` -> Displays detailed informations on PV
+ * `vgdisplay` -> Displays detailed informations on VG
+ * `lvdisplay` -> Displays detailed informations on LV
+
+.Creating new ones:
+ * `pvcreate` -> Initializes a disk or partition for use by LVM
+ * `vgcreate` -> Creates a VG
+ * `lvcreate` -> Creates a LV inside a VG
+
+.Extension and resize commands:
+ * `vgextend` -> Adds one or more PV to an existing VG
+ * `vgreduce` -> Removes one or mode PV to an existing VG
+ * `lvextend` -> Increases the size of an existing LV
+ * `lvresize` -> Changes the size of an existing LV
+ * `lvreduce` -> Reduces the size of an existing LV
+
+.Deletion commands:
+ * `pvremove` -> Removes LVM labels from a PV
+ * `vgremove` -> Removes a VG definition
+ * `lvremove` -> Removes a LV definition
+
+.Changing attributes of a LVM layer:
+ * `pvchange`
+ * `vgchange`
+ * `lvchange`
+
+.Other manipulations:
+ * `lvrename` -> renames a LV
+ * `pvmove` -> Migrates data from one PV to another
+
+Real life cases
+---------------
+
+Creating a new VG
+~~~~~~~~~~~~~~~~~
+
+Here we are creating a VG called vg_test and containing a 3GB LV named lv_test
+on the sdb disk.
+
+[source, shell]
+-----
+# PV initialisation and verification
+pvcreate /dev/sdb
+pvdisplay /dev/sdb
+# VG creation and verification
+vgcreate vg_test /dev/sdb
+vgdisplay -v vg_test
+# LV creation and check
+lvcreate -L 3G -n lv_test vg_test
+vgdisplay -v vg_test
+lvdisplay vg_test/lv_test
+-----
+
+
+Removing PV from a VG
+~~~~~~~~~~~~~~~~~~~~~
+
+For mode fun, let's consider that a LV named VolGroup/lv_root containing / has
+been allocated to 2 disks (/dev/sda and /dev/sdb) and that you want to remove
+one of the PV (/dev/sdb).
+
+1st things first, as it is a root partition, you should boot on e CD in rescue
+mode but *don't mount the current system in /mnt/sysimage*. 
+
+[source, shell]
+-----
+# Then activate all known volumes in the system if not automatically done with
+vgchange -a y
+# Then check the unmounted LV
+e2fsck -f /dev/VolGroup/lv_root
+# Then resize the FS to the minimum size possible
+resize2fs -M /dev/VolGroup/lv_root
+# Then reduce the LV
+lvreduce -r -L 5G VolGroup/lv_root
+# The mode the data from /dev/sdb1 to /dev/sda2
+pvmode /dev/sdb1 /dev/sda2
+# Then remove the PV from the VG
+vgreduce VolGroup /dev/sdb1
+# Then extend the LV and FS of the max available extents
+lvextend -r -l +100%FREE VolGroup/lv_root
+-----
+
+Then reboot, removing the rescue CD.
+
+NOTE: You can use the `-r` option of `lvreduce` to resize both the FS and the LV
+together. This will call resize2fs automatically.
+
+Logical RAID
+------------
+
+You'll need the mdadm package here.
+
+Creating a logical /dev/md0 RAID 5 device from /dev/sdb1, /dev/sdc1 and
+/dev/sdd1 partitions.
+
+[source, shell]
+-----
+# First verify that all the partitions have been created using fdisk
+fdisk -l
+# If not, create them
+fdisk /dev/sdd
+# Finally create the RAID
+mdadm -Cv /dev/md0 --level=5 -n3 /dev/sdb1 /dev/sdc1 /dev/sdd1
+-----
+
+Then verify the status using
+
+[source, shell]
+-----
+# First verify the md number taken by the RAID
+cat /proc/mdstat
+# Then get the details
+mdadm -D /dev/md0
+-----
+
+Fail a given disk of md0 using
+
+[source, shell]
+-----
+mdadm /dev/md0 -f /dev/sdb1
+-----
+
+Remove a disk from the array using
+
+[source, shell]
+-----
+mdadm /dev/md0 -r /dev/sdb1
+-----
+
+Or combine them using: `mdadm -v /dev/md0 -f /dev/sdb1 -r /dev/sdb1`
+
+Add a disk in the array using
+
+[source, shell]
+-----
+mdadm /dev/md0 -a /dev/sdb1
+-----
+
+Add then the RAID device to LVM using the classic `pvcreate /dev/md0`
+
+Drop the array using
+
+[source, shell]
+-----
+# First switch array offline after removing from LVM using pvremove
+mdadm -vS /dev/md0
+# Then remove the device (seems not needed on Centos 6.5)
+mdadm --remove /dev/md0
+-----
+
+WARNING: `/boot` can only use basic partitions or logical RAID 1 because GRUB
+don't undestand the other types of RAID.
