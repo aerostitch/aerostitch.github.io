@@ -1,0 +1,48 @@
+Cheasheet about encrypted filesystems
+=====================================
+Joseph Herlant
+v1.0.0, 2014-07-06 : Initial version
+:Author Initials: Joseph Herlant
+:description: Some stuffs I keep as a reminder about LUKS encryption.
+:keywords: LUKS, linux, encryption, FileSystem
+
+About algorithms
+----------------
+
+In RHEL6, the default is AES-128 encryption with 256SHA hashing.
+But the following ciphers are also available: AES, Twofish, Serpent, Cast5,
+Cast6
+
+Creating an encrypted partition
+-------------------------------
+
+[source, shell]
+-----
+# First, boot into runlevel 1
+telinit 1
+# Then ensure your partition is unmounted (here /dev/sdb1)
+mount | grep /dev/sdb1
+# Then fill your partition with /dev/urandom
+dd if=/dev/urandom of=/dev/sdb1
+# Initialize your partition in LUKS Format and setup initial key
+cryptsetup -v -y luksFormat /dev/sdb1
+# Open LUKS partition and map a name on it (in /dev/mapper/)
+cryptsetup luksOpen /dev/sdb1 encr_sdb1
+# Formation device and mount it as a classic FS
+mkfs -t ext4 /dev/mapper/encr_sdb1
+mkdir -p /media/encrypted_disks/test_sdb1
+mount /dev/mapper/encr_sdb1 /media/encrypted_disks/test_sdb1
+# Add your filesystem to crypttab and fstab (if you want automatic mount on boot)
+echo -e "encr_sdb1 \t /dev/sdb1 \t none" >> /etc/crypttab
+echo -e "/dev/mapper/encr_sdb1 \t /media/encrypted_disks/test_sdb1 \t ext4 \t defaults \t 1 \t 2" >> /etc/fstab
+# Restore default SELinux security context and reboot
+/sbin/restorecon -v -R /media/encrypted_disks/test_sdb1
+shutdown -r now
+-----
+
+Check that a device is a LUKS device:
+
+[source, shell]
+-----
+cryptsetup isLuks /dev/sdb1 && echo "Encrypted device"
+-----
