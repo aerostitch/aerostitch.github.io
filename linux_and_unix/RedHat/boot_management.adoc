@@ -1,0 +1,37 @@
+Managing startup services and runlevels
+=======================================
+Joseph Herlant
+v1.0.0, 2014-07-04 : Initial version
+:Author Initials: Joseph Herlant
+:description: Some notes about managing services on startup with RedHat-based +
+ distributions and playing with runlevels.
+:keywords: boot, Red Hat, runlevel
+
+
+`runlevel` and `who -r` commands display the current and previous runlevels.
+
+Using `shutdown now` with no other option specified actually brings system in
+maintenance mode.
+
+Scripts in `/etc/rc.d/rc[1-6].d` directories are played in the following order:
+
+ * K* first, then S*
+ * Then the order is defined by the number and then the alphabetical order of
+ the given service name
+
+`chkconfig servicename off` disables servicename service on boot.
+
+`chkconfig --level 5 servicename off` disables servicename service only for
+runlevel 5.
+
+To change runlevel, use `telinit` or `init` followed by the runelevel number.
+Example, to switch to runlevel 1, use:
+
+[source, shell]
+-----
+telinit 1
+-----
+
+The difference between `init` and `telinit` is that init is the parent of all
+processes and if it's called by a user process, it automatically calls `telinit`
+with the same arguments it has been given.

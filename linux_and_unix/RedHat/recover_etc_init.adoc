@@ -13,7 +13,7 @@ v1.0.0, 2014-07-05 : Initial version
  3. If not, remount the filesystem in writable mode via `mount -o rw,remount /`
  (if your /var is on /...)
  4. Check which packages are to be reinstalled via `yum -C provides /etc/init*`
- 5. Mount installation CD via `mount -t iso9660 /dev/sr0 /mnt`
+ 5. Mount installation CD via `mount -r -t iso9660 /dev/sr0 /mnt`
  5. Reinstall upstart and initscripts via
  `rpm -Uv --force --noscripts /mnt/Packages/upstart*.rpm /mnt/Packages/initscripts*.rpm`
  6. Verify there is no more missing files from the packages via

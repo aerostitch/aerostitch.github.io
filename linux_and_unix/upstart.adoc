@@ -1,0 +1,25 @@
+Notes about Upstart
+===================
+Joseph Herlant
+v1.0.0, 2014-07-04 : Initial version
+:Author Initials: Joseph Herlant
+:description: Some tips about the Upstart boot system
+:keywords: boot, Upstart
+
+
+Since RHEL 6 or in Ubuntu, SysV has been replaced by Upstart.
+
+Each process to start with Upstart is a job, is defined in the `/etc/init`
+directory. And each event is now in the `/etc/event.d` directory.
+
+With Upstart, `/etc/inittab` is now deprecated and used only to look it to know
+the initdefault parameter.
+
+The `/etc/rc.d/rc` script is not called directly anymore. Upstart only looks
+into the conf files placed in the `/etc/init` directory. `/etc/rc.d/rc` is now
+called via the `/etc/init/rc.conf` file.
+
+You use the `initctl` command to interact with Upstart jobs quite similarly to
+the `service` command. For example, use `initctl list` to list Upstart jobs.
+
+

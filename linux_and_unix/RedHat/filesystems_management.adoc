@@ -1,0 +1,58 @@
+Filesystems management commands
+===============================
+Joseph Herlant
+v1.0.0, 2014-07-06 : Initial version
+:Author Initials: Joseph Herlant
+:description: A cheasheet about classic filesystem managemement commands.
+:keywords: swap, partition, filesystem, FS, label
+
+Basic filesystems operations
+----------------------------
+
+`fdisk -l` and `parted -l` are equivalent but RedHat recommends using `parted`
+over `fdisk`.
+
+To force the kernel to reread the partition table, use the `partprobe` command.
+
+To convert a filesystem from ext2 to ext3, use
+
+[source, shell]
+-----
+umount /dev/sdb1
+tune2fs -j /dev/sdb1
+-----
+
+To create a swap partition on /dev/sdc1
+
+[source, shell]
+-----
+mkswap /dev/sdc1
+swapon /dev/sdc1
+# Last, verify
+swapon -s
+-----
+
+Label a filesystem using
+
+[source, shell]
+-----
+e2label /dev/sdb1 my_label
+# Then display the label to verify:
+e2label /dev/sdb1
+# And find the FS from the label
+findfs LABEL=my_label
+-----
+
+Get usefull infos about disks with the `blkid` command. Example:
+
+-----
+# blkid
+/dev/sda1: UUID="635f2b90-bb93-4221-88e2-5194a004aa52" TYPE="ext4" 
+/dev/sda2: UUID="4DmlAr-kOMB-0s17-GSxv-t0Sl-3fF2-Vqo6Of" TYPE="LVM2_member" 
+/dev/sdc1: UUID="187b93af-44c4-a179-06ae-2b7759e32205" UUID_SUB="71fee50b-4b50-4ce7-7a97-901b9a76e079" LABEL="RHEL01:0" TYPE="linux_raid_member" 
+/dev/sdb1: UUID="187b93af-44c4-a179-06ae-2b7759e32205" UUID_SUB="f164f4f6-d529-3d8e-93ef-ee6d5ae1870b" LABEL="RHEL01:0" TYPE="linux_raid_member" 
+/dev/sdd1: UUID="187b93af-44c4-a179-06ae-2b7759e32205" UUID_SUB="bbf9f4a1-1cca-5b1a-df4f-9eabe1e72a32" LABEL="RHEL01:0" TYPE="linux_raid_member" 
+/dev/mapper/VolGroup-lv_root: UUID="50eb8ea8-3c11-46c3-80c5-68a57075170a" TYPE="ext4" 
+/dev/mapper/VolGroup-lv_swap: UUID="c9ca22fc-fe01-4ee9-8607-66892a4aa794" TYPE="swap" 
+-----
+

@@ -1,0 +1,26 @@
+Some notes about the GRUB bootloader
+====================================
+Joseph Herlant
+v1.0.0, 2014-07-04 : Initial version
+:Author Initials: Joseph Herlant
+:description: Notes about the GRUB bootloader
+:keywords: bootloader, GRUB
+
+
+In GRUB's configuration file, the `(hd0, 0)` means to load the bootloader from
+the partition 0 of the hd0 drive.
+
+In RHEL6, the GRUB version used is 0.97 so you can still edit the
+`/boot/grub/grub.conf` manually unlinke GRUB 2.0.
+
+From GRUB's command line:
+
+ * To find the partition containing GRUB's conf file: `find /grub/grub.conf` or
+ simply `root`
+ * To reinstall grub on hd0: `setup (hd0)`
+
+To boot in maintenance mode (`init 1` / `telinit 1` equivalent) from the grub
+menu, just append `single` to the boot arguments to the "kernel" line.
+
+
+

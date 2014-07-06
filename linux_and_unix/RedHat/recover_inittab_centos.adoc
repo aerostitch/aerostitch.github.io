@@ -10,7 +10,7 @@ If you've lost your `/etc/inittab` in a RHEL or Centos environement, recovering
 it is quite easy:
 
  1. Boot to single user mode (eg: add "single" at the end of your grub options)
- 2. Mount your cdrom or iso to /mnt (`mount /dev/cdrom /mnt`)
+ 2. Mount your cdrom or iso to /mnt (`mount -r /dev/cdrom /mnt`)
  3. Find which package provides inittab (`yum -q --whatprovides /etc/inittab`)
  4. Go to /mnt and find your rpm package which is actually "initscripts"
  (`find /mnt -name '*initscripts*'`)

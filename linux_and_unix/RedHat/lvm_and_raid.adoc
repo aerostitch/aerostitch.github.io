@@ -68,6 +68,8 @@ vgdisplay -v vg_test
 lvcreate -L 3G -n lv_test vg_test
 vgdisplay -v vg_test
 lvdisplay vg_test/lv_test
+# Then create your FS as usual
+mkfs -t ext4 /dev/vg_test/lv_test
 -----
 
 
