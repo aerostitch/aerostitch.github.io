@@ -68,6 +68,7 @@ License: GPL
 Packager: $USER
 Group: Development/Tools
 Source: %{name}.tar.gz
+BuildRequires: coreutils
 BuildRoot: ${RPM_ROOT_DIR}/tmp/%{name}-%{version}
 
 %description
@@ -87,7 +88,10 @@ cp $BINARY_FILE "%{buildroot}/opt/${PKG_NAME}/"
 /opt/${PKG_NAME}/hello_world
 
 %clean
-rm -rf "%{buildroot}/*"
+%if "%{clean}" != ""
+  rm -rf %{_topdir}/BUILD/%{name}
+  [ $(basename %{buildroot}) == "%{name}-%{version}-%{release}.%{_target_cpu}" ] && rm -rf %{buildroot}
+%endif
 
 %post
 chmod 755 -R /opt/${PKG_NAME}
