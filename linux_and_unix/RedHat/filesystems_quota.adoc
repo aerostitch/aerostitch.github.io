@@ -42,3 +42,8 @@ mount -o usrquota,grpquota,remount /fs
 
 Quota size are given in blocks of 1KB by default but you can specify units as
 usual (K, M, G and T).
+
+If you don't specify a grace period, the soft limit is the max. When a grace
+period is defined, the soft period acts like an alarm as long as the grace
+period is not reached and the hard limit is the max limit you can hit before
+the grace period expires.

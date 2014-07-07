@@ -1,0 +1,48 @@
+Autofs notes
+============
+Joseph Herlant
+v1.0.0, 2014-07-07 : Initial version
+:Author Initials: Joseph Herlant
+:description: Cheasheet about autofs
+:keywords: autofs, file system
+
+Autofs
+------
+
+Naturally, you need the `autofs` package installed to play with autofs!
+
+.Files used with autofs:
+ * `/etc/sysconfig/autofs` -> Autofs daemon main confiugration file.
+ * `/etc/auto.master` -> Main map file containing the mounts mapping and
+ references to other map files you may want to use.
+
+.Types of autofs maps:
+ * `special` -> Allows group mount without defining each one.
+ * `direct` -> Specifies mount point with absolute path.
+ * `indirect` -> Used to mount resources under a common parent directory.
+
+Their lines syntax are: `[pathname] [mount options] [location]`
+
+.`/etc/auto.master` file example:
+-----
+/misc     /etc/auto.misc     # Indirect maps file for parent directory "/misc"
+/-        /etc/auto.direct   # Direct maps file
+/net      -host              # Special map to mount all NFS resources found to subdirectories of the /net directory
++auto.master
+-----
+
+.Here the `/etc/auto.misc` file could look like:
+-----
+cd         -fstype=iso9660,ro,nosuid,nodev  :/dev/cdrom    # Will be /misc/cd
+linux      -ro,soft,intr                    ftp.example.org:/pub/linux
+removable  -fstype=ext2                     :/dev/hdd
+*          -rw,sync                         &:/home/&      # Mounts user home directories from all available NFS Servers
+-----
+
+.And the `/etc/auto.direct` file could look like:
+-----
+/usr/data  -rw,sync       myserver:/data01/data
+-----
+
+When modifying the autofs files, you should reload the service configuration
+(`service autofs reload`)
