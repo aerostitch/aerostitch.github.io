@@ -1,0 +1,60 @@
+Channel bonding interface manipulation
+======================================
+Joseph Herlant
+v1.0.0, 2014-07-07 : Initial version
+:Author Initials: Joseph Herlant
+:description: Cheatsheet about channel bonding interfaces.
+:keywords: bonding, network
+
+Creating a network bond
+-----------------------
+
+The network bond over `eth1` and `eth2` will be called `bond0` in our example.
+
+.If not already done, enable the bonding kernel bonding for bond0:
+[source, shell]
+-----
+echo "alias bond0 bonding" >> /etc/modprobe.d/bond.conf
+-----
+
+.Create the ifcfg-bond0 file:
+[source, shell]
+-----
+cat << __EOF__ > /etc/sysconfig/network-scripts/ifcfg-bond0
+DEVICE=bond0
+IPADDR=10.0.0.100
+NETMASK=255.255.255.0
+ONBOOT=yes
+BOOTPROTO=none
+USERCTL=no
+BONDING_OPTS="primary=eth1"
+__EOF__
+-----
+
+.Configure eth1 and eth2 to work with bond0:
+[source, shell]
+-----
+# eth1
+cat << __EOF__ > /etc/sysconfig/network-scripts/ifcfg-eth1
+DEVICE=eth1
+BOOTPROTO=none
+ONBOOT=yes
+MASTER=bond0
+SLAVE=yes
+USERCTL=no
+__EOF__
+# eth2
+cat << __EOF__ > /etc/sysconfig/network-scripts/ifcfg-eth2
+DEVICE=eth2
+BOOTPROTO=none
+ONBOOT=yes
+MASTER=bond0
+SLAVE=yes
+USERCTL=no
+__EOF__
+-----
+
+Finally, restart the network service (`service network restart`) or just put
+bond0 interface up (`ifup bond0`) and check that `ifconfig` returns 
+`UP BROADCAST RUNNING SLAVE` for the slaves and `UP BROADCAST RUNNING MASTER`
+for the bond0 interface.
