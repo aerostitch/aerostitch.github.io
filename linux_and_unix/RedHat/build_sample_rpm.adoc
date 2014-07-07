@@ -1,0 +1,109 @@
+Tips to quickly build a simple RPM package
+==========================================
+Joseph Herlant
+v1.0.0, 2014-07-07 : Initial version
+:Author Initials: Joseph Herlant
+:description: How to quickly create a simple RPM package.
+:keywords: RPM, package
+
+.The directory structure needed for a RPM is:
+ * SOURCES -> Source code of the package to build
+ * SPECS -> Spec file(s) (one per RPM)
+ * BUILD -> Compilation space
+ * tmp -> A temporarybuild directory
+ * RPMS -> Final binary RPM(s) will be located there
+ * SRPMS -> Final source RPM(s) will be located there
+
+In the following example, we are using a basic C file that prints "Hello
+world!". The name of our package will be "dummy_package" and the provided binary
+output will be "hello_world". So as prerequisites, we create the C file in a
+temporary FS and create a tarball with it:
+
+[source, shell]
+-----
+PKG_NAME=dummy_package
+PKG_DIR=/tmp/${PKG_NAME}
+mkdir -p ${PKG_DIR}
+
+cat << __EOF__ > ${PKG_DIR}/hello_world.c
+#include <stdio.h>
+int main(){
+  printf("Hello world!\n");
+  return 0;
+}
+__EOF__
+
+pushd ${PKG_DIR}/..
+tar czvf ${PKG_NAME}.tar.gz ${PKG_NAME}
+popd
+-----
+
+[source, shell]
+-----
+#!/bin/sh
+# This scripts creates and build a simple RPM package
+#
+# Prerequisites:
+#  - rpm-build, make and gcc (as it's a c file) packages must be installed
+#
+
+# Holds the name of the root directory containing the necessary structure to
+# build RPM packages.
+RPM_ROOT_DIR=~/rpm_factory
+PKG_NAME=dummy_package
+PKG_TAR=/tmp/${PKG_NAME}.tar.gz
+BINARY_FILE=hello_world
+# Recreate the root directory and its structure if necessary
+mkdir -p ${RPM_ROOT_DIR}/{SOURCES,BUILD,RPMS,SPECS,SRPMS,tmp}
+pushd  $RPM_ROOT_DIR
+cp ${PKG_TAR} ${RPM_ROOT_DIR}/SOURCES/
+
+# Creating a basic spec file
+cat << __EOF__ > ${RPM_ROOT_DIR}/SPECS/${PKG_NAME}.spec
+Summary: This package is a sample for quickly build dummy RPM package.
+Name: $PKG_NAME
+Version: 1.0
+Release: 0
+License: GPL
+Packager: $USER
+Group: Development/Tools
+Source: %{name}.tar.gz
+BuildRoot: ${RPM_ROOT_DIR}/tmp/%{name}-%{version}
+
+%description
+%{summary}
+
+%prep
+%setup -n ${PKG_NAME}
+
+%build
+make $BINARY_FILE
+
+%install
+mkdir -p "%{buildroot}/opt/${PKG_NAME}"
+cp $BINARY_FILE "%{buildroot}/opt/${PKG_NAME}/"
+
+%files
+/opt/${PKG_NAME}/hello_world
+
+%clean
+rm -rf "%{buildroot}/*"
+
+%post
+chmod 755 -R /opt/${PKG_NAME}
+__EOF__
+
+rpmbuild -v -bb --define "_topdir ${RPM_ROOT_DIR}" SPECS/${PKG_NAME}.spec
+popd
+-----
+
+Now play with the package. For example:
+
+[source, shell]
+-----
+sudo rpm -ivh ~/rpm_factory/RPMS/x86_64/dummy_package-1.0-0.x86_64.rpm
+rpm -ql dummy_package
+/opt/dummy_package/hello_world
+sudo rpm -e dummy_package
+-----
+
