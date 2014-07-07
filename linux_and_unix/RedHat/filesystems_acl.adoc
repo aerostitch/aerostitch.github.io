@@ -1,0 +1,26 @@
+ACL file systems permissions enhancement
+========================================
+Joseph Herlant
+v1.0.0, 2014-07-07 : Initial version
+:Author Initials: Joseph Herlant
+:description: Playing with the acl package
+:keywords: Red Hat, file system, acl, permission
+
+ACL
+---
+
+First of all, to play with acl, you must naturally have the `acl` package
+installed.
+
+Then, to use acl on a file system, you must mount it with the `acl` options
+(either in the `/etc/fstab` or temporarly using `mount -o acl,remount /fs`).
+
+.Commands to use
+ * `getfacl file01` -> Displays the acl of file01
+ * `setfacl -m u:user01:rx file01` -> Allows user01 to read and execute file01
+ even if he's neither owner nor in the right group (and that other have no
+ permission on the file). `-R` can be used for recursive grant.
+ * `setfacl -x g:group01 file01` -> Removes the acl permission sets to the
+ group01 group on file01.
+ * `setfacl -b file01` -> Blanks (removes all) acl permissions (fall back to
+ classic permissions mode).

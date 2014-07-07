@@ -1,0 +1,44 @@
+Simple quota management notes
+=============================
+Joseph Herlant
+v1.0.0, 2014-07-06 : Initial version
+:Author Initials: Joseph Herlant
+:description: Basics to know about quota management
+:keywords: Filesystem, quota, FS
+
+To play with quotas on RHEL, you will need to use the `quota` package.
+
+To check your kernel supports quotas, use:
+
+[source, shell]
+-----
+grep -i config_quota /boot/config-$(uname -r)
+-----
+
+ * `quotaon /fs` -> To turn quota tracking on for the "/fs" file system
+ (Automatically called on boot, but can't be called until the quota files
+ are created in the root directory of the quota file system.)
+ * `quotaoff -a` -> To turn quota tracking off for all file systems
+ * `edquota -u user01` -> To edit the quota of user01
+ * `edquota -up user01 user02 user03` -> To duplicate the quota configuration
+ of user01 to user02 and user03
+ * `edquota -t` -> To edit the grace period of quota on each file system
+ * `quota` -> To display disk quota and usage
+ * `repquota -ugav` -> To summarize user and groups quotas for all (non-NFS)
+ file systems
+ * `quotacheck -ugm -a` -> To scan all filesystems for disk usage, create, check and
+ repair quota files
+
+To specify that a filesystem is using quota, add `usrquota` and `grpquota`
+options to the filesystem in /etc/fstab. This will be taken in account at next
+mount (you can use the `mount -o remount /fs` to force a remount).
+
+Or, to activate quota in a temporary way, just use:
+
+[source, shell]
+-----
+mount -o usrquota,grpquota,remount /fs
+-----
+
+Quota size are given in blocks of 1KB by default but you can specify units as
+usual (K, M, G and T).
