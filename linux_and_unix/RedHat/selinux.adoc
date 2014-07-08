@@ -1,0 +1,67 @@
+SElinux cheatsheet
+==================
+Joseph Herlant
+v1.0.0, 2014-07-08 : Initial version
+:Author Initials: Joseph Herlant
+:description: This is my personnal cheatsheet about SELinux
+:keywords: Red Hat, selinux, security
+
+
+Basics
+------
+
+Main SELinux configuration file: `/etc/selinux/config`. Changing values in that
+file requires a reboot.
+
+.Enforcing levels:
+ * `disabled` -> SELinux is fully disabled
+ * `permissive` -> Logs warnings and actions that would be done by enforcing but
+ do not block anything.
+ * `enforcing` -> SELinux policies are fully applied
+
+.SELinux contexts:
+ * Users:
+   - `unconfined_u` -> unprotected user
+   - `system_u` -> system user
+   - `user_u` -> normal user
+ * Role:
+   - `object_r` -> file
+   - `system_r` -> users and processes
+   - `unconfined_r` -> unprotected file or process
+ * Domain:
+   - `unconfined_t` -> unprotected file or process (most common)
+   - `etc_t` -> for files in /etc directory
+   - plenty of other domains are available
+
+.SELinux logs in:
+ * `/var/log/audit/audit.log` -> main log file
+ * `/var/log/messages` -> Should normally also contain SELinux denials
+
+Usefull commands
+----------------
+
+ * `ls -Z` -> Shows security context of the files
+ * `ps -ZC atd` -> Shows security context of the atd process
+ * `sestatus` -> Shows selinux status
+ * `getenforce` -> Shows the current enforcing level
+ * `setenforce` -> Temporarly changes selinux enforcing level (do not touches
+ /etc/selinux/config file
+ * `chcon -vu user_u install.log` -> Changes the security context of the
+ install.log file to users_u user context
+ * `restorecon -Rv /tftpboot` -> Resets the original context of the /tftpboot
+ directory (or set it correctly when you change the tftpboot service directory)
+ * `sestatus -b` or `getsebool -a` -> Shows all boolean options for services
+ * `semanage boolean -l` -> Provides the same info as previos command but with a
+ description (provided by the policycoreutils-python package)
+ * `setsebool -P tftp_use_nfs=1` -> Enables permanently this boolean
+ * `matchpathcon /my/path` -> Gets the default SELinux security context for the
+ specified path from the file contexts configuration
+ * `sealert` is also a very usefull command when it comes to troubleshooting.
+
+From GRUB
+---------
+
+To disable selinux from grub, add `selinux=0` to the kernel line.
+
+To let selinux be loaded, but setting enforcing to permissive, add
+`enforcing=0` to the kernel line.
