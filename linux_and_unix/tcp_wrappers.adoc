@@ -1,0 +1,29 @@
+TCP wrappers
+============
+Joseph Herlant
+v1.0.0, 2014-07-08 : Initial version
+:Author Initials: Joseph Herlant
+:description: Memo about tcp wrappers
+:keywords: Security, TCP wrappers, hosts.allow, hosts.deny
+
+On RHEL, the `tcp_wrappers` is the package that provides TCP wrappers
+capability.
+
+IMPORTANT: TCP wrappers looks first in `/etc/hosts.allow` then in
+`/etc/hosts.deny`. If not found in either, it allows the access.
+
+/etc/hosts.(allow|deny) files format is: `daemon_list : client_list`.
+
+The `client_list` field could be either a hostname or an IP, or one of the
+following:
+
+ * `ALL` -> For all networks
+ * `LOCAL` -> For the local network
+ * `EXCEPT` -> To exclude a particular user or client
+ * `KNOWN` -> All hosts that can be resolved by the system
+ * `UNKNOWN` -> All hosts that can't be resolved by the system
+ * `PARANOID` -> Case when the forward and reverse lookup IP address don't match
+
+Example: `sshd : 192.168.1. EXCEPT 192.168.1.30`
+
+TCP wrappers usually log into `/var/log/secure`.
