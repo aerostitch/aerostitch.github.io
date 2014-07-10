@@ -84,7 +84,7 @@ You need to set the SELinux `allow_ftpd_anon_write` boolean set to `on`:
 
 [source, shell]
 -----
-setsebool allow_ftpd_anon_write on
+setsebool -P allow_ftpd_anon_write on
 # And check that the change is correctly made
 getsebool allow_ftpd_anon_write
 -----
