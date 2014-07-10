@@ -1,0 +1,128 @@
+Configure vsftpd for anonymous write access in /var/ftp/pub
+===========================================================
+Joseph Herlant
+v1.0.0, 2014-07-09 : Initial version
+:Author Initials: Joseph Herlant
+:description: This is how you can configure write access to a directory in +
+ a RHEL, Centos or a Fedora.
+:keywords: RHEL, Fedora, Centos, SELinux, iptables, ftp, vsftp
+
+Today we'll see how to simply configure write access to anonymous user in
+/var/ftp/pub on a Red Hat based system via FTP using the vsftpd daemon.
+
+NOTE: This procedure has been tested on Centos 6.5.
+
+Prerequisites
+-------------
+
+First of all, you need to install vsftpd:
+
+[source, shell]
+-----
+yum -y install vsftpd
+-----
+
+Configure vsftpd
+----------------
+
+Edit youd vsftpd configuration file (`/etc/vsftpd/vsftpd.conf`) and ensure the
+following lines are uncommented and with these values:
+
+-----
+anonymous_enable=YES
+anon_upload_enable=YES
+-----
+
+And if you want your anonymous users to create directories, you will need:
+
+-----
+anon_mkdir_write_enable=YES
+-----
+
+Don't forget to restart the service after any modification:
+
+[source, shell]
+-----
+service vsftpd restart
+-----
+
+Configure iptables
+------------------
+
+To be able to use passive mode in FTP, you will need to make iptables load the
+`ip_conntrack_ftp` module. To do this, edit the `IPTABLES_MODULES` in the
+`/etc/sysconfig/iptables-config` file. If no other modules were already loaded,
+the line should finally look like:
+
+-----
+IPTABLES_MODULES="ip_conntrack_ftp"
+-----
+
+Then enable the correct ports (you will certainly limit the sources here for
+security. This example is the simplest):
+
+[source, shell]
+-----
+iptables -I INPUT 5 -p tcp -m tcp --dport 20 -j ACCEPT
+iptables -I INPUT 5 -p tcp -m tcp --dport 21 -j ACCEPT
+# Check that the REJECT rule is AFTER the rules you just added
+iptables -L -n
+# Save and restart
+service iptables save
+service iptables restart
+# And check again that everything is ok
+iptables -L -n -v
+-----
+
+Configure SELinux
+-----------------
+
+Ensure your SELinux is set to Enforcing (`getenforce`). If not, you should
+consider set it to Enforcing for more security (`setenforce 1`).
+
+You need to set the SELinux `allow_ftpd_anon_write` boolean set to `on`:
+
+[source, shell]
+-----
+setsebool allow_ftpd_anon_write on
+# And check that the change is correctly made
+getsebool allow_ftpd_anon_write
+-----
+
+Configure permissions
+---------------------
+
+The directory we want the anonymous user to put files in is `/var/ftp/pub` so we
+will ensure that this folder is writable by the ftp user:
+
+-----
+chown ftp /var/ftp/pub
+chown 755 /var/ftp/pub
+-----
+
+And you should ensure that your dirctory has the correct SELinux context:
+
+[source, shell]
+-----
+chcon -t public_content_rw_t /var/www/pub
+# And check that it's correctly applied:
+ll -Z
+-----
+
+IMPORTANT: Check in /etc/hosts.allow and /etc/hosts.deny that your client is
+authorized by tcp wrappers to connect to the service.
+
+Now test from any client that should be able to connect and put a dummy_file
+(I'm using lftp here but you could test with any other client).
+
+[source, shell]
+-----
+lftp my_ftp_server
+cd pub
+put dummy_file
+bye
+-----
+
+NOTE: Now our server is up and running, but you should certainly consider
+digging a little more about security on FTP servers to have a fully secure
+server.

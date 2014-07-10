@@ -30,6 +30,9 @@ iptables -L -n -v
 iptables --table nat -L -n -v
 -----
 
+IMPORTANT: You will need to add the line `net.ipv4.ip_forward = 1` or change it to
+that value in `/etc/sysctl.conf` to be sure the change will survive next reboot!
+
 Now you have to put this host's eth1 IP as a gateway in your
 `/etc/sysconfig/network` file if not already done (if there's already a gateway,
 replace it!):
