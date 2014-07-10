@@ -1,0 +1,79 @@
+Making iptables log with Centos
+===============================
+Joseph Herlant
+v1.0.0, 2014-07-10 : Initial version
+:Author Initials: Joseph Herlant
+:description: This document describes how to make iptables log rejected or +
+ dropped traffic (depending on your last rule in the given chain) on Centos +
+ (or other Red Hat based distributions).
+:keywords: iptables, rsyslog, Centos, RedHat
+
+
+NOTE: Here is the example with the INPUT chain having the last rule to be a
+REJECT one. But this procedure can apply with last rule to be a DROP and to the
+other chains (OUTPUT or FORWARD).
+
+Check which one is your REJECT rule on the INPUT chain:
+
+[source, shell]
+-----
+iptables -L INPUT
+-----
+
+Let's assume that our REJECT final rule is **#10** in our case, so enter the
+following command to make iptables log any packets that will be rejected to the
+rsyslog daemon (The LOG rule should be the *last BEFORE* the REJECT/DROP rule):
+
+[source, shell]
+-----
+iptables -I INPUT 10 -j LOG --log-level 4
+-----
+
+If you want your logs to be easily recognizeable, you can use the `--log-prefix`
+option like this:
+
+[source, shell]
+-----
+iptables -I INPUT 10 -j LOG --log-level 4 --log-prefix "IPTABLES_REJECT: "
+-----
+
+Don't forget to save and restart if you want it to survive to the next service
+restart!
+
+[source, shell]
+-----
+service iptables save
+service iptables restart
+-----
+
+If you want to put the iptables logs into a separate file, use rsyslogd
+filtering capabilities (in this case, you MUST have the `--log-prefix`
+switch mentionned as explained earlier in your iptables LOG rule):
+
+[source, shell]
+-----
+cat << __EOF__ > /etc/rsyslog.d/iptables.conf
+:msg, startswith, "IPTABLES_REJECT: " -/var/log/iptables.log
+&~
+__EOF__
+# Also create the log file with proper permissions
+touch /var/log/iptables.log
+chown root:root /var/log/iptables.log
+chmod 600 /var/log/iptables.log
+# Last force the reload the rsyslog service configuration
+service rsyslog reload
+cat << __EOF__ > /etc/logrotate.d/iptables
+/var/log/iptables.log
+{
+  rotate 7
+  daily
+  missingok
+  notifempty
+  delaycompress
+  compress
+  postrotate
+    /sbin/service rsyslog reload 2>&1 || true
+  endscript
+}
+__EOF__
+-----

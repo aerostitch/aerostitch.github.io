@@ -1,0 +1,25 @@
+Change VSFTP daemon's root directory
+====================================
+Joseph Herlant
+v1.0.0, 2014-07-10 : Initial version
+:Author Initials: Joseph Herlant
+:description: Changing the root directory of the FTP server (the one you use +
+  for anonymous login for example) is quite easy. You just need to change the +
+  home directory of the user.
+:keywords: ftp, vsftpd, Centos, home, user, RHEL, Red Hat
+
+Here we are moving the vsftpd root directory from /var/ftp to /opt/share/ftp.
+Tested on Centos 6.5.
+
+[source, shell]
+-----
+# First, verify that the target directory does not exists
+ll /opt/share/ftp # Should return an error message. If not, move it.
+# Stop vsftpd service
+service vsftpd stop
+# Move the home directory of the user and set the SELinux context
+usermod -m -d /opt/share/ftp
+chcon -t public_content_t /opt/share/ftp
+# Finally restart vsftpd service
+service vsftpd start
+-----
