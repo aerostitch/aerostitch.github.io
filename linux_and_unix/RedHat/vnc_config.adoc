@@ -1,0 +1,105 @@
+Configure an unencrypted vnc server
+===================================
+Joseph Herlant
+v1.0.0, 2014-07-11 : Initial version
+:Author Initials: Joseph Herlant
+:description: How to configure an unencrypted VNC server and to connect to.
+:keywords: Centos, Red Hat, RHEL, Fedora, tigervnc, vnc-server, vncviewer
+
+Introduction
+------------
+
+This procedure has been tested on a CentOS 6.5 environment, so it could differ
+from yours if you're not using the save OS or version.
+
+Here we are installing and configuring a vnc server on a server which IP is:
+192.168.1.10.
+
+As using VNC implies using an X server, you'll need to have and X11 environment
+available. You can install one with `yum groupinstall -y Desktop` which will
+provide you a Gnome Desktop environment.
+
+You will also need to have some users to use VNC with. For this example here, we
+have created the `grumpy` and `sleepy` users (simply using `useradd -m <username>`)
+and changing their password (using `passwd <username>`).
+
+IMPORTANT: This procedure explains how to configure an UNENCRYPTED vncserver.
+For more security in a production environment, you could consider using an ssh
+tunnel to connect to it and so retrict the vnc server to listen only to
+localhost.
+
+Server side installation and configuration
+------------------------------------------
+
+First things first, install the vnc server package:
+
+[source, shell]
+-----
+sudo yum install -y tigervnc-server
+-----
+
+Then configure it by editing the `/etc/sysconfig/vncservers` file which should,
+in the end, look like this:
+
+-----
+VNCSERVERS="1:sleepy 2:grumpy
+VNCSERVERARGS[1]="-geometry 800x600 -nolisten tcp"
+VNCSERVERARGS[2]="-geometry 800x600 -nolisten tcp"
+-----
+
+Then configure iptables to let the ports 5901 and 5902 in our case (if se had a
+3rd one, it would be 5903) listening only on the 192.168.1.0/24 network (if you
+only have one administration gateway, you should think about a more restrictfull
+limitation) as root:
+
+[source, shell]
+-----
+iptables -I INPUT 5 -p tcp -m tcp -m multiport --dports 5901:5902 -s 192.168.1.0/24 -j ACCEPT
+# Don't forget to save and restart
+service iptables save
+service iptables restart
+-----
+
+Then, you need to su to each of your users to set their vnc passwords using the
+`vncpasswd` command, which will create a `$HOME/.vnc/passwd` password file.
+
+[source, shell]
+-----
+sudo su - sleepy
+vncpasswd
+exit
+sudo su - grumpy
+vncpasswd
+exit
+-----
+
+Once it's done, you could start correctly your vncserver service as root:
+
+[source, shell]
+-----
+service vncserver start
+chkconfig vncserver on
+-----
+
+Client side configuration
+-------------------------
+
+On client part, you need to install the vnc client. Here we are using `tigervnc`
+package that provides `vncviewer`, so we'll first install it. Note that you'll
+need and x client for this to work, so if not already done, you'll certainly
+need to do a `yum groupinstall -y Desktop` to get a Gnome.
+
+[source, shell]
+-----
+sudo yum install -y tigervnc
+-----
+
+You now can either use the graphical menu provided (in the "Internet" menu group
+of gnome) or use the command line (you need to set the correct USER to connect 
+vnc configuration) like this:
+
+[source, shell]
+-----
+USER=sleepy vncviewer 192.168.1.10:1
+USER=grumpy vncviewer 192.168.1.10:2
+-----
