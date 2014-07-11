@@ -1,0 +1,19 @@
+Managing crontab permissions
+============================
+Joseph Herlant
+v1.0.0, 2014-07-10 : Initial version
+:Author Initials: Joseph Herlant
+:description: How to allow or deny users to use crontabs.
+:keywords: crontab, crond, cron.deny, cron.allow, Linux
+
+The 2 files used to allow or deny crontabs are: `/etc/cron.allow` and
+`/etc/cron.deny`.
+
+These files are ruled by the following:
+
+ * If `/etc/cron.allow` exists and contains any user login, only these users are
+ allowed. Any other user cannot use crontabs (and `/etc/cron.deny` is ignored).
+ * If `/etc/cron.allow` does not exists or is empty and `/etc/cron.deny` exists,
+ if it's empty, everyone can use crontab, else, everyone but the logins listed
+ in the `/etc/cron.deny` file will not be able to use crontab.
+ 
