@@ -65,3 +65,22 @@ To disable selinux from grub, add `selinux=0` to the kernel line.
 
 To let selinux be loaded, but setting enforcing to permissive, add
 `enforcing=0` to the kernel line.
+
+Troubleshooting
+---------------
+
+The best way to troubleshoot is to install the `setroubleshoot-server` and
+`setroubleshoot-plugins`. Then, each time SELinux blocks something, an alert
+will be created in `/var/log/messages` with the instructions to help you solving
+hte issue and the id to use with `sealert`.
+
+If you are running a graphical environment, you may to consider installing also
+the `setroubleshoot` package which provides a GUI to troubleshoot even more
+easily.
+
+For some really interesting topics about SELinux, consider having a look to the
+Dan Walsh's blog:
+
+http://danwalsh.livejournal.com/7995.html
+
+http://danwalsh.livejournal.com/20931.html
