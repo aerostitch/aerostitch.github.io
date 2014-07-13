@@ -108,7 +108,7 @@ of the host report) to display them:
 
 The RPM is: ganglia-p6-mod_ibmpower-3.6.0-2.aix5.3.ppc.rpm
 
-To change the list of metreics you want to recieve, change the 
+To change the list of metreics you want to receive, change the 
 `/etc/ganglia/conf.d/ibmpower.conf`, commenting out the metreics you're not
 interested in.
 

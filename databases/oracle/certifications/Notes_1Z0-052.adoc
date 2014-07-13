@@ -244,7 +244,7 @@ Listener connection is transient but connection between user process and dispatc
 
 The common queue is shared by all dispatchers. All shared server processes monitor the common queue.
 
-The response queue is specific to the dispatcher that recieved the job (SQL) in the 1st place. Each dispatcher monitors its own response queue.
+The response queue is specific to the dispatcher that received the job (SQL) in the 1st place. Each dispatcher monitors its own response queue.
 
 UGA (user global area) is the equivalent to the PGA in a shared server environment. It resides in the SGA. The difference is that the session stack space that is still outside the SGA. The UGA can be configured manually using the "large_pool" parameter.
 
