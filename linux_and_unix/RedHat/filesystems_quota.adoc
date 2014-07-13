@@ -3,7 +3,7 @@ Simple quota management notes
 Joseph Herlant
 v1.0.0, 2014-07-06 : Initial version
 :Author Initials: Joseph Herlant
-:description: Basics to know about quota management
+:description: Basics to know about quota management.
 :keywords: Filesystem, quota, FS
 
 To play with quotas on RHEL, you will need to use the `quota` package.

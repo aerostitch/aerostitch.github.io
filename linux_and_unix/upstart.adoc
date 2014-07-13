@@ -3,7 +3,7 @@ Notes about Upstart
 Joseph Herlant
 v1.0.0, 2014-07-04 : Initial version
 :Author Initials: Joseph Herlant
-:description: Some tips about the Upstart boot system
+:description: Some tips about the Upstart boot system.
 :keywords: boot, Upstart
 
 

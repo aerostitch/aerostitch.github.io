@@ -3,7 +3,7 @@ Basics examples about the star utility
 Joseph Herlant
 v1.0.0, 2014-07-13 : Initial version
 :Author Initials: Joseph Herlant
-:description: star is an evoluted tar that could take care of ACL set by
+:description: star is an evoluted tar that could take care of ACL set by +
  setfacl.
 :keywords: setfacl, star, tar
 

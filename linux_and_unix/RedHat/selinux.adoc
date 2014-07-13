@@ -3,7 +3,7 @@ SElinux cheatsheet
 Joseph Herlant
 v1.0.0, 2014-07-08 : Initial version
 :Author Initials: Joseph Herlant
-:description: This is my personnal cheatsheet about SELinux
+:description: This is my personnal cheatsheet about SELinux.
 :keywords: Red Hat, selinux, security
 
 

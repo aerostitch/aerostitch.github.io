@@ -3,7 +3,7 @@ TCP wrappers
 Joseph Herlant
 v1.0.0, 2014-07-08 : Initial version
 :Author Initials: Joseph Herlant
-:description: Memo about tcp wrappers
+:description: Memo about tcp wrappers.
 :keywords: Security, TCP wrappers, hosts.allow, hosts.deny
 
 On RHEL, the `tcp_wrappers` is the package that provides TCP wrappers

@@ -3,8 +3,8 @@ Setting up iptables for NAT
 Joseph Herlant
 v1.0.0, 2014-07-08 : Initial version
 :Author Initials: Joseph Herlant
-:description: Set your server as a gateway, using iptables to create NAT rules
- is easy!
+:description: Set your server as a gateway, using iptables to create NAT +
+ rules is easy!
 :keywords: security, iptables, NAT, network address translation
 
 First, remember that on RHEL, iptables config file is `/etc/sysconfig/iptables`

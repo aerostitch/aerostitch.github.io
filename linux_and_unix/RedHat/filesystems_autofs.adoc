@@ -3,7 +3,7 @@ Autofs notes
 Joseph Herlant
 v1.0.0, 2014-07-07 : Initial version
 :Author Initials: Joseph Herlant
-:description: Cheasheet about autofs
+:description: Cheasheet about autofs.
 :keywords: autofs, file system
 
 Autofs

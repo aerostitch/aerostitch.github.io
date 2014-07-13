@@ -3,7 +3,7 @@ Some notes about the GRUB bootloader
 Joseph Herlant
 v1.0.0, 2014-07-04 : Initial version
 :Author Initials: Joseph Herlant
-:description: Notes about the GRUB bootloader
+:description: Notes about the GRUB bootloader.
 :keywords: bootloader, GRUB
 
 

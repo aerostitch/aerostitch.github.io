@@ -3,7 +3,7 @@ ACL file systems permissions enhancement
 Joseph Herlant
 v1.0.0, 2014-07-07 : Initial version
 :Author Initials: Joseph Herlant
-:description: Playing with the acl package
+:description: Playing with the acl package.
 :keywords: Red Hat, file system, acl, permission
 
 ACL
