@@ -1,0 +1,148 @@
+Basics examples about the star utility
+======================================
+Joseph Herlant
+v1.0.0, 2014-07-13 : Initial version
+:Author Initials: Joseph Herlant
+:description: star is an evoluted tar that could take care of ACL set by
+ setfacl.
+:keywords: setfacl, star, tar
+
+
+Preliminary step
+----------------
+
+Here we are preparing our environment: in our homr directory we have 3 files
+that we will use for packing with star:
+
+-----
+# cd
+# ll
+-rw-r--r--.  1 user01 root  9458 Jul  5 07:03 install.log
+-rw-r--r--.  1 root   root  3091 Jul  5 07:02 install.log.syslog
+-rw-r--r--+  1 root   root  9458 Jul 13 05:31 test.log
+# setfacl -n -m u:user01:rw test.log
+# getfacl test.log 
+# file: test.log
+# owner: root
+# group: root
+user::rw-
+user:user01:rw-     #effective:r--
+group::r--
+mask::r--
+-----
+
+Using star without saving ACL
+-----------------------------
+
+This is quite like using tar. To create a regular tar file with tar, you can
+use:
+
+[source, shell]
+-----
+star -c file=test.tar *.log*
+-----
+
+You can list the files in your tarball:
+
+-----
+# star -t file=test.tar -v
+   9458 -rw-r--r--  user01/root Jul  5 07:03 2014 install.log
+   3091 -rw-r--r--  root/root Jul  5 07:02 2014 install.log.syslog
+   9458 -rw-r--r--  root/root Jul 13 05:31 2014 test.log
+star: 3 blocks + 0 bytes (total of 30720 bytes = 30.00k).
+-----
+
+
+[source, shell]
+-----
+star -xp -C /tmp f=~/test.tar
+-----
+
+As you can see it has saved regular premissions
+
+-----
+# ll /tmp
+-rw-r--r--. 1 user01  root     9458 Jul  5 07:03 install.log
+-rw-r--r--. 1 root    root     3091 Jul  5 07:02 install.log.syslog
+-rw-r--r--. 1 root    root     9458 Jul 13 05:31 test.log
+-----
+
+But not ACL
+
+-----
+# getfacl /tmp/test.log 
+getfacl: Removing leading '/' from absolute path names
+# file: tmp/test.log
+# owner: root
+# group: root
+user::rw-
+group::r--
+other::r--
+-----
+
+
+Clean up a bit with a simple `rm -f /tmp/install.log* /tmp/test.log`.
+
+Using star with ACL
+-------------------
+
+This time we will switch the `-acl` flag which will require to force the
+archiver type to `exustar`. This time we change the extension from tar to star
+but that's just a personnal reminder. You could use whatever extension you want:
+
+[source, shell]
+-----
+star -c file=test.star *.log* -acl -artype=exustar
+-----
+
+Now you can see that the archive listing is a bit different from previous
+example:
+
+-----
+# star -t file=test.star -v
+Release     star 1.5 (x86_64-redhat-linux-gnu)
+Archtype    exustar
+Dumpdate    1405244704.648841 (Sun Jul 13 05:45:04 2014)
+Volno       1
+Blocksize   20 records
+   9458 -rw-r--r--  user01/root Jul  5 07:03 2014 install.log
+   3091 -rw-r--r--  root/root Jul  5 07:02 2014 install.log.syslog
+   9458 -rw-r--r--+ root/root Jul 13 05:31 2014 test.log
+star: 3 blocks + 0 bytes (total of 30720 bytes = 30.00k).
+-----
+
+Notice the little *+* on the test.log file that means that it has some ACL
+recorded.
+
+Now extract the files to the /tmp as previously but adding the `-acl` switch to
+make it apply the acl records that were shipped in the tarball:
+
+[source, shell]
+-----
+star -xp -C /tmp f=/root/test.star -acl
+-----
+
+Now you can see that basic permissions are still there
+
+-----
+# ll /tmp
+-rw-r--r--. 1 user01  root     9458 Jul  5 07:03 install.log
+-rw-r--r--. 1 root    root     3091 Jul  5 07:02 install.log.syslog
+-rw-r--r--. 1 root    root     9458 Jul 13 05:31 test.log
+-----
+
+But acl are also still there!
+
+-----
+# getfacl /tmp/test.log 
+getfacl: Removing leading '/' from absolute path names
+# file: tmp/test.log
+# owner: root
+# group: root
+user::rw-
+user:user01:rw-     #effective:r--
+group::r--
+mask::r--
+other::r--
+-----
+

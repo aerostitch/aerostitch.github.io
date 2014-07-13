@@ -22,5 +22,7 @@ From GRUB's command line:
 To boot in maintenance mode (`init 1` / `telinit 1` equivalent) from the grub
 menu, just append `single` to the boot arguments to the "kernel" line.
 
-
+If you are booting by default on runlevel 5 and that you want to reboot in
+runlevel 3, just add " 3" at the end of the kernel line at the grub prompt.
+Tested on Centos.
 
