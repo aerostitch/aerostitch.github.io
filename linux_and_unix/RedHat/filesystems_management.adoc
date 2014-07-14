@@ -32,7 +32,7 @@ swapon /dev/sdc1
 swapon -s
 -----
 
-Label a filesystem using
+Label a filesystem using:
 
 [source, shell]
 -----
