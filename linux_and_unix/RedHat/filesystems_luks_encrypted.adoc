@@ -11,34 +11,56 @@ About algorithms
 
 In RHEL6, the default is AES-128 encryption with 256SHA hashing.
 But the following ciphers are also available: AES, Twofish, Serpent, Cast5,
-Cast6
+Cast6.
+
+This document supposes that you already install the `cryptsetup-luks` package on
+your system.
 
 Creating an encrypted partition
 -------------------------------
 
 [source, shell]
 -----
-# First, boot into runlevel 1
+# First, boot into runlevel 1 (optional)
 telinit 1
 # Then ensure your partition is unmounted (here /dev/sdb1)
 mount | grep /dev/sdb1
-# Then fill your partition with /dev/urandom
+# Then fill your partition with /dev/urandom (optional)
 dd if=/dev/urandom of=/dev/sdb1
 # Initialize your partition in LUKS Format and setup initial key
-cryptsetup -v -y luksFormat /dev/sdb1
+# Type YES un UPPERCASE!
+cryptsetup luksFormat /dev/sdb1
 # Open LUKS partition and map a name on it (in /dev/mapper/)
 cryptsetup luksOpen /dev/sdb1 encr_sdb1
 # Formation device and mount it as a classic FS
 mkfs -t ext4 /dev/mapper/encr_sdb1
 mkdir -p /media/encrypted_disks/test_sdb1
 mount /dev/mapper/encr_sdb1 /media/encrypted_disks/test_sdb1
+-----
+
+To configure automount:
+
+[source, shell]
+-----
+# First, create a keystore file (only needed if you want to open the FS without
+# having to type passphrase during the boot phase on boot
+dd if=/dev/urandom of=/root/luks_sdb1.keyfile bs=1K count=4
+# As it will be some kind of private key, be strict on security
+chmod 0400 /root/luks_sdb1.keyfile
+# Add the key to the keystore
+cryptsetup luksAddKey /dev/sdb1 /root/luks_sdb1.keyfile
 # Add your filesystem to crypttab and fstab (if you want automatic mount on boot)
-echo -e "encr_sdb1 \t /dev/sdb1 \t none" >> /etc/crypttab
+# If you don't want to mount without asking for the passphrase, replace the last
+# 2 fields by a simple "none"
+echo -e "encr_sdb1 \t /dev/sdb1 \t /root/luks_sdb1.keyfile \t luks" >> /etc/crypttab
 echo -e "/dev/mapper/encr_sdb1 \t /media/encrypted_disks/test_sdb1 \t ext4 \t defaults \t 1 \t 2" >> /etc/fstab
 # Restore default SELinux security context and reboot
 /sbin/restorecon -v -R /media/encrypted_disks/test_sdb1
-shutdown -r now
+shutdown -r now # Be sure you have access to the console before that!
 -----
+
+NOTE: LUKS only protects against a disk robbery, so never store your keyfile on
+a partition located on the same disk as the encrypted partition.
 
 Check that a device is a LUKS device:
 
