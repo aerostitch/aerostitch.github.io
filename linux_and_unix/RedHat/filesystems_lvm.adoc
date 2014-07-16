@@ -70,6 +70,10 @@ vgdisplay -v vg_test
 lvdisplay vg_test/lv_test
 # Then create your FS as usual
 mkfs -t ext4 /dev/vg_test/lv_test
+# Mount it and update fstab
+mkdir /media/test_fs
+mount /dev/vg_test/lv_test /media/test_fs
+echo -e "$(blkid /dev/mapper/vgtest-lvtest | cut -d" " -f2) \t /media/test_fs \t ext4 \t defaults \t 1 \t  1" >> /etc/fstab
 -----
 
 

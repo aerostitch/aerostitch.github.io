@@ -56,3 +56,40 @@ Get usefull infos about disks with the `blkid` command. Example:
 /dev/mapper/VolGroup-lv_swap: UUID="c9ca22fc-fe01-4ee9-8607-66892a4aa794" TYPE="swap" 
 -----
 
+About XFS filesystems
+---------------------
+
+XFS is now the default file system for RHEL7.
+
+To create an XFS file system, you need to install the xfsprogs anc xfsdump
+packages (`yum install -y xfsdump xfsprogs`). Then the process would look quite
+familiar:
+
+[source, shell]
+-----
+# We don't use LVM here, but you can! So let's create a new /dev/sdd1
+# You can choose type 83, mkfs.xfs will do the rest
+fdisk /dev/sdd
+mkfs.xfs /dev/sdd1
+mkdir /media/test_xfs
+mount /dev/sdd1 /media/test_xfs
+# Then update fstab
+echo -e "$(blkid /dev/sdd1 | cut -d" " -f2) \t /media/test_xfs \t xfs \t defaults \t 1 \t 1" >> /etc/fstab
+-----
+
+Permissions
+-----------
+
+The setuid flag (`chmod u+s file` or `chmod 4755 file`) is used to allow multiuser
+access, meaning that when running the file, the process running the file will be
+the owner of the file, not the user that launched it.
+
+The setgid flag (`chmod g+s folder` or `chmod 2770 folder`) is used to allow
+multigroup access, meaning that the owner of the folder won't be able to access
+the directory if not in the group that owns the file and that all files created
+in this folder will all be accessible in read/write to any member of the
+folder's group owner.
+
+The sticky bit flag (`chmod o+t file` or `chmod 1775 file`) prevents accidental
+delete by users or groups even if they have read/write access. Only root or the
+owner of the file (or directory) can delete it.
