@@ -61,6 +61,9 @@ About XFS filesystems
 
 XFS is now the default file system for RHEL7.
 
+In RHEL 6.5, the `/boot` CANNOT be other than ext* file systems. Grub does not
+support vFAT, Btrfs, XFS or even LVM, so you can't use thoses for `/boot`.
+
 To create an XFS file system, you need to install the xfsprogs anc xfsdump
 packages (`yum install -y xfsdump xfsprogs`). Then the process would look quite
 familiar:
