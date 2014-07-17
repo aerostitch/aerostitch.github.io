@@ -1,0 +1,12 @@
+VMWare's PowerCLI tips
+======================
+
+
+List ESX hosts using PowerCLI:
+
+-----
+Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Scope Session -Confirm:$false
+Connect-VIServer 127.0.0.1
+Get-VMHost | format-table name, manufacturer, model, numcpu, build, parent -autosize
+Disconnect-VIServer 127.0.0.1 -Confirm:$false
+-----
