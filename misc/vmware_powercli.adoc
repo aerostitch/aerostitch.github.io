@@ -1,6 +1,10 @@
 VMWare's PowerCLI tips
 ======================
-
+Joseph Herlant
+v1.0.0, 2014-07-17: Initial version
+:Author Initials: Joseph Herlant
+:description: Just little tips about VMWare's PowerCLI commands.
+:keywords: Virtualisation, VMWare, PowerShell, PowerCLI
 
 List ESX hosts using PowerCLI:
 

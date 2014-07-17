@@ -1,0 +1,92 @@
+Minimal kickstart example for Centos
+====================================
+Joseph Herlant
+v1.0.0, 2014-07-17 : Initial version
+:Author Initials: Joseph Herlant
+:description: A sample kickstart file for a minimal installation of Centos.
+:keywords: Kickstart, installation, centos
+
+
+This kickstart supposes that:
+
+ * your installation repository is available at: http://192.168.2.1/pub
+ * you want to make some partitions using LVM
+ * you only want a minimal installation for your server
+ * you want to use DHCP for configuring your server (and have one running)
+ * you want a french keyboard
+ * timezone of the server is America/Los_Angeles with hardware clock set to UTC
+
+-----
+# Install OS instead of upgrade
+install
+# Use network installation
+url --url="http://192.168.2.1/pub"
+# Root password
+rootpw --iscrypted $1$ITYLaake$2U14.TtR3FglwwTKPlr5L.
+# System authorization information
+auth  --useshadow  --passalgo=sha512
+
+# Firewall configuration
+firewall --enabled --ssh
+# SELinux configuration
+selinux --enforcing
+
+# Installation logging level
+logging --level=info
+# Use text mode install
+text
+# Do not configure the X Window System
+skipx
+# System timezone, language and keyboard
+timezone --utc America/Los_Angeles
+lang en_US
+keyboard fr-pc
+# Network information
+network  --bootproto=dhcp --device=eth0 --onboot=on
+# If you want to configure a static IP:
+# network --device eth0 --hostname kstest --bootproto=static --ip=192.168.2.105 --netmask=255.255.255.0 --gateway=192.168.2.1 --nameserver 192.168.2.1
+
+
+# System bootloader configuration
+bootloader --location=mbr
+# Partition clearing information
+clearpart --all --initlabel
+# Disk partitioning information
+part /boot --fstype="ext4" --size=512
+# --> LVM
+part pv.01 --size=1 --grow --ondisk=sda
+volgroup vg_root --pesize=4096 pv.01
+logvol / --fstype="ext4" --size=1024 --vgname=vg_root --name=lv_root
+logvol /usr --fstype="ext4" --size=3072 --vgname=vg_root --name=lv_usr
+logvol /tmp --fstype="ext4" --size=1024 --vgname=vg_root --name=lv_tmp
+logvol /var --fstype="ext4" --size=5120 --vgname=vg_root --name=lv_var
+logvol /home --fstype="ext4" --size=512 --vgname=vg_root --name=lv_home
+logvol swap --fstype="ext4" --size=1024 --vgname=vg_root --name=lv_swap
+
+# If you just don't want to use LVM, just use this
+# part /boot --fstype="ext4" --size=512
+# part swap --fstype="swap" --recommended
+# part /var --fstype="ext4" --size=5120
+# part / --fstype="ext4" --size=1024
+# part /usr --fstype="ext4" --size=3072
+# part /home --fstype="ext4" --size=512
+# part /tmp --fstype="ext4" --size=1024
+
+# Reboot after installation
+reboot
+
+%packages  --nobase
+@core
+# @base
+
+%end
+-----
+
+To start it without PXE, insert the installation disk, on prompt for
+installation, press [Escape], then you'll have the boot prompt. If your
+kickstart is available at the following url:
+http://192.168.2.1/pub/ks/centos_minimal.cfg, then type:
+
+-----
+linux ks=http://192.168.2.1/pub/ks/centos_minimal.cfg
+-----
