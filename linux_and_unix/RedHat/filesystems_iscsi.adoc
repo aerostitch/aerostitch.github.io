@@ -1,0 +1,141 @@
+Configuring an iSCSI server and client
+======================================
+Joseph Herlant
+v1.0.0, 2014-07-19 : Initial version
+:Author Initials: Joseph Herlant
+:description: This helps you to configure an iSCSI target and initiator.
+:keywords: CenOS, iSCSI, target, initiator
+
+
+Procedure tested on CentOS 6.5.
+
+Configuring iSCSI target (server)
+---------------------------------
+
+First, install the `scsi-target-utils`:
+
+[source, shell]
+-----
+sudo yum install -y scsi-target-utils
+-----
+
+Then configure your new target. For this, we took the following hypotheses
+(change them with whatever values you want):
+
+ * Our domain is `mydomain.com`
+ * The device we are using is `/dev/vg_test/lv_test`
+ * Our client's IP is `192.168.2.101`
+
+[source, shell]
+-----
+sudo cat << __EOF__ >> /etc/tgt/targets.conf
+# naming rule : iqn.<year>-<month>.<reversed.domain.name>:<any name>
+<target iqn.2014-07.com.mydomain:target0>
+  backing-store /dev/vg_test/lv_test
+  # iSCSI client allowed to connect
+  initiator 192.168.2.101
+  # Auth info
+  incominguser iscsiuser01 userpassword
+</target>
+__EOF__
+-----
+
+Then get the service up and running and configure your firewall:
+
+[source, shell]
+-----
+sudo chkconfig --levels 35 tgtd on
+sudo service tgtd start
+# Check that the new target is available
+tgtadm --mode target --op show
+# iptables configuration. Place your rule wherever you want!
+sudo iptables -I INPUT 5 -p tcp -m tcp --dport 3260 -j ACCEPT
+sudo service iptables save
+sudo service iptables restart
+-----
+
+Configuring iSCSI initiator (client)
+------------------------------------
+
+First, install the `iscsi-initiator-utils`:
+
+[source, shell]
+-----
+sudo yum install -y iscsi-initiator-utils
+-----
+
+Configure your initiator iscsi identifier:
+
+[source, shell]
+-----
+sudo cat << __EOF__ > /etc/iscsi/initiatorname.iscsi
+InitiatorName=iqn.2014-07.com.mydomain:my_initiator01
+InitiatorAlias=my_initiator01
+__EOF__
+-----
+
+And verify in your `/etc/iscsi/iscsi.conf` that the following fields are
+uncommented and with the right values:
+
+-----
+node.startup = automatic
+node.session.auth.authmethod = CHAP
+node.session.auth.username = iscsiuser01
+node.session.auth.password = userpassword
+-----
+
+And restart your iscsid daemon:
+
+[source, shell]
+-----
+sudo service iscsid restart
+sudo chkconfig --levels 35 iscsid on
+-----
+
+Now test that you can see the target's device (our scsi target is 
+192.168.2.100). The following line should return something like
+"192.168.2.100:3260,1 iqn.2014-07.com.mydomain:target0".
+
+[source, shell]
+-----
+sudo iscsiadm --mode discovery --type sendtargets --portal 192.168.2.100
+-----
+
+Now make your target available as a new disk. This will make it persist accross
+reboot.
+
+[source, shell]
+-----
+sudo iscsiadm --mode node --targetname iqn.2014-07.com.mydomain:target0 --portal 192.168.2.100
+-----
+
+Check your available partition:
+
+[source, shell]
+-----
+# Through fdisk, you should see your new disk
+sudo fdisk -l
+# Also check your iscsi sessions
+sudo iscsiadm --mode session --op show
+# use blkid to get your UUID
+blkid
+-----
+
+IMPORTANT: Here you could notice that I used a LVM LV for the mount, so you can
+mount it directly. But usually we use a real LUN as target, so you'll still have
+to create the partition using `fdisk /dev/sdb` (if your iscsi disk appeared as
+/dev/sdb) and format it using `mkfs.ext4 /dev/sdb1`.
+
+To mount it automatically on boot, you'll need to get the `netfs` daemon up and
+running and use the `_netdev` mount option in your `/etc/fstab` line. If you
+don't do that, Linux will try to mount it BEFORE the network is setup.
+
+[source, shell]
+-----
+sudo service netfs start
+sudo chkconfig --levels 35 netfs on
+mkdir /media/my/mountpoint
+sudo echo -e "$(blkid /dev/sdb1 | cut -d" " -f2) \t /media/my/mountpoint \t ext4 \t _netdev,rw  \t 0 \t 0" >> /etc/fstab
+sudo mount -a -O _netdev
+-----
+
