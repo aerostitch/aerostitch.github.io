@@ -90,3 +90,26 @@ http://192.168.2.1/pub/ks/centos_minimal.cfg, then type:
 -----
 linux ks=http://192.168.2.1/pub/ks/centos_minimal.cfg
 -----
+
+
+Sample PXE menu to put in $ROOT_OF_TFTP_SERVER/pxelinux.cfg/default when booting
+using PXE (you still have to do the TFTP and DHCP server installation and
+configuration):
+
+-----
+default menu.c32
+prompt 0
+timeout 100
+
+MENU TITLE PXE Menu
+
+LABEL Centos 6 x64 with Kickstart
+  MENU LABEL Centos 6 x64 Kickstart
+  KERNEL images/vmlinuz
+  append initrd=images/initrd.img linux ks=http://192.168.2.1/pub/ks/centos_minimal.cfg
+
+LABEL Centos 6 x64 ISO no KS rescue
+  MENU LABEL Centos 6 x64 ISO no KS rescue
+  KERNEL images/vmlinuz
+  APPEND initrd=images/initrd.img ksdevice=bootif ip=dhcp nomount rescue lang=en_US keymap=fr-pc method=http://192.168.2.1/pub/
+-----

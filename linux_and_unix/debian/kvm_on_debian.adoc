@@ -109,6 +109,22 @@ LIBVIRT_DEFAULT_URI=qemu:///system virsh list --all
 virsh --connect vbox:///session list --all
 -----
 
+To install a new VM, you can use for example:
+
+[source, shell]
+-----
+VM_NAME=myVM01
+virt-install --connect qemu:///system \
+  --virt-type=kvm \
+  --name $VM_NAME \
+  --ram 512 \
+  --vcpus=1 \
+  --os-variant=rhel6 \
+  --cdrom=Downloads/CentOS-6.5-x86_64-minimal.iso \
+  --disk path=/var/lib/libvirt/images/${VM_NAME}_disk1.img,bus=sata,size=5 \
+  --network network=default
+-----
+
 References:
 
 http://wiki.libvirt.org/page/Networking#Altering_the_interface_config

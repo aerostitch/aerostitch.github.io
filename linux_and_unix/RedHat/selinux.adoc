@@ -40,23 +40,48 @@ file requires a reboot.
 Usefull commands
 ----------------
 
- * `ls -Z` -> Shows security context of the files
- * `ps -ZC atd` -> Shows security context of the atd process
  * `sestatus` -> Shows selinux status
  * `getenforce` -> Shows the current enforcing level
  * `setenforce` -> Temporarly changes selinux enforcing level (do not touches
  /etc/selinux/config file
+
+
+ * `ls -Z` -> Shows security context of the files
+ * `ps -ZC atd` -> Shows security context of the atd process
  * `chcon -vu user_u install.log` -> Changes the security context of the
  install.log file to users_u user context
  * `restorecon -Rv /tftpboot` -> Resets the original context of the /tftpboot
  directory (or set it correctly when you change the tftpboot service directory)
+ * `matchpathcon /my/path` -> Gets the default SELinux security context for the
+ specified path from the file contexts configuration
+
  * `sestatus -b` or `getsebool -a` -> Shows all boolean options for services
  * `semanage boolean -l` -> Provides the same info as previos command but with a
  description (provided by the policycoreutils-python package)
  * `setsebool -P tftp_use_nfs=1` -> Enables permanently this boolean
- * `matchpathcon /my/path` -> Gets the default SELinux security context for the
- specified path from the file contexts configuration
+
  * `sealert` is also a very usefull command when it comes to troubleshooting.
+ * `ausearch -ts 16:00 | grep AVC` -> Lists all access violations since 16h the
+ one that is in the previous 24 hours
+ * `ausearch -ts this-month | grep denied` -> Lists all deactions denied by
+ SELinux during the current month. You can put a date there, but be carefull of
+ your locale which it will depend on.
+
+
+Port labeling
+-------------
+
+Port labeling in SELinux is to allow services to use non standard ports. For
+example, by default, ssh will need to be on port 22 to work correctly with
+SELinux. Now let's say that you configured ssh to listen on port 2222 instead.
+You'll have to issue the following command to make it work:
+
+[source, shell]
+-----
+semanage port -a -t ssh_port_t -p tcp 2222
+-----
+
+The `semanage port -l` command will show the currently configured port labels.
 
 From GRUB
 ---------
@@ -84,3 +109,4 @@ Dan Walsh's blog:
 http://danwalsh.livejournal.com/7995.html
 
 http://danwalsh.livejournal.com/20931.html
+
