@@ -1,0 +1,116 @@
+Get KVM working on Debian
+=========================
+Joseph Herlant
+v1.0.0, 2014-07-19 : Initial version
+:Author Initials: Joseph Herlant
+:description: Getting KVM working on Debian
+:keywords: Debian, kvm, libvirt
+
+Tested on Debian 7.
+
+Install the `qemu-kvm` and `libvirt-bin` packages
+and add your user to the libvirt group.
+
+[source, shell]
+-----
+sudo apt-get install qemu-kvm libvirt-bin
+# Add your user to the libvirt, then logout / log back in
+sudo usermod -a -G libvirt $USER
+-----
+
+Now setup the bridge interface. The `bridge-utils` packet normally ships with
+the libvirt install.
+
+[source, shell]
+-----
+# If not already done, disable network-manager (don't forget to configure your
+# usually used interfaces)
+sudo service network-manager stop
+echo "manual" | sudo tee /etc/init/network-manager.override
+# backup your interfaces file and change it to make it look that way if your IP
+# configuration is static on eth0.
+ifdown eth0
+sudo mv /etc/network/interfaces /etc/network/interfaces.$(date +'%Y%m%d')
+# THE NEXT COMMANDS SHOULD BE EXECUTED AS ROOT!
+cat << __EOF__ > /etc/network/interfaces
+# The loopback network interface
+auto lo
+iface lo inet loopback
+# br0 configuration
+auto br0
+iface br0 inet static
+  address 192.168.1.2
+  netmask 255.255.255.0
+  gateway 192.168.1.1
+  bridge_ports eth0
+  # Can generate a "set forward dealy: numeric value out of range" warning.
+  # If you exeprience issues with passing DHCP to/from guest machines, put that
+  # parameter to "off".
+  bridge_stp on
+  bridge_maxwait 0
+  bridge_fd 0
+__EOF__
+ifup br0
+# Then setup your sysctl parameters
+cat << __EOF__ >> /etc/sysctl.conf
+net.bridge.bridge-nf-call-ip6tables = 0
+net.bridge.bridge-nf-call-iptables = 0
+net.bridge.bridge-nf-call-arptables = 0
+__EOF__
+sysctl -p /etc/sysctl.conf
+# Ensure the sysctl.conf is correctly loaded on boot and iptable is correctly
+# configured (if you are managing it out of this file, just ignore that.
+sudo cp /etc/rc.local /etc/rc.local.$(date +'%Y%m%d')
+cat << __EOF__ > /etc/rc.local
+#!/bin/sh -e
+sbin/sysctl -p /etc/sysctl.conf
+iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+exit 0
+__EOF__
+iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+-----
+
+Now setup your NAT interface:
+
+[source, shell]
+-----
+sudo virsh net-autostart default
+sudo virsh net-start default
+# Now the following command should say that the defailt interface is active
+sudo virsh net-list --all
+# And the virbr0 interface should now appear in the following command output
+sudo brctl show
+# THEN EXECUTE THIS AS ROOT!
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+-----
+
+Last but not least, restart your libvirtd service
+
+[source, shell]
+-----
+sudo service libvirtd start
+-----
+
+IMPORTANT: If you have setup the bridge interface over a wireless interface, you
+should configure your ebtables rules as explaine here:
+https://wiki.debian.org/BridgeNetworkConnections#Bridging_with_a_wireless_NIC
+
+To view the available virtual machines, you can use:
+
+[source, shell]
+-----
+# View only machines owned by your session if non-root user
+virsh list --all
+# View all virtual machines of the system as non-root user
+virsh --connect qemu:///system list --all
+# Or:
+LIBVIRT_DEFAULT_URI=qemu:///system virsh list --all
+# To connect to vritualbox channel
+virsh --connect vbox:///session list --all
+-----
+
+References:
+
+http://wiki.libvirt.org/page/Networking#Altering_the_interface_config
+
+https://wiki.debian.org/KVM
