@@ -21,11 +21,9 @@ Creating an encrypted partition
 
 [source, shell]
 -----
-# First, boot into runlevel 1 (optional)
-telinit 1
 # Then ensure your partition is unmounted (here /dev/sdb1)
 mount | grep /dev/sdb1
-# Then fill your partition with /dev/urandom (optional)
+# Then fill your partition with /dev/urandom (optional but a best practice)
 dd if=/dev/urandom of=/dev/sdb1
 # Initialize your partition in LUKS Format and setup initial key
 # Type YES un UPPERCASE!
