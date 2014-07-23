@@ -1,0 +1,119 @@
+Sharing user home directories using Samba
+=========================================
+Joseph Herlant
+v1.0.0, 2014-07-23 : Initial version
+:Author Initials: Joseph Herlant
+:description: Basic configuration to share user home directories using Samba +
+  on a Centos server.
+:keywords: Samba, share, smbd, nmbd, winbind
+
+Tested on a centos 6.5.
+
+Server side installation and configuration
+------------------------------------------
+
+Install as usual: `yum -y install samba`
+
+In `/etc/samba/smb.conf`, you can change the default configuration but in CentOS
+6.5, the package already configures homes to be shared. Use the `testparm`
+command to see the currently configured parameters for samba. A basic output
+should look like this (if you don't have printers, comment the block in the
+`/etc/samba/smb.conf` file):
+
+-----
+$ testparm
+Load smb config files from /etc/samba/smb.conf
+rlimit_max: increasing rlimit_max (1024) to minimum Windows limit (16384)
+Processing section "[homes]"
+Processing section "[printers]"
+Loaded services file OK.
+Server role: ROLE_STANDALONE
+Press enter to see a dump of your service definitions
+
+[global]
+  workgroup = MYGROUP
+  server string = Samba Server Version %v
+  log file = /var/log/samba/log.%m
+  max log size = 50
+  idmap config * : backend = tdb
+  cups options = raw
+
+[homes]
+  comment = Home Directories
+  read only = No
+  browseable = No
+
+[printers]
+  comment = All Printers
+  path = /var/spool/samba
+  printable = Yes
+  print ok = Yes
+  browseable = No
+-----
+
+Now open the ports:
+
+ * 137 UDP for netbios name service (nmb daemon)
+ * 138 UDP for netbios datagram (nmb daemon)
+ * 139 TCP for netbios session, Windows files and printers sharing
+ * 445 TCP for MS Directory service AD, windows shares
+
+and enable the needed services (restart them if already started).
+`smb` and `nmb` are mandatory to make the samba shares working correctly
+but the `winbind` is optionnal (used for user and host name resolution).
+
+[source, shell]
+-----
+iptables -I INPUT 5 -m state --state NEW -m udp -p udp -m multiport --dports 137,138 -j ACCEPT -m comment --comment "nmb services"
+iptables -I INPUT 5 -m state --state NEW -m tcp -p tcp -m multiport --dports 139,445 -j ACCEPT -m comment --comment "smb services"
+service iptables save
+service iptables restart
+chkconfig winbind --levels 35 on
+chkconfig smb --levels 35 on
+chkconfig nmb --levels 35 on
+service winbind start
+service smb start
+service nmb start
+-----
+
+
+
+# Create your user and set a password
+useradd grumpy
+passwd grumpy
+# Set the user's password in a samba context
+smbpasswd -a grumpy
+
+
+
+NOTE: if you need to enable another directory for samba export, don't forget to
+tell SELinux that it's a samba share using: `chcon -R -t samba_share_t /sharedata`
+
+Client side installation and configuration
+------------------------------------------
+
+Install samba client: `yum -y install samba-client`
+
+Ensure that the user exists on the client computer. Then check which samba
+shares are viewed from the client using the `smbclient` command line.
+
+[source, shell]
+-----
+useradd grumpy
+smbclient -L 192.168.2.2 -U grumpy
+-----
+
+Then try to mount the share:
+
+[source, shell]
+-----
+mkdir /home/grumpy/remote_home
+mount -t cifs //192.168.2.2/grumpy /home/grumpy/remote_home/ -o user,uid=grumpy,rw,username=grumpy,password=smb_grumpy_password
+-----
+
+If you changed the WORKGROUP parameter at the samba server, add the
+"workgroup=MY_NEW_WORKGROUP" parameter to the command line.
+
+To avoid having the password shown everywhere even in the mount output display,
+you should think about using either a credentials file, but even better, you
+should look at autofs to do that more properly and in a more automated way.
