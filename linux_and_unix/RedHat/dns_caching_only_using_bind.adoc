@@ -1,0 +1,113 @@
+How to setup a caching only DNS server using bind
+=================================================
+Joseph Herlant
+v1.0.0, 2014-07-24 : Initial version
+:Author Initials: Joseph Herlant
+:description: This document describes the installation and configuration of +
+  bind as a caching only DNS server on CentOS.
+:keywords: dns, bind, named, caching-only
+
+Tested on CentOS 6.5 in an IPv4 only context.
+
+Server-side actions
+-------------------
+
+First, install the `bind` and `bind-utils` packages using yum, activate the
+service and configure iptables to open both TCP and UDP ports 53:
+
+[source, shell]
+-----
+yum -y install bind bind-utils
+chkconfig named --levels 35 on
+# and ensure named service is stopped
+service named off
+iptables -I INPUT 5 -m udp -p udp --dport 53 -j ACCEPT
+iptables -I INPUT 5 -m tcp -p tcp --dport 53 -j ACCEPT
+service iptables save
+service iptables restart
+-----
+
+Then verify that SELinux will only allow the root and named users to read
+`/etc/named.conf`:
+
+-----
+# ll -Z /etc/named.conf 
+-rw-r-----. root named system_u:object_r:named_conf_t:s0 /etc/named.conf
+-----
+
+In CentOS 6.5 the service ships with a caching-only configuration by default, so
+you don't have a lot to do then. Just comment the IPV6 listening if you don't
+use it or the IPV4 if that's the one you don't use. Make the service listen on
+the server interface (not only on local loopback). All these actions are
+configured in `/etc/named.conf` which would finally look like this (adapt it to
+your network of course!):
+
+-----
+acl listening_ips { 127.0.0.1; 192.168.2.2; };
+acl allowed_networks { 127.0.0.1; 192.168.2.0/24; };
+acl allowed_slaves { 192.168.2.3; };
+
+options {
+        listen-on port 53 { listening_ips; };
+        // Disable this for IPv4 only environments
+        /* listen-on-v6 port 53 { ::1; }; */
+        directory       "/var/named";
+        dump-file       "/var/named/data/cache_dump.db";
+        statistics-file "/var/named/data/named_stats.txt";
+        memstatistics-file "/var/named/data/named_mem_stats.txt";
+        allow-query     { allowed_networks; };
+        recursion yes;
+
+        // Use this to allow slave DNS servers to get the transfers
+        /* allow-transfer { allowed_slaves; } */
+
+        dnssec-enable yes;
+        dnssec-validation yes;
+        dnssec-lookaside auto;
+
+        /* Path to ISC DLV key */
+        bindkeys-file "/etc/named.iscdlv.key";
+
+        managed-keys-directory "/var/named/dynamic";
+};
+
+logging {
+        channel default_debug {
+                file "data/named.run";
+                severity dynamic;
+        };
+};
+
+zone "." IN {
+        type hint;
+        file "named.ca";
+};
+
+include "/etc/named.rfc1912.zones";
+include "/etc/named.root.key";
+-----
+
+Verify that the DNS servers you want to cache from are correctly set in
+`/etc/resolv.conf` (usual DNS `nameserver` fields configuration).
+
+Then test the configuration and start the service. Be careful, at first start,
+the service will generate the rndc key which can really take a long time.
+
+[source, shell]
+-----
+service named configtest
+service named start
+-----
+
+Client-side configuration
+-------------------------
+
+On the client, make your /etc/resolv.conf include the nameserver either by using
+network-manager or directly editing the file.
+
+If you don't use network-manager and you want the configuration to persist
+between reboots, don't forget to change the DNS1 and DNS2 entries in
+`/etc/sysconfig/network`.
+
+If you have to troubleshoot, install the `bind-utils` package and use the
+`host`, `nslookup` and `dig` commands.
