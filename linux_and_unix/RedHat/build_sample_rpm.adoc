@@ -38,7 +38,7 @@ tar czvf ${PKG_NAME}.tar.gz ${PKG_NAME}
 popd
 -----
 
-Here is the sample SPEC/dummy_package.spec file:
+Here is the script that generates your sample SPEC/dummy_package.spec file and builds the package:
 
 [source, shell]
 -----
