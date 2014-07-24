@@ -26,7 +26,7 @@ mount | grep /dev/sdb1
 # Then fill your partition with /dev/urandom (optional but a best practice)
 dd if=/dev/urandom of=/dev/sdb1
 # Initialize your partition in LUKS Format and setup initial key
-# Type YES un UPPERCASE!
+# NOTE: Type YES in UPPERCASE!
 cryptsetup luksFormat /dev/sdb1
 # Open LUKS partition and map a name on it (in /dev/mapper/)
 cryptsetup luksOpen /dev/sdb1 encr_sdb1
