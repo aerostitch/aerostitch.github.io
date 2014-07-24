@@ -38,6 +38,8 @@ tar czvf ${PKG_NAME}.tar.gz ${PKG_NAME}
 popd
 -----
 
+Here is the sample SPEC/dummy_package.spec file:
+
 [source, shell]
 -----
 #!/bin/sh
