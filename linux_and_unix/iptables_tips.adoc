@@ -1,0 +1,30 @@
+Tips about iptables
+===================
+Joseph Herlant
+v1.0.0, 2014-07-24 : Initial version
+:Author Initials: Joseph Herlant
+:description: Some iptables tips.
+:keywords: Linux, iptables, ports, firewall
+
+/////
+Comments
+/////
+
+
+Limit IP for the SSH port (iptables rule #5):
+
+[source, shell]
+-----
+iptables -I INPUT 5 -p tcp -s 192.168.2.10 --dport 22 -j ACCEPT
+-----
+
+If you are unable to limit source IP addresses, and must open the ssh port
+globally, then iptables can still help prevent brute-force attacks by logging
+and blocking repeated attempts to login from the same IP address. For example:
+
+[source, shell]
+-----
+iptables -A INPUT -m state --state NEW -p tcp --dport 22 -m state --state NEW -m recent --set --name ssh --rsource
+iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent ! --rcheck --seconds 60 --hitcount 4 --name ssh --rsource -j ACCEPT
+-----
+

@@ -61,13 +61,6 @@ options {
         // Use this to allow slave DNS servers to get the transfers
         /* allow-transfer { allowed_slaves; } */
 
-        dnssec-enable yes;
-        dnssec-validation yes;
-        dnssec-lookaside auto;
-
-        /* Path to ISC DLV key */
-        bindkeys-file "/etc/named.iscdlv.key";
-
         managed-keys-directory "/var/named/dynamic";
 };
 
@@ -110,4 +103,4 @@ between reboots, don't forget to change the DNS1 and DNS2 entries in
 `/etc/sysconfig/network`.
 
 If you have to troubleshoot, install the `bind-utils` package and use the
-`host`, `nslookup` and `dig` commands.
+`host`, `nslookup` and `dig` commands (dig @my_caching_dns_server google.com).
