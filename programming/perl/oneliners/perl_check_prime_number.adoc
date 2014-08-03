@@ -14,5 +14,5 @@ Comments
 
 [source, shell]
 -----
-include::perl-check_prime.sh[]
+perl -wle 'print"Prime"if(1x shift)!~/^1?$|^(11+?)\1+$/' 
 -----

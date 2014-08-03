@@ -27,7 +27,7 @@ pipe.).
 
 [source, shell]
 -----
-include::perl-qp_encoder.sh[]
+perl -MMIME::QuotedPrint=encode_qp -e 'print encode_qp join"",<>'
 -----
 
 
@@ -39,6 +39,6 @@ This sentence returns the decoded version of a qp encoded input (from a file or
 
 [source, shell]
 -----
-include::perl-qp_decoder.sh[]
+perl -MMIME::QuotedPrint=decode_qp -e 'print decode_qp join"",<>'
 -----
 

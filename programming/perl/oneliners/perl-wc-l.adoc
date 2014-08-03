@@ -15,14 +15,14 @@ This shell command returns the number of lines contained by a file.
 
 [source, shell]
 -----
-include::perl_wc-l.sh[]
+perl -lne '}{print$.' file_input.txt
 -----
 
 The above command is the exact same one but in a more human readable way:
 
 [source, shell]
 -----
-include::perl_wc-l2.sh[]
+perl -lne 'END{print$.}' file_input.txt
 -----
 
 The `$.` variable contains the line number of the line currently been read.

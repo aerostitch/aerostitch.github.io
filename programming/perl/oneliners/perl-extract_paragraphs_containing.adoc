@@ -17,5 +17,5 @@ given pattern (here it is "my_pattern").
 
 [source, shell]
 -----
-include::extract_paragraphs_containing.sh[]
+perl -n000e 'print if /my_pattern/' my_file.txt
 -----

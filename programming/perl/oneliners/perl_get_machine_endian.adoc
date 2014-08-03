@@ -16,7 +16,7 @@ little-endian and "big-endian" if it's configured for big!
 
 [source, shell]
 -----
-include::perl-endian.sh[]
+perl -le 'print+(ord pack"s",1)?"little":"big","-endian"'
 -----
 
 Or you can use the "Config" module like in the example bellow. If the returned
@@ -27,6 +27,6 @@ with `4321`, then it is a big-endian one.
 
 [source, shell]
 -----
-include::perl-endian-config.sh[]
+perl -MConfig -le 'print$Config{byteorder}'
 -----
 

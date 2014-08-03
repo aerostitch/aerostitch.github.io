@@ -1,1 +1,0 @@
-perl -ne '/regexp/&&print'

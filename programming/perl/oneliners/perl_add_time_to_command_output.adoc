@@ -15,6 +15,6 @@ This commands adds the date and time to each lines of the "my_command" output.
 
 [source,shell]
 -----
-include::perl-add_time_to_command_output.sh[]
+my_command | perl -pe'$_=localtime()." $_"'
 -----
 

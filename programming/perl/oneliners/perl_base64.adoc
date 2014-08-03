@@ -26,7 +26,7 @@ pipe. Here, it is from the input_data file).
 
 [source, shell]
 -----
-include::perl-base64_encode.sh[]
+perl -MMIME::Base64=encode_base64 -e 'print encode_base64 join"",<>' input_data
 -----
 
 
@@ -38,5 +38,5 @@ file or a pipe. Here, it is from the encoded_input_data file).
 
 [source, shell]
 -----
-include::perl-base64_decode.sh[]
+perl -MMIME::Base64=decode_base64 -e 'print decode_base64 join"",<>' encoded_input_data
 -----

@@ -15,7 +15,7 @@ line).
 
 [source, shell]
 -----
-include::perl-ip_to_hostname.sh[]
+perl -MSocket -ple '$_=gethostbyaddr inet_aton($_),AF_INET'
 -----
 
 To get the ip (v4) of the hostname (or for a file containing a list of 
@@ -23,5 +23,5 @@ hostnames, each on a line).
 
 [source, shell]
 -----
-include::perl-hostname_to_ipv4.sh[]
+perl -MSocket -nle 'printf"%d.%d.%d.%d\n",unpack"C4",$_ for splice @{[gethostbyname$_]},4'
 -----

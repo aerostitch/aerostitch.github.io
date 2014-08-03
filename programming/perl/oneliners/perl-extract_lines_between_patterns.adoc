@@ -20,5 +20,5 @@ end.
 
 [source, shell]
 -----
-include::extract_lines_between_patterns.sh[]
+perl -ne 'print if /pretium enim/../porta massa/' text_file.txt
 -----

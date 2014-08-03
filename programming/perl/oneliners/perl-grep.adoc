@@ -19,7 +19,7 @@ pipes for example).
 
 [source, shell]
 -----
-include::perl_grep.sh[]
+perl -ne '/regexp/&&print'
 -----
 
 grep -i regexp
@@ -30,7 +30,7 @@ stdin using pipes for example).
 
 [source, shell]
 -----
-include::perl_grep-i.sh[]
+perl -ne '/regexp/i&&print'
 -----
 
 
@@ -42,7 +42,7 @@ stdin using pipes for example).
 
 [source, shell]
 -----
-include::perl_grep-v.sh[]
+perl -ne '/regexp/||print'
 -----
 
 NOTE: If you want the regexp of the grep -v to be case insensitive, just add

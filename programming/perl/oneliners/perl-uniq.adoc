@@ -16,7 +16,7 @@ keeping only the 1st occurence.
 
 [source, shell]
 -----
-include::perl_unique.sh[]
+perl -ne 'print  if!$u{$_}++'
 -----
 
 This command removes lines that have duplicated values in the 2nd column (F[1]),
@@ -24,6 +24,6 @@ keeping only the first line of the duplicated values.
 
 [source, shell]
 -----
-include::perl_unique_by_column.sh[]
+perl -nae 'print  if!$u{$F[1]}++'
 -----
 

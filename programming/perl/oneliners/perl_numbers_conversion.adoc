@@ -19,7 +19,7 @@ case wanted, use %x instead of %X.
 
 [source, shell]
 -----
-include::perl-decimal_to_hexadecimal.sh[]
+perl -e 'printf("0x%X\n",$_)for@ARGV'
 -----
 
 Example:
@@ -39,7 +39,7 @@ use 0x in front of the hexadecimal numbers or not as you want.
 
 [source, shell]
 -----
-include::perl-hex_to_decimal.sh[]
+perl -e 'printf("%i\n",hex $_)for@ARGV'
 -----
 
 Example:
@@ -59,7 +59,7 @@ Converts the given list of decimal numbers to their octal format.
 
 [source, shell]
 -----
-include::perl-decimal_to_octal.sh[]
+perl -e 'printf("%o\n",$_)for@ARGV'
 -----
 
 Example:
@@ -82,7 +82,7 @@ give hexadecimal formats as long as you put the 0x in front of them.
 
 [source, shell]
 -----
-include::perl-octal_to_decimal.sh[]
+perl -e 'printf("%i\n",oct $_)for@ARGV'
 -----
 
 Example:
@@ -103,7 +103,7 @@ front of the %b in the expression to have the 0bXXX number format.
 
 [source, shell]
 -----
-include::perl-decimal_to_binary.sh[]
+perl -e 'printf("%b\n",$_)for@ARGV'
 -----
 
 Example:
@@ -131,7 +131,7 @@ formated binaries strings if you want.
 
 [source, shell]
 -----
-include::perl-binary_to_decimal.sh[]
+perl -e 'printf("%i\n",oct("$_"=~/^0b\d/?$_:"0b".$_))for@ARGV'
 -----
 
 Example:

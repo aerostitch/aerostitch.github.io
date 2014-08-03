@@ -15,5 +15,5 @@ This shell command returns the first uid available on the system.
 
 [source, shell]
 -----
-include::get_1st_available_uid.sh[]
+perl -le '$i++ while getpwuid($i); print $i'
 -----

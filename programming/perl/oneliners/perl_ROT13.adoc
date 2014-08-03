@@ -23,7 +23,7 @@ rules.
 
 [source, shell]
 -----
-include::perl-ROT13_encoder.sh[]
+perl -pe 'tr/N-ZA-Mn-za-m/A-Za-z/'
 -----
 
 Decoding
@@ -34,5 +34,5 @@ rules.
 
 [source, shell]
 -----
-include::perl-ROT13_decoder.sh[]
+perl -pe 'tr/A-Za-z/N-ZA-Mn-za-m/'
 -----

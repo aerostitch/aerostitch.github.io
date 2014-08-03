@@ -17,7 +17,7 @@ line numbers, like the nl command do.
 
 [source, shell]
 -----
-include::perl_nl.sh[]
+perl -pe 's//$. /' input
 -----
 
 If you want exactly the same output than `nl` (meaning the same spacing at the
@@ -26,6 +26,6 @@ command:
 
 [source, shell]
 -----
-include::perl_nl2.sh[]
+perl -pe 'printf "% 6d  ",$.' input
 -----
 
