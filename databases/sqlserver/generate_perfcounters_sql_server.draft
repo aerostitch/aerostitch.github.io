@@ -1,0 +1,208 @@
+TODO
+====
+
+[script, powershell]
+-----
+#! powershell
+
+# *****************************************************************************
+# File       : sql_server_perf_counters.ps1
+# Purpose    : This script exports some performance counters that help for 
+#              troubleshooting SQL Server 2008 and 2008R2 performance issues.
+#              For more informations about these performance counters, you can
+#              read: http://www.quest.com/backstage/images/promotions/SQLServer-Perfmonance-Poster.pdf
+# Tested on   : Windows 2003 & 2008 with SQL Server 2008 & 2008R2
+# Usage       : powershell sql_server_perf_counters.ps1
+# Version     : 1.0 (2014-08-22)
+# Technology  : Powershell, Perfmon
+# Requirements: Windows 2003 and later with Windows Powershell
+#               SQL Server 2008 and later
+# History:
+# *****************************************************************************
+
+$outfiles_directory = "$home"  # Where to put result files
+# What to prefix result files names with
+$outfile_prefix  = (Get-Date -f 'yyyyMMdd_HHmmss').ToString() +"_"
+$outfiles_format = 'BLG'       # Output wanted format. Valid values are CSV, TSV, and BLG
+$sample_interval = 2           # Sample interval time (s)
+$max_samples     = 10          # Number of samples value to catch
+
+Function export_counters ()
+{
+    Param ([string]$file_name="unknown_counters", [string[]]$counters)
+    
+    $sb = {
+        Param ([int]$sample_interval, [int]$max_samples, [string]$outfiles_format, [string]$outfiles_directory, 
+                [string]$outfile_prefix, [string]$file_name, [string[]]$counters)
+        Get-Counter -Counter $counters  `
+        -SampleInterval $sample_interval -MaxSamples $max_samples `
+        | Export-Counter -FileFormat $outfiles_format `
+            -Path "$outfiles_directory\$($outfile_prefix)$($file_name).$($outfiles_format.ToLower())"
+        }
+    Start-Job -ScriptBlock $sb -ArgumentList @($sample_interval, $max_samples, $outfiles_format, 
+        $outfiles_directory, $outfile_prefix, $file_name, $counters) | Out-Null
+}
+
+# OS memory and Paging Performance counters
+$os_mem_counters = @(
+    '\Memory\Available MBytes',
+    '\Memory\Pages Input/sec',
+    '\Memory\Pages/sec',
+    '\Paging File(*)\% Usage',
+    '\Paging File(*)\% Usage Peak'
+    )
+# OS CPU and Processor counters
+$os_proc_counters = @(
+    '\Process(sqlservr)\% Processor Time',
+    '\Process(msmdsrv)\% Processor Time',
+    '\Processor(*)\% Processor Time',
+    '\System\Processor Queue Length',
+    '\System\Context Switches/sec'
+    )
+# OS Disk and Miscellaneous Counters
+$os_disk_counters = @(
+    '\PhysicalDisk(*)\Avg. Disk sec/Read',
+    '\PhysicalDisk(*)\Avg. Disk sec/Write'
+    )
+$os_network_counters = @(
+    '\Network Interface(*)\Bytes Total/sec'
+    )
+# Red Herring Counters
+$os_redHerring_counters = @(
+    '\PhysicalDisk(*)\% Disk Time',
+    '\PhysicalDisk(*)\Avg. Disk Queue Length',
+    '\PhysicalDisk(*)\Disk Transfers/sec',
+    '\Processor(*)\% Processor Time'
+    )
+$sql_redHerring_counters = @(
+    '\SQLServer:Buffer Manager\Buffer cache hit ratio'
+    )
+# MSSQL Data Access Performance counters
+$sql_access_counters = @(
+    '\SQLServer:Access Methods\Forwarded Records/sec',
+    '\SQLServer:Access Methods\Full Scans/sec',
+    '\SQLServer:Access Methods\Index Searches/sec',
+    '\SQLServer:Access Methods\Page Splits/sec',
+    '\SQLServer:Access Methods\Workfiles Created/sec',
+    '\SQLServer:Access Methods\Worktables Created/sec'
+    )
+# SQL Server: Memory Manager Counters
+$sql_mem_counters = @(
+    '\SQLServer:Memory Manager\Granted Workspace Memory (KB)',
+    '\SQLServer:Memory Manager\Maximum Workspace Memory (KB)',
+    '\SQLServer:Memory Manager\Memory Grants Outstanding',
+    '\SQLServer:Memory Manager\Memory Grants Pending',
+    '\SQLServer:Memory Manager\Target Server Memory (KB)'
+    )
+# MSSQL User Database Performance Counters
+$sql_userdb_counters = @(
+    '\SQLServer:Databases(*)\Data File(s) Size (KB)',
+    '\SQLServer:Databases(*)\Log Bytes Flushed/sec',
+    '\SQLServer:Databases(*)\Log File(s) Size (KB)',
+    '\SQLServer:Databases(*)\Log File(s) Used Size (KB)',
+    '\SQLServer:Databases(*)\Log Flush Wait Time',
+    '\SQLServer:Databases(*)\Log Flush Waits/sec',
+    '\SQLServer:Databases(*)\Log Flushes/sec',
+    '\SQLServer:Databases(*)\Log Growths',
+    '\SQLServer:Databases(*)\Log Shrinks',
+    '\SQLServer:Databases(*)\Log Truncations',
+    '\SQLServer:Databases(*)\Percent Log Used'
+    )
+# SQL Server SQL Statistics Counters
+$sql_sqlstats_counters = @(
+    '\SQLServer:SQL Statistics\Auto-Param Attempts/sec',
+    '\SQLServer:SQL Statistics\Failed Auto-Params/sec',
+    '\SQLServer:SQL Statistics\Safe Auto-Params/sec',
+    '\SQLServer:SQL Statistics\Unsafe Auto-Params/sec'
+)
+# MSSQL Buffer Manager and Memory Performance Counters
+$sql_buffer_counters = @(
+    '\SQLServer:Buffer Manager\Free list stalls/sec',
+    '\SQLServer:Buffer Manager\Lazy writes/sec',
+    '\SQLServer:Buffer Manager\Checkpoint pages/sec',
+    '\SQLServer:Buffer Manager\Page life expectancy',
+    '\SQLServer:Buffer Manager\Page lookups/sec',
+    '\SQLServer:Buffer Manager\Page reads/sec',
+    '\SQLServer:Buffer Manager\Page writes/sec',
+    '\SQLServer:Buffer Manager\Readahead pages/sec',
+    '\Memory\Free System Page Table Entries'
+)
+# MSSQL "How is My Memory Being Used" Performance Counters
+$sql_memusage_counters = @(
+    '\SQLServer:Buffer Manager\Database pages',
+    '\SQLServer:Buffer Manager\Target pages',
+    '\SQLServer:Buffer Manager\Free pages',
+    '\SQLServer:Buffer Manager\Stolen pages',
+    '\SQLServer:Memory Manager\Total Server Memory (KB)',
+    '\SQLServer:Memory Manager\Target Server Memory (KB)'
+)
+# MSSQL Workload Performance Counters
+$sql_workload_counters = @(
+    '\SQLServer:SQL Statistics\Batch Requests/sec',
+    '\SQLServer:SQL Statistics\SQL Compilations/sec',
+    '\SQLServer:SQL Statistics\SQL Re-Compilations/sec',
+    '\SQLServer:Deprecated Features(*)\Usage',
+    '\SQLServer:SQL Statistics\SQL Compilations/sec',
+    '\SQLServer:Cursor Manager by Type(*)\Active cursors',
+    '\SQLServer:SQL Errors(*)\Errors/sec'
+)
+# SQL Server : Plan Cache : Cache Manager Instance
+# -> None found
+# MSSQL Users and Locks Performance Counters
+$sql_connections_counters = @(
+    '\SQLServer:General Statistics\Logins/sec',
+    '\SQLServer:General Statistics\Logouts/sec',
+    '\SQLServer:General Statistics\User Connections'
+)
+$sql_locks_counters = @(
+    '\SQLServer:Latches\Latch Waits/sec',
+    '\SQLServer:Latches\Average Latch Wait Time (ms)',
+    '\SQLServer:Latches\Total Latch Wait Time (ms)',
+    '\SQLServer:Locks(*)\Lock Wait Time (ms)',
+    '\SQLServer:Locks(*)\Lock Waits/sec',
+    '\SQLServer:Locks(*)\Average Wait Time (ms)',
+    '\SQLServer:Locks(*)\Lock Requests/sec',
+    '\SQLServer:Locks(*)\Lock Timeouts/sec',
+    '\SQLServer:Locks(*)\Lock Timeouts (timeout > 0)/sec',
+    '\SQLServer:Locks(*)\Lock Wait Time (ms)',
+    '\SQLServer:Locks(*)\Number of Deadlocks/sec'
+)
+$sql_waits_counters = @(
+    '\SQLServer:Wait Statistics(*)\Lock waits',
+    '\SQLServer:Wait Statistics(*)\Log buffer waits',
+    '\SQLServer:Wait Statistics(*)\Log write waits',
+    '\SQLServer:Wait Statistics(*)\Memory grant queue waits',
+    '\SQLServer:Wait Statistics(*)\Network IO waits',
+    '\SQLServer:Wait Statistics(*)\Non-Page latch waits',
+    '\SQLServer:Wait Statistics(*)\Page IO latch waits',
+    '\SQLServer:Wait Statistics(*)\Page latch waits',
+    '\SQLServer:Wait Statistics(*)\Thread-safe memory objects waits',
+    '\SQLServer:Wait Statistics(*)\Transaction ownership waits',
+    '\SQLServer:Wait Statistics(*)\Wait for the worker',
+    '\SQLServer:Wait Statistics(*)\Workspace synchronization waits'
+)
+$sql_misc_counters = @(
+    '\SQLServer:Access Methods\Worktables From Cache Ratio',
+    '\SQLServer:Access Methods\Table Lock Escalations/sec',
+    '\SQLServer:Transactions\Longest Transaction Running Time'
+)
+
+export_counters "os_mem_counters" $os_mem_counters
+export_counters "os_proc_counters" $os_proc_counters
+export_counters "os_io_counters" $($os_disk_counters + $os_network_counters)
+export_counters "redHerring_counters" $($os_redHerring_counters + $sql_redHerring_counters)
+export_counters "sql_access_counters" $sql_access_counters
+export_counters "sql_mem_counters" $sql_mem_counters
+export_counters "sql_userdb_counters" $sql_userdb_counters
+export_counters "sql_sqlstats_counters" $sql_sqlstats_counters
+export_counters "sql_buffer_counters" $sql_buffer_counters
+export_counters "sql_memusage_counters" $sql_memusage_counters
+export_counters "sql_workload_counters" $sql_workload_counters
+export_counters "sql_locks_waits_counters" $($sql_locks_counters + $sql_waits_counters)
+export_counters "sql_misc_counters" $($sql_connections_counters + $sql_misc_counters)
+
+Write-Host "To follow your performance monitors collection, use the Get-Job command:"
+Get-Job -State Running
+Write-Host ""
+Write-Host "To clean up the jobs when done, use the 'Remove-Job -State Completed' command."
+-----
