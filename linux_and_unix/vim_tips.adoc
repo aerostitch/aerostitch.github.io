@@ -74,8 +74,13 @@ Usefull editor commands
  * `U` -> Undoes all commands on one line
  * Ctrl + `r` -> Redo the last undone action
  * `J` -> Joins the current line and the next one including a space between them
- and setting cursor position to the joining point.
+ and setting cursor position to the joining point
  * `:3` -> Goes to the 3rd line
+ * `gUw` -> Converts a word to upper case
+ * `guw` -> Converts a word to lower case
+ * `VU` -> Converts current line to upper case
+ * `Vu` -> Converts current line to lower case
+ * `V~` -> Inverts the case of the current line
 
  * `/` -> Searches forward in the document
  * `?` -> Searches backward in the document
