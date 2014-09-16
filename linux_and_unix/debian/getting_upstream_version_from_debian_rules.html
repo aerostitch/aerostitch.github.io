@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="This tells you how to get the package's upstream from the debian/rules file of a package." />
+<meta name="keywords" content="debian, packaging, rules, makefile, cdbs, debhelpers" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
+<title>How to get the upstream version from debian/rules file</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-06-16</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>How to get the upstream version from debian/rules file</h1>
+This tells you how to get the package's upstream from the debian/rules file of a package.
+</div>
+      </div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>If you&#8217;re using cdbs, it&#8217;s simple: use the "$(DEB_UPSTREAM_VERSION)" variable
+defined in the <code class="monospaced">/usr/share/cdbs/1/rules/buildvars.mk</code> file.</p></div>
+<div class="paragraph"><p>If you&#8217;re using debhelper, you can use <code class="monospaced">/usr/share/dpkg/pkg-info.mk</code> file from
+dpkg-dev which defines this "$(DEB_UPSTREAM_VERSION)" variable.</p></div>
+<div class="paragraph"><p>This last file defines some usefull variables as:
+ * DEB_SOURCE: the source package name
+ * DEB_VERSION: the full version of the package (epoch + upstream vers.<br />
+ revision)
+ * DEB_VERSION_EPOCH_UPSTREAM: the package&#8217;s version without the Debian revision
+ * DEB_VERSION_UPSTREAM_REVISION: the package&#8217;s version without the Debian epoch
+ * DEB_VERSION_UPSTREAM: the package&#8217;s upstream version
+ * DEB_DISTRIBUTION: the distribution(s) listed in the current entry of
+ debian/changelog</p></div>
+<div class="paragraph"><p>If you still want to redefine it. You can use, for example:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>DEB_UPSTREAM_VERSION ?= $(shell dpkg-parsechangelog \
+                          | sed -rne 's/^Version: ([0-9.]+)[-+].*$$/\1/p')</pre>
+</div></div>
+<div class="paragraph"><p>But if you want, you can still use exactly the same way as cdbs did (also added
+some other usefull variables that were defined in this makefile):</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre># Gets the name of the source package
+DEB_SOURCE_PACKAGE := $(strip $(shell egrep '^Source: ' debian/control | cut -f 2 -d ':'))
+
+# Gets the full version of the source package including debian version
+DEB_VERSION := $(shell dpkg-parsechangelog | egrep '^Version:' | cut -f 2 -d ' ')
+DEB_NOEPOCH_VERSION := $(shell echo $(DEB_VERSION) | cut -d: -f2-)
+# Gets only the upstream version of the package
+DEB_UPSTREAM_VERSION := $(shell echo $(DEB_NOEPOCH_VERSION) | sed 's/-[^-]*$$//')
+
+# Prints the version line if the package is native. Nothing for a non native package
+DEB_ISNATIVE := $(shell dpkg-parsechangelog | egrep '^Version:' | perl -ne 'print if not /^Version:\s*.*-/;')</pre>
+</div></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

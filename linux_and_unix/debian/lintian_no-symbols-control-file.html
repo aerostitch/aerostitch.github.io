@@ -3,10 +3,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="When packaging a C or C++ library, you sometimes have to face a" />
+<meta name="description" content="When packaging a C or C++ library, you sometimes have to face a lintian complaining about "no-symbols-control-file". This tutorial will help you to get correct this." />
 <meta name="keywords" content="Lintian, no-symbols-control-file, debian, packaging, library" />
 <meta name="author" content="Joseph Herlant" />
-<link rel="shortcut icon" href="/home/theolediable/git/perso/asciidoc/images/icons/favicon.png" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
 <title>Lintiani: Get rid of the no-symbols-control-file info</title>
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
 
@@ -18,17 +18,17 @@ asciidoc.install(3);
 /*]]>*/
 </script>
 <!-- Bootstrap core CSS -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Bootstrap theme -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
 <!-- ztree treeview css -->
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
 <!-- Custom styles for this template -->
 <link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2pre/html5shiv.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <![endif]-->
 </head>
 <body class="article">
@@ -50,15 +50,13 @@ asciidoc.install(3);
   <br />
   <span id="revnumber">version 1.0.0,</span>
   <span id="revdate">2014-03-06</span>
-  <span id="revremark">: Initial version
-  lintian complaining about "no-symbols-control-file". This tutorial will help
-  you to get correct this.</span>
+  <span id="revremark">: Initial version</span>
 </div>
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
 <div id="header">
 <h1>Lintiani: Get rid of the no-symbols-control-file info</h1>
-When packaging a C or C++ library, you sometimes have to face a
+When packaging a C or C++ library, you sometimes have to face a lintian complaining about "no-symbols-control-file". This tutorial will help you to get correct this.
 </div>
       </div>
 <div id="preamble">
@@ -73,7 +71,7 @@ by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt>debuild -uc -us</tt></pre></div></div>
-<div class="paragraph"><p>Then, use <code>dpkg-gensymbols</code> to generate the symbol file. Let&#8217;s say here your
+<div class="paragraph"><p>Then, use <code class="monospaced">dpkg-gensymbols</code> to generate the symbol file. Let&#8217;s say here your
 library name is <strong>mylib</strong> (replace mylib in the following examples).
 From the root of your debian package&#8217;s source, execute the following command
 line:</p></div>
@@ -83,7 +81,7 @@ by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt>dpkg-gensymbols -pmylib -Odebian/mylib<span style="color: #990000">.</span>symbols -q</tt></pre></div></div>
-<div class="paragraph"><p>This las command will create or update the <code>debian/mylib.symbols</code> file (replace
+<div class="paragraph"><p>This las command will create or update the <code class="monospaced">debian/mylib.symbols</code> file (replace
 <strong>mylib</strong> with the name of your package). But there&#8217;s still an issue because with
 this you&#8217;ll have the debian version after the upstream version in the file which
 will generate a <strong>symbols-file-contains-current-version-with-debian-revision</strong>
@@ -125,8 +123,8 @@ lintian -c --color auto -L <span style="color: #FF0000">"&gt;=pedantic"</span></
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
-  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
 <div id="footnotes"><hr /></div>

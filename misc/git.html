@@ -6,7 +6,7 @@
 <meta name="description" content="Here you'll find some stuffs I found to be kind of cool or some things that I usually forget about it. For example, how to edit commits history or what does rebase do." />
 <meta name="keywords" content="git, hg, rebase, log, .gitattributes, config, crlf, stash, rebase, fetch, reset, branch, HEAD, origin, tag, cherry-pick, prune" />
 <meta name="author" content="Joseph Herlant" />
-<link rel="shortcut icon" href="/home/theolediable/git/perso/asciidoc/images/icons/favicon.png" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
 <title>Some git tips</title>
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
 
@@ -18,17 +18,17 @@ asciidoc.install(3);
 /*]]>*/
 </script>
 <!-- Bootstrap core CSS -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Bootstrap theme -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
 <!-- ztree treeview css -->
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
 <!-- Custom styles for this template -->
 <link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2pre/html5shiv.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <![endif]-->
 </head>
 <body class="article">
@@ -48,9 +48,9 @@ asciidoc.install(3);
 <div>
   <span id="author">Joseph Herlant</span>
   <br />
-  <span id="revnumber">version 1.0.3,</span>
-  <span id="revdate">2014-03-16</span>
-  <span id="revremark">: Adding a way to delete a tag</span>
+  <span id="revnumber">version 1.0.4,</span>
+  <span id="revdate">2014-06-21</span>
+  <span id="revremark">: Adding the --rebase option to the git pull</span>
 </div>
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
@@ -79,7 +79,7 @@ You can also consult the <a href="http://gitready.com/">Git ready website</a> to
 tips about this.<br />
 Another good and free book about git is
 <a href="http://ftp.newartisans.com/pub/git.from.bottom.up.pdf">Git from the bottom up</a>.<br />
-You can also use the <code>git help</code> command for more informations.<br />
+You can also use the <code class="monospaced">git help</code> command for more informations.<br />
 And watch the online courses about git on <a href="https://www.codeschool.com">Code
 school</a>!  </div>
 </div>
@@ -99,65 +99,85 @@ school</a>!  </div>
 "--online" option. There you&#8217;ll get the logs in a "&lt;commit id&gt; &lt;Commit message&gt;"
 style.</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git log --oneline</code></pre>
+<div class="content monospaced">
+<pre>git log --oneline</pre>
 </div></div>
 <div class="paragraph"><p>Output example:</p></div>
 <div class="literalblock">
-<div class="content">
-<pre><code>$git log --oneline
+<div class="content monospaced">
+<pre>$git log --oneline
 e89195d Adding a tip on asciidoc using utf-8 titles
 4c666c1 Adding perl helpers for converting numbers
 d13b046 Adding some stuffs to do
 60a2477 Adding other perl one-liners
 dfd0f8f Adding some perl monks and some todo
-9596bb3 Updating todo</code></pre>
+9596bb3 Updating todo</pre>
 </div></div>
 <div class="paragraph"><p>Or use the "--pretty=format:" formatter like this:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git log --pretty=format:"%h (%ad) [%an] - %s"</code></pre>
+<div class="content monospaced">
+<pre>git log --pretty=format:"%h (%ad) [%an] - %s"</pre>
 </div></div>
 <div class="paragraph"><p>Which will output something like this:</p></div>
 <div class="literalblock">
-<div class="content">
-<pre><code>$ git log --pretty=format:"%h (%ad) [%an] - %s"
+<div class="content monospaced">
+<pre>$ git log --pretty=format:"%h (%ad) [%an] - %s"
 e89195d (Sat Oct 26 20:25:21 2013 +0200) [Joseph Herlant] - Adding a tip on asciidoc using utf-8 titles
 4c666c1 (Fri Oct 25 12:54:59 2013 +0200) [Joseph Herlant] - Adding perl helpers for converting numbers
 d13b046 (Fri Oct 25 11:32:01 2013 +0200) [Joseph Herlant] - Adding some stuffs to do
-60a2477 (Fri Oct 25 11:24:55 2013 +0200) [Joseph Herlant] - Adding other perl one-liners</code></pre>
+60a2477 (Fri Oct 25 11:24:55 2013 +0200) [Joseph Herlant] - Adding other perl one-liners</pre>
 </div></div>
 <div class="paragraph"><p>Or even add graphs to get branching graphs!</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git log --pretty=format:"%h [%an] %s" --decorate --graph</code></pre>
+<div class="content monospaced">
+<pre>git log --pretty=format:"%h [%an] %s" --decorate --graph</pre>
 </div></div>
 <div class="paragraph"><p>or</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git log --oneline --graph --decorate</code></pre>
+<div class="content monospaced">
+<pre>git log --oneline --graph --decorate</pre>
 </div></div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_what_does_git_rebase_do">3. What does git rebase do?</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>the <code>git rebase [branch_name]</code> command duplicates the head version of the given
+<div class="paragraph"><p>the <code class="monospaced">git rebase [branch_name]</code> command duplicates the head version of the given
 branch ("branch_name") just as if you did a brand new branch and then applies
 all the current branch&#8217;s commit history on the top of the HEAD version of the
 branch.</p></div>
 <div class="paragraph"><p>For example, if you had a commit "A1" and "A2" in the "A" branch and you do a
-<code>git rebase master</code> with a master branch that has a commit B1 done after the "A"
+<code class="monospaced">git rebase master</code> with a master branch that has a commit B1 done after the "A"
 branch creation, your command will create a new branch from the master branch&#8217;s
 HEAD containing the "B1" commit, and then apply the "A1" and "A2" commit on top
 of this. This branch will replace the branch you&#8217;ve currently checked out
 (branch "A" here).</p></div>
-<div class="paragraph"><p>It is often better to do the following instead of <code>git pull</code> (which will
+<div class="paragraph"><p>It is often better to do the following instead of <code class="monospaced">git pull</code> (which will
 pollute the logs with merges):</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git fetch
-git rebase</code></pre>
+<div class="content monospaced">
+<pre>git fetch
+git rebase</pre>
+</div></div>
+<div class="panel panel-info admonitionblock">
+  <div class="panel-heading">
+
+
+<span class="glyphicon glyphicon-info-sign"></span>
+
+
+    <b class="panel-title">
+    Note
+    </b>
+  </div>
+  <div class="panel-body">In the latest versions of git, you also can (and should because it&#8217;s
+quicker) just use the <code class="monospaced">--rebase</code> option of the <code class="monospaced">git pull</code> command which
+does a <code class="monospaced">git fetch</code> followed by a <code class="monospaced">git rebase</code> instead of the usual <code class="monospaced">git fetch</code>
+and <code class="monospaced">git merge</code> combination.  </div>
+</div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>git pull --rebase</pre>
 </div></div>
 </div>
 </div>
@@ -169,41 +189,41 @@ git rebase</code></pre>
 <div class="paragraph"><p>The following command will open an editor containing the last 2 commands and let
 you alter them, so you will be able to edit them (and change their order).</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git rebase -i HEAD~2</code></pre>
+<div class="content monospaced">
+<pre>git rebase -i HEAD~2</pre>
 </div></div>
 </div>
 <div class="sect2">
 <h3 id="_rename_a_specific_commit">4.2. Rename a specific commit</h3>
-<div class="paragraph"><p>To change the 5th last commit, use a <code>git rebase -i HEAD~5</code> and use the <code>reword</code>
+<div class="paragraph"><p>To change the 5th last commit, use a <code class="monospaced">git rebase -i HEAD~5</code> and use the <code class="monospaced">reword</code>
 command in our editor.</p></div>
 </div>
 <div class="sect2">
 <h3 id="_merging_2_commits">4.3. Merging 2 commits</h3>
-<div class="paragraph"><p>To merge the last 2 commits, open a git editor using <code>git rebase -i HEAD~2</code>
-and use the <code>squash</code> command to merge one of the commits into the other.</p></div>
+<div class="paragraph"><p>To merge the last 2 commits, open a git editor using <code class="monospaced">git rebase -i HEAD~2</code>
+and use the <code class="monospaced">squash</code> command to merge one of the commits into the other.</p></div>
 </div>
 <div class="sect2">
 <h3 id="_reverting_the_last_commit_not_already_pushed">4.4. Reverting the last commit (not already pushed)</h3>
 <div class="paragraph"><p>To remove the last commit from the local repository, use :</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git reset --soft HEAD^</code></pre>
+<div class="content monospaced">
+<pre>git reset --soft HEAD^</pre>
 </div></div>
 <div class="paragraph"><p>If you also want to remove the changes that were included in the last commit
 (and not only the commit from the timeline) from your local repository, use the
 "--hard" option instead of "--soft":</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git reset --hard HEAD^</code></pre>
+<div class="content monospaced">
+<pre>git reset --hard HEAD^</pre>
 </div></div>
 </div>
 <div class="sect2">
 <h3 id="_adding_some_stuff_to_the_last_commit">4.5. Adding some stuff to the last commit</h3>
 <div class="paragraph"><p>To add data to the last commit, use the "--amend" option:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git commit --amend -m "New message for the last commit I want to add data to."</code></pre>
+<div class="content monospaced">
+<pre>git commit --amend -m "New message for the last commit I want to add data to."</pre>
 </div></div>
 </div>
 <div class="sect2">
@@ -212,14 +232,14 @@ and use the <code>squash</code> command to merge one of the commits into the oth
 another branch, use the following command (--edit is if you want to edit the
 commit message). Be carefull, this command directly commits to the local branch!</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git cherry-pick -x --signoff [--edit] &lt;hash_of_the_commit&gt;</code></pre>
+<div class="content monospaced">
+<pre>git cherry-pick -x --signoff [--edit] &lt;hash_of_the_commit&gt;</pre>
 </div></div>
 <div class="paragraph"><p>If you just want to apply the local branch, not commiting it, use the
 "--no-commit" option:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git cherry-pick --no-commit &lt;hash_of_the_commit&gt;</code></pre>
+<div class="content monospaced">
+<pre>git cherry-pick --no-commit &lt;hash_of_the_commit&gt;</pre>
 </div></div>
 <div class="panel panel-info admonitionblock">
   <div class="panel-heading">
@@ -255,14 +275,14 @@ has heen done.  </div>
 <div class="paragraph"><p>List the logs of the local repo to retrieve the hash or the short name of the
 operation that <strong>preceeded</strong> the operation of dropping the commit, using:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git reflog</code></pre>
+<div class="content monospaced">
+<pre>git reflog</pre>
 </div></div>
-<div class="paragraph"><p>Or the <code>git log --walk-reflogs</code> if you want a more verbose mode.</p></div>
+<div class="paragraph"><p>Or the <code class="monospaced">git log --walk-reflogs</code> if you want a more verbose mode.</p></div>
 <div class="paragraph"><p>Then, do a:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git reset --hard &lt;hash_retrieved&gt;|&lt;short_name&gt;</code></pre>
+<div class="content monospaced">
+<pre>git reset --hard &lt;hash_retrieved&gt;|&lt;short_name&gt;</pre>
 </div></div>
 </div>
 </div>
@@ -273,13 +293,13 @@ operation that <strong>preceeded</strong> the operation of dropping the commit, 
 <div class="sect2">
 <h3 id="_list_remote_branches">5.1. List remote branches</h3>
 <div class="listingblock">
-<div class="content">
-<pre><code>git branch -r</code></pre>
+<div class="content monospaced">
+<pre>git branch -r</pre>
 </div></div>
 <div class="paragraph"><p>or, with little more cool stuffs like which branch is out of date:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git remote show origin</code></pre>
+<div class="content monospaced">
+<pre>git remote show origin</pre>
 </div></div>
 </div>
 <div class="sect2">
@@ -288,8 +308,8 @@ operation that <strong>preceeded</strong> the operation of dropping the commit, 
 not exist anymore on the remote repository. Quite handy when working on big
 projects that have a lot of branching activity.</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git remote prune origin</code></pre>
+<div class="content monospaced">
+<pre>git remote prune origin</pre>
 </div></div>
 </div>
 <div class="sect2">
@@ -305,20 +325,20 @@ projects that have a lot of branching activity.</p></div>
     Warning
     </b>
   </div>
-  <div class="panel-body">This has to be done on the local repo where the drop operation (<code>git
+  <div class="panel-body">This has to be done on the local repo where the drop operation (<code class="monospaced">git
 branch -D|-d &lt;branch_name&gt;</code>) has heen done.  </div>
 </div>
 <div class="paragraph"><p>List the logs of the local repo to retrieve the hash or the short name of the
 the last commit of the dropped branch, using:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git reflog</code></pre>
+<div class="content monospaced">
+<pre>git reflog</pre>
 </div></div>
-<div class="paragraph"><p>Or the <code>git log --walk-reflogs</code> if you want a more verbose mode.</p></div>
+<div class="paragraph"><p>Or the <code class="monospaced">git log --walk-reflogs</code> if you want a more verbose mode.</p></div>
 <div class="paragraph"><p>Then, recreate the branch (with the same name or a new name) using:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git branch &lt;branch_name&gt; &lt;hash_retrieved&gt;|&lt;short_name&gt;</code></pre>
+<div class="content monospaced">
+<pre>git branch &lt;branch_name&gt; &lt;hash_retrieved&gt;|&lt;short_name&gt;</pre>
 </div></div>
 </div>
 </div>
@@ -329,15 +349,15 @@ the last commit of the dropped branch, using:</p></div>
 <div class="sect2">
 <h3 id="_list_tags">6.1. List tags</h3>
 <div class="listingblock">
-<div class="content">
-<pre><code>git tag</code></pre>
+<div class="content monospaced">
+<pre>git tag</pre>
 </div></div>
 </div>
 <div class="sect2">
 <h3 id="_add_new_tag">6.2. Add new tag</h3>
 <div class="listingblock">
-<div class="content">
-<pre><code>git tag -a &lt;tag_name&gt; -m "&lt;Message&gt;"</code></pre>
+<div class="content monospaced">
+<pre>git tag -a &lt;tag_name&gt; -m "&lt;Message&gt;"</pre>
 </div></div>
 </div>
 <div class="sect2">
@@ -345,11 +365,11 @@ the last commit of the dropped branch, using:</p></div>
 <div class="paragraph"><p>If you want to delete a tag named "tag_I_want_to_delete" from origin, use the
 following commands.</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code># Remove from local repository
+<div class="content monospaced">
+<pre># Remove from local repository
 git tag -d tag_I_want_to_delete
 # Push change to remote repository
-git push origin :refs/tags/tag_I_want_to_delete</code></pre>
+git push origin :refs/tags/tag_I_want_to_delete</pre>
 </div></div>
 </div>
 <div class="sect2">
@@ -357,8 +377,8 @@ git push origin :refs/tags/tag_I_want_to_delete</code></pre>
 <div class="paragraph"><p>Classic git push won&#8217;t push tags.If you don&#8217;t want tags to stay only local, use
 the "--tags" option of the push command.</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git push --tags</code></pre>
+<div class="content monospaced">
+<pre>git push --tags</pre>
 </div></div>
 </div>
 </div>
@@ -371,13 +391,13 @@ the "--tags" option of the push command.</p></div>
 <div class="paragraph"><p>To save a current state of branch modifications (for example to go and work on
 another branch) but without having to commit, use the stash command.</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git stash save [&lt;stash_message&gt;]</code></pre>
+<div class="content monospaced">
+<pre>git stash save [&lt;stash_message&gt;]</pre>
 </div></div>
 <div class="paragraph"><p>or without the save, it does the same thing:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git stash</code></pre>
+<div class="content monospaced">
+<pre>git stash</pre>
 </div></div>
 <div class="panel panel-warning admonitionblock">
   <div class="panel-heading">
@@ -395,21 +415,21 @@ don&#8217;t want the staging area to be stashed, use the "--keep-index" option.<
 If you want also the untracked files to be stashed, use the
 "--include-untracked" option.  </div>
 </div>
-<div class="paragraph"><p>And to create a branch directly from the stash, use <code>git stash branch
+<div class="paragraph"><p>And to create a branch directly from the stash, use <code class="monospaced">git stash branch
 &lt;branch_name&gt;</code></p></div>
 </div>
 <div class="sect2">
 <h3 id="_listing_backups">7.2. Listing backups</h3>
 <div class="listingblock">
-<div class="content">
-<pre><code>git stash list</code></pre>
+<div class="content monospaced">
+<pre>git stash list</pre>
 </div></div>
 <div class="paragraph"><p>or, to get a little bit more infos on what changes are done on each stash, use
 the "--stat" option (or any other option of git log command) or use the
 following command to get the informations on one particular stash</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git stash show [&lt;stash_name&gt;]</code></pre>
+<div class="content monospaced">
+<pre>git stash show [&lt;stash_name&gt;]</pre>
 </div></div>
 </div>
 <div class="sect2">
@@ -424,8 +444,8 @@ http://www.gnu.org/software/src-highlite -->
 git stash drop <span style="color: #990000">[&lt;</span>stash_name<span style="color: #990000">&gt;]</span>   <span style="font-style: italic"><span style="color: #9A1900"># once you don't need the backup anymore</span></span></tt></pre></div></div>
 <div class="paragraph"><p>or the following which do the both previous commands in one on the last stash:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git stash pop</code></pre>
+<div class="content monospaced">
+<pre>git stash pop</pre>
 </div></div>
 </div>
 </div>
@@ -438,14 +458,14 @@ git stash drop <span style="color: #990000">[&lt;</span>stash_name<span style="c
 <div class="paragraph"><p>If you&#8217;re on a Linux/unix machine and you want to ensure line endings are in
 unix format when you get committed files, use:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git config --global core.autocrlf input</code></pre>
+<div class="content monospaced">
+<pre>git config --global core.autocrlf input</pre>
 </div></div>
 <div class="paragraph"><p>If you&#8217;re on a windows machine and you want to ensure line endings will be all
 in windows format (\r\n), use:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git config --global core.autocrlf true</code></pre>
+<div class="content monospaced">
+<pre>git config --global core.autocrlf true</pre>
 </div></div>
 </div>
 <div class="sect2">
@@ -455,12 +475,12 @@ feeds. For example, This .gitattributes file manages automatically line endings
 by default but considers .bat files to need windows-style line endings, .sh
 files to be unix-style and .jpg to be binary files.</p></div>
 <div class="literalblock">
-<div class="content">
-<pre><code>*     text=auto
+<div class="content monospaced">
+<pre>*     text=auto
 *.py  text
 *.sh  text eol=lf
 *.bat text eol=crlf
-*.jpg binary</code></pre>
+*.jpg binary</pre>
 </div></div>
 </div>
 </div>
@@ -474,11 +494,11 @@ files to be unix-style and .jpg to be binary files.</p></div>
 explicitly.</p></div>
 <div class="paragraph"><p>If the submodule you are adding is empty, use:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git submodule add &lt;remote_repository_adress_of_submodule&gt;
+<div class="content monospaced">
+<pre>git submodule add &lt;remote_repository_adress_of_submodule&gt;
 git add --all
 cd &lt;submodule_dir&gt;
-git checkout &lt;submodule_branch&gt;</code></pre>
+git checkout &lt;submodule_branch&gt;</pre>
 </div></div>
 <div class="paragraph"><p>If the module you are adding contains some things, use:</p></div>
 <div class="listingblock">
@@ -523,10 +543,10 @@ git checkout <span style="color: #990000">&lt;</span>submodule_branch<span style
 <div class="sect2">
 <h3 id="_pulling_submodules">9.3. Pulling submodules</h3>
 <div class="listingblock">
-<div class="content">
-<pre><code>git submodule update
+<div class="content monospaced">
+<pre>git submodule update
 cd &lt;submodule_dir&gt;
-git checkout &lt;submodule_branch&gt;</code></pre>
+git checkout &lt;submodule_branch&gt;</pre>
 </div></div>
 </div>
 <div class="sect2">
@@ -534,9 +554,9 @@ git checkout &lt;submodule_branch&gt;</code></pre>
 <div class="paragraph"><p>When you forget to checkout your submodules and you commit your submodules,
 these commits don&#8217;t get into any branch, so you&#8217;ll need to do:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git checkout &lt;branch_name&gt;
-git merge &lt;hash_of_the_unbranched_commit&gt;</code></pre>
+<div class="content monospaced">
+<pre>git checkout &lt;branch_name&gt;
+git merge &lt;hash_of_the_unbranched_commit&gt;</pre>
 </div></div>
 </div>
 <div class="sect2">
@@ -557,14 +577,14 @@ project to ensure it point to the latest version of the submodule.  </div>
 </div>
 <div class="paragraph"><p>You can ensure to push your submodules using the "--recurse-submodules" option:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git push --recurse-submodules=on-demand</code></pre>
+<div class="content monospaced">
+<pre>git push --recurse-submodules=on-demand</pre>
 </div></div>
 <div class="paragraph"><p>You can use alias to shorten this:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git config --global alias.pushall "push --recurse-submodules=on-demand"
-git pushall     # Uses your newly created alias</code></pre>
+<div class="content monospaced">
+<pre>git config --global alias.pushall "push --recurse-submodules=on-demand"
+git pushall     # Uses your newly created alias</pre>
 </div></div>
 </div>
 </div>
@@ -574,17 +594,17 @@ git pushall     # Uses your newly created alias</code></pre>
 <div class="sectionbody">
 <div class="paragraph"><p>Creates a gzipped tarball of a specific branch or tag in the parent directory:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>git archive -o ../&lt;my_package&gt;_&lt;my_version&gt;.tar.gz &lt;branch_name&gt;|&lt;tag_name&gt;</code></pre>
+<div class="content monospaced">
+<pre>git archive -o ../&lt;my_package&gt;_&lt;my_version&gt;.tar.gz &lt;branch_name&gt;|&lt;tag_name&gt;</pre>
 </div></div>
-<div class="paragraph"><p>To get the recognized files format, use the <code>git archive --list</code> command:</p></div>
+<div class="paragraph"><p>To get the recognized files format, use the <code class="monospaced">git archive --list</code> command:</p></div>
 <div class="literalblock">
-<div class="content">
-<pre><code>$ git archive --list
+<div class="content monospaced">
+<pre>$ git archive --list
 tar
 tgz
 tar.gz
-zip</code></pre>
+zip</pre>
 </div></div>
 </div>
 </div>
@@ -606,8 +626,8 @@ zip</code></pre>
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
-  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
 <div id="footnotes"><hr /></div>

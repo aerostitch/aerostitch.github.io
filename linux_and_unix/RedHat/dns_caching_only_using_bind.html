@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="This document describes the installation and configuration of bind as a caching only DNS server on CentOS." />
+<meta name="keywords" content="dns, bind, named, caching-only" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
+<title>How to setup a caching only DNS server using bind</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-07-24</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>How to setup a caching only DNS server using bind</h1>
+This document describes the installation and configuration of bind as a caching only DNS server on CentOS.
+</div>
+      </div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>Tested on CentOS 6.5 in an IPv4 only context.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_server_side_actions">1. Server-side actions</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>First, install the <code class="monospaced">bind</code> and <code class="monospaced">bind-utils</code> packages using yum, activate the
+service and configure iptables to open both TCP and UDP ports 53:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>yum -y install <span style="font-weight: bold"><span style="color: #0000FF">bind</span></span> bind-utils
+chkconfig named --levels <span style="color: #993399">35</span> on
+<span style="font-style: italic"><span style="color: #9A1900"># and ensure named service is stopped</span></span>
+service named off
+iptables -I INPUT <span style="color: #993399">5</span> -m udp -p udp --dport <span style="color: #993399">53</span> -j ACCEPT
+iptables -I INPUT <span style="color: #993399">5</span> -m tcp -p tcp --dport <span style="color: #993399">53</span> -j ACCEPT
+service iptables save
+service iptables restart</tt></pre></div></div>
+<div class="paragraph"><p>Then verify that SELinux will only allow the root and named users to read
+<code class="monospaced">/etc/named.conf</code>:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre># ll -Z /etc/named.conf
+-rw-r-----. root named system_u:object_r:named_conf_t:s0 /etc/named.conf</pre>
+</div></div>
+<div class="paragraph"><p>In CentOS 6.5 the service ships with a caching-only configuration by default, so
+you don&#8217;t have a lot to do then. Just comment the IPV6 listening if you don&#8217;t
+use it or the IPV4 if that&#8217;s the one you don&#8217;t use. Make the service listen on
+the server interface (not only on local loopback). All these actions are
+configured in <code class="monospaced">/etc/named.conf</code> which would finally look like this (adapt it to
+your network of course!):</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>acl listening_ips { 127.0.0.1; 192.168.2.2; };
+acl allowed_networks { 127.0.0.1; 192.168.2.0/24; };
+acl allowed_slaves { 192.168.2.3; };
+
+options {
+        listen-on port 53 { listening_ips; };
+        // Disable this for IPv4 only environments
+        /* listen-on-v6 port 53 { ::1; }; */
+        directory       "/var/named";
+        dump-file       "/var/named/data/cache_dump.db";
+        statistics-file "/var/named/data/named_stats.txt";
+        memstatistics-file "/var/named/data/named_mem_stats.txt";
+        allow-query     { allowed_networks; };
+        recursion yes;
+
+        // Use this to allow slave DNS servers to get the transfers
+        /* allow-transfer { allowed_slaves; } */
+
+        managed-keys-directory "/var/named/dynamic";
+};
+
+logging {
+        channel default_debug {
+                file "data/named.run";
+                severity dynamic;
+        };
+};
+
+zone "." IN {
+        type hint;
+        file "named.ca";
+};
+
+include "/etc/named.rfc1912.zones";
+include "/etc/named.root.key";</pre>
+</div></div>
+<div class="paragraph"><p>Verify that the DNS servers you want to cache from are correctly set in
+<code class="monospaced">/etc/resolv.conf</code> (usual DNS <code class="monospaced">nameserver</code> fields configuration).</p></div>
+<div class="paragraph"><p>Then test the configuration and start the service. Be careful, at first start,
+the service will generate the rndc key which can really take a long time.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>service named configtest
+service named start</tt></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_client_side_configuration">2. Client-side configuration</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>On the client, make your /etc/resolv.conf include the nameserver either by using
+network-manager or directly editing the file.</p></div>
+<div class="paragraph"><p>If you don&#8217;t use network-manager and you want the configuration to persist
+between reboots, don&#8217;t forget to change the DNS1 and DNS2 entries in
+<code class="monospaced">/etc/sysconfig/network</code>.</p></div>
+<div class="paragraph"><p>If you have to troubleshoot, install the <code class="monospaced">bind-utils</code> package and use the
+<code class="monospaced">host</code>, <code class="monospaced">nslookup</code> and <code class="monospaced">dig</code> commands (dig @my_caching_dns_server google.com).</p></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

@@ -6,7 +6,7 @@
 <meta name="description" content="This document is regrouping my personal notes I took while revising for the 1Z0-047 Oracle certification exam." />
 <meta name="keywords" content="Oracle, Certified, Expert, SQL, Certification, exam, 1Z0-047" />
 <meta name="author" content="Joseph Herlant" />
-<link rel="shortcut icon" href="/home/theolediable/git/perso/asciidoc/images/icons/favicon.png" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
 <title>Notes for exam 1Z0-047</title>
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
 
@@ -18,17 +18,17 @@ asciidoc.install(3);
 /*]]>*/
 </script>
 <!-- Bootstrap core CSS -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Bootstrap theme -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
 <!-- ztree treeview css -->
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
 <!-- Custom styles for this template -->
 <link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2pre/html5shiv.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <![endif]-->
 </head>
 <body class="article">
@@ -79,10 +79,10 @@ having hard time to remember or just found interesting to keep track of.  </div>
 </div>
 <div class="paragraph"><p>Create Table As Select copies CHECK and NOT NULL constraints but not PU, UK, FK, indexes.</p></div>
 <div class="paragraph"><p>Indexes have their own namespace (different from tables), just as for constraints.</p></div>
-<div class="paragraph"><p>The view&#8217;s <code>WITH CHECK OPTION</code> prevent rows to be updated/inserted OUTSIDE the view and the update target from getting rows disapear from the view.</p></div>
+<div class="paragraph"><p>The view&#8217;s <code class="monospaced">WITH CHECK OPTION</code> prevent rows to be updated/inserted OUTSIDE the view and the update target from getting rows disapear from the view.</p></div>
 <div class="paragraph"><p>To reset or change the value of a sequence, you must recreate it. That&#8217;s the only way.</p></div>
-<div class="paragraph"><p>In a WHERE clause, <code>NOT</code> is evaluated 1st, then <code>AND</code>, then <code>OR</code> (if no parentheses).</p></div>
-<div class="paragraph"><p>In a where clause, the <code>NOT IN</code> <strong>excludes NULL</strong>.</p></div>
+<div class="paragraph"><p>In a WHERE clause, <code class="monospaced">NOT</code> is evaluated 1st, then <code class="monospaced">AND</code>, then <code class="monospaced">OR</code> (if no parentheses).</p></div>
+<div class="paragraph"><p>In a where clause, the <code class="monospaced">NOT IN</code> <strong>excludes NULL</strong>.</p></div>
 <div class="paragraph"><p>Where clause executes <strong>before</strong> SET clause in an update &#8658; update with no row will not fail if SET has incorrectly formatted values&#8230;</p></div>
 <div class="paragraph"><p>NOT NULL constraints cannot be precised in an outline way.</p></div>
 <div class="paragraph"><p>With set operators, you can order by position or by any column of the 1st select list.</p></div>
@@ -100,20 +100,20 @@ MAXVALUE can be set to &lt; 0 as long as MINVALUE &lt; MAXVALUE
 </li>
 </ul></div>
 <div class="paragraph"><p>After setting a column to unused, you can reuse its name for another column.</p></div>
-<div class="paragraph"><p><code>GROUPING</code> function returns 1 for superaggregated rows.</p></div>
-<div class="paragraph"><p><code>TIMESTAMP WITH TIMEZONE</code> cannot be used as PK, but <code>TIMESTAMP WITH LOCAL TIMEZONE</code> can.</p></div>
-<div class="paragraph"><p><code>SAVEPOINT &lt;savepoint_name&gt;</code> (no <strong>TO</strong>), but <code>ROLLBACK TO &lt;savepoint_name&gt;</code> (here you have a TO)!</p></div>
+<div class="paragraph"><p><code class="monospaced">GROUPING</code> function returns 1 for superaggregated rows.</p></div>
+<div class="paragraph"><p><code class="monospaced">TIMESTAMP WITH TIMEZONE</code> cannot be used as PK, but <code class="monospaced">TIMESTAMP WITH LOCAL TIMEZONE</code> can.</p></div>
+<div class="paragraph"><p><code class="monospaced">SAVEPOINT &lt;savepoint_name&gt;</code> (no <strong>TO</strong>), but <code class="monospaced">ROLLBACK TO &lt;savepoint_name&gt;</code> (here you have a TO)!</p></div>
 <div class="paragraph"><p>DISTINCT and UNIQUE operators do exactly the same thing in a select clause.</p></div>
-<div class="paragraph"><p>The <code>PRIOR</code> is on the side making reference to the parent line.</p></div>
-<div class="paragraph"><p><code>CREATE DIRECTORY</code> statement do not test the existence of the directory path.</p></div>
-<div class="paragraph"><p><code>SELECT ROWNUM, * FROM ...</code> will generate an syntax error. You cannot have a column and an a * in the same select clause.</p></div>
+<div class="paragraph"><p>The <code class="monospaced">PRIOR</code> is on the side making reference to the parent line.</p></div>
+<div class="paragraph"><p><code class="monospaced">CREATE DIRECTORY</code> statement do not test the existence of the directory path.</p></div>
+<div class="paragraph"><p><code class="monospaced">SELECT ROWNUM, * FROM ...</code> will generate an syntax error. You cannot have a column and an a * in the same select clause.</p></div>
 <div class="paragraph"><p>An updatable view cannot be base on hierarchical query.</p></div>
-<div class="paragraph"><p>To disable PK with FK referencing it, use: <code>ALTER TABLE &lt;table_name&gt; DISABLE PRIMARY KEY CASCADE;</code></p></div>
+<div class="paragraph"><p>To disable PK with FK referencing it, use: <code class="monospaced">ALTER TABLE &lt;table_name&gt; DISABLE PRIMARY KEY CASCADE;</code></p></div>
 <div class="paragraph"><p>FK needs the referenced columns to be constrained by a UNIQUE constraint (no need to be a PK).</p></div>
 <div class="paragraph"><p>Synonym creation do not require that the target object exists.</p></div>
-<div class="paragraph"><p>Any <code>ALTER TABLE ...</code> will prevent flashback from working.</p></div>
-<div class="paragraph"><p>Semijoins stand for <code>EXISTS</code> operators.</p></div>
-<div class="paragraph"><p><code>AVG(NULL) = NULL != 0</code></p></div>
+<div class="paragraph"><p>Any <code class="monospaced">ALTER TABLE ...</code> will prevent flashback from working.</p></div>
+<div class="paragraph"><p>Semijoins stand for <code class="monospaced">EXISTS</code> operators.</p></div>
+<div class="paragraph"><p><code class="monospaced">AVG(NULL) = NULL != 0</code></p></div>
 <div class="paragraph"><p>Available pseudocolumns in flashback version query are:</p></div>
 <div class="ulist"><ul>
 <li>
@@ -147,17 +147,17 @@ VERSIONS_OPERATION
 </p>
 </li>
 </ul></div>
-<div class="paragraph"><p>The UNDO_SQL column of the <code>FLASHBACK_TRANSACTION_QUERY</code> table shows informations required to undo a single SQL statement (and not a whole transaction).</p></div>
-<div class="paragraph"><p><code>VERSION BETWEEN MINVALUE AND MAXVALUE</code> get all the versions of the select in the time interval (MINVALUE is the minimum timestamp available in flashback operations).</p></div>
-<div class="paragraph"><p>When using a combination of <code>AS OF</code> and <code>VERSION BETWEEN</code>, VERSION BETWEEN must be <strong>BEFORE</strong> AS OF.</p></div>
+<div class="paragraph"><p>The UNDO_SQL column of the <code class="monospaced">FLASHBACK_TRANSACTION_QUERY</code> table shows informations required to undo a single SQL statement (and not a whole transaction).</p></div>
+<div class="paragraph"><p><code class="monospaced">VERSION BETWEEN MINVALUE AND MAXVALUE</code> get all the versions of the select in the time interval (MINVALUE is the minimum timestamp available in flashback operations).</p></div>
+<div class="paragraph"><p>When using a combination of <code class="monospaced">AS OF</code> and <code class="monospaced">VERSION BETWEEN</code>, VERSION BETWEEN must be <strong>BEFORE</strong> AS OF.</p></div>
 <div class="paragraph"><p>You cannot reference subquery&#8217;s table aliases in the WHEN condition(s) of a multitable INSERT.</p></div>
 <div class="paragraph"><p>You cannot use NEXTVAL of a sequence in a subquery of a multitable INSERT.</p></div>
 <div class="paragraph"><p>NEXTVAL in a WHEN condition of a multitable INSERT will increment <strong>ONE and only ONE time</strong> for each line regardless whether the when condition evaluates to true or if a multiple WHEN calls NEXTVAL.</p></div>
 <div class="paragraph"><p>In MERGE statements, DELETE only affect previously updated rows, not inserted or not matching.</p></div>
-<div class="paragraph"><p><code>TRIM(&lt;string&gt; [&lt;trim_char&gt;] [FROM LEADING|TRAILING|BOTH])</code></p></div>
+<div class="paragraph"><p><code class="monospaced">TRIM(&lt;string&gt; [&lt;trim_char&gt;] [FROM LEADING|TRAILING|BOTH])</code></p></div>
 <div class="paragraph"><p>SOUNDEX &#8658; 1st letter + 3 numerics. Don&#8217;t forget to use it twice in a comparision.</p></div>
 <div class="paragraph"><p>REMAINDER &#8658; plus proche multiple + !=</p></div>
-<div class="paragraph"><p><code>MONTH_BETWEEN(&lt;greater_date&gt;, &lt;lesser_date&gt;)</code></p></div>
+<div class="paragraph"><p><code class="monospaced">MONTH_BETWEEN(&lt;greater_date&gt;, &lt;lesser_date&gt;)</code></p></div>
 <div class="paragraph"><p>You cannot change database TZ if it already has a TIMESTAMP WITH LOCAL TIMEZONE column defined.</p></div>
 <div class="paragraph"><p>5 types of constraints:</p></div>
 <div class="ulist"><ul>
@@ -193,14 +193,14 @@ CHECK
 <div class="paragraph"><p>If you modify a column adding a DEFAULT constraint, the DEFAULT keyword must follow the datatype specification, not preceed it!</p></div>
 <div class="paragraph"><p>You cannot set the DEFAULT value to a column with something taht conflicts with its datatype.</p></div>
 <div class="paragraph"><p>You cannot change the datatype of an already populated column.</p></div>
-<div class="paragraph"><p>To set a column unused: <code>ALTER TABLE &lt;table_name&gt; SET UNUSED COLUMN &lt;col_name&gt;;</code></p></div>
+<div class="paragraph"><p>To set a column unused: <code class="monospaced">ALTER TABLE &lt;table_name&gt; SET UNUSED COLUMN &lt;col_name&gt;;</code></p></div>
 <div class="paragraph"><p>The GROUPING SETS operations combines the resulting row sets with an UNION ALL operation.</p></div>
 <div class="paragraph"><p>ALL_* views list any type of objects in the database, regardless of owner, to which your account has been granted access.</p></div>
-<div class="paragraph"><p><code>ALL_TAB_PRIV_RECD</code> view list grants on objects for which the user, PUBLIC or enabled role is grantee.</p></div>
-<div class="paragraph"><p><code>NUMTODSINTERVAL(&lt;number&gt;, 'UNIT_OF_THE_NUMBER_LIKE_MINUTE')</code> The unit of the number must be enclosed by quotes.</p></div>
-<div class="paragraph"><p>To defer an constraint, it must have been created with the <code>DEFERRABLE</code> option. Then you defer it using <code>SET CONSTRAINT &lt;constraint_name&gt; DEFERRED;</code></p></div>
-<div class="paragraph"><p>NVL2 function syntax <code>NVL2('&lt;column or expression to evaluate&gt;', '&lt;column or expression to return if NOT NULL&gt;', '&lt;column or expression to return if NULL&gt;')</code></p></div>
-<div class="paragraph"><p>A coumpound query will, by default, return rows sorted accross all the columns, from the left to the right. The only exception is <code>UNION ALL</code> where the rows will not be sorted.</p></div>
+<div class="paragraph"><p><code class="monospaced">ALL_TAB_PRIV_RECD</code> view list grants on objects for which the user, PUBLIC or enabled role is grantee.</p></div>
+<div class="paragraph"><p><code class="monospaced">NUMTODSINTERVAL(&lt;number&gt;, 'UNIT_OF_THE_NUMBER_LIKE_MINUTE')</code> The unit of the number must be enclosed by quotes.</p></div>
+<div class="paragraph"><p>To defer an constraint, it must have been created with the <code class="monospaced">DEFERRABLE</code> option. Then you defer it using <code class="monospaced">SET CONSTRAINT &lt;constraint_name&gt; DEFERRED;</code></p></div>
+<div class="paragraph"><p>NVL2 function syntax <code class="monospaced">NVL2('&lt;column or expression to evaluate&gt;', '&lt;column or expression to return if NOT NULL&gt;', '&lt;column or expression to return if NULL&gt;')</code></p></div>
+<div class="paragraph"><p>A coumpound query will, by default, return rows sorted accross all the columns, from the left to the right. The only exception is <code class="monospaced">UNION ALL</code> where the rows will not be sorted.</p></div>
 <div class="paragraph"><p>The result set of an inner query will be nested before the outer query can run.</p></div>
 </div>
 </div>
@@ -222,8 +222,8 @@ CHECK
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
-  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
 <div id="footnotes"><hr /></div>

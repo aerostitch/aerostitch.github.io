@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="This is my personnal cheatsheet about SELinux." />
+<meta name="keywords" content="Red Hat, selinux, security" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
+<title>SElinux cheatsheet</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-07-08</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>SElinux cheatsheet</h1>
+This is my personnal cheatsheet about SELinux.
+</div>
+      </div>
+<div class="sect1">
+<h2 id="_basics">1. Basics</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Main SELinux configuration file: <code class="monospaced">/etc/selinux/config</code>. Changing values in that
+file requires a reboot.</p></div>
+<div class="ulist"><div class="title">Enforcing levels:</div><ul>
+<li>
+<p>
+<code class="monospaced">disabled</code> &#8594; SELinux is fully disabled
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">permissive</code> &#8594; Logs warnings and actions that would be done by enforcing but
+ do not block anything.
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">enforcing</code> &#8594; SELinux policies are fully applied
+</p>
+</li>
+</ul></div>
+<div class="ulist"><div class="title">SELinux contexts:</div><ul>
+<li>
+<p>
+Users:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code class="monospaced">unconfined_u</code> &#8594; unprotected user
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">system_u</code> &#8594; system user
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">user_u</code> &#8594; normal user
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Role:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code class="monospaced">object_r</code> &#8594; file
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">system_r</code> &#8594; users and processes
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">unconfined_r</code> &#8594; unprotected file or process
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Domain:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code class="monospaced">unconfined_t</code> &#8594; unprotected file or process (most common)
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">etc_t</code> &#8594; for files in /etc directory
+</p>
+</li>
+<li>
+<p>
+plenty of other domains are available
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="ulist"><div class="title">SELinux logs in:</div><ul>
+<li>
+<p>
+<code class="monospaced">/var/log/audit/audit.log</code> &#8594; main log file
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">/var/log/messages</code> &#8594; Should normally also contain SELinux denials
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_usefull_commands">2. Usefull commands</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+<code class="monospaced">sestatus</code> &#8594; Shows selinux status
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">getenforce</code> &#8594; Shows the current enforcing level
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">setenforce</code> &#8594; Temporarly changes selinux enforcing level (do not touches
+ /etc/selinux/config file
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">ls -Z</code> &#8594; Shows security context of the files
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">ps -ZC atd</code> &#8594; Shows security context of the atd process
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">chcon -vu user_u install.log</code> &#8594; Changes the security context of the
+ install.log file to users_u user context
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">restorecon -Rv /tftpboot</code> &#8594; Resets the original context of the /tftpboot
+ directory (or set it correctly when you change the tftpboot service directory)
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">matchpathcon /my/path</code> &#8594; Gets the default SELinux security context for the
+ specified path from the file contexts configuration
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">sestatus -b</code> or <code class="monospaced">getsebool -a</code> &#8594; Shows all boolean options for services
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">semanage boolean -l</code> &#8594; Provides the same info as previos command but with a
+ description (provided by the policycoreutils-python package)
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">setsebool -P tftp_use_nfs=1</code> &#8594; Enables permanently this boolean
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">sealert</code> is also a very usefull command when it comes to troubleshooting.
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">ausearch -ts 16:00 | grep AVC</code> &#8594; Lists all access violations since 16h the
+ one that is in the previous 24 hours
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">ausearch -ts this-month | grep denied</code> &#8594; Lists all deactions denied by
+ SELinux during the current month. You can put a date there, but be carefull of
+ your locale which it will depend on.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_port_labeling">3. Port labeling</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Port labeling in SELinux is to allow services to use non standard ports. For
+example, by default, ssh will need to be on port 22 to work correctly with
+SELinux. Now let&#8217;s say that you configured ssh to listen on port 2222 instead.
+You&#8217;ll have to issue the following command to make it work:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>semanage port -a -t ssh_port_t -p tcp <span style="color: #993399">2222</span></tt></pre></div></div>
+<div class="paragraph"><p>The <code class="monospaced">semanage port -l</code> command will show the currently configured port labels.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_from_grub">4. From GRUB</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>To disable selinux from grub, add <code class="monospaced">selinux=0</code> to the kernel line.</p></div>
+<div class="paragraph"><p>To let selinux be loaded, but setting enforcing to permissive, add
+<code class="monospaced">enforcing=0</code> to the kernel line.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_troubleshooting">5. Troubleshooting</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The best way to troubleshoot is to install the <code class="monospaced">setroubleshoot-server</code> and
+<code class="monospaced">setroubleshoot-plugins</code>. Then, each time SELinux blocks something, an alert
+will be created in <code class="monospaced">/var/log/messages</code> with the instructions to help you solving
+hte issue and the id to use with <code class="monospaced">sealert</code>.</p></div>
+<div class="paragraph"><p>If you are running a graphical environment, you may to consider installing also
+the <code class="monospaced">setroubleshoot</code> package which provides a GUI to troubleshoot even more
+easily.</p></div>
+<div class="paragraph"><p>For some really interesting topics about SELinux, consider having a look to the
+Dan Walsh&#8217;s blog:</p></div>
+<div class="paragraph"><p><a href="http://danwalsh.livejournal.com/7995.html">http://danwalsh.livejournal.com/7995.html</a></p></div>
+<div class="paragraph"><p><a href="http://danwalsh.livejournal.com/20931.html">http://danwalsh.livejournal.com/20931.html</a></p></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

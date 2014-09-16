@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="This little shell schript will provide the log_mode of all the databases of the linux/Unix server that are registered in the oratab file." />
+<meta name="keywords" content="Oracle, database, log_mode, archivelog, noarchivelog, script" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
+<title>Getting log_mode of multiple databases</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-06-25</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Getting log_mode of multiple databases</h1>
+This little shell schript will provide the log_mode of all the databases of the linux/Unix server that are registered in the oratab file.
+</div>
+      </div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>It is supposed to be running in an sh or ksh environement.</p></div>
+<div class="paragraph"><p>Tested on AIX, Solaris and linux.</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>for oratab_path in /etc/oratab /var/opt/oracle/oratab ; do
+if [ -f $oratab_path ]; then
+  export ORAENV_ASK=NO
+  for instance in $(awk -F: '/^[^#]/ {print $1}' $oratab_path); do
+    export ORACLE_SID=$instance
+    . oraenv &gt; /dev/null
+    ${ORACLE_HOME}/bin/sqlplus -S /nolog &lt;&lt; __EOF__
+connect / as sysdba;
+set head off;
+set lines 200 pages 1024;
+select name, log_mode from v\$database;
+__EOF__
+  done
+  export ORAENV_ASK=YES
+fi
+done | grep -v '^\s*$' | sort</pre>
+</div></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

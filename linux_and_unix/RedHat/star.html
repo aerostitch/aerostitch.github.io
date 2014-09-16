@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="star is an evoluted tar that could take care of ACL set by setfacl." />
+<meta name="keywords" content="setfacl, star, tar" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
+<title>Basics examples about the star utility</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-07-13</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Basics examples about the star utility</h1>
+star is an evoluted tar that could take care of ACL set by setfacl.
+</div>
+      </div>
+<div class="sect1">
+<h2 id="_preliminary_step">1. Preliminary step</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Here we are preparing our environment: in our homr directory we have 3 files
+that we will use for packing with star:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre># cd
+# ll
+-rw-r--r--.  1 user01 root  9458 Jul  5 07:03 install.log
+-rw-r--r--.  1 root   root  3091 Jul  5 07:02 install.log.syslog
+-rw-r--r--+  1 root   root  9458 Jul 13 05:31 test.log
+# setfacl -n -m u:user01:rw test.log
+# getfacl test.log
+# file: test.log
+# owner: root
+# group: root
+user::rw-
+user:user01:rw-     #effective:r--
+group::r--
+mask::r--</pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_star_without_saving_acl">2. Using star without saving ACL</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This is quite like using tar. To create a regular tar file with tar, you can
+use:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>star -c <span style="color: #009900">file</span><span style="color: #990000">=</span><span style="font-weight: bold"><span style="color: #0000FF">test</span></span><span style="color: #990000">.</span>tar <span style="color: #990000">*.</span>log<span style="color: #990000">*</span></tt></pre></div></div>
+<div class="paragraph"><p>You can list the files in your tarball:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre># star -t file=test.tar -v
+   9458 -rw-r--r--  user01/root Jul  5 07:03 2014 install.log
+   3091 -rw-r--r--  root/root Jul  5 07:02 2014 install.log.syslog
+   9458 -rw-r--r--  root/root Jul 13 05:31 2014 test.log
+star: 3 blocks + 0 bytes (total of 30720 bytes = 30.00k).</pre>
+</div></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>star -xp -C /tmp <span style="color: #009900">f</span><span style="color: #990000">=~</span>/test<span style="color: #990000">.</span>tar</tt></pre></div></div>
+<div class="paragraph"><p>As you can see it has saved regular premissions</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre># ll /tmp
+-rw-r--r--. 1 user01  root     9458 Jul  5 07:03 install.log
+-rw-r--r--. 1 root    root     3091 Jul  5 07:02 install.log.syslog
+-rw-r--r--. 1 root    root     9458 Jul 13 05:31 test.log</pre>
+</div></div>
+<div class="paragraph"><p>But not ACL</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre># getfacl /tmp/test.log
+getfacl: Removing leading '/' from absolute path names
+# file: tmp/test.log
+# owner: root
+# group: root
+user::rw-
+group::r--
+other::r--</pre>
+</div></div>
+<div class="paragraph"><p>Clean up a bit with a simple <code class="monospaced">rm -f /tmp/install.log* /tmp/test.log</code>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_star_with_acl">3. Using star with ACL</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This time we will switch the <code class="monospaced">-acl</code> flag which will require to force the
+archiver type to <code class="monospaced">exustar</code>. This time we change the extension from tar to star
+but that&#8217;s just a personnal reminder. You could use whatever extension you want:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>star -c <span style="color: #009900">file</span><span style="color: #990000">=</span><span style="font-weight: bold"><span style="color: #0000FF">test</span></span><span style="color: #990000">.</span>star <span style="color: #990000">*.</span>log<span style="color: #990000">*</span> -acl -artype<span style="color: #990000">=</span>exustar</tt></pre></div></div>
+<div class="paragraph"><p>Now you can see that the archive listing is a bit different from previous
+example:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre># star -t file=test.star -v
+Release     star 1.5 (x86_64-redhat-linux-gnu)
+Archtype    exustar
+Dumpdate    1405244704.648841 (Sun Jul 13 05:45:04 2014)
+Volno       1
+Blocksize   20 records
+   9458 -rw-r--r--  user01/root Jul  5 07:03 2014 install.log
+   3091 -rw-r--r--  root/root Jul  5 07:02 2014 install.log.syslog
+   9458 -rw-r--r--+ root/root Jul 13 05:31 2014 test.log
+star: 3 blocks + 0 bytes (total of 30720 bytes = 30.00k).</pre>
+</div></div>
+<div class="paragraph"><p>Notice the little <strong>+</strong> on the test.log file that means that it has some ACL
+recorded.</p></div>
+<div class="paragraph"><p>Now extract the files to the /tmp as previously but adding the <code class="monospaced">-acl</code> switch to
+make it apply the acl records that were shipped in the tarball:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>star -xp -C /tmp <span style="color: #009900">f</span><span style="color: #990000">=</span>/root/test<span style="color: #990000">.</span>star -acl</tt></pre></div></div>
+<div class="paragraph"><p>Now you can see that basic permissions are still there</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre># ll /tmp
+-rw-r--r--. 1 user01  root     9458 Jul  5 07:03 install.log
+-rw-r--r--. 1 root    root     3091 Jul  5 07:02 install.log.syslog
+-rw-r--r--. 1 root    root     9458 Jul 13 05:31 test.log</pre>
+</div></div>
+<div class="paragraph"><p>But acl are also still there!</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre># getfacl /tmp/test.log
+getfacl: Removing leading '/' from absolute path names
+# file: tmp/test.log
+# owner: root
+# group: root
+user::rw-
+user:user01:rw-     #effective:r--
+group::r--
+mask::r--
+other::r--</pre>
+</div></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

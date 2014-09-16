@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="These are various logical RAID management commands." />
+<meta name="keywords" content="RAID, RedHat, Centos" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
+<title>RAID management commands on RedHat based distributions</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-07-05</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>RAID management commands on RedHat based distributions</h1>
+These are various logical RAID management commands.
+</div>
+      </div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>You&#8217;ll need the mdadm package here.</p></div>
+<div class="paragraph"><p>Creating a logical /dev/md0 RAID 5 device from /dev/sdb1, /dev/sdc1 and
+/dev/sdd1 partitions.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># First verify that all the partitions have been created using fdisk</span></span>
+fdisk -l
+<span style="font-style: italic"><span style="color: #9A1900"># If not, create them</span></span>
+fdisk /dev/sdd
+<span style="font-style: italic"><span style="color: #9A1900"># Finally create the RAID</span></span>
+mdadm -Cv /dev/md<span style="color: #993399">0</span> --level<span style="color: #990000">=</span><span style="color: #993399">5</span> -n<span style="color: #993399">3</span> /dev/sdb<span style="color: #993399">1</span> /dev/sdc<span style="color: #993399">1</span> /dev/sdd<span style="color: #993399">1</span></tt></pre></div></div>
+<div class="paragraph"><p>Then verify the status using</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># First verify the md number taken by the RAID</span></span>
+cat /proc/mdstat
+<span style="font-style: italic"><span style="color: #9A1900"># Then get the details</span></span>
+mdadm --detail /dev/md<span style="color: #993399">0</span></tt></pre></div></div>
+<div class="paragraph"><p>Fail a given disk of md0 using</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>mdadm /dev/md<span style="color: #993399">0</span> -f /dev/sdb<span style="color: #993399">1</span></tt></pre></div></div>
+<div class="paragraph"><p>Remove a disk from the array using</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>mdadm /dev/md<span style="color: #993399">0</span> -r /dev/sdb<span style="color: #993399">1</span></tt></pre></div></div>
+<div class="paragraph"><p>Or combine them using: <code class="monospaced">mdadm -v /dev/md0 -f /dev/sdb1 -r /dev/sdb1</code></p></div>
+<div class="paragraph"><p>Add a disk in the array using</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>mdadm /dev/md<span style="color: #993399">0</span> -a /dev/sdb<span style="color: #993399">1</span></tt></pre></div></div>
+<div class="paragraph"><p>Add then the RAID device to LVM using the classic <code class="monospaced">pvcreate /dev/md0</code></p></div>
+<div class="paragraph"><p>Drop the array using</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># First switch array offline after removing from LVM using pvremove</span></span>
+mdadm -vS /dev/md<span style="color: #993399">0</span>
+<span style="font-style: italic"><span style="color: #9A1900"># Then remove the device (seems not needed on Centos 6.5)</span></span>
+mdadm --remove /dev/md<span style="color: #993399">0</span>
+<span style="font-style: italic"><span style="color: #9A1900"># Finally, zero the superblock</span></span>
+mdadm --zero-superblock /dev/sdb<span style="color: #993399">1</span> /dev/sdc<span style="color: #993399">1</span> /dev/sdd<span style="color: #993399">1</span></tt></pre></div></div>
+<div class="paragraph"><p>Find stopped RAID arrays:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre># mdadm -v --examine --scan
+ARRAY /dev/md/0  level=raid5 metadata=1.2 num-devices=3 UUID=187b93af:44c4a179:06ae2b77:59e32205 name=RHEL01:0
+   devices=/dev/sdd1,/dev/sdc1,/dev/sdb1</pre>
+</div></div>
+<div class="paragraph"><p>Changing the device name from a given device. Here our device is called
+<code class="monospaced">/dev/md127</code> and we would like to start it as <code class="monospaced">/dev/md0</code>, do:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># First switch array offline after removing from LVM using pvremove</span></span>
+mdadm -vS /dev/md<span style="color: #993399">127</span>
+<span style="font-style: italic"><span style="color: #9A1900"># Then scan the offline devices to get the UUID</span></span>
+mdadm -v --examine --scan
+<span style="font-style: italic"><span style="color: #9A1900"># And use this UUID to start the device with the new device name</span></span>
+mdadm --assemble --run -u 187b93af<span style="color: #990000">:</span>44c4a179<span style="color: #990000">:</span>06ae2b77<span style="color: #990000">:</span><span style="color: #993399">59e32205</span> /dev/md<span style="color: #993399">0</span>
+<span style="font-style: italic"><span style="color: #9A1900"># And check the drive is now available from /proc/mdstat</span></span>
+cat /proc/mdstat
+<span style="font-style: italic"><span style="color: #9A1900"># If you want your new configuration to be preserved between reboots</span></span>
+mdadm --detail --brief /dev/md<span style="color: #993399">0</span> <span style="color: #990000">&gt;&gt;</span> /etc/mdadm<span style="color: #990000">.</span>conf
+<span style="font-style: italic"><span style="color: #9A1900"># And remove the line related to the old configuration of this device if exists</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># in this configuration file.</span></span></tt></pre></div></div>
+<div class="panel panel-warning admonitionblock">
+  <div class="panel-heading">
+
+<span class="glyphicon glyphicon-warning-sign"></span>
+
+
+
+    <b class="panel-title">
+    Warning
+    </b>
+  </div>
+  <div class="panel-body"><code class="monospaced">/boot</code> can only use basic partitions or logical RAID 1 because GRUB
+don&#8217;t undestand the other types of RAID.  </div>
+</div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

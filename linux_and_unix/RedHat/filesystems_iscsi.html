@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="This helps you to configure an iSCSI target and initiator." />
+<meta name="keywords" content="CenOS, iSCSI, target, initiator" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
+<title>Configuring an iSCSI server and client</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-07-19</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Configuring an iSCSI server and client</h1>
+This helps you to configure an iSCSI target and initiator.
+</div>
+      </div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>Procedure tested on CentOS 6.5.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuring_iscsi_target_server">1. Configuring iSCSI target (server)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>First, install the <code class="monospaced">scsi-target-utils</code>:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo yum install -y scsi-target-utils</tt></pre></div></div>
+<div class="paragraph"><p>Then configure your new target. For this, we took the following hypotheses
+(change them with whatever values you want):</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Our domain is <code class="monospaced">mydomain.com</code>
+</p>
+</li>
+<li>
+<p>
+The device we are using is <code class="monospaced">/dev/vg_test/lv_test</code>
+</p>
+</li>
+<li>
+<p>
+Our client&#8217;s IP is <code class="monospaced">192.168.2.101</code>
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo cat <span style="color: #990000">&lt;&lt;</span> __EOF__ <span style="color: #990000">&gt;&gt;</span> /etc/tgt/targets<span style="color: #990000">.</span>conf
+<span style="font-style: italic"><span style="color: #9A1900"># naming rule : iqn.&lt;year&gt;-&lt;month&gt;.&lt;reversed.domain.name&gt;:&lt;any name&gt;</span></span>
+<span style="color: #990000">&lt;</span>target iqn<span style="color: #990000">.</span><span style="color: #993399">2014</span>-<span style="color: #993399">07</span><span style="color: #990000">.</span>com<span style="color: #990000">.</span>mydomain<span style="color: #990000">:</span>target0<span style="color: #990000">&gt;</span>
+  backing-store /dev/vg_test/lv_test
+  <span style="font-style: italic"><span style="color: #9A1900"># iSCSI client allowed to connect</span></span>
+  initiator <span style="color: #993399">192.168</span><span style="color: #990000">.</span><span style="color: #993399">2.101</span>
+  <span style="font-style: italic"><span style="color: #9A1900"># Auth info</span></span>
+  incominguser iscsiuser01 userpassword
+<span style="color: #990000">&lt;</span>/target<span style="color: #990000">&gt;</span>
+__EOF__</tt></pre></div></div>
+<div class="paragraph"><p>Then get the service up and running and configure your firewall:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo chkconfig --levels <span style="color: #993399">35</span> tgtd on
+sudo service tgtd start
+<span style="font-style: italic"><span style="color: #9A1900"># Check that the new target is available</span></span>
+tgtadm --mode target --op show
+<span style="font-style: italic"><span style="color: #9A1900"># iptables configuration. Place your rule wherever you want!</span></span>
+sudo iptables -I INPUT <span style="color: #993399">5</span> -p tcp -m tcp --dport <span style="color: #993399">3260</span> -j ACCEPT
+sudo service iptables save
+sudo service iptables restart</tt></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuring_iscsi_initiator_client">2. Configuring iSCSI initiator (client)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>First, install the <code class="monospaced">iscsi-initiator-utils</code>:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo yum install -y iscsi-initiator-utils</tt></pre></div></div>
+<div class="paragraph"><p>Configure your initiator iscsi identifier:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo cat <span style="color: #990000">&lt;&lt;</span> __EOF__ <span style="color: #990000">&gt;</span> /etc/iscsi/initiatorname<span style="color: #990000">.</span>iscsi
+<span style="color: #009900">InitiatorName</span><span style="color: #990000">=</span>iqn<span style="color: #990000">.</span><span style="color: #993399">2014</span>-<span style="color: #993399">07</span><span style="color: #990000">.</span>com<span style="color: #990000">.</span>mydomain<span style="color: #990000">:</span>my_initiator01
+<span style="color: #009900">InitiatorAlias</span><span style="color: #990000">=</span>my_initiator01
+__EOF__</tt></pre></div></div>
+<div class="paragraph"><p>And verify in your <code class="monospaced">/etc/iscsi/iscsi.conf</code> that the following fields are
+uncommented and with the right values:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>node.startup = automatic
+node.session.auth.authmethod = CHAP
+node.session.auth.username = iscsiuser01
+node.session.auth.password = userpassword</pre>
+</div></div>
+<div class="paragraph"><p>And restart your iscsid daemon:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo service iscsid restart
+sudo chkconfig --levels <span style="color: #993399">35</span> iscsid on</tt></pre></div></div>
+<div class="paragraph"><p>Now test that you can see the target&#8217;s device (our scsi target is
+192.168.2.100). The following line should return something like
+"192.168.2.100:3260,1 iqn.2014-07.com.mydomain:target0".</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo iscsiadm --mode discovery --type sendtargets --portal <span style="color: #993399">192.168</span><span style="color: #990000">.</span><span style="color: #993399">2.100</span></tt></pre></div></div>
+<div class="paragraph"><p>Now make your target available as a new disk. This will make it persist accross
+reboot.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo iscsiadm --mode node --targetname iqn<span style="color: #990000">.</span><span style="color: #993399">2014</span>-<span style="color: #993399">07</span><span style="color: #990000">.</span>com<span style="color: #990000">.</span>mydomain<span style="color: #990000">:</span>target0 --portal <span style="color: #993399">192.168</span><span style="color: #990000">.</span><span style="color: #993399">2.100</span></tt></pre></div></div>
+<div class="paragraph"><p>Check your available partition:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># Through fdisk, you should see your new disk</span></span>
+sudo fdisk -l
+<span style="font-style: italic"><span style="color: #9A1900"># Also check your iscsi sessions</span></span>
+sudo iscsiadm --mode session --op show
+<span style="font-style: italic"><span style="color: #9A1900"># use blkid to get your UUID</span></span>
+blkid</tt></pre></div></div>
+<div class="panel panel-primary admonitionblock">
+  <div class="panel-heading">
+
+
+
+
+<span class="glyphicon glyphicon-minus-sign"></span>
+    <b class="panel-title">
+    Important
+    </b>
+  </div>
+  <div class="panel-body">Here you could notice that I used a LVM LV for the mount, so you can
+mount it directly. But usually we use a real LUN as target, so you&#8217;ll still have
+to create the partition using <code class="monospaced">fdisk /dev/sdb</code> (if your iscsi disk appeared as
+/dev/sdb) and format it using <code class="monospaced">mkfs.ext4 /dev/sdb1</code>.  </div>
+</div>
+<div class="paragraph"><p>To mount it automatically on boot, you&#8217;ll need to get the <code class="monospaced">netfs</code> daemon up and
+running and use the <code class="monospaced">_netdev</code> mount option in your <code class="monospaced">/etc/fstab</code> line. If you
+don&#8217;t do that, Linux will try to mount it BEFORE the network is setup.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo service netfs start
+sudo chkconfig --levels <span style="color: #993399">35</span> netfs on
+mkdir /media/my/mountpoint
+sudo echo -e <span style="color: #FF0000">"$(blkid /dev/sdb1 | cut -d"</span> <span style="color: #FF0000">" -f2) </span><span style="color: #CC33CC">\t</span><span style="color: #FF0000"> /media/my/mountpoint </span><span style="color: #CC33CC">\t</span><span style="color: #FF0000"> ext4 </span><span style="color: #CC33CC">\t</span><span style="color: #FF0000"> _netdev,rw  </span><span style="color: #CC33CC">\t</span><span style="color: #FF0000"> 0 </span><span style="color: #CC33CC">\t</span><span style="color: #FF0000"> 0"</span> <span style="color: #990000">&gt;&gt;</span> /etc/fstab
+sudo mount -a -O _netdev</tt></pre></div></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

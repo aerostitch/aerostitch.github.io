@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Getting KVM working on Debian" />
+<meta name="keywords" content="Debian, kvm, libvirt" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
+<title>Get KVM working on Debian</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-07-19</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Get KVM working on Debian</h1>
+Getting KVM working on Debian
+</div>
+      </div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>Tested on Debian 7.</p></div>
+<div class="paragraph"><p>Install the <code class="monospaced">qemu-kvm</code> and <code class="monospaced">libvirt-bin</code> packages
+and add your user to the libvirt group.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo apt-get install qemu-kvm libvirt-bin
+<span style="font-style: italic"><span style="color: #9A1900"># Add your user to the libvirt, then logout / log back in</span></span>
+sudo usermod -a -G libvirt <span style="color: #009900">$USER</span></tt></pre></div></div>
+<div class="paragraph"><p>Now setup the bridge interface. The <code class="monospaced">bridge-utils</code> packet normally ships with
+the libvirt install.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># If not already done, disable network-manager (don't forget to configure your</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># usually used interfaces)</span></span>
+sudo service network-manager stop
+echo <span style="color: #FF0000">"manual"</span> <span style="color: #990000">|</span> sudo tee /etc/init/network-manager<span style="color: #990000">.</span>override
+<span style="font-style: italic"><span style="color: #9A1900"># backup your interfaces file and change it to make it look that way if your IP</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># configuration is static on eth0.</span></span>
+ifdown eth0
+sudo mv /etc/network/interfaces /etc/network/interfaces<span style="color: #990000">.</span><span style="color: #009900">$(</span>date <span style="color: #990000">+</span><span style="color: #FF0000">'%Y%m%d'</span><span style="color: #990000">)</span>
+<span style="font-style: italic"><span style="color: #9A1900"># THE NEXT COMMANDS SHOULD BE EXECUTED AS ROOT!</span></span>
+cat <span style="color: #990000">&lt;&lt;</span> __EOF__ <span style="color: #990000">&gt;</span> /etc/network/interfaces
+<span style="font-style: italic"><span style="color: #9A1900"># The loopback network interface</span></span>
+auto lo
+iface lo inet loopback
+<span style="font-style: italic"><span style="color: #9A1900"># br0 configuration</span></span>
+auto br0
+iface br0 inet static
+  address <span style="color: #993399">192.168</span><span style="color: #990000">.</span><span style="color: #993399">1.2</span>
+  netmask <span style="color: #993399">255.255</span><span style="color: #990000">.</span><span style="color: #993399">255.0</span>
+  gateway <span style="color: #993399">192.168</span><span style="color: #990000">.</span><span style="color: #993399">1.1</span>
+  bridge_ports eth0
+  <span style="font-style: italic"><span style="color: #9A1900"># Can generate a "set forward dealy: numeric value out of range" warning.</span></span>
+  <span style="font-style: italic"><span style="color: #9A1900"># If you exeprience issues with passing DHCP to/from guest machines, put that</span></span>
+  <span style="font-style: italic"><span style="color: #9A1900"># parameter to "off".</span></span>
+  bridge_stp on
+  bridge_maxwait <span style="color: #993399">0</span>
+  bridge_fd <span style="color: #993399">0</span>
+__EOF__
+ifup br0
+<span style="font-style: italic"><span style="color: #9A1900"># Then setup your sysctl parameters</span></span>
+cat <span style="color: #990000">&lt;&lt;</span> __EOF__ <span style="color: #990000">&gt;&gt;</span> /etc/sysctl<span style="color: #990000">.</span>conf
+net<span style="color: #990000">.</span>bridge<span style="color: #990000">.</span>bridge-nf-call-ip6tables <span style="color: #990000">=</span> <span style="color: #993399">0</span>
+net<span style="color: #990000">.</span>bridge<span style="color: #990000">.</span>bridge-nf-call-iptables <span style="color: #990000">=</span> <span style="color: #993399">0</span>
+net<span style="color: #990000">.</span>bridge<span style="color: #990000">.</span>bridge-nf-call-arptables <span style="color: #990000">=</span> <span style="color: #993399">0</span>
+__EOF__
+sysctl -p /etc/sysctl<span style="color: #990000">.</span>conf
+<span style="font-style: italic"><span style="color: #9A1900"># Ensure the sysctl.conf is correctly loaded on boot and iptable is correctly</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># configured (if you are managing it out of this file, just ignore that.</span></span>
+sudo cp /etc/rc<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #0000FF">local</span></span> /etc/rc<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #0000FF">local</span></span><span style="color: #990000">.</span><span style="color: #009900">$(</span>date <span style="color: #990000">+</span><span style="color: #FF0000">'%Y%m%d'</span><span style="color: #990000">)</span>
+cat <span style="color: #990000">&lt;&lt;</span> __EOF__ <span style="color: #990000">&gt;</span> /etc/rc<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #0000FF">local</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">#!/bin/sh -e</span></span>
+sbin/sysctl -p /etc/sysctl<span style="color: #990000">.</span>conf
+iptables -A FORWARD -p tcp --tcp-flags SYN<span style="color: #990000">,</span>RST SYN -j TCPMSS --clamp-mss-to-pmtu
+<span style="font-weight: bold"><span style="color: #0000FF">exit</span></span> <span style="color: #993399">0</span>
+__EOF__
+iptables -A FORWARD -p tcp --tcp-flags SYN<span style="color: #990000">,</span>RST SYN -j TCPMSS --clamp-mss-to-pmtu</tt></pre></div></div>
+<div class="paragraph"><p>Now setup your NAT interface:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo virsh net-autostart default
+sudo virsh net-start default
+<span style="font-style: italic"><span style="color: #9A1900"># Now the following command should say that the defailt interface is active</span></span>
+sudo virsh net-list --all
+<span style="font-style: italic"><span style="color: #9A1900"># And the virbr0 interface should now appear in the following command output</span></span>
+sudo brctl show
+<span style="font-style: italic"><span style="color: #9A1900"># THEN EXECUTE THIS AS ROOT!</span></span>
+echo <span style="color: #FF0000">"net.ipv4.ip_forward = 1"</span> <span style="color: #990000">&gt;&gt;</span> /etc/sysctl<span style="color: #990000">.</span>conf</tt></pre></div></div>
+<div class="paragraph"><p>Last but not least, restart your libvirtd service</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo service libvirtd start</tt></pre></div></div>
+<div class="panel panel-primary admonitionblock">
+  <div class="panel-heading">
+
+
+
+
+<span class="glyphicon glyphicon-minus-sign"></span>
+    <b class="panel-title">
+    Important
+    </b>
+  </div>
+  <div class="panel-body">If you have setup the bridge interface over a wireless interface, you
+should configure your ebtables rules as explaine here:
+<a href="https://wiki.debian.org/BridgeNetworkConnections#Bridging_with_a_wireless_NIC">https://wiki.debian.org/BridgeNetworkConnections#Bridging_with_a_wireless_NIC</a>  </div>
+</div>
+<div class="paragraph"><p>To view the available virtual machines, you can use:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># View only machines owned by your session if non-root user</span></span>
+virsh list --all
+<span style="font-style: italic"><span style="color: #9A1900"># View all virtual machines of the system as non-root user</span></span>
+virsh --connect qemu<span style="color: #990000">:</span>///system list --all
+<span style="font-style: italic"><span style="color: #9A1900"># Or:</span></span>
+<span style="color: #009900">LIBVIRT_DEFAULT_URI</span><span style="color: #990000">=</span>qemu<span style="color: #990000">:</span>///system virsh list --all
+<span style="font-style: italic"><span style="color: #9A1900"># To connect to vritualbox channel</span></span>
+virsh --connect vbox<span style="color: #990000">:</span>///session list --all</tt></pre></div></div>
+<div class="paragraph"><p>To install a new VM, you can use for example:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="color: #009900">VM_NAME</span><span style="color: #990000">=</span>myVM01
+virt-install --connect qemu<span style="color: #990000">:</span>///system <span style="color: #990000">\</span>
+  --virt-type<span style="color: #990000">=</span>kvm <span style="color: #990000">\</span>
+  --name <span style="color: #009900">$VM_NAME</span> <span style="color: #990000">\</span>
+  --ram <span style="color: #993399">512</span> <span style="color: #990000">\</span>
+  --vcpus<span style="color: #990000">=</span><span style="color: #993399">1</span> <span style="color: #990000">\</span>
+  --os-variant<span style="color: #990000">=</span>rhel6 <span style="color: #990000">\</span>
+  --cdrom<span style="color: #990000">=</span>Downloads/CentOS-<span style="color: #993399">6.5</span>-x86_64-minimal<span style="color: #990000">.</span>iso <span style="color: #990000">\</span>
+  --disk <span style="color: #009900">path</span><span style="color: #990000">=</span>/var/lib/libvirt/images<span style="color: #990000">/</span><span style="color: #009900">${VM_NAME}</span>_disk1<span style="color: #990000">.</span>img<span style="color: #990000">,</span><span style="color: #009900">bus</span><span style="color: #990000">=</span>sata<span style="color: #990000">,</span><span style="color: #009900">size</span><span style="color: #990000">=</span><span style="color: #993399">5</span> <span style="color: #990000">\</span>
+  --network <span style="color: #009900">network</span><span style="color: #990000">=</span>default</tt></pre></div></div>
+<div class="paragraph"><p>References:</p></div>
+<div class="paragraph"><p><a href="http://wiki.libvirt.org/page/Networking#Altering_the_interface_config">http://wiki.libvirt.org/page/Networking#Altering_the_interface_config</a></p></div>
+<div class="paragraph"><p><a href="https://wiki.debian.org/KVM">https://wiki.debian.org/KVM</a></p></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

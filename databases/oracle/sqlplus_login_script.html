@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="This document shows a simple [g]login.sql script to use with sqlplus." />
+<meta name="keywords" content="sqlplus, glogin.sql, login.sql" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
+<title>Basic login script in sqlplus</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-05-03</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Basic login script in sqlplus</h1>
+This document shows a simple [g]login.sql script to use with sqlplus.
+</div>
+      </div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>Example of <code class="monospaced">login.sql</code> file in the directory from where you execute sqlplus
+or in <code class="monospaced">$ORACLE_HOME/sqlplus/admin/glogin.sql</code></p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">set</span></span> feedback off<span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">set</span></span> feedback off<span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">set</span></span> <span style="font-weight: bold"><span style="color: #0000FF">lines</span></span> <span style="color: #993399">200</span> pages <span style="color: #993399">0</span><span style="color: #990000">;</span>
+define _editor<span style="color: #990000">=</span>gvim<span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">set</span></span> sqlprompt <span style="color: #FF0000">"&amp;_user@&amp;_CONNECT_IDENTIFIER&gt; "</span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">alter</span></span> session <span style="font-weight: bold"><span style="color: #0000FF">set</span></span> NLS_LANGUAGE<span style="color: #990000">=</span><span style="color: #FF0000">'AMERICAN'</span> NLS_TERRITORY<span style="color: #990000">=</span><span style="color: #FF0000">'AMERICA'</span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">alter</span></span> session <span style="font-weight: bold"><span style="color: #0000FF">set</span></span> NLS_CURRENCY<span style="color: #990000">=</span><span style="color: #FF0000">'$'</span> NLS_ISO_CURRENCY<span style="color: #990000">=</span><span style="color: #FF0000">'AMERICA'</span> NLS_NUMERIC_CHARACTERS<span style="color: #990000">=</span><span style="color: #FF0000">'.,'</span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">alter</span></span> session <span style="font-weight: bold"><span style="color: #0000FF">set</span></span> NLS_DATE_LANGUAGE<span style="color: #990000">=</span><span style="color: #FF0000">'AMERICAN'</span> NLS_COMP<span style="color: #990000">=</span><span style="color: #FF0000">'BINARY'</span> NLS_DATE_FORMAT<span style="color: #990000">=</span><span style="color: #FF0000">'YYYY-MM-DD HH24:MI:SS'</span><span style="color: #990000">;</span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">SELECT</span></span> <span style="color: #FF0000">'*********** Current connection details ***********'</span> <span style="font-weight: bold"><span style="color: #0000FF">FROM</span></span> DUAL
+<span style="font-weight: bold"><span style="color: #0000FF">UNION</span></span> <span style="font-weight: bold"><span style="color: #0000FF">ALL</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">SELECT</span></span> <span style="color: #FF0000">'Starting: '</span><span style="color: #990000">||</span> SYSDATE <span style="font-weight: bold"><span style="color: #0000FF">FROM</span></span> DUAL
+<span style="font-weight: bold"><span style="color: #0000FF">UNION</span></span> <span style="font-weight: bold"><span style="color: #0000FF">ALL</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">SELECT</span></span> <span style="color: #FF0000">'Language: '</span><span style="color: #990000">||</span>SYS_CONTEXT<span style="color: #990000">(</span><span style="color: #FF0000">'USERENV'</span><span style="color: #990000">,</span> <span style="color: #FF0000">'LANGUAGE'</span><span style="color: #990000">)</span> <span style="font-weight: bold"><span style="color: #0000FF">FROM</span></span> DUAL
+<span style="font-weight: bold"><span style="color: #0000FF">UNION</span></span> <span style="font-weight: bold"><span style="color: #0000FF">ALL</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">SELECT</span></span> <span style="color: #FF0000">'SID     : '</span><span style="color: #990000">||</span>SYS_CONTEXT<span style="color: #990000">(</span><span style="color: #FF0000">'USERENV'</span><span style="color: #990000">,</span> <span style="color: #FF0000">'SID'</span><span style="color: #990000">)</span> <span style="font-weight: bold"><span style="color: #0000FF">FROM</span></span> DUAL
+<span style="font-weight: bold"><span style="color: #0000FF">UNION</span></span> <span style="font-weight: bold"><span style="color: #0000FF">ALL</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">SELECT</span></span> <span style="color: #FF0000">'DB user : '</span><span style="color: #990000">||</span>SYS_CONTEXT<span style="color: #990000">(</span><span style="color: #FF0000">'USERENV'</span><span style="color: #990000">,</span> <span style="color: #FF0000">'SESSION_USER'</span><span style="color: #990000">)</span> <span style="font-weight: bold"><span style="color: #0000FF">FROM</span></span> DUAL
+<span style="font-weight: bold"><span style="color: #0000FF">UNION</span></span> <span style="font-weight: bold"><span style="color: #0000FF">ALL</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">SELECT</span></span> <span style="color: #FF0000">'Instance: '</span><span style="color: #990000">||</span>SYS_CONTEXT<span style="color: #990000">(</span><span style="color: #FF0000">'USERENV'</span><span style="color: #990000">,</span> <span style="color: #FF0000">'INSTANCE_NAME'</span><span style="color: #990000">)</span> <span style="font-weight: bold"><span style="color: #0000FF">FROM</span></span> DUAL
+<span style="font-weight: bold"><span style="color: #0000FF">UNION</span></span> <span style="font-weight: bold"><span style="color: #0000FF">ALL</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">SELECT</span></span> <span style="color: #FF0000">'Server  : '</span><span style="color: #990000">||</span>SYS_CONTEXT<span style="color: #990000">(</span><span style="color: #FF0000">'USERENV'</span><span style="color: #990000">,</span> <span style="color: #FF0000">'SERVER_HOST'</span><span style="color: #990000">)</span> <span style="font-weight: bold"><span style="color: #0000FF">FROM</span></span> DUAL
+<span style="font-weight: bold"><span style="color: #0000FF">UNION</span></span> <span style="font-weight: bold"><span style="color: #0000FF">ALL</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">SELECT</span></span> <span style="color: #FF0000">'Database: '</span><span style="color: #990000">||</span>SYS_CONTEXT<span style="color: #990000">(</span><span style="color: #FF0000">'USERENV'</span><span style="color: #990000">,</span> <span style="color: #FF0000">'DB_UNIQUE_NAME'</span><span style="color: #990000">)</span> <span style="font-weight: bold"><span style="color: #0000FF">FROM</span></span> DUAL
+<span style="font-weight: bold"><span style="color: #0000FF">UNION</span></span> <span style="font-weight: bold"><span style="color: #0000FF">ALL</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">SELECT</span></span> <span style="color: #FF0000">'*********** Current connection details ***********'</span> <span style="font-weight: bold"><span style="color: #0000FF">FROM</span></span> DUAL<span style="color: #990000">;</span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">set</span></span> pages <span style="color: #993399">500</span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">set</span></span> feedback <span style="font-weight: bold"><span style="color: #0000FF">on</span></span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">set</span></span> timing <span style="font-weight: bold"><span style="color: #0000FF">on</span></span><span style="color: #990000">;</span></tt></pre></div></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

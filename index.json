@@ -21,6 +21,16 @@
             "target": "_self"
           },
           {
+            "name": "Getting log_mode of multiple databases",
+            "url": "/databases/oracle/oracle_get_logmode_of_multiple_databases.html",
+            "target": "_self"
+          },
+          {
+            "name": "Basic login script in sqlplus",
+            "url": "/databases/oracle/sqlplus_login_script.html",
+            "target": "_self"
+          },
+          {
             "name": "Certifications",
             "children": [
               {
@@ -41,12 +51,52 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Sqlserver",
+        "children": [
+          {
+            "name": "Automatically setting SQL Server perf counters using Powershell",
+            "url": "/databases/sqlserver/generate_perfcounters_sql_server.html",
+            "target": "_self"
+          }
+        ]
       }
     ]
   },
   {
     "name": "Linux_and_unix",
     "children": [
+      {
+        "name": "Managing crontab permissions",
+        "url": "/linux_and_unix/crontab_permissions.html",
+        "target": "_self"
+      },
+      {
+        "name": "Some notes about the GRUB bootloader",
+        "url": "/linux_and_unix/grub.html",
+        "target": "_self"
+      },
+      {
+        "name": "Tips about iptables",
+        "url": "/linux_and_unix/iptables_tips.html",
+        "target": "_self"
+      },
+      {
+        "name": "TCP wrappers",
+        "url": "/linux_and_unix/tcp_wrappers.html",
+        "target": "_self"
+      },
+      {
+        "name": "Notes about Upstart",
+        "url": "/linux_and_unix/upstart.html",
+        "target": "_self"
+      },
+      {
+        "name": "Some vim tips",
+        "url": "/linux_and_unix/vim_tips.html",
+        "target": "_self"
+      },
       {
         "name": "Aix",
         "children": [
@@ -63,16 +113,161 @@
         ]
       },
       {
+        "name": "Redhat",
+        "children": [
+          {
+            "name": "Managing startup services and runlevels",
+            "url": "/linux_and_unix/RedHat/boot_management.html",
+            "target": "_self"
+          },
+          {
+            "name": "Tips to quickly build a simple RPM package",
+            "url": "/linux_and_unix/RedHat/build_sample_rpm.html",
+            "target": "_self"
+          },
+          {
+            "name": "How to setup a caching only DNS server using bind",
+            "url": "/linux_and_unix/RedHat/dns_caching_only_using_bind.html",
+            "target": "_self"
+          },
+          {
+            "name": "ACL file systems permissions enhancement",
+            "url": "/linux_and_unix/RedHat/filesystems_acl.html",
+            "target": "_self"
+          },
+          {
+            "name": "Autofs notes",
+            "url": "/linux_and_unix/RedHat/filesystems_autofs.html",
+            "target": "_self"
+          },
+          {
+            "name": "Configuring an iSCSI server and client",
+            "url": "/linux_and_unix/RedHat/filesystems_iscsi.html",
+            "target": "_self"
+          },
+          {
+            "name": "Cheasheet about encrypted filesystems",
+            "url": "/linux_and_unix/RedHat/filesystems_luks_encrypted.html",
+            "target": "_self"
+          },
+          {
+            "name": "LVM management commands on RedHat based distributions",
+            "url": "/linux_and_unix/RedHat/filesystems_lvm.html",
+            "target": "_self"
+          },
+          {
+            "name": "Filesystems management commands",
+            "url": "/linux_and_unix/RedHat/filesystems_management.html",
+            "target": "_self"
+          },
+          {
+            "name": "Simple quota management notes",
+            "url": "/linux_and_unix/RedHat/filesystems_quota.html",
+            "target": "_self"
+          },
+          {
+            "name": "RAID management commands on RedHat based distributions",
+            "url": "/linux_and_unix/RedHat/filesystems_raid.html",
+            "target": "_self"
+          },
+          {
+            "name": "Configure vsftpd for anonymous write access in /var/ftp/pub",
+            "url": "/linux_and_unix/RedHat/ftp_anonymous_write.html",
+            "target": "_self"
+          },
+          {
+            "name": "Change VSFTP daemon’s root directory",
+            "url": "/linux_and_unix/RedHat/ftp_change_vsftpd_root_dir.html",
+            "target": "_self"
+          },
+          {
+            "name": "Making iptables log with Centos",
+            "url": "/linux_and_unix/RedHat/iptables_logging.html",
+            "target": "_self"
+          },
+          {
+            "name": "Setting up iptables for NAT",
+            "url": "/linux_and_unix/RedHat/iptables_nat_gateway.html",
+            "target": "_self"
+          },
+          {
+            "name": "Minimal kickstart example for Centos",
+            "url": "/linux_and_unix/RedHat/kickstart_minimal_centos.html",
+            "target": "_self"
+          },
+          {
+            "name": "Channel bonding interface manipulation",
+            "url": "/linux_and_unix/RedHat/network_bonding.html",
+            "target": "_self"
+          },
+          {
+            "name": "Recovering a lost /etc/init lost directory",
+            "url": "/linux_and_unix/RedHat/recover_etc_init.html",
+            "target": "_self"
+          },
+          {
+            "name": "How to simply recover a lost inittab file",
+            "url": "/linux_and_unix/RedHat/recover_inittab_centos.html",
+            "target": "_self"
+          },
+          {
+            "name": "Sharing user home directories using Samba",
+            "url": "/linux_and_unix/RedHat/samba.html",
+            "target": "_self"
+          },
+          {
+            "name": "SElinux cheatsheet",
+            "url": "/linux_and_unix/RedHat/selinux.html",
+            "target": "_self"
+          },
+          {
+            "name": "Basics examples about the star utility",
+            "url": "/linux_and_unix/RedHat/star.html",
+            "target": "_self"
+          },
+          {
+            "name": "Configure an unencrypted vnc server",
+            "url": "/linux_and_unix/RedHat/vnc_config.html",
+            "target": "_self"
+          }
+        ]
+      },
+      {
         "name": "Debian",
         "children": [
+          {
+            "name": "Forcing CMake in debian/rules",
+            "url": "/linux_and_unix/debian/force_buildsystem_in_debian_rules.html",
+            "target": "_self"
+          },
+          {
+            "name": "How to get the upstream version from debian/rules file",
+            "url": "/linux_and_unix/debian/getting_upstream_version_from_debian_rules.html",
+            "target": "_self"
+          },
+          {
+            "name": "Get KVM working on Debian",
+            "url": "/linux_and_unix/debian/kvm_on_debian.html",
+            "target": "_self"
+          },
           {
             "name": "Lintiani: Get rid of the no-symbols-control-file info",
             "url": "/linux_and_unix/debian/lintian_no-symbols-control-file.html",
             "target": "_self"
           },
           {
+            "name": "Finding udplicated files in a package",
+            "url": "/linux_and_unix/debian/list-duplicated_files_in_a_package.html",
+            "target": "_self"
+          },
+          {
             "name": "Packaging tips for debian",
             "url": "/linux_and_unix/debian/packaging_debian.html",
+            "target": "_self"
+          },
+          {
+            "name": "Building with sbuild for the experimental distribution",
+            "url": "/linux_and_unix/debian/sbuild_with_experimental_distribution.html",
             "target": "_self"
           }
         ]
@@ -90,6 +285,16 @@
       {
         "name": "Adding a counter of visits on an imagevue based website",
         "url": "/misc/imagevue-adding_visit_counter_to_imagevue_website.html",
+        "target": "_self"
+      },
+      {
+        "name": "List the backup of a file done with Netbackup",
+        "url": "/misc/netbackup_list_backuped_files.html",
+        "target": "_self"
+      },
+      {
+        "name": "VMWare’s PowerCLI tips",
+        "url": "/misc/vmware_powercli.html",
         "target": "_self"
       },
       {
@@ -244,6 +449,21 @@
                 "target": "_self"
               }
             ]
+          }
+        ]
+      },
+      {
+        "name": "Python",
+        "children": [
+          {
+            "name": "Combining Queues and Pools of processes using the multiprocessing module",
+            "url": "/programming/python/multiprocessing_combining_pools_and_queues.html",
+            "target": "_self"
+          },
+          {
+            "name": "Using apply_async on a Pool of processes using the multiprocessing module",
+            "url": "/programming/python/multiprocessing_pool_apply_async.html",
+            "target": "_self"
           }
         ]
       }

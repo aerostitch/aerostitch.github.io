@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="This is how you can configure write access to a directory in a RHEL, Centos or a Fedora." />
+<meta name="keywords" content="RHEL, Fedora, Centos, SELinux, iptables, ftp, vsftp" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
+<title>Configure vsftpd for anonymous write access in /var/ftp/pub</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-07-09</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Configure vsftpd for anonymous write access in /var/ftp/pub</h1>
+This is how you can configure write access to a directory in a RHEL, Centos or a Fedora.
+</div>
+      </div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>Today we&#8217;ll see how to simply configure write access to anonymous user in
+/var/ftp/pub on a Red Hat based system via FTP using the vsftpd daemon.</p></div>
+<div class="panel panel-info admonitionblock">
+  <div class="panel-heading">
+
+
+<span class="glyphicon glyphicon-info-sign"></span>
+
+
+    <b class="panel-title">
+    Note
+    </b>
+  </div>
+  <div class="panel-body">This procedure has been tested on Centos 6.5.  </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_prerequisites">1. Prerequisites</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>First of all, you need to install vsftpd:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>yum -y install vsftpd</tt></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configure_vsftpd">2. Configure vsftpd</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Edit youd vsftpd configuration file (<code class="monospaced">/etc/vsftpd/vsftpd.conf</code>) and ensure the
+following lines are uncommented and with these values:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>anonymous_enable=YES
+anon_upload_enable=YES</pre>
+</div></div>
+<div class="paragraph"><p>And if you want your anonymous users to create directories, you will need:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>anon_mkdir_write_enable=YES</pre>
+</div></div>
+<div class="paragraph"><p>Don&#8217;t forget to restart the service after any modification:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>service vsftpd restart</tt></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configure_iptables">3. Configure iptables</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>To be able to use passive mode in FTP, you will need to make iptables load the
+<code class="monospaced">ip_conntrack_ftp</code> module. To do this, edit the <code class="monospaced">IPTABLES_MODULES</code> in the
+<code class="monospaced">/etc/sysconfig/iptables-config</code> file. If no other modules were already loaded,
+the line should finally look like:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>IPTABLES_MODULES="ip_conntrack_ftp"</pre>
+</div></div>
+<div class="paragraph"><p>Then enable the correct ports (you will certainly limit the sources here for
+security. This example is the simplest):</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>iptables -I INPUT <span style="color: #993399">5</span> -p tcp -m tcp --dport <span style="color: #993399">20</span> -j ACCEPT
+iptables -I INPUT <span style="color: #993399">5</span> -p tcp -m tcp --dport <span style="color: #993399">21</span> -j ACCEPT
+<span style="font-style: italic"><span style="color: #9A1900"># Check that the REJECT rule is AFTER the rules you just added</span></span>
+iptables -L -n
+<span style="font-style: italic"><span style="color: #9A1900"># Save and restart</span></span>
+service iptables save
+service iptables restart
+<span style="font-style: italic"><span style="color: #9A1900"># And check again that everything is ok</span></span>
+iptables -L -n -v</tt></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configure_selinux">4. Configure SELinux</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Ensure your SELinux is set to Enforcing (<code class="monospaced">getenforce</code>). If not, you should
+consider set it to Enforcing for more security (<code class="monospaced">setenforce 1</code>).</p></div>
+<div class="paragraph"><p>You need to set the SELinux <code class="monospaced">allow_ftpd_anon_write</code> boolean set to <code class="monospaced">on</code>:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>setsebool -P allow_ftpd_anon_write on
+<span style="font-style: italic"><span style="color: #9A1900"># And check that the change is correctly made</span></span>
+getsebool allow_ftpd_anon_write</tt></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configure_permissions">5. Configure permissions</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The directory we want the anonymous user to put files in is <code class="monospaced">/var/ftp/pub</code> so we
+will ensure that this folder is writable by the ftp user:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>chown ftp /var/ftp/pub
+chown 755 /var/ftp/pub</pre>
+</div></div>
+<div class="paragraph"><p>And you should ensure that your dirctory has the correct SELinux context:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>chcon -t public_content_rw_t /var/www/pub
+<span style="font-style: italic"><span style="color: #9A1900"># And check that it's correctly applied:</span></span>
+ll -Z</tt></pre></div></div>
+<div class="panel panel-primary admonitionblock">
+  <div class="panel-heading">
+
+
+
+
+<span class="glyphicon glyphicon-minus-sign"></span>
+    <b class="panel-title">
+    Important
+    </b>
+  </div>
+  <div class="panel-body">Check in /etc/hosts.allow and /etc/hosts.deny that your client is
+authorized by tcp wrappers to connect to the service.  </div>
+</div>
+<div class="paragraph"><p>Now test from any client that should be able to connect and put a dummy_file
+(I&#8217;m using lftp here but you could test with any other client).</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>lftp my_ftp_server
+cd pub
+put dummy_file
+bye</tt></pre></div></div>
+<div class="panel panel-info admonitionblock">
+  <div class="panel-heading">
+
+
+<span class="glyphicon glyphicon-info-sign"></span>
+
+
+    <b class="panel-title">
+    Note
+    </b>
+  </div>
+  <div class="panel-body">Now our server is up and running, but you should certainly consider
+digging a little more about security on FTP servers to have a fully secure
+server.  </div>
+</div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

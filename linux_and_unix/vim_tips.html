@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Some tips for the vim text editor." />
+<meta name="keywords" content="linux, vi, vim, text editor" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
+<title>Some vim tips</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-07-03</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Some vim tips</h1>
+Some tips for the vim text editor.
+</div>
+      </div>
+<div class="sect1">
+<h2 id="_usefull_vim_command_line_options">1. Usefull vim command-line options</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Opening a file in read-only mode:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>vim -R my_file.ext</pre>
+</div></div>
+<div class="paragraph"><p>Opening a file in binary mode:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>vim -b my_file.ext</pre>
+</div></div>
+<div class="paragraph"><p>Opening a file and jumping directly to the last line:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>vim + my_file.ext</pre>
+</div></div>
+<div class="paragraph"><p>Opening a file and jumping directly to the 50th line:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>vim +50 my_file.ext</pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_usefull_editor_commands">2. Usefull editor commands</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+<code class="monospaced">$</code> &#8594; Go to the end of the line
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">H</code> &#8594; Go to the 1st line of the script (H is for Head)
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">L</code> or <code class="monospaced">G</code> &#8594; Go to the last line of the script (L is for Last)
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">A</code> &#8594; Appends after the last letter of the current line
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">a</code> &#8594; Appends after the cursor
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">i</code> &#8594; Insert at the current cursor position
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">r</code> &#8594; Replaces the current character by the one you will type after the <code class="monospaced">r</code>
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">R</code> &#8594; Insert mode but for replacing current characters instead of adding new
+ until the Escape key is pressed
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">o</code> &#8594; Opens a new line below the current in insert mode
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">O</code> &#8594; Opens a new line above the current in insert mode
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">dd</code> &#8594; Deletes current line
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">d5d</code> &#8594; Delets the next 5 lines including current
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">x</code> &#8594; Deletes character under the cursor
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">D</code> &#8594; Deletes characters from the cursor to the end of the line
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">C</code> &#8594; Deletes characters from the cursor to the end of the line and switch
+ to insert mode (C is for Change)
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">yy</code> &#8594; Copies the current line (Y is for Yanks)
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">y6y</code> &#8594; Copies the next 5 lines including the current one
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">p</code> &#8594; Pastes the yanked lines
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">^</code> &#8594; Moves to the 1st non-blank column of the current line
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">%</code> &#8594; Moves to associated (), {}, []
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">w</code> or <code class="monospaced">W</code>&#8594; Goes to the next word
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">wd</code> &#8594; Deletes the current word starting from cursor position
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">wc</code> &#8594; Changes current word (like a <code class="monospaced">wd</code> and a <code class="monospaced">i</code> combination)
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">m</code> + a char &#8594; sets a mark
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">y'</code> + a marked char &#8594; Copies lines from the current position to the given
+ mark (eg: <code class="monospaced">me</code> move to another position and do a <code class="monospaced">y'e</code> to copy the current block)
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">d'</code> + a marked char &#8594; deletes lines from the current position to the mark
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">u</code> &#8594; Undoes the last action
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">U</code> &#8594; Undoes all commands on one line
+</p>
+</li>
+<li>
+<p>
+Ctrl + <code class="monospaced">r</code> &#8594; Redo the last undone action
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">J</code> &#8594; Joins the current line and the next one including a space between them
+ and setting cursor position to the joining point
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">:3</code> &#8594; Goes to the 3rd line
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">gUw</code> &#8594; Converts a word to upper case
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">guw</code> &#8594; Converts a word to lower case
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">VU</code> &#8594; Converts current line to upper case
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">Vu</code> &#8594; Converts current line to lower case
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">V~</code> &#8594; Inverts the case of the current line
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">/</code> &#8594; Searches forward in the document
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">?</code> &#8594; Searches backward in the document
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">:set list</code> &#8594; Prints escape characters (end of lines, etc.)
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">:set nu</code> &#8594; Prints line numbers as 1st column
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">:set sm</code> &#8594; Show matching { or ( as ) or } is typed
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">:!'cmd'</code> &#8594; Executes <em>cmd</em> command in a shell prompt
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">:r filename</code> &#8594; Copies (reads) filename contents after cursor  in the
+ current document
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">:3,15w filename</code> &#8594; Saves lines 3 to 15 to filename
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">:3,15w &gt;&gt; filename</code> &#8594; Appends lines 3 to 15 to the end of filename
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">:e</code> &#8594; Discards all unsaved changes and continue editing
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">:.=</code> &#8594; Shows current line number
+</p>
+</li>
+<li>
+<p>
+<code class="monospaced">:=</code> &#8594; Shows number of lines in file
+</p>
+</li>
+<li>
+<p>
+Ctrl + <code class="monospaced">v</code> &#8594; Enters visual block mode
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

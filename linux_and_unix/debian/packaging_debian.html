@@ -6,7 +6,7 @@
 <meta name="description" content="These are links to several interesting documents about Debian packaging" />
 <meta name="keywords" content="Debian, .deb, sbuild, pbuilder, cowbuilder, packaging, maintaining, package" />
 <meta name="author" content="Joseph Herlant" />
-<link rel="shortcut icon" href="/home/theolediable/git/perso/asciidoc/images/icons/favicon.png" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
 <title>Packaging tips for debian</title>
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
 
@@ -18,17 +18,17 @@ asciidoc.install(3);
 /*]]>*/
 </script>
 <!-- Bootstrap core CSS -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Bootstrap theme -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
 <!-- ztree treeview css -->
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
 <!-- Custom styles for this template -->
 <link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2pre/html5shiv.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <![endif]-->
 </head>
 <body class="article">
@@ -67,9 +67,9 @@ These are links to several interesting documents about Debian packaging
 <div class="paragraph"><p>Build environments are restricted environments. To have and overview of that,
 see: <a href="https://wiki.debian.org/buildd">https://wiki.debian.org/buildd</a></p></div>
 <div class="paragraph"><p>Look at what&#8217;s on your computer that needs help, install the <em>devscripts</em> and
-<em>how-can-i-help</em> packages. From the first, use the <code>rc-alert</code> and <code>wnpp-alert</code>
-scripts. From the later, use the <code>how-can-i-help -o</code> or (if you want to help on
-packages not installed on your computer yet) <code>how-can-i-help -a</code>.</p></div>
+<em>how-can-i-help</em> packages. From the first, use the <code class="monospaced">rc-alert</code> and <code class="monospaced">wnpp-alert</code>
+scripts. From the later, use the <code class="monospaced">how-can-i-help -o</code> or (if you want to help on
+packages not installed on your computer yet) <code class="monospaced">how-can-i-help -a</code>.</p></div>
 <div class="paragraph"><p>To have a complete overview of how to maintain a package, refer to the official
 maintainer guide: <a href="http://www.debian.org/doc/manuals/maint-guide">http://www.debian.org/doc/manuals/maint-guide</a>
 <strong>This document is a gold mine!</strong></p></div>
@@ -88,7 +88,7 @@ maintainer guide: <a href="http://www.debian.org/doc/manuals/maint-guide">http:/
 </div>
 </div>
 <div class="sect1">
-<h2 id="_tips">3. Tips</h2>
+<h2 id="_general_tips">3. General tips</h2>
 <div class="sectionbody">
 <div class="paragraph"><p><strong>Don&#8217;t do NMU</strong> (Non Maintainer Uploads) on packages with maintainers.
 NMU is more considered as something quite rude than a grood practice.
@@ -105,6 +105,50 @@ could be a good start in my mind. That helps understanding how
 packages are made and how Debian developement works. Then cleanup and
 adopt an orphaned or a package in RFA state or if you want to be part
 of a packageing team, see the RFH bugs.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_packaging_tips">4. Packaging tips</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_debian_control_file">4.1. debian/control file</h3>
+<div class="paragraph"><p>When you have no architecture-specific files, use "Architecture: all"
+instead of "Architecture: any". This way the package won&#8217;t be rebuilt
+for each platforms, saving time and resources. It will also produce one
+binary package for all the platforms instead of one for each architecture.
+Example: for packaged based on python, ruby, javascript or other
+interpreted languages.</p></div>
+<div class="paragraph"><p>Description synopsis should be 80 chars max (Policy 3.4.1)
+and not end by a period (Developper reference 6.2.2).</p></div>
+<div class="paragraph"><p>When changing the description, it&#8217;s always better to validate it by sending
+a mail to <a href="mailto:debian-l10n-english@lists.debian.org">debian-l10n-english@lists.debian.org</a></p></div>
+<div class="paragraph"><p>Priority should generally be set to "optional".</p></div>
+<div class="paragraph"><p>Use the <code class="monospaced">wrap-and-sort -s</code> command from devscripts to have a clean and
+sorted debian/control file.other files are also cleaned during this process.
+Beware: it removes the commented lines!</p></div>
+</div>
+<div class="sect2">
+<h3 id="_debian_patches">4.2. debian/patches</h3>
+<div class="paragraph"><p>When doing a patch, don&#8217;t forget to add DEP-3 headers using <code class="monospaced">quilt header -e</code>.</p></div>
+<div class="paragraph"><p>When using a debian/source/format containing <em>3.0 quilt</em>, you don&#8217;t need:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+the <code class="monospaced">--with quilt</code> after the <code class="monospaced">dh $@</code> in the debian/rules file
+</p>
+</li>
+<li>
+<p>
+to set quilt as a build-dep in debian/control file.
+</p>
+</li>
+<li>
+<p>
+to use the dh_quilt_patch / dh_quilt_unpatch (it&#8217;s done automatically)
+</p>
+</li>
+</ul></div>
+</div>
 </div>
 </div>
     </div>
@@ -125,8 +169,8 @@ of a packageing team, see the RFH bugs.</p></div>
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
-  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
 <div id="footnotes"><hr /></div>

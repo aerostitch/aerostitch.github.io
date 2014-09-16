@@ -6,7 +6,7 @@
 <meta name="description" content="This document is regrouping my personal notes I took while revising for the 1Z0-052 Oracle certification exam." />
 <meta name="keywords" content="Oracle, Database, Certified, Administrator, Certification, exam, 1Z0-052, 11gR2" />
 <meta name="author" content="Joseph Herlant" />
-<link rel="shortcut icon" href="/home/theolediable/git/perso/asciidoc/images/icons/favicon.png" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
 <title>Notes for exams 1Z0-052</title>
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
 
@@ -18,17 +18,17 @@ asciidoc.install(3);
 /*]]>*/
 </script>
 <!-- Bootstrap core CSS -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Bootstrap theme -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
 <!-- ztree treeview css -->
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
 <!-- Custom styles for this template -->
 <link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2pre/html5shiv.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <![endif]-->
 </head>
 <body class="article">
@@ -102,58 +102,55 @@ a set of files on the disk. It exists until these files are deleted.
 </p>
 </dd>
 </dl></div>
-<div class="paragraph"><p>If the query <code>select parallel from v$instance;</code> returns NO, this means the instance is not part of a RAC.</p></div>
-<div class="paragraph"><p>If the query <code>select protection_level from v$database;</code> returns UNPROTECTED, it means that the instance is not part of a dataguard.</p></div>
-<div class="paragraph"><p>If the query <code>select * from dba_streams_administrator;</code> returns no rows, it means Streams has not been configured.</p></div>
-<div class="paragraph"><p><code>v$sga_dynamic_components</code> won&#8217;t show the log buffer because this view show only components that can be dynamically resized.</p></div>
+<div class="paragraph"><p>If the query <code class="monospaced">select parallel from v$instance;</code> returns NO, this means the instance is not part of a RAC.</p></div>
+<div class="paragraph"><p>If the query <code class="monospaced">select protection_level from v$database;</code> returns UNPROTECTED, it means that the instance is not part of a dataguard.</p></div>
+<div class="paragraph"><p>If the query <code class="monospaced">select * from dba_streams_administrator;</code> returns no rows, it means Streams has not been configured.</p></div>
+<div class="paragraph"><p><code class="monospaced">v$sga_dynamic_components</code> won&#8217;t show the log buffer because this view show only components that can be dynamically resized.</p></div>
 </div>
 <div class="sect2">
 <h3 id="_memory">1.2. Memory</h3>
 <div class="sect3">
 <h4 id="_sga">1.2.1. SGA</h4>
-<div class="tableblock">
-<table rules="all"
-width="100%"
-frame="border"
-cellspacing="0" cellpadding="4"
-class="table">
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
 <caption class="title">Table 1. SGA structures</caption>
-<col width="16%" />
-<col width="16%" />
-<col width="16%" />
-<col width="16%" />
-<col width="16%" />
-<col width="16%" />
+<col style="width:16%;">
+<col style="width:16%;">
+<col style="width:16%;">
+<col style="width:16%;">
+<col style="width:16%;">
+<col style="width:16%;">
 <thead>
 <tr>
-<th colspan="3" align="center" valign="top">SGA mandatory structures                                       </th>
-<th colspan="3" align="center" valign="top">SGA Optionnal structures</th>
+<th class="tableblock halign-center valign-top" colspan="3" >SGA mandatory structures                                       </th>
+<th class="tableblock halign-center valign-top" colspan="3" >SGA Optionnal structures</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td rowspan="5" align="center" valign="middle"><p class="table"><strong>Buffer cache</strong></p></td>
-<td rowspan="5" align="center" valign="middle"><p class="table"><strong>Log Buffer</strong></p></td>
-<td align="center" valign="top"><p class="table"><strong>Shared Pool</strong></p></td>
-<td rowspan="5" align="center" valign="middle"><p class="table"><strong>Large pool</strong></p></td>
-<td rowspan="5" align="center" valign="middle"><p class="table"><strong>Java pool</strong></p></td>
-<td rowspan="5" align="center" valign="middle"><p class="table"><strong>Streams pool</strong></p></td>
+<td class="tableblock halign-center valign-middle" rowspan="5" ><p class="tableblock"><strong>Buffer cache</strong></p></td>
+<td class="tableblock halign-center valign-middle" rowspan="5" ><p class="tableblock"><strong>Log Buffer</strong></p></td>
+<td class="tableblock halign-center valign-top" ><p class="tableblock"><strong>Shared Pool</strong></p></td>
+<td class="tableblock halign-center valign-middle" rowspan="5" ><p class="tableblock"><strong>Large pool</strong></p></td>
+<td class="tableblock halign-center valign-middle" rowspan="5" ><p class="tableblock"><strong>Java pool</strong></p></td>
+<td class="tableblock halign-center valign-middle" rowspan="5" ><p class="tableblock"><strong>Streams pool</strong></p></td>
 </tr>
 <tr>
-<td align="left" valign="top"><p class="table">Library cache</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Library cache</p></td>
 </tr>
 <tr>
-<td align="left" valign="top"><p class="table">Data dictionnary cache</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">Data dictionnary cache</p></td>
 </tr>
 <tr>
-<td align="left" valign="top"><p class="table">PL/SQL cache</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">PL/SQL cache</p></td>
 </tr>
 <tr>
-<td align="left" valign="top"><p class="table">PL/SQL functions / SQL Query cache</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">PL/SQL functions / SQL Query cache</p></td>
 </tr>
 </tbody>
 </table>
-</div>
 <div class="dlist"><dl>
 <dt class="hdlist1">
 SGA required memory buffers
@@ -461,7 +458,7 @@ VKTM
 <h2 id="_instance_management">3. Instance management</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>Get instance basic parameters:
-<code>select s.name, s.value as value_in_spfile, p.value as value_in_memory from v$spparameter s inner join v$parameter p on s.name=p.name where p.isbasic='TRUE' order by name;</code></p></div>
+<code class="monospaced">select s.name, s.value as value_in_spfile, p.value as value_in_memory from v$spparameter s inner join v$parameter p on s.name=p.name where p.isbasic='TRUE' order by name;</code></p></div>
 <div class="paragraph"><p>If you raise the log_buffer size, you may find that commit processing takes longer. If you make it smaller, it will be internally adjusted up to the default value. Generally speaking, you should keep it to the default value.</p></div>
 <div class="paragraph"><p>SYSOPER has the ability to issue:</p></div>
 <div class="ulist"><ul>
@@ -571,22 +568,22 @@ OS-specific inter-processing communication (IPC) &#8594; for local connections o
 <div class="paragraph"><p>Shared server implies: listener will transfert the user process to one dispatcher (load balancing between all dispatchers) that will queue the statements in a common queue. A shared server process (not tied to a session) that will take the job from the common queue and then queue the fetched result back to the initial dispatcher&#8217;s response queue that will transmit it to the user process.</p></div>
 <div class="paragraph"><p>Listener connection is transient but connection between user process and dispatcher will persist for the duration of the session.</p></div>
 <div class="paragraph"><p>The common queue is shared by all dispatchers. All shared server processes monitor the common queue.</p></div>
-<div class="paragraph"><p>The response queue is specific to the dispatcher that recieved the job (SQL) in the 1st place. Each dispatcher monitors its own response queue.</p></div>
+<div class="paragraph"><p>The response queue is specific to the dispatcher that received the job (SQL) in the 1st place. Each dispatcher monitors its own response queue.</p></div>
 <div class="paragraph"><p>UGA (user global area) is the equivalent to the PGA in a shared server environment. It resides in the SGA. The difference is that the session stack space that is still outside the SGA. The UGA can be configured manually using the "large_pool" parameter.</p></div>
 <div class="paragraph"><p>"shared_servers" parameter (that defaults to 1) controls the number of shared server processes that will be launched at instance startup time. In case of load, Oracle will automatically launch additionnal shared servers until it reaches the "max_shared_servers" (that defaults to a eigth of the "processes" parameter).</p></div>
 <div class="paragraph"><p>"dispatchers" is the only required parameter in order to configure a shared server environment. It contains the number of dispatchers and the corresponding protocol.</p></div>
-<div class="paragraph"><p>To force a dedicated connection in a shared server environment (for admin tasks for example), put <code>(SERVER = DEDICATED)</code> in the client side&#8217;s tnsnames.ora. Operations like RMAN backups, bulk loads, DataWarehousing DBA work need dedicated connections.</p></div>
+<div class="paragraph"><p>To force a dedicated connection in a shared server environment (for admin tasks for example), put <code class="monospaced">(SERVER = DEDICATED)</code> in the client side&#8217;s tnsnames.ora. Operations like RMAN backups, bulk loads, DataWarehousing DBA work need dedicated connections.</p></div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_oracle_storage">5. Oracle Storage</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>If a column of a table is defined as a user-defined object segment that itself has columns, then the column can be stored in its own segment called <code>a nested table</code>.</p></div>
-<div class="paragraph"><p>To allocate manually a new extent to a segment (here a table), use: <code>ALTER TABLE &lt;table_name&gt; ALLOCATE EXTENT [STORAGE (datafile '&lt;file_name&gt;')]</code></p></div>
+<div class="paragraph"><p>If a column of a table is defined as a user-defined object segment that itself has columns, then the column can be stored in its own segment called <code class="monospaced">a nested table</code>.</p></div>
+<div class="paragraph"><p>To allocate manually a new extent to a segment (here a table), use: <code class="monospaced">ALTER TABLE &lt;table_name&gt; ALLOCATE EXTENT [STORAGE (datafile '&lt;file_name&gt;')]</code></p></div>
 <div class="paragraph"><p>Oracle Home cannot be in ASM. Only datafiles, backup, redo and datapump files can be stored in ASM.</p></div>
 <div class="paragraph"><p>Extent management of a tablespace should always be LOCAL.</p></div>
-<div class="paragraph"><p><code>ALTER TABLESPACE &lt;ts_name&gt; OFFLINE IMMEDIATE</code> will not generated a checkpoint (due to the <strong>IMMEDIATE</strong> option) and will need change vectors to be applied before opening it back.</p></div>
+<div class="paragraph"><p><code class="monospaced">ALTER TABLESPACE &lt;ts_name&gt; OFFLINE IMMEDIATE</code> will not generated a checkpoint (due to the <strong>IMMEDIATE</strong> option) and will need change vectors to be applied before opening it back.</p></div>
 <div class="paragraph"><p>Objects in a READ ONLY (and/or OFFLINE) tablespace cannot be changed using DML statements but can be dropped (because it is only deleting rows in the data dictionnary)! But as the creation of a data object requires writing the 1<sup>st</sup> extent to the tablespace, creation of data objects is not possible in a READ ONLY tablespace.</p></div>
 <div class="paragraph"><p>It is possible to convert tablespace from dictionnary extent management to local extent management but not from freelist segment management to automatic segment management.</p></div>
 </div>
@@ -597,7 +594,7 @@ OS-specific inter-processing communication (IPC) &#8594; for local connections o
 <div class="paragraph"><p>User names must be <strong>&le; 30 characters</strong>, consists of leters, digits, the "$" sign and the "_" sign. If setting username with double quotes, theses rules can be broken except for length using non standard characters.</p></div>
 <div class="paragraph"><p>If a user&#8217;s quota is reduced to below the size of their existing objects (or even reduced to zero), the user objects will survive and be usable but they will not be permitted to get any bigger.</p></div>
 <div class="paragraph"><p>Before you can create a table you must have the "CREATE TABLE" grant <strong>AND</strong> quota on the tablespace in which you create it.</p></div>
-<div class="paragraph"><p>List of users that are in the password file are accessible through the <code>V$PWFILE_USERS</code> dynamic view.</p></div>
+<div class="paragraph"><p>List of users that are in the password file are accessible through the <code class="monospaced">V$PWFILE_USERS</code> dynamic view.</p></div>
 <div class="paragraph"><p>To have external authentication on normal user without advanced security option, create the account with the same name that the OS account prefixed with the value of the "OS_AUTHENT_PREFIX" init parameter (which defaults to OPS$).
 On windows domain, the user name will be "DOMAIN\USER", and the prefix will be added before the DOMAIN.</p></div>
 <div class="paragraph"><p>Using external authentication can be very useful, but only if the users actually log on to the machine hosting the database. Users will rarely do this, so the technique is more likely to be of value for accounts used for running maintenance or batch jobs.</p></div>
@@ -605,18 +602,18 @@ On windows domain, the user name will be "DOMAIN\USER", and the prefix will be a
 <div class="paragraph"><p>A (non-dba) user can only revoke objects-privileges that <strong>he/she granted</strong>.</p></div>
 <div class="paragraph"><p>To enable a non default role on your session, use the SET ROLE rolename.
 If you want a user to enable a role only by a specific procedure, use: CREATE ROLE rolename IDENTIFIED USING procedure_name;</p></div>
-<div class="paragraph"><p>Resource limits will not be applied unless the <code>RESOURCE_LIMIT</code> instance parameter has been set to TRUE.</p></div>
-<div class="paragraph"><p>In a profile, the <code>LIMIT SESSION_PER_USER</code> will not be applied unless the <code>RESOURCE_LIMIT</code> is set to TRUE.</p></div>
-<div class="paragraph"><p>A profile cannot be dropped if it has been assigned to a user. They must be altered to a different profile first, or use <code>DROP PROFILE &lt;profile_name&gt; CASCADE;</code> which will automatically reassign the assigned users to the default profile.</p></div>
+<div class="paragraph"><p>Resource limits will not be applied unless the <code class="monospaced">RESOURCE_LIMIT</code> instance parameter has been set to TRUE.</p></div>
+<div class="paragraph"><p>In a profile, the <code class="monospaced">LIMIT SESSION_PER_USER</code> will not be applied unless the <code class="monospaced">RESOURCE_LIMIT</code> is set to TRUE.</p></div>
+<div class="paragraph"><p>A profile cannot be dropped if it has been assigned to a user. They must be altered to a different profile first, or use <code class="monospaced">DROP PROFILE &lt;profile_name&gt; CASCADE;</code> which will automatically reassign the assigned users to the default profile.</p></div>
 <div class="paragraph"><p>A profile can limit logical I/O, from the database buffer cache, but not physical I/O from the database.</p></div>
 <div class="paragraph"><p>Public is a role that is granted to everyone, but when connecting using the "AS SYSOPER" syntax, you will appear to be connected to an account named "PUBLIC"! When connected "AS SYSDBA", you will appear to be connected as user "SYS".</p></div>
-<div class="paragraph"><p><code>GRANT ANY</code> system privilege protects SYS schema (to protect dictionnary by excluding its objects from the grant). It will not grants rights on the SYS schema as long as the <code>O7_DICTIONNARY_ACCESSIBILITY</code> is set to <code>FALSE</code>.</p></div>
-<div class="paragraph"><p>In the <code>AUDIT</code> command, the <code>BY SESSION</code> (which is the default) will create an audit entry for each session violating the rules, no matter how many violation it makes. The <code>BY ACCESS</code> will create 1 audit entry for each violation.</p></div>
-<div class="paragraph"><p>In the <code>AUDIT</code> command, the <code>WHENEVER SUCCESSFULL</code> keywork limits audit records to those where the operation succeeded. The alternative syntax is <code>WHENEVER NOT SUCCESSFULL</code>. By default, all are audited.</p></div>
-<div class="paragraph"><p>Logons are audited with the <code>AUDIT SESSION</code> command.</p></div>
-<div class="paragraph"><p><code>DBA_AUDIT_TRAIL</code> view is used for accessing standard auditing datas.</p></div>
-<div class="paragraph"><p>To manage Fine-Grained Auditing, use the <code>DBMS_FGA</code> package and the <code>DBA_FGA_AUDIT_TRAIL</code> view.</p></div>
-<div class="paragraph"><p><code>DBA_COMMON_AUDIT_TRAIL</code> view shows events from both standard and Fine-Grained auditing.</p></div>
+<div class="paragraph"><p><code class="monospaced">GRANT ANY</code> system privilege protects SYS schema (to protect dictionnary by excluding its objects from the grant). It will not grants rights on the SYS schema as long as the <code class="monospaced">O7_DICTIONNARY_ACCESSIBILITY</code> is set to <code class="monospaced">FALSE</code>.</p></div>
+<div class="paragraph"><p>In the <code class="monospaced">AUDIT</code> command, the <code class="monospaced">BY SESSION</code> (which is the default) will create an audit entry for each session violating the rules, no matter how many violation it makes. The <code class="monospaced">BY ACCESS</code> will create 1 audit entry for each violation.</p></div>
+<div class="paragraph"><p>In the <code class="monospaced">AUDIT</code> command, the <code class="monospaced">WHENEVER SUCCESSFULL</code> keywork limits audit records to those where the operation succeeded. The alternative syntax is <code class="monospaced">WHENEVER NOT SUCCESSFULL</code>. By default, all are audited.</p></div>
+<div class="paragraph"><p>Logons are audited with the <code class="monospaced">AUDIT SESSION</code> command.</p></div>
+<div class="paragraph"><p><code class="monospaced">DBA_AUDIT_TRAIL</code> view is used for accessing standard auditing datas.</p></div>
+<div class="paragraph"><p>To manage Fine-Grained Auditing, use the <code class="monospaced">DBMS_FGA</code> package and the <code class="monospaced">DBA_FGA_AUDIT_TRAIL</code> view.</p></div>
+<div class="paragraph"><p><code class="monospaced">DBA_COMMON_AUDIT_TRAIL</code> view shows events from both standard and Fine-Grained auditing.</p></div>
 <div class="paragraph"><p>Roles can be password protected!</p></div>
 </div>
 </div>
@@ -664,27 +661,27 @@ Dimensions
 <div class="ulist"><ul>
 <li>
 <p>
-a <code>heap table</code>: simplest, randomly organized, variable-length columns
+a <code class="monospaced">heap table</code>: simplest, randomly organized, variable-length columns
 </p>
 </li>
 <li>
 <p>
-an <code>index-organized table</code>: stores rows in the order of an index key
+an <code class="monospaced">index-organized table</code>: stores rows in the order of an index key
 </p>
 </li>
 <li>
 <p>
-an <code>index cluster</code>: can denormalize tables in parent-child relationship so that related rows from different tables are stored together
+an <code class="monospaced">index cluster</code>: can denormalize tables in parent-child relationship so that related rows from different tables are stored together
 </p>
 </li>
 <li>
 <p>
-a <code>hash cluster</code>: forces a random distribution rows to break ordering based on the entry sequence
+a <code class="monospaced">hash cluster</code>: forces a random distribution rows to break ordering based on the entry sequence
 </p>
 </li>
 <li>
 <p>
-a <code>partitionned table</code>: stores rows in separated physical structures (the partitions), allocating rows according to the value of a column
+a <code class="monospaced">partitionned table</code>: stores rows in separated physical structures (the partitions), allocating rows according to the value of a column
 </p>
 </li>
 </ul></div>
@@ -692,22 +689,22 @@ a <code>partitionned table</code>: stores rows in separated physical structures 
 <div class="paragraph"><p>Temporary tables' DML operation do not generate redo logs &#8658; faster than classic tables!</p></div>
 <div class="paragraph"><p>It is recommended to put an index on the foreign key to help Oracle searching for keys (when deleting rows in parent table for example).</p></div>
 <div class="paragraph"><p>There is no precompilation that makes a view quicker than the query without the view.</p></div>
-<div class="paragraph"><p>View created with <code>select * from ...</code> will be transformed internally to <code>select col1, col2, ... from ...</code> at the time of the creation and will therefore <strong>NOT</strong> become invalid when a new column will be added to the undelying table, but will not show the added column unless a manual recompilation is made against the view.</p></div>
+<div class="paragraph"><p>View created with <code class="monospaced">select * from ...</code> will be transformed internally to <code class="monospaced">select col1, col2, ... from ...</code> at the time of the creation and will therefore <strong>NOT</strong> become invalid when a new column will be added to the undelying table, but will not show the added column unless a manual recompilation is made against the view.</p></div>
 </div>
 <div class="sect2">
 <h3 id="_query_plan_techniques">7.2. Query plan techniques</h3>
-<div class="paragraph"><p><code>Nested join</code> technique passes through one table using an index placed on the other table of a the join to locate the matching rows (usually disk-intensive operation).</p></div>
-<div class="paragraph"><p><code>Hash join</code> technique reads the entire table into memory, converts it into a hash table and uses a hashing algorithm to locate the matching rows (memory and CPU intensive).</p></div>
-<div class="paragraph"><p><code>Sort merge</code> technique sorts the tables according to the join column and then merges them together (compromise among disk, memory and CPU).</p></div>
-<div class="paragraph"><p><code>Skip-scanning</code> method is used when the leftmost column of a composite index is not included in a select. That is much less effiscient than if the leftmost column was included.</p></div>
+<div class="paragraph"><p><code class="monospaced">Nested join</code> technique passes through one table using an index placed on the other table of a the join to locate the matching rows (usually disk-intensive operation).</p></div>
+<div class="paragraph"><p><code class="monospaced">Hash join</code> technique reads the entire table into memory, converts it into a hash table and uses a hashing algorithm to locate the matching rows (memory and CPU intensive).</p></div>
+<div class="paragraph"><p><code class="monospaced">Sort merge</code> technique sorts the tables according to the join column and then merges them together (compromise among disk, memory and CPU).</p></div>
+<div class="paragraph"><p><code class="monospaced">Skip-scanning</code> method is used when the leftmost column of a composite index is not included in a select. That is much less effiscient than if the leftmost column was included.</p></div>
 </div>
 <div class="sect2">
 <h3 id="_indexes">7.3. Indexes</h3>
-<div class="paragraph"><p><code>Reverse key indexes</code> store "John" as "nhoJ". When select is done, Oracle will automatically reverse the search key. Usefull when the data concatenate to the high end of the index.</p></div>
-<div class="paragraph"><p><code>Compressed indexes</code> will store the duplicated keys once, followed by a string of all the matching rowids.</p></div>
+<div class="paragraph"><p><code class="monospaced">Reverse key indexes</code> store "John" as "nhoJ". When select is done, Oracle will automatically reverse the search key. Usefull when the data concatenate to the high end of the index.</p></div>
+<div class="paragraph"><p><code class="monospaced">Compressed indexes</code> will store the duplicated keys once, followed by a string of all the matching rowids.</p></div>
 <div class="paragraph"><p>Unlike B*Tree indexes, bitmap indexes include NULL values.</p></div>
 <div class="paragraph"><p>Use bitmap indexes only with a low cardinality.</p></div>
-<div class="paragraph"><p>When creating an index with the <code>NOSORT</code> option, you indicate Oracle that the rows do not need to be sorted; if they are not already sorted (in the index order), the index creation will fail.</p></div>
+<div class="paragraph"><p>When creating an index with the <code class="monospaced">NOSORT</code> option, you indicate Oracle that the rows do not need to be sorted; if they are not already sorted (in the index order), the index creation will fail.</p></div>
 <div class="paragraph"><p>If you create a PK/UNIQUE constraint on 1 or more columns and a unique index already exists on these columns, oracle will detect it and use it for the PK/UNIQUE constraint. If the existing index is a NON-UNIQUE index, it will be used and converted to a UNIQUE index.</p></div>
 <div class="paragraph"><p>Dropping a constraint that have an implicit index defined will also drop the index, but if the index was explicitly created before the contraint, then the index will survive.</p></div>
 </div>
@@ -718,7 +715,7 @@ a <code>partitionned table</code>: stores rows in separated physical structures 
 <div class="sectionbody">
 <div class="paragraph"><p>Truncating a table only resets its High Water Mark.</p></div>
 <div class="paragraph"><p>Closing a Windows SQL*Plus terminal with an "exit" will commit transactions, but NOT on all the other Operating Systems!</p></div>
-<div class="paragraph"><p>PL/SQL functions are similar in concept to a PL/SQL procedure but it does not have OUT argument and cannot be invoked with <code>EXECUTE</code>. It returns a single value with the <code>RETURN</code> statement.</p></div>
+<div class="paragraph"><p>PL/SQL functions are similar in concept to a PL/SQL procedure but it does not have OUT argument and cannot be invoked with <code class="monospaced">EXECUTE</code>. It returns a single value with the <code class="monospaced">RETURN</code> statement.</p></div>
 <div class="paragraph"><p>DML statement acquire at least 2 locks:</p></div>
 <div class="ulist"><ul>
 <li>
@@ -732,10 +729,10 @@ a <code>partitionned table</code>: stores rows in separated physical structures 
 </p>
 </li>
 </ul></div>
-<div class="paragraph"><p><code>V$ROLLSTAT</code> gives informations on the size of the UNDO segments.</p></div>
-<div class="paragraph"><p><code>DBA_ROLLBACK_SEGS</code> gives informations about the existing ROLLBACK segments.</p></div>
-<div class="paragraph"><p><code>V$TRANSACTION</code> gives informations on the currently active transactions.</p></div>
-<div class="paragraph"><p><code>V$SESSION</code> gives informations about the currently existing sessions.</p></div>
+<div class="paragraph"><p><code class="monospaced">V$ROLLSTAT</code> gives informations on the size of the UNDO segments.</p></div>
+<div class="paragraph"><p><code class="monospaced">DBA_ROLLBACK_SEGS</code> gives informations about the existing ROLLBACK segments.</p></div>
+<div class="paragraph"><p><code class="monospaced">V$TRANSACTION</code> gives informations on the currently active transactions.</p></div>
+<div class="paragraph"><p><code class="monospaced">V$SESSION</code> gives informations about the currently existing sessions.</p></div>
 <div class="paragraph"><p>To find out space needed for an undo tablespace, take the longest query and the retention guarantee and do the following operation:</p></div>
 <div class="paragraph"><p><strong>(</strong> max(<em>Number of blocks for the query</em>) <strong>/</strong>  (<em>seconds of retention guarantee</em>)  <strong>)</strong> * (<em>Block size</em>) * max(<em>Duration of the query (sec)</em>)</p></div>
 </div>
@@ -743,13 +740,13 @@ a <code>partitionned table</code>: stores rows in separated physical structures 
 <div class="sect1">
 <h2 id="_configuring_the_db_for_backup_and_recovery">9. Configuring the DB for Backup and recovery</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>Can a <code>shutdown abort</code> corrupt a database? No, it is impossible to corrupt the database using these types of commands.</p></div>
+<div class="paragraph"><p>Can a <code class="monospaced">shutdown abort</code> corrupt a database? No, it is impossible to corrupt the database using these types of commands.</p></div>
 <div class="paragraph"><p>At instance startup, the roll forward phase reconstructs UNDO segments in memory and buffer cache from the active and current redo logs to enable the rollback phase.</p></div>
 <div class="paragraph"><p>Instance recovery never needs an ARCHIVED redo log file.</p></div>
-<div class="paragraph"><p>MTTR (&#8594; Mean Time To Recover) can be controlled by the <code>FAST_START_MTTR_TARGET</code> (which defaults to 0, that means UNLIMITED). This initialization parameter makes the DWR work more harder to ensure that the time between the checkpoint time (in the redo) and the current time tend to be near the value of this particular parameter. This parameter also enables "checkpoint auto-tunning".</p></div>
-<div class="paragraph"><p>When <code>FAST_START_MTTR_TARGET</code> is set to a nonzero value, it will override the <code>LOG_CHECKPOINT_INTERVAL</code>.</p></div>
-<div class="paragraph"><p>MTTR Advisor can be seen through <code>V$INSTANCE_RECOVERY</code> view.</p></div>
-<div class="paragraph"><p>Full checkpoint only occurs with orderly shutdown or by user request (<code>alter system checkpoint</code>).</p></div>
+<div class="paragraph"><p>MTTR (&#8594; Mean Time To Recover) can be controlled by the <code class="monospaced">FAST_START_MTTR_TARGET</code> (which defaults to 0, that means UNLIMITED). This initialization parameter makes the DWR work more harder to ensure that the time between the checkpoint time (in the redo) and the current time tend to be near the value of this particular parameter. This parameter also enables "checkpoint auto-tunning".</p></div>
+<div class="paragraph"><p>When <code class="monospaced">FAST_START_MTTR_TARGET</code> is set to a nonzero value, it will override the <code class="monospaced">LOG_CHECKPOINT_INTERVAL</code>.</p></div>
+<div class="paragraph"><p>MTTR Advisor can be seen through <code class="monospaced">V$INSTANCE_RECOVERY</code> view.</p></div>
+<div class="paragraph"><p>Full checkpoint only occurs with orderly shutdown or by user request (<code class="monospaced">alter system checkpoint</code>).</p></div>
 <div class="paragraph"><p>Partial checkpoint occurs while:</p></div>
 <div class="ulist"><ul>
 <li>
@@ -774,14 +771,14 @@ putting a tablespace in backup mode
 </li>
 </ul></div>
 <div class="paragraph"><p>An instance can have up to 8 multiplexed copies of a controlfile.</p></div>
-<div class="paragraph"><p><code>DB_RECOVERY_FILE_DEST_SIZE</code> must be set <strong>before</strong> attempting to set <code>DB_RECOVERY_FILE_DEST</code>.</p></div>
+<div class="paragraph"><p><code class="monospaced">DB_RECOVERY_FILE_DEST_SIZE</code> must be set <strong>before</strong> attempting to set <code class="monospaced">DB_RECOVERY_FILE_DEST</code>.</p></div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_backup_with_rman">10. Backup with RMAN</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>An <code>OPEN</code> backup can only be made if the database is in <code>ARCHIVELOG</code> mode.</p></div>
-<div class="paragraph"><p>In <code>NOARCHIVELOG</code> mode, backup of database can only be done with database closed (<code>MOUNT</code> mode after a <strong>CLEAN</strong> shutdown).</p></div>
+<div class="paragraph"><p>An <code class="monospaced">OPEN</code> backup can only be made if the database is in <code class="monospaced">ARCHIVELOG</code> mode.</p></div>
+<div class="paragraph"><p>In <code class="monospaced">NOARCHIVELOG</code> mode, backup of database can only be done with database closed (<code class="monospaced">MOUNT</code> mode after a <strong>CLEAN</strong> shutdown).</p></div>
 <div class="paragraph"><p>Files that cannot be backed up with RMAN are:</p></div>
 <div class="ulist"><ul>
 <li>
@@ -820,25 +817,25 @@ Oracle NET configuration files
 <div class="ulist"><ul>
 <li>
 <p>
-one <code>default session</code>: invokes the kernelized (available before DB is mounted) PL/SQL that implements RMAN.
+one <code class="monospaced">default session</code>: invokes the kernelized (available before DB is mounted) PL/SQL that implements RMAN.
 </p>
 </li>
 <li>
 <p>
-one <code>pooling session</code>: monitors the progress of RMAN operations
+one <code class="monospaced">pooling session</code>: monitors the progress of RMAN operations
 </p>
 </li>
 <li>
 <p>
-one ore more <code>channel session</code>: reads and writes on a disk or tape. One by user-defined (or defaults) channels.
+one ore more <code class="monospaced">channel session</code>: reads and writes on a disk or tape. One by user-defined (or defaults) channels.
 </p>
 </li>
 </ul></div>
 <div class="paragraph"><p>RMAN&#8217;s parallelism (# of channels) cannot exceed the number of input (if the multisection backup is disabled) and output files.</p></div>
 <div class="paragraph"><p>Default RMAN encryption requires a wallet and will be AES128. Alternatively, a password or longer keys can be specified.</p></div>
-<div class="paragraph"><p><code>CONFIGURE BACKUP OPTIMIZATION ON;</code> allows RMAN not to backup certain files if it considers it already has suffiscient copies of the files (related to retention policy). For read-write datafiles, it will never have identical copies of the file.</p></div>
-<div class="paragraph"><p><code>DELETE EXPIRED;</code> will not delete anything on disk, only the references marked as expired in the RMAN repository.</p></div>
-<div class="paragraph"><p><code>DELETE OBSOLETE;</code> will delete files and update the repository accordingly.</p></div>
+<div class="paragraph"><p><code class="monospaced">CONFIGURE BACKUP OPTIMIZATION ON;</code> allows RMAN not to backup certain files if it considers it already has suffiscient copies of the files (related to retention policy). For read-write datafiles, it will never have identical copies of the file.</p></div>
+<div class="paragraph"><p><code class="monospaced">DELETE EXPIRED;</code> will not delete anything on disk, only the references marked as expired in the RMAN repository.</p></div>
+<div class="paragraph"><p><code class="monospaced">DELETE OBSOLETE;</code> will delete files and update the repository accordingly.</p></div>
 <div class="paragraph"><p>RMAN stores its repository on controlfile &#8658; loss of it means no restore possible! RMAN Recovery Catalog avoids this.</p></div>
 <div class="paragraph"><p>If you use LOG_ARCHIVE_DEST or LOG_ARCHIVE_DUPLEX_DEST, these locations must be disks (Filesystems or ASM). It cannot be another Oracle instance.</p></div>
 <div class="paragraph"><p>If a MANDATORY archive destination is unavailable, the database will shut down.</p></div>
@@ -923,33 +920,33 @@ Data Recovery Advisor : makes the use of informations gathered by the Health Mon
 <div class="olist arabic"><ol class="arabic">
 <li>
 <p>
-<code>LIST FAILURE;</code> RMAN command to show informations about the failure
+<code class="monospaced">LIST FAILURE;</code> RMAN command to show informations about the failure
 </p>
 </li>
 <li>
 <p>
-<code>ADVISE FAILURE;</code> RMAN command <strong>in the SAME RMAN session</strong> to obtain a report of repair. DRA will not generate any advice if you have not first asked it to the list the failures. Fixed failures or occurences since last listing will not be advised upon.
+<code class="monospaced">ADVISE FAILURE;</code> RMAN command <strong>in the SAME RMAN session</strong> to obtain a report of repair. DRA will not generate any advice if you have not first asked it to the list the failures. Fixed failures or occurences since last listing will not be advised upon.
 </p>
 </li>
 <li>
 <p>
-<code>REPAIR FAILURE;</code> RMAN command <strong>in the SAME RMAN session</strong> to automatically run the generated repair script
+<code class="monospaced">REPAIR FAILURE;</code> RMAN command <strong>in the SAME RMAN session</strong> to automatically run the generated repair script
 </p>
 </li>
 </ol></div>
 <div class="paragraph"><p>DRA will function only for a single-instance database. It cannot work with a RAC clustered database, nor against a DataGuard standby database.</p></div>
-<div class="paragraph"><p>In <strong>NOarchivelog</strong> mode, the corruption of a datafile will mean full restore and a clear of the logfile groups using <code>ALTER DATABASE CLEAR LOGFILE GROUP &lt;group_number&gt;;</code>. This recreates the specified logfile group. Other solution would be to drop the relevant tablespace&#8230;</p></div>
-<div class="paragraph"><p>In <strong>NOarchivelog</strong> mode, restoring an incremental backup will need the use of <code>RECOVER DATABASE NOREDO;</code> command after the full backup restore.</p></div>
+<div class="paragraph"><p>In <strong>NOarchivelog</strong> mode, the corruption of a datafile will mean full restore and a clear of the logfile groups using <code class="monospaced">ALTER DATABASE CLEAR LOGFILE GROUP &lt;group_number&gt;;</code>. This recreates the specified logfile group. Other solution would be to drop the relevant tablespace&#8230;</p></div>
+<div class="paragraph"><p>In <strong>NOarchivelog</strong> mode, restoring an incremental backup will need the use of <code class="monospaced">RECOVER DATABASE NOREDO;</code> command after the full backup restore.</p></div>
 <div class="paragraph"><p>RMAN will always apply incremental backups in preference to applying redo data (if they are available).</p></div>
 <div class="paragraph"><p>SYSTEM and/or active UNDO tablespaces and/or any controlfile copy corruption will all bring database down.</p></div>
 <div class="paragraph"><p>Other tablespaces' datafile corruption &#8658; datafile will be brought offline (and the rest of the database will remain open).</p></div>
 <div class="paragraph"><p>Incomplete recovery is necessary if there is a missing archivelog or if all members of the current online redo log file group are missing.</p></div>
 <div class="paragraph"><p>Autobackup of controlfile and spfile will rely on DBID, so keep the DBID in your documentation.</p></div>
-<div class="paragraph"><p><code>RESTORE CONTROLFILE|SPFILE FROM AUTOBACKUP|'&lt;file_path&gt;';</code> are the only RMAN commands that can be executed in NOMOUNT mode.</p></div>
-<div class="paragraph"><p>In RMAN, the <code>SET</code> commands (SET UNTIL, NEWNAME, DBID,&#8230;) can <strong>only</strong> be executed in a <strong>run block</strong>.</p></div>
+<div class="paragraph"><p><code class="monospaced">RESTORE CONTROLFILE|SPFILE FROM AUTOBACKUP|'&lt;file_path&gt;';</code> are the only RMAN commands that can be executed in NOMOUNT mode.</p></div>
+<div class="paragraph"><p>In RMAN, the <code class="monospaced">SET</code> commands (SET UNTIL, NEWNAME, DBID,&#8230;) can <strong>only</strong> be executed in a <strong>run block</strong>.</p></div>
 <div class="paragraph"><p>Block corruptions will not take the datafile offline. RMAN can detect them as it performs backup operations and repair them automatically.</p></div>
-<div class="paragraph"><p>To manually recover a block using RMAN, use the <code>block recover datafile &lt;datafile_number&gt; block &lt;coma_separated_block_numbers_to_recover&gt;;</code>.</p></div>
-<div class="paragraph"><p>If you use the backup with the MAXCORRUPT option, you can recover corrupted blocks using <code>block recover corruption list [until SYSDATE-7];</code> (for example). The "until sysdate - 7" would recover from a backup at least older than 7 days.</p></div>
+<div class="paragraph"><p>To manually recover a block using RMAN, use the <code class="monospaced">block recover datafile &lt;datafile_number&gt; block &lt;coma_separated_block_numbers_to_recover&gt;;</code>.</p></div>
+<div class="paragraph"><p>If you use the backup with the MAXCORRUPT option, you can recover corrupted blocks using <code class="monospaced">block recover corruption list [until SYSDATE-7];</code> (for example). The "until sysdate - 7" would recover from a backup at least older than 7 days.</p></div>
 </div>
 </div>
 <div class="sect1">
@@ -957,7 +954,7 @@ Data Recovery Advisor : makes the use of informations gathered by the Health Mon
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_sql_loader">12.1. SQL*Loader</h3>
-<div class="paragraph"><p>SQL*Loader can use either binded insert with normal commit or <code>direct path loads</code> that will skip buffer cache (can even skip redo), generate no UNDO, writes directly above HWM and move HWM at the end of the work.</p></div>
+<div class="paragraph"><p>SQL*Loader can use either binded insert with normal commit or <code class="monospaced">direct path loads</code> that will skip buffer cache (can even skip redo), generate no UNDO, writes directly above HWM and move HWM at the end of the work.</p></div>
 <div class="paragraph"><p>Direct path loads have drawbacks:</p></div>
 <div class="ulist"><ul>
 <li>
@@ -1023,12 +1020,12 @@ Reject files (correct input but do not match some record selection criterion)
 <div class="ulist"><ul>
 <li>
 <p>
-The <code>DMnn</code>: DataPump Master process (one by datapump job)
+The <code class="monospaced">DMnn</code>: DataPump Master process (one by datapump job)
 </p>
 </li>
 <li>
 <p>
-One or more <code>DWnn</code>: Worker processes. If parallelism is enabled, each DWnn may make use of 2 or more parallel execution server processes named <code>Pnnn</code>.
+One or more <code class="monospaced">DWnn</code>: Worker processes. If parallelism is enabled, each DWnn may make use of 2 or more parallel execution server processes named <code class="monospaced">Pnnn</code>.
 </p>
 </li>
 </ul></div>
@@ -1077,12 +1074,12 @@ A parameter applied to the whole datapump job at command-line level
 </li>
 <li>
 <p>
-The <code>DATAPUMP_DIR</code> environment variable
+The <code class="monospaced">DATAPUMP_DIR</code> environment variable
 </p>
 </li>
 <li>
 <p>
-The <code>DATA_PUMP_DIR</code> directory
+The <code class="monospaced">DATA_PUMP_DIR</code> directory
 </p>
 </li>
 </ol></div>
@@ -1103,38 +1100,38 @@ External table path: uses SELECT and INSERT statements using the buffer cache, U
 </div>
 <div class="sect2">
 <h3 id="_transportable_tablespaces">12.4. Transportable tablespaces</h3>
-<div class="paragraph"><p>Transportable tablespaces requires data to be converted to the endian format. To transport tablespace accross platforms with a different endian requires converting datafiles. You do this using the <code>CONVERT</code> RMAN command.</p></div>
+<div class="paragraph"><p>Transportable tablespaces requires data to be converted to the endian format. To transport tablespace accross platforms with a different endian requires converting datafiles. You do this using the <code class="monospaced">CONVERT</code> RMAN command.</p></div>
 </div>
 <div class="sect2">
 <h3 id="_tables_reorganization">12.5. Tables reorganization</h3>
-<div class="paragraph"><p><code>DBA_RESUMABLE</code> view lists all suspended sessions. Resumable can be set:</p></div>
+<div class="paragraph"><p><code class="monospaced">DBA_RESUMABLE</code> view lists all suspended sessions. Resumable can be set:</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
-at session level using <code>ALTER SESSION ENABLE RESUMABLE [TIMEOUT &lt;seconds&gt;] [name &lt;operation_name&gt;];</code>. TIMEOUT defauts to infinite; NAME is the name that would appear in DBA_RESUMABLE
+at session level using <code class="monospaced">ALTER SESSION ENABLE RESUMABLE [TIMEOUT &lt;seconds&gt;] [name &lt;operation_name&gt;];</code>. TIMEOUT defauts to infinite; NAME is the name that would appear in DBA_RESUMABLE
 </p>
 </li>
 <li>
 <p>
-at system level by setting the <code>RESUMABLE_TIMEOUT</code> instance parameter
+at system level by setting the <code class="monospaced">RESUMABLE_TIMEOUT</code> instance parameter
 </p>
 </li>
 </ul></div>
 <div class="paragraph"><p>Row migration is caused by UPDATE statement. INSERT or DELETE can NEVER cause row migration.</p></div>
 <div class="paragraph"><p>Reorganizing a table with a MOVE will render all associated indexes unusable.</p></div>
 <div class="paragraph"><p>A MOVE operation will lock the table against DML. You cannot move a table if there is an uncommited transaction against it.</p></div>
-<div class="paragraph"><p>To find chained rows, use the <code>ANALYZE</code> command, <strong>NOT</strong> <code>DBMS_STATS</code> package. Then go to the <code>CHAIN_CNT</code> of the <code>DBA_TABLES</code>. If the <code>AVG_ROW_LEN</code> is less than the block size, these are migrated rows; if it is greater, they will be chained rows.</p></div>
+<div class="paragraph"><p>To find chained rows, use the <code class="monospaced">ANALYZE</code> command, <strong>NOT</strong> <code class="monospaced">DBMS_STATS</code> package. Then go to the <code class="monospaced">CHAIN_CNT</code> of the <code class="monospaced">DBA_TABLES</code>. If the <code class="monospaced">AVG_ROW_LEN</code> is less than the block size, these are migrated rows; if it is greater, they will be chained rows.</p></div>
 <div class="paragraph"><p>Tables in tablespace that use the older freelist technique for managing segment space usage cannot be shrunk.</p></div>
-<div class="paragraph"><p>You CANNOT <code>SHRINK</code> a table that:</p></div>
+<div class="paragraph"><p>You CANNOT <code class="monospaced">SHRINK</code> a table that:</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
-has a column of type <code>LONG</code>
+has a column of type <code class="monospaced">LONG</code>
 </p>
 </li>
 <li>
 <p>
-has a materialize view defined with <code>REFRESH ON COMMIT</code>
+has a materialize view defined with <code class="monospaced">REFRESH ON COMMIT</code>
 </p>
 </li>
 <li>
@@ -1154,9 +1151,9 @@ has not row movement enabled
 <div class="paragraph"><p>AWR tables are stored in the SYSAUX tablespace (SYSMAN schema) and cannot be relocated to anywhere else.</p></div>
 <div class="paragraph"><p>DB control and Grid connect directly using SYSMAN to query AWR informations.</p></div>
 <div class="paragraph"><p>ADDM reports are generated by MMON each time an AWR shanpshot is taken and are purged every 30 days by default.</p></div>
-<div class="paragraph"><p>Alerting queue (raised by MMON) can be queried from the <code>DBA_OUTSTANDING_ALERTS</code> view.</p></div>
-<div class="paragraph"><p>Metrics used for alerts are in V$METRICNAME. You can configure alerts using <code>DBMS_SERVER_ALERT</code> package.</p></div>
-<div class="paragraph"><p>When an alert is cleared, it is removed from <code>DBA_OUTSTANDING_ALERTS</code> and written to <code>DBA_ALERT_HISTORY</code>. Stateless alerts go straight to the history view.</p></div>
+<div class="paragraph"><p>Alerting queue (raised by MMON) can be queried from the <code class="monospaced">DBA_OUTSTANDING_ALERTS</code> view.</p></div>
+<div class="paragraph"><p>Metrics used for alerts are in V$METRICNAME. You can configure alerts using <code class="monospaced">DBMS_SERVER_ALERT</code> package.</p></div>
+<div class="paragraph"><p>When an alert is cleared, it is removed from <code class="monospaced">DBA_OUTSTANDING_ALERTS</code> and written to <code class="monospaced">DBA_ALERT_HISTORY</code>. Stateless alerts go straight to the history view.</p></div>
 <div class="paragraph"><p>The space usage alert is intelligent enough to ignore dropped objects and to take account of file autoextension, but it is only checked every ten minutes and can be disabled per tablespace. A snapshot is not needed for checking alerts, and if no threshold is set for a tablespace, then the database-wide default threshold will be applied.</p></div>
 </div>
 </div>
@@ -1182,10 +1179,10 @@ Multipass: Both SORT and MERGE are separated into batches, sorted and written to
 </li>
 </ul></div>
 <div class="paragraph"><p>The LOG_BUFFER is the only SGA structure that cannot be adjusted dynamically. It cannot therefore be automatically generated.</p></div>
-<div class="paragraph"><p>If AMM (<code>MEMORY_TARGET</code>) is set and that you also set <code>PGA_AGGREGATE_TARGET</code> and <code>SGA_TARGET</code>, these will be considered as <strong>MINIMUM</strong>. AMM will never reduce PGA and SGA beneath those sizes.</p></div>
+<div class="paragraph"><p>If AMM (<code class="monospaced">MEMORY_TARGET</code>) is set and that you also set <code class="monospaced">PGA_AGGREGATE_TARGET</code> and <code class="monospaced">SGA_TARGET</code>, these will be considered as <strong>MINIMUM</strong>. AMM will never reduce PGA and SGA beneath those sizes.</p></div>
 <div class="paragraph"><p>When Automatic Memory Management is enabled, the individual advisors (which are necessary for AMM to function) can be seen in V$ views, but only the overall advisor is displayed by Database Control.</p></div>
-<div class="paragraph"><p>Automatic memory management cannot function unless the <code>statistics_level</code> instance parameter is set to TYPICAL (which is the default) or ALL.</p></div>
-<div class="paragraph"><p>Memory advisor views: <code>v$memory_target_advice</code>, <code>v$sga_target_advice</code> and <code>v$pga_target_advice</code></p></div>
+<div class="paragraph"><p>Automatic memory management cannot function unless the <code class="monospaced">statistics_level</code> instance parameter is set to TYPICAL (which is the default) or ALL.</p></div>
+<div class="paragraph"><p>Memory advisor views: <code class="monospaced">v$memory_target_advice</code>, <code class="monospaced">v$sga_target_advice</code> and <code class="monospaced">v$pga_target_advice</code></p></div>
 <div class="paragraph"><p>An invalid object may become valid on next access, but unusable indexes must be made valid by manual rebuild.</p></div>
 <div class="sect2">
 <h3 id="_sql_tuning_advisor">14.1. SQL Tuning Advisor</h3>
@@ -1245,8 +1242,8 @@ revision of SQL statement
 </p>
 </li>
 </ul></div>
-<div class="paragraph"><p>Package to use the SQL Tuning Advisor: <code>DBMS_SQLTUNE</code>. To launch SQL Tuning Advisor job manually, use <code>DBMS_SQLTUNE.EXECUTE_TUNNING_TASK</code>.</p></div>
-<div class="paragraph"><p>Views to use with the SQL Tuning Advisor: <code>DBA_ADVISOR_LOG</code>, <code>DBA_/USER_ADVISOR_TASKS</code> and <code>V$ADVISOR_PROGRESS</code>.</p></div>
+<div class="paragraph"><p>Package to use the SQL Tuning Advisor: <code class="monospaced">DBMS_SQLTUNE</code>. To launch SQL Tuning Advisor job manually, use <code class="monospaced">DBMS_SQLTUNE.EXECUTE_TUNNING_TASK</code>.</p></div>
+<div class="paragraph"><p>Views to use with the SQL Tuning Advisor: <code class="monospaced">DBA_ADVISOR_LOG</code>, <code class="monospaced">DBA_/USER_ADVISOR_TASKS</code> and <code class="monospaced">V$ADVISOR_PROGRESS</code>.</p></div>
 </div>
 <div class="sect2">
 <h3 id="_sql_access_advisor">14.2. SQL Access Advisor</h3>
@@ -1274,7 +1271,7 @@ A hypothetical workload imputed from the DDL of a set of objects
 </li>
 </ul></div>
 <div class="paragraph"><p>SQL Access Advisor can recommend changes to Materialize views, changing indexes and partitionning, and enabling query rewrite. But only SQL Access Advisor recommends changes to Materialized views (including their creation).</p></div>
-<div class="paragraph"><p>Package to use the SQL Access Advisor: <code>DBMS_ADVISOR</code>. To launch SQL Access Advisor job manually, use <code>DBMS_ADVISOR.QUICK_TUNE</code>.</p></div>
+<div class="paragraph"><p>Package to use the SQL Access Advisor: <code class="monospaced">DBMS_ADVISOR</code>. To launch SQL Access Advisor job manually, use <code class="monospaced">DBMS_ADVISOR.QUICK_TUNE</code>.</p></div>
 </div>
 <div class="sect2">
 <h3 id="_database_replay">14.3. Database replay</h3>
@@ -1296,7 +1293,7 @@ A hypothetical workload imputed from the DDL of a set of objects
 <h2 id="_the_intelligent_infrastructure">15. The Intelligent Infrastructure</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>The ADR is a central file-based repository for all diagnostic information. This includes various dumps and trace files, the alert log, and health monitor reports.</p></div>
-<div class="paragraph"><p><code>ADR_BASE</code> defaults to (in order of precedence):</p></div>
+<div class="paragraph"><p><code class="monospaced">ADR_BASE</code> defaults to (in order of precedence):</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
@@ -1337,8 +1334,8 @@ ORACLE_HOME/log (if ORACLE_BASE environment variable is not set)
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
-  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
 <div id="footnotes"><hr /></div>

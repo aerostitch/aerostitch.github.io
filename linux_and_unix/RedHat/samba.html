@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Basic configuration to share user home directories using Samba on a Centos server." />
+<meta name="keywords" content="Samba, share, smbd, nmbd, winbind" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
+<title>Sharing user home directories using Samba</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-07-23</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Sharing user home directories using Samba</h1>
+Basic configuration to share user home directories using Samba on a Centos server.
+</div>
+      </div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>Tested on a centos 6.5.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_server_side_installation_and_configuration">1. Server side installation and configuration</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Install as usual: <code class="monospaced">yum -y install samba</code></p></div>
+<div class="paragraph"><p>In <code class="monospaced">/etc/samba/smb.conf</code>, you can change the default configuration but in CentOS
+6.5, the package already configures homes to be shared. Use the <code class="monospaced">testparm</code>
+command to see the currently configured parameters for samba. A basic output
+should look like this (if you don&#8217;t have printers, comment the block in the
+<code class="monospaced">/etc/samba/smb.conf</code> file):</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>$ testparm
+Load smb config files from /etc/samba/smb.conf
+rlimit_max: increasing rlimit_max (1024) to minimum Windows limit (16384)
+Processing section "[homes]"
+Processing section "[printers]"
+Loaded services file OK.
+Server role: ROLE_STANDALONE
+Press enter to see a dump of your service definitions
+
+[global]
+  workgroup = MYGROUP
+  server string = Samba Server Version %v
+  log file = /var/log/samba/log.%m
+  max log size = 50
+  idmap config * : backend = tdb
+  cups options = raw
+
+[homes]
+  comment = Home Directories
+  read only = No
+  browseable = No
+
+[printers]
+  comment = All Printers
+  path = /var/spool/samba
+  printable = Yes
+  print ok = Yes
+  browseable = No</pre>
+</div></div>
+<div class="paragraph"><p>Now open the ports:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+137 UDP for netbios name service (nmb daemon)
+</p>
+</li>
+<li>
+<p>
+138 UDP for netbios datagram (nmb daemon)
+</p>
+</li>
+<li>
+<p>
+139 TCP for netbios session, Windows files and printers sharing
+</p>
+</li>
+<li>
+<p>
+445 TCP for MS Directory service AD, windows shares
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>and enable the needed services (restart them if already started).
+<code class="monospaced">smb</code> and <code class="monospaced">nmb</code> are mandatory to make the samba shares working correctly
+but the <code class="monospaced">winbind</code> is optionnal (used for user and host name resolution).</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>iptables -I INPUT <span style="color: #993399">5</span> -m state --state NEW -m udp -p udp -m multiport --dports <span style="color: #993399">137</span><span style="color: #990000">,</span><span style="color: #993399">138</span> -j ACCEPT -m comment --comment <span style="color: #FF0000">"nmb services"</span>
+iptables -I INPUT <span style="color: #993399">5</span> -m state --state NEW -m tcp -p tcp -m multiport --dports <span style="color: #993399">139</span><span style="color: #990000">,</span><span style="color: #993399">445</span> -j ACCEPT -m comment --comment <span style="color: #FF0000">"smb services"</span>
+service iptables save
+service iptables restart
+chkconfig winbind --levels <span style="color: #993399">35</span> on
+chkconfig smb --levels <span style="color: #993399">35</span> on
+chkconfig nmb --levels <span style="color: #993399">35</span> on
+service winbind start
+service smb start
+service nmb start</tt></pre></div></div>
+<div class="paragraph"><p># Create your user and set a password
+useradd grumpy
+passwd grumpy
+# Set the user&#8217;s password in a samba context
+smbpasswd -a grumpy</p></div>
+<div class="panel panel-info admonitionblock">
+  <div class="panel-heading">
+
+
+<span class="glyphicon glyphicon-info-sign"></span>
+
+
+    <b class="panel-title">
+    Note
+    </b>
+  </div>
+  <div class="panel-body">if you need to enable another directory for samba export, don&#8217;t forget to
+tell SELinux that it&#8217;s a samba share using: <code class="monospaced">chcon -R -t samba_share_t /sharedata</code>  </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_client_side_installation_and_configuration">2. Client side installation and configuration</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Install samba client: <code class="monospaced">yum -y install samba-client</code></p></div>
+<div class="paragraph"><p>Ensure that the user exists on the client computer. Then check which samba
+shares are viewed from the client using the <code class="monospaced">smbclient</code> command line.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>useradd grumpy
+smbclient -L <span style="color: #993399">192.168</span><span style="color: #990000">.</span><span style="color: #993399">2.2</span> -U grumpy</tt></pre></div></div>
+<div class="paragraph"><p>Then try to mount the share:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>mkdir /home/grumpy/remote_home
+mount -t cifs <span style="color: #990000">//</span><span style="color: #993399">192.168</span><span style="color: #990000">.</span><span style="color: #993399">2.2</span>/grumpy /home/grumpy/remote_home<span style="color: #990000">/</span> -o user<span style="color: #990000">,</span><span style="color: #009900">uid</span><span style="color: #990000">=</span>grumpy<span style="color: #990000">,</span>rw<span style="color: #990000">,</span><span style="color: #009900">username</span><span style="color: #990000">=</span>grumpy<span style="color: #990000">,</span><span style="color: #009900">password</span><span style="color: #990000">=</span>smb_grumpy_password</tt></pre></div></div>
+<div class="paragraph"><p>If you changed the WORKGROUP parameter at the samba server, add the
+"workgroup=MY_NEW_WORKGROUP" parameter to the command line.</p></div>
+<div class="paragraph"><p>To avoid having the password shown everywhere even in the mount output display,
+you should think about using either a credentials file, but even better, you
+should look at autofs to do that more properly and in a more automated way.</p></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

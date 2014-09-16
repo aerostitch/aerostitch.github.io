@@ -6,7 +6,7 @@
 <meta name="description" content="This document describes how to configure Kerberos authentication on AIX 5.3, 6.1 and 7.1 working with Windows 2008 R2 Active Directory servers." />
 <meta name="keywords" content="AIX, KDC, Kerberos, krb5, authentication, windows, AD, active directory" />
 <meta name="author" content="Joseph Herlant" />
-<link rel="shortcut icon" href="/home/theolediable/git/perso/asciidoc/images/icons/favicon.png" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
 <title>Kerberos authentication configuration for AIX servers</title>
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
 
@@ -18,17 +18,17 @@ asciidoc.install(3);
 /*]]>*/
 </script>
 <!-- Bootstrap core CSS -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Bootstrap theme -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
 <!-- ztree treeview css -->
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
 <!-- Custom styles for this template -->
 <link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2pre/html5shiv.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <![endif]-->
 </head>
 <body class="article">
@@ -78,8 +78,8 @@ to any other domains of the MyForest Active Directory forest.</p></div>
     </b>
   </div>
   <div class="panel-body">In the command lines, the values between "&lt;" and "&gt;" are to be replaced
-by values appropriated to your context. Example: <code>kinit &lt;user.name&gt;</code> can become
-<code>kinit joseph.herlant</code> in some environements.  </div>
+by values appropriated to your context. Example: <code class="monospaced">kinit &lt;user.name&gt;</code> can become
+<code class="monospaced">kinit joseph.herlant</code> in some environements.  </div>
 </div>
 </div>
 </div>
@@ -89,8 +89,8 @@ by values appropriated to your context. Example: <code>kinit &lt;user.name&gt;</
 <div class="sect2">
 <h3 id="_preparing_environment">2.1. Preparing environment</h3>
 <div class="paragraph"><p>Install Kerberos filesets (aka NAS software). On AIX 5.3 as well as on AIX 7.1
-there are 3 filesets to install: the client (<code>krb5.client.rte</code>), the localized
-(english here) messages (<code>krb5.msg.en_US.client.rte</code>) and the license (<code>krb5.lic</code>).</p></div>
+there are 3 filesets to install: the client (<code class="monospaced">krb5.client.rte</code>), the localized
+(english here) messages (<code class="monospaced">krb5.msg.en_US.client.rte</code>) and the license (<code class="monospaced">krb5.lic</code>).</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
@@ -106,12 +106,12 @@ http://www.gnu.org/software/src-highlite -->
 <span style="font-style: italic"><span style="color: #9A1900"># Alternatively you can use this command on a server</span></span>
 <span style="font-style: italic"><span style="color: #9A1900"># where the installation packages are available in/mnt"</span></span>
 installp -ac -SvYXgd /mnt krb5<span style="color: #990000">.</span>client<span style="color: #990000">.</span>rte krb5<span style="color: #990000">.</span>msg<span style="color: #990000">.</span>en_US<span style="color: #990000">.</span>client<span style="color: #990000">.</span>rte krb5<span style="color: #990000">.</span>lic</tt></pre></div></div>
-<div class="paragraph"><p>Check if the installation is successfull using <code>installp -s all</code> (to check
-all packages applied but not commited) and <code>lslpp -l krb5*</code> (to check whether
+<div class="paragraph"><p>Check if the installation is successfull using <code class="monospaced">installp -s all</code> (to check
+all packages applied but not commited) and <code class="monospaced">lslpp -l krb5*</code> (to check whether
 the package is installed or not. Correct output example:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code># installp -s all
+<div class="content monospaced">
+<pre># installp -s all
 installp:  No filesets were found in the Software
         Vital Product Database in the APPLIED state.
 # lslpp -l krb5*
@@ -127,7 +127,7 @@ Path: /usr/lib/objrepos
 
 Path: /etc/objrepos
   krb5.client.rte            1.5.0.2  COMMITTED  Network Authentication Service
-                                                 Client</code></pre>
+                                                 Client</pre>
 </div></div>
 <div class="paragraph"><p>Add Kerberos binaries to the PATH variable and in /etc/environment:</p></div>
 <div class="listingblock">
@@ -172,7 +172,7 @@ shutdown -Fr</tt></pre></div></div>
 </div>
 <div class="sect2">
 <h3 id="_configuring_kerberos">2.2. Configuring Kerberos</h3>
-<div class="paragraph"><p>Generate Kerberos client configuration files using the <code>config.krb5</code> as
+<div class="paragraph"><p>Generate Kerberos client configuration files using the <code class="monospaced">config.krb5</code> as
 following. Here we choose to have the realm name the same name as the domain.
 But notice that the realm name MUST be UPPER CASE!<br />
 Generally speaking, the kdc is on the active directory server, but that is not
@@ -185,7 +185,7 @@ http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-style: italic"><span style="color: #9A1900"># The value of the "-r" argument must be written in UPPER CASE!</span></span>
 config<span style="color: #990000">.</span>krb5 -C -r MYDOMAIN<span style="color: #990000">.</span>MYFOREST -d mydomain<span style="color: #990000">.</span>myforest -s my_active_directory_server_name  -c my_kdc_server_name</tt></pre></div></div>
 <div class="paragraph"><p>Adapt kerberos configuration files "/etc/krb5/krb5.conf" to change the
-<code>default_tkt_enctypes</code> and <code>default_tgs_enctypes</code> to match the windows 2008 R2
+<code class="monospaced">default_tkt_enctypes</code> and <code class="monospaced">default_tgs_enctypes</code> to match the windows 2008 R2
 Kerberos supported encrption types (cf.
 <a href="http://technet.microsoft.com/en-us/library/dd560670%28v=WS.10%29.aspx">http://technet.microsoft.com/en-us/library/dd560670%28v=WS.10%29.aspx</a>).
 This would determine which algorithm to use when exchaning informations with the
@@ -194,30 +194,30 @@ so this configuration will use it to encrypt the communication channel.</p></div
 <div class="paragraph"><p>It should look like this (Be carefull to the order, it determines which
 algorithm is used first. It MUST be THIS ordering):</p></div>
 <div class="literalblock">
-<div class="content">
-<pre><code>        default_tkt_enctypes = aes256-cts aes128-cts arcfour-hmac
-        default_tgs_enctypes = aes256-cts aes128-cts arcfour-hmac</code></pre>
+<div class="content monospaced">
+<pre>        default_tkt_enctypes = aes256-cts aes128-cts arcfour-hmac
+        default_tgs_enctypes = aes256-cts aes128-cts arcfour-hmac</pre>
 </div></div>
 <div class="paragraph"><p>For AIX 7.1 and AIX 6.1 (not tested for 6.1), add the following block to the "/etc/methods.cfg" file:</p></div>
 <div class="literalblock">
-<div class="content">
-<pre><code>KRB5:
+<div class="content monospaced">
+<pre>KRB5:
         program = /usr/lib/security/KRB5
         program_64 = /usr/lib/security/KRB5_64
         options = authonly,tgt_verify=no,is_kadmind_compat=no
 
 KRB5files:
-        options = db=BUILTIN,auth=KRB5</code></pre>
+        options = db=BUILTIN,auth=KRB5</pre>
 </div></div>
 <div class="paragraph"><p>For AIX 5.3, add the following block to the "/usr/lib/security/methods.cfg" file:</p></div>
 <div class="literalblock">
-<div class="content">
-<pre><code>KRB5:
+<div class="content monospaced">
+<pre>KRB5:
         program = /usr/lib/security/KRB5A
         options = tgt_verify=no
 
 KRB5files:
-        options = db=BUILTIN,auth=KRB5</code></pre>
+        options = db=BUILTIN,auth=KRB5</pre>
 </div></div>
 <div class="paragraph"><p>Setup "Kerberos 5" as a valid authentication type for AIX to use:</p></div>
 <div class="listingblock">
@@ -269,9 +269,9 @@ http://www.gnu.org/software/src-highlite -->
     Note
     </b>
   </div>
-  <div class="panel-body">If the above commands do not work, use <code>kinit</code> locally on the target
+  <div class="panel-body">If the above commands do not work, use <code class="monospaced">kinit</code> locally on the target
 server to check if the user can be authenticated against the Kerberos server
-(i.e: <code>kinit &lt;user.name&gt;</code>).  </div>
+(i.e: <code class="monospaced">kinit &lt;user.name&gt;</code>).  </div>
 </div>
 </div>
 <div class="sect2">
@@ -288,10 +288,10 @@ http://www.gnu.org/software/src-highlite -->
 <div class="sect2">
 <h3 id="_mapping_a_local_login_to_a_different_ad_login">3.3. Mapping a local login to a different AD login</h3>
 <div class="paragraph"><p>First of all, add the kerberos authentication mode to the user using
-<code>chuser registry=KRB5files SYSTEM=KRB5files &lt;user.name&gt;</code> command explained
+<code class="monospaced">chuser registry=KRB5files SYSTEM=KRB5files &lt;user.name&gt;</code> command explained
 in the previous step.</p></div>
 <div class="paragraph"><p>It is possible to map a local login with an Active Directory account that
-is using another login name. For this, use the <code>auth_name</code> attribute of
+is using another login name. For this, use the <code class="monospaced">auth_name</code> attribute of
 the local user like this :</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.7
@@ -300,7 +300,7 @@ http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt>chuser <span style="color: #009900">auth_name</span><span style="color: #990000">=&lt;</span>active<span style="color: #990000">.</span>directory<span style="color: #990000">.</span>login<span style="color: #990000">&gt;</span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">local</span></span><span style="color: #990000">.</span>user<span style="color: #990000">.</span>name<span style="color: #990000">&gt;</span></tt></pre></div></div>
 <div class="paragraph"><p>For example, to map the "joseph" local user to the remote "joseph.herlant" user,
-use the following (after the execution of the <code>chuser registry=KRB5files
+use the following (after the execution of the <code class="monospaced">chuser registry=KRB5files
 SYSTEM=KRB5files &lt;user.name&gt;</code> command explained in the previous step) :</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.7
@@ -335,22 +335,22 @@ user authentication in an environment where <strong>MyDomain.MyForest</strong> i
 authentication domain.</p></div>
 <div class="paragraph"><p>In the /etc/methods file, verify that the "tgl_verify=no" option is set:</p></div>
 <div class="literalblock">
-<div class="content">
-<pre><code>KRB5:
+<div class="content monospaced">
+<pre>KRB5:
         program = /usr/lib/security/KRB5
         program_64 = /usr/lib/security/KRB5_64
         options = authonly,tgt_verify=no,is_kadmind_compat=no
 
 KRB5files:
-        options = db=BUILTIN,auth=KRB5</code></pre>
+        options = db=BUILTIN,auth=KRB5</pre>
 </div></div>
 <div class="paragraph"><p>Then add the "dns_lookup_kdc = true" and "dns_lookup_realm = false" lines to the
 libdefaults stanza of the "/etc/krb5/krb5.conf" file and add your new realm and
 domain realms as follow (the following is to enable MySecondDomain domain users for
 a server configured for MyDomain):</p></div>
 <div class="literalblock">
-<div class="content">
-<pre><code>[libdefaults]
+<div class="content monospaced">
+<pre>[libdefaults]
         default_realm = MYDOMAIN.MYFOREST
         default_keytab_name = FILE:/etc/krb5/krb5.keytab
         default_tkt_enctypes = arcfour-hmac aes256-cts aes128-cts
@@ -381,12 +381,12 @@ a server configured for MyDomain):</p></div>
         kdc = FILE:/var/krb5/log/krb5kdc.log
         admin_server = FILE:/var/krb5/log/kadmin.log
         kadmin_local = FILE:/var/krb5/log/kadmin_local.log
-        default = FILE:/var/krb5/log/krb5lib.log</code></pre>
+        default = FILE:/var/krb5/log/krb5lib.log</pre>
 </div></div>
-<div class="paragraph"><p>Then change the <code>auth_name</code> and <code>auth_domain</code> attribute to match the realm corresponding to you. For example:</p></div>
+<div class="paragraph"><p>Then change the <code class="monospaced">auth_name</code> and <code class="monospaced">auth_domain</code> attribute to match the realm corresponding to you. For example:</p></div>
 <div class="listingblock">
-<div class="content">
-<pre><code>chuser auth_domain=MYSECONDDOMAIN.MYFOREST auth_name=&lt;active.directory.login&gt; &lt;local.user.name&gt;</code></pre>
+<div class="content monospaced">
+<pre>chuser auth_domain=MYSECONDDOMAIN.MYFOREST auth_name=&lt;active.directory.login&gt; &lt;local.user.name&gt;</pre>
 </div></div>
 </div>
 </div>
@@ -408,8 +408,8 @@ a server configured for MyDomain):</p></div>
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
-  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
 <div id="footnotes"><hr /></div>

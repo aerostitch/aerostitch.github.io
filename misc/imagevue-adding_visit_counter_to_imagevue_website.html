@@ -6,7 +6,7 @@
 <meta name="description" content="This document explains how to easily add a counter for counting visitors surfing on your website when using the 'imagevue' website builder." />
 <meta name="keywords" content="website, blog, gallery, generator, imagevue, visit, counter" />
 <meta name="author" content="Joseph Herlant" />
-<link rel="shortcut icon" href="/home/theolediable/git/perso/asciidoc/images/icons/favicon.png" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
 <title>Adding a counter of visits on an imagevue based website</title>
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
 
@@ -18,17 +18,17 @@ asciidoc.install(3);
 /*]]>*/
 </script>
 <!-- Bootstrap core CSS -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Bootstrap theme -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
 <!-- ztree treeview css -->
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
 <!-- Custom styles for this template -->
 <link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2pre/html5shiv.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <![endif]-->
 </head>
 <body class="article">
@@ -88,7 +88,7 @@ http://www.gnu.org/software/src-highlite -->
 <div class="sect1">
 <h2 id="_modify_index_gallery_phtml">3. Modify index.gallery.phtml</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>The <code>index.gallery.phtml</code> file should be located in the <code>iv-includes/templates/</code>
+<div class="paragraph"><p>The <code class="monospaced">index.gallery.phtml</code> file should be located in the <code class="monospaced">iv-includes/templates/</code>
 folder relatively to the root of your directory.</p></div>
 <div class="paragraph"><p>At the very end of this page, just before this following lines that represent
 the closing tags for the html and body tags&#8230;</p></div>
@@ -114,7 +114,7 @@ http://www.gnu.org/software/src-highlite -->
 <div class="sect1">
 <h2 id="_modifying_imagevue_flash_css">4. Modifying imagevue.flash.css</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>The <code>imagevue.flash.css</code> file is located in the <code>iv-includes/assets/css/</code>
+<div class="paragraph"><p>The <code class="monospaced">imagevue.flash.css</code> file is located in the <code class="monospaced">iv-includes/assets/css/</code>
 directory (this is relative to the root of your website).</p></div>
 <div class="paragraph"><p>There you&#8217;ll need to find the declaration of the imagevue id that should be
 empty. It should look like this:</p></div>
@@ -125,7 +125,7 @@ http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="color: #993399">#imagevue</span> <span style="color: #FF0000">{</span> <span style="color: #FF0000">}</span></tt></pre></div></div>
 <div class="paragraph"><p>You need to modify this to change the size of the container to 95% of the whole
-page. You do it adding <code>height: 95%</code> in the brackets of the previously finded
+page. You do it adding <code class="monospaced">height: 95%</code> in the brackets of the previously finded
 imagevue declaration tag. It should look like this:</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.7
@@ -154,8 +154,8 @@ http://www.gnu.org/software/src-highlite -->
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
-  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
 <div id="footnotes"><hr /></div>

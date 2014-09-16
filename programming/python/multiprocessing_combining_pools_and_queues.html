@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="A simple example of how to combine pools and queues using the multiprocessing python module." />
+<meta name="keywords" content="Python, multiprocessing, queue, pool" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
+<title>Combining Queues and Pools of processes using the multiprocessing module</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-06-26</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Combining Queues and Pools of processes using the multiprocessing module</h1>
+A simple example of how to combine pools and queues using the multiprocessing python module.
+</div>
+      </div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>This script shows how to simply use a queue to delegate tasks
+to a pool of workers using the multiprocessing module.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">from</span></span>  multiprocessing <span style="font-weight: bold"><span style="color: #000080">import</span></span> Pool<span style="color: #990000">,</span> Queue
+<span style="font-weight: bold"><span style="color: #000080">from</span></span> os <span style="font-weight: bold"><span style="color: #000080">import</span></span> getpid
+<span style="font-weight: bold"><span style="color: #000080">from</span></span> time <span style="font-weight: bold"><span style="color: #000080">import</span></span> sleep
+<span style="font-weight: bold"><span style="color: #000080">from</span></span> random <span style="font-weight: bold"><span style="color: #000080">import</span></span> random
+
+MAX_WORKERS<span style="color: #990000">=</span><span style="color: #993399">10</span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">class</span></span> <span style="font-weight: bold"><span style="color: #000000">Testing_mp</span></span><span style="color: #990000">(</span>object<span style="color: #990000">):</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">def</span></span> <span style="font-weight: bold"><span style="color: #000000">__init__</span></span><span style="color: #990000">(</span>self<span style="color: #990000">):</span>
+<span style="font-style: italic"><span style="color: #9A1900">        """</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">        Initiates a queue, a pool and a temporary buffer, used only</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">        when the queue is full.</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">        """</span></span>
+        self<span style="color: #990000">.</span>q <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">Queue</span></span><span style="color: #990000">()</span>
+        self<span style="color: #990000">.</span>pool <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">Pool</span></span><span style="color: #990000">(</span>processes<span style="color: #990000">=</span>MAX_WORKERS<span style="color: #990000">,</span> initializer<span style="color: #990000">=</span>self<span style="color: #990000">.</span>worker_main<span style="color: #990000">,)</span>
+        self<span style="color: #990000">.</span>temp_buffer <span style="color: #990000">=</span> <span style="color: #990000">[]</span>
+
+    <span style="font-weight: bold"><span style="color: #0000FF">def</span></span> <span style="font-weight: bold"><span style="color: #000000">add_to_queue</span></span><span style="color: #990000">(</span>self<span style="color: #990000">,</span> msg<span style="color: #990000">):</span>
+<span style="font-style: italic"><span style="color: #9A1900">        """</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">        If queue is full, put the message in a temporary buffer.</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">        If the queue is not full, adding the message to the queue.</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">        If the buffer is not empty and that the message queue is not full,</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">        putting back messages from the buffer to the queue.</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">        """</span></span>
+        <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> self<span style="color: #990000">.</span>q<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">full</span></span><span style="color: #990000">():</span>
+            self<span style="color: #990000">.</span>temp_buffer<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">append</span></span><span style="color: #990000">(</span>msg<span style="color: #990000">)</span>
+        <span style="font-weight: bold"><span style="color: #0000FF">else</span></span><span style="color: #990000">:</span>
+            self<span style="color: #990000">.</span>q<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">put</span></span><span style="color: #990000">(</span>msg<span style="color: #990000">)</span>
+            <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="font-weight: bold"><span style="color: #000000">len</span></span><span style="color: #990000">(</span>self<span style="color: #990000">.</span>temp_buffer<span style="color: #990000">)</span> <span style="color: #990000">&gt;</span> <span style="color: #993399">0</span><span style="color: #990000">:</span>
+                <span style="font-weight: bold"><span style="color: #000000">add_to_queue</span></span><span style="color: #990000">(</span>self<span style="color: #990000">.</span>temp_buffer<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">pop</span></span><span style="color: #990000">())</span>
+
+    <span style="font-weight: bold"><span style="color: #0000FF">def</span></span> <span style="font-weight: bold"><span style="color: #000000">write_to_queue</span></span><span style="color: #990000">(</span>self<span style="color: #990000">):</span>
+<span style="font-style: italic"><span style="color: #9A1900">        """</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">        This function writes some messages to the queue.</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">        """</span></span>
+        <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> i <span style="font-weight: bold"><span style="color: #0000FF">in</span></span> <span style="font-weight: bold"><span style="color: #000000">range</span></span><span style="color: #990000">(</span><span style="color: #993399">50</span><span style="color: #990000">):</span>
+            self<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">add_to_queue</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"First item for loop %d"</span> <span style="color: #990000">%</span> i<span style="color: #990000">)</span>
+            <span style="font-style: italic"><span style="color: #9A1900"># Not really needed, just to show that some elements can be added</span></span>
+            <span style="font-style: italic"><span style="color: #9A1900"># to the queue whenever you want!</span></span>
+            <span style="font-weight: bold"><span style="color: #000000">sleep</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #000000">random</span></span><span style="color: #990000">()*</span><span style="color: #993399">2</span><span style="color: #990000">)</span>
+            self<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">add_to_queue</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"Second item for loop %d"</span> <span style="color: #990000">%</span> i<span style="color: #990000">)</span>
+            <span style="font-style: italic"><span style="color: #9A1900"># Not really needed, just to show that some elements can be added</span></span>
+            <span style="font-style: italic"><span style="color: #9A1900"># to the queue whenever you want!</span></span>
+            <span style="font-weight: bold"><span style="color: #000000">sleep</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #000000">random</span></span><span style="color: #990000">()*</span><span style="color: #993399">2</span><span style="color: #990000">)</span>
+
+    <span style="font-weight: bold"><span style="color: #0000FF">def</span></span> <span style="font-weight: bold"><span style="color: #000000">worker_main</span></span><span style="color: #990000">(</span>self<span style="color: #990000">):</span>
+<span style="font-style: italic"><span style="color: #9A1900">        """</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">        Waits indefinitely for an item to be written in the queue.</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">        Finishes when the parent process terminates.</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">        """</span></span>
+        <span style="font-weight: bold"><span style="color: #0000FF">print</span></span> <span style="color: #FF0000">"Process {0} started"</span><span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">format</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #000000">getpid</span></span><span style="color: #990000">())</span>
+        <span style="font-weight: bold"><span style="color: #0000FF">while</span></span> True<span style="color: #990000">:</span>
+            <span style="font-style: italic"><span style="color: #9A1900"># If queue is not empty, pop the next element and do the work.</span></span>
+            <span style="font-style: italic"><span style="color: #9A1900"># If queue is empty, wait indefinitly until an element get in the queue.</span></span>
+            item <span style="color: #990000">=</span> self<span style="color: #990000">.</span>q<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">get</span></span><span style="color: #990000">(</span>block<span style="color: #990000">=</span>True<span style="color: #990000">,</span> timeout<span style="color: #990000">=</span>None<span style="color: #990000">)</span>
+            <span style="font-weight: bold"><span style="color: #0000FF">print</span></span> <span style="color: #FF0000">"{0} retrieved: {1}"</span><span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">format</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #000000">getpid</span></span><span style="color: #990000">(),</span> item<span style="color: #990000">)</span>
+            <span style="font-style: italic"><span style="color: #9A1900"># simulate some random length operations</span></span>
+            <span style="font-weight: bold"><span style="color: #000000">sleep</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #000000">random</span></span><span style="color: #990000">())</span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># Warning from Python documentation:</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># Functionality within this package requires that the __main__ module be</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># importable by the children. This means that some examples, such as the</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># multiprocessing.Pool examples will not work in the interactive interpreter.</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">if</span></span> __name__ <span style="color: #990000">==</span> <span style="color: #FF0000">'__main__'</span><span style="color: #990000">:</span>
+    mp_class <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">Testing_mp</span></span><span style="color: #990000">()</span>
+    mp_class<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">write_to_queue</span></span><span style="color: #990000">()</span>
+    <span style="font-style: italic"><span style="color: #9A1900"># Waits a bit for the child processes to do some work</span></span>
+    <span style="font-style: italic"><span style="color: #9A1900"># because when the parent exits, childs are terminated.</span></span>
+    <span style="font-weight: bold"><span style="color: #000000">sleep</span></span><span style="color: #990000">(</span><span style="color: #993399">5</span><span style="color: #990000">)</span></tt></pre></div></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

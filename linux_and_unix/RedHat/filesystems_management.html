@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="A cheasheet about classic filesystem managemement commands." />
+<meta name="keywords" content="swap, partition, filesystem, FS, label" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
+<title>Filesystems management commands</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-07-06</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Filesystems management commands</h1>
+A cheasheet about classic filesystem managemement commands.
+</div>
+      </div>
+<div class="sect1">
+<h2 id="_basic_filesystems_operations">1. Basic filesystems operations</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><code class="monospaced">fdisk -l</code> and <code class="monospaced">parted -l</code> are equivalent but RedHat recommends using <code class="monospaced">parted</code>
+over <code class="monospaced">fdisk</code>.</p></div>
+<div class="paragraph"><p>To force the kernel to reread the partition table, use the <code class="monospaced">partprobe</code> command.</p></div>
+<div class="paragraph"><p>To convert a filesystem from ext2 to ext3, use</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>umount /dev/sdb<span style="color: #993399">1</span>
+tune2fs -j /dev/sdb<span style="color: #993399">1</span></tt></pre></div></div>
+<div class="paragraph"><p>To create a swap partition on /dev/sdc1</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>mkswap /dev/sdc<span style="color: #993399">1</span>
+swapon /dev/sdc<span style="color: #993399">1</span>
+<span style="font-style: italic"><span style="color: #9A1900"># Last, verify</span></span>
+swapon -s</tt></pre></div></div>
+<div class="paragraph"><p>Label a filesystem using:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>e2label /dev/sdb<span style="color: #993399">1</span> my_label
+<span style="font-style: italic"><span style="color: #9A1900"># Then display the label to verify:</span></span>
+e2label /dev/sdb<span style="color: #993399">1</span>
+<span style="font-style: italic"><span style="color: #9A1900"># And find the FS from the label</span></span>
+findfs <span style="color: #009900">LABEL</span><span style="color: #990000">=</span>my_label</tt></pre></div></div>
+<div class="paragraph"><p>Get usefull infos about disks with the <code class="monospaced">blkid</code> command. Example:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre># blkid
+/dev/sda1: UUID="635f2b90-bb93-4221-88e2-5194a004aa52" TYPE="ext4"
+/dev/sda2: UUID="4DmlAr-kOMB-0s17-GSxv-t0Sl-3fF2-Vqo6Of" TYPE="LVM2_member"
+/dev/sdc1: UUID="187b93af-44c4-a179-06ae-2b7759e32205" UUID_SUB="71fee50b-4b50-4ce7-7a97-901b9a76e079" LABEL="RHEL01:0" TYPE="linux_raid_member"
+/dev/sdb1: UUID="187b93af-44c4-a179-06ae-2b7759e32205" UUID_SUB="f164f4f6-d529-3d8e-93ef-ee6d5ae1870b" LABEL="RHEL01:0" TYPE="linux_raid_member"
+/dev/sdd1: UUID="187b93af-44c4-a179-06ae-2b7759e32205" UUID_SUB="bbf9f4a1-1cca-5b1a-df4f-9eabe1e72a32" LABEL="RHEL01:0" TYPE="linux_raid_member"
+/dev/mapper/VolGroup-lv_root: UUID="50eb8ea8-3c11-46c3-80c5-68a57075170a" TYPE="ext4"
+/dev/mapper/VolGroup-lv_swap: UUID="c9ca22fc-fe01-4ee9-8607-66892a4aa794" TYPE="swap"</pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_about_xfs_filesystems">2. About XFS filesystems</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>XFS is now the default file system for RHEL7.</p></div>
+<div class="paragraph"><p>In RHEL 6.5, the <code class="monospaced">/boot</code> CANNOT be other than ext* file systems. Grub does not
+support vFAT, Btrfs, XFS or even LVM, so you can&#8217;t use thoses for <code class="monospaced">/boot</code>.</p></div>
+<div class="paragraph"><p>To create an XFS file system, you need to install the xfsprogs anc xfsdump
+packages (<code class="monospaced">yum install -y xfsdump xfsprogs</code>). Then the process would look quite
+familiar:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># We don't use LVM here, but you can! So let's create a new /dev/sdd1</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># You can choose type 83, mkfs.xfs will do the rest</span></span>
+fdisk /dev/sdd
+mkfs<span style="color: #990000">.</span>xfs /dev/sdd<span style="color: #993399">1</span>
+mkdir /media/test_xfs
+mount /dev/sdd<span style="color: #993399">1</span> /media/test_xfs
+<span style="font-style: italic"><span style="color: #9A1900"># Then update fstab</span></span>
+echo -e <span style="color: #FF0000">"$(blkid /dev/sdd1 | cut -d"</span> <span style="color: #FF0000">" -f2) </span><span style="color: #CC33CC">\t</span><span style="color: #FF0000"> /media/test_xfs </span><span style="color: #CC33CC">\t</span><span style="color: #FF0000"> xfs </span><span style="color: #CC33CC">\t</span><span style="color: #FF0000"> defaults </span><span style="color: #CC33CC">\t</span><span style="color: #FF0000"> 1 </span><span style="color: #CC33CC">\t</span><span style="color: #FF0000"> 1"</span> <span style="color: #990000">&gt;&gt;</span> /etc/fstab</tt></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_permissions">3. Permissions</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The setuid flag (<code class="monospaced">chmod u+s file</code> or <code class="monospaced">chmod 4755 file</code>) is used to allow multiuser
+access, meaning that when running the file, the process running the file will be
+the owner of the file, not the user that launched it.</p></div>
+<div class="paragraph"><p>The setgid flag (<code class="monospaced">chmod g+s folder</code> or <code class="monospaced">chmod 2770 folder</code>) is used to allow
+multigroup access, meaning that the owner of the folder won&#8217;t be able to access
+the directory if not in the group that owns the file and that all files created
+in this folder will all be accessible in read/write to any member of the
+folder&#8217;s group owner.</p></div>
+<div class="paragraph"><p>The sticky bit flag (<code class="monospaced">chmod o+t file</code> or <code class="monospaced">chmod 1775 file</code>) prevents accidental
+delete by users or groups even if they have read/write access. Only root or the
+owner of the file (or directory) can delete it.</p></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

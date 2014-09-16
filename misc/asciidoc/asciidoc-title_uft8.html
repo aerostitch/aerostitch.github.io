@@ -6,7 +6,7 @@
 <meta name="description" content="This document describes how to take care of title containing non-ascii characters using a2x." />
 <meta name="keywords" content="UTF-8, Asciidoc, ascii-ids, a2x" />
 <meta name="author" content="Joseph Herlant" />
-<link rel="shortcut icon" href="/home/theolediable/git/perso/asciidoc/images/icons/favicon.png" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
 <title>Using UTF-8 titles with a2x</title>
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
 
@@ -18,17 +18,17 @@ asciidoc.install(3);
 /*]]>*/
 </script>
 <!-- Bootstrap core CSS -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Bootstrap theme -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
 <!-- ztree treeview css -->
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
 <!-- Custom styles for this template -->
 <link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2pre/html5shiv.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <![endif]-->
 </head>
 <body class="article">
@@ -66,21 +66,21 @@ This document describes how to take care of title containing non-ascii character
 processed using dblatex, fop or other tools.</p></div>
 <div class="paragraph"><p>In this xml file, a section has an id assigned that is the title with spaces
 replaced by underscores.</p></div>
-<div class="paragraph"><p>If you generate a pdf with dblatex which is the default for an <code>a2x -f pdf</code>
+<div class="paragraph"><p>If you generate a pdf with dblatex which is the default for an <code class="monospaced">a2x -f pdf</code>
 command) and that your title contains some non-ascii characters, the xml will
 render them correctly, but not dblatex by default.</p></div>
 <div class="paragraph"><p>In this case, you will encounter an error as described in
 <a href="http://bugs.debian.org/622359">this debian bug report</a>. To summarize, the
 non-verbose mode will render this:</p></div>
 <div class="literalblock">
-<div class="content">
-<pre><code>$ a2x -f pdf /tmp/test.txt
-a2x: ERROR: "dblatex" -t pdf -p "/etc/asciidoc/dblatex/asciidoc-dblatex.xsl" -s "/etc/asciidoc/dblatex/asciidoc-dblatex.sty"   "/tmp/test.xml" returned non-zero exit status 1</code></pre>
+<div class="content monospaced">
+<pre>$ a2x -f pdf /tmp/test.txt
+a2x: ERROR: "dblatex" -t pdf -p "/etc/asciidoc/dblatex/asciidoc-dblatex.xsl" -s "/etc/asciidoc/dblatex/asciidoc-dblatex.sty"   "/tmp/test.xml" returned non-zero exit status 1</pre>
 </div></div>
 <div class="paragraph"><p>And the verbose mode will render something like this:</p></div>
 <div class="literalblock">
-<div class="content">
-<pre><code>$ a2x -v -f pdf /tmp/test.txt
+<div class="content monospaced">
+<pre>$ a2x -v -f pdf /tmp/test.txt
 a2x: args: ['-v', '-f', 'pdf', '/tmp/test.txt']
 a2x: resource files: []
 a2x: resource directories: ['/etc/asciidoc/images', '/etc/asciidoc/stylesheets']
@@ -136,7 +136,7 @@ test.aux:60: leading text: \end{document}
 Unexpected error occured
 Error: pdflatex compilation failed
 
-a2x: ERROR: "dblatex" -t pdf -p "/etc/asciidoc/dblatex/asciidoc-dblatex.xsl" -s "/etc/asciidoc/dblatex/asciidoc-dblatex.sty"  -V  "/tmp/test.xml" returned non-zero exit status 1</code></pre>
+a2x: ERROR: "dblatex" -t pdf -p "/etc/asciidoc/dblatex/asciidoc-dblatex.xsl" -s "/etc/asciidoc/dblatex/asciidoc-dblatex.sty"  -V  "/tmp/test.xml" returned non-zero exit status 1</pre>
 </div></div>
 </div>
 </div>
@@ -167,13 +167,13 @@ http://www.gnu.org/software/src-highlite -->
 </div>
 <div class="sect2">
 <h3 id="_the_built_in_asciidoc_much_cleaner_option">2.2. The built-in asciidoc (much cleaner) option</h3>
-<div class="paragraph"><p>But if you want, asciidoc can do it for you with the built-in tag <code>:ascii-ids:</code>
+<div class="paragraph"><p>But if you want, asciidoc can do it for you with the built-in tag <code class="monospaced">:ascii-ids:</code>
 that transforms non-ascii characters to ascii characters using the "unicodedata"
 python module.</p></div>
 <div class="paragraph"><p>Example of using this tag:</p></div>
 <div class="literalblock">
-<div class="content">
-<pre><code>This is an example asciidoc-file
+<div class="content monospaced">
+<pre>This is an example asciidoc-file
 ================================
 Gerhard Siegesmund &lt;jerri@jerri.de&gt;
 :ascii-ids:
@@ -181,7 +181,7 @@ Gerhard Siegesmund &lt;jerri@jerri.de&gt;
 Umlauts e.g. ü break a2x headlines
 ----------------------------------
 
-Stable asciidoc (8.5.x) has no problems with this file.</code></pre>
+Stable asciidoc (8.5.x) has no problems with this file.</pre>
 </div></div>
 </div>
 </div>
@@ -204,8 +204,8 @@ Stable asciidoc (8.5.x) has no problems with this file.</code></pre>
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
-  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
 <div id="footnotes"><hr /></div>

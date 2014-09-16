@@ -1,5 +1,12 @@
-TODO
-====
+Automatically setting SQL Server perf counters using Powershell
+===============================================================
+Joseph Herlant
+v1.0.0, 2014-09-16 : Initial version
+:Author Initials: Joseph Herlant
+:description: This little powershell script easily sets interesting +
+ performance counters interesting when searching for some performance +
+ bottlenecks.
+:keywords: powershell, performance, mssql
 
 [script, powershell]
 -----

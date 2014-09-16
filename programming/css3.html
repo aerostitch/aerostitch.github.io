@@ -6,7 +6,7 @@
 <meta name="description" content="Some tips about CSS that I want to keep track of." />
 <meta name="keywords" content="CSS, margin, padding, collapsing, alignment" />
 <meta name="author" content="Joseph Herlant" />
-<link rel="shortcut icon" href="/home/theolediable/git/perso/asciidoc/images/icons/favicon.png" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
 <title>Some CSS tips</title>
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
 
@@ -18,17 +18,17 @@ asciidoc.install(3);
 /*]]>*/
 </script>
 <!-- Bootstrap core CSS -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Bootstrap theme -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
 <!-- ztree treeview css -->
 <link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
 <!-- Custom styles for this template -->
 <link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2pre/html5shiv.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <![endif]-->
 </head>
 <body class="article">
@@ -81,7 +81,7 @@ http://www.gnu.org/software/src-highlite -->
 <div class="sect1">
 <h2 id="_shortening">2. Shortening</h2>
 <div class="sectionbody">
-<div class="paragraph"><p><code>margin</code> and <code>padding</code> properties can be set in oneline using the following pattern
+<div class="paragraph"><p><code class="monospaced">margin</code> and <code class="monospaced">padding</code> properties can be set in oneline using the following pattern
 (just remember that it&#8217;s clockwise):</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.7
@@ -103,14 +103,14 @@ http://www.gnu.org/software/src-highlite -->
   <span style="color: #0000FF">margin:</span> <span style="font-style: italic"><span style="color: #009900">margin-top_and_bottom</span></span> <span style="font-style: italic"><span style="color: #009900">margin-right_and_left</span></span>;
   <span style="color: #0000FF">padding:</span> <span style="font-style: italic"><span style="color: #009900">top_bottom-size</span></span> <span style="font-style: italic"><span style="color: #009900">right_left-size</span></span>;
 <span style="color: #FF0000">}</span></tt></pre></div></div>
-<div class="paragraph"><p><code>font</code> property can be set in one line using:</p></div>
+<div class="paragraph"><p><code class="monospaced">font</code> property can be set in one line using:</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt>my_element <span style="color: #FF0000">{</span> <span style="color: #0000FF">font:</span> <span style="font-style: italic"><span style="color: #009900">size</span></span>/<span style="font-style: italic"><span style="color: #009900">line-height</span></span> <span style="font-style: italic"><span style="color: #009900">text-weight</span></span> <span style="font-style: italic"><span style="color: #009900">font-style</span></span> <span style="font-style: italic"><span style="color: #009900">font-family</span></span>; <span style="color: #FF0000">}</span></tt></pre></div></div>
-<div class="paragraph"><p><code>background</code> propertie&#8217;s template:</p></div>
+<div class="paragraph"><p><code class="monospaced">background</code> propertie&#8217;s template:</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
@@ -119,7 +119,7 @@ http://www.gnu.org/software/src-highlite -->
 <pre><tt>my_element <span style="color: #FF0000">{</span>
   <span style="color: #0000FF">background:</span> <span style="font-style: italic"><span style="color: #009900">background-color</span></span> <span style="font-style: italic"><span style="color: #009900">background-image</span></span> <span style="font-style: italic"><span style="color: #009900">background</span></span> <span style="font-style: italic"><span style="color: #009900">repeat</span></span> <span style="font-style: italic"><span style="color: #009900">x-position</span></span> <span style="font-style: italic"><span style="color: #009900">y-position</span></span>;
 <span style="color: #FF0000">}</span></tt></pre></div></div>
-<div class="paragraph"><p><code>border</code> property template:</p></div>
+<div class="paragraph"><p><code class="monospaced">border</code> property template:</p></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.7
 by Lorenzo Bettini
@@ -323,8 +323,8 @@ http://www.gnu.org/software/src-highlite -->
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
-  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
   <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
 <div id="footnotes"><hr /></div>

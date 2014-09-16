@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="This document describes how to make iptables log rejected or dropped traffic (depending on your last rule in the given chain) on Centos (or other Red Hat based distributions)." />
+<meta name="keywords" content="iptables, rsyslog, Centos, RedHat" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
+<title>Making iptables log with Centos</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-07-10</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Making iptables log with Centos</h1>
+This document describes how to make iptables log rejected or dropped traffic (depending on your last rule in the given chain) on Centos (or other Red Hat based distributions).
+</div>
+      </div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="panel panel-info admonitionblock">
+  <div class="panel-heading">
+
+
+<span class="glyphicon glyphicon-info-sign"></span>
+
+
+    <b class="panel-title">
+    Note
+    </b>
+  </div>
+  <div class="panel-body">Here is the example with the INPUT chain having the last rule to be a
+REJECT one. But this procedure can apply with last rule to be a DROP and to the
+other chains (OUTPUT or FORWARD).  </div>
+</div>
+<div class="paragraph"><p>Check which one is your REJECT rule on the INPUT chain:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>iptables -L INPUT</tt></pre></div></div>
+<div class="paragraph"><p>Let&#8217;s assume that our REJECT final rule is <strong>#10</strong> in our case, so enter the
+following command to make iptables log any packets that will be rejected to the
+rsyslog daemon (The LOG rule should be the <strong>last BEFORE</strong> the REJECT/DROP rule):</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>iptables -I INPUT <span style="color: #993399">10</span> -j LOG --log-level <span style="color: #993399">4</span></tt></pre></div></div>
+<div class="paragraph"><p>If you want your logs to be easily recognizeable, you can use the <code class="monospaced">--log-prefix</code>
+option like this:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>iptables -I INPUT <span style="color: #993399">10</span> -j LOG --log-level <span style="color: #993399">4</span> --log-prefix <span style="color: #FF0000">"IPTABLES_REJECT: "</span></tt></pre></div></div>
+<div class="paragraph"><p>Don&#8217;t forget to save and restart if you want it to survive to the next service
+restart!</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>service iptables save
+service iptables restart</tt></pre></div></div>
+<div class="paragraph"><p>If you want to put the iptables logs into a separate file, use rsyslogd
+filtering capabilities (in this case, you MUST have the <code class="monospaced">--log-prefix</code>
+switch mentionned as explained earlier in your iptables LOG rule):</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>cat <span style="color: #990000">&lt;&lt;</span> __EOF__ <span style="color: #990000">&gt;</span> /etc/rsyslog<span style="color: #990000">.</span>d/iptables<span style="color: #990000">.</span>conf
+<span style="color: #990000">:</span>msg<span style="color: #990000">,</span> startswith<span style="color: #990000">,</span> <span style="color: #FF0000">"IPTABLES_REJECT: "</span> -/var/log/iptables<span style="color: #990000">.</span>log
+<span style="color: #990000">&amp;~</span>
+__EOF__
+<span style="font-style: italic"><span style="color: #9A1900"># Also create the log file with proper permissions</span></span>
+touch /var/log/iptables<span style="color: #990000">.</span>log
+chown root<span style="color: #990000">:</span>root /var/log/iptables<span style="color: #990000">.</span>log
+chmod <span style="color: #993399">600</span> /var/log/iptables<span style="color: #990000">.</span>log
+<span style="font-style: italic"><span style="color: #9A1900"># Last force the reload the rsyslog service configuration</span></span>
+service rsyslog reload
+cat <span style="color: #990000">&lt;&lt;</span> __EOF__ <span style="color: #990000">&gt;</span> /etc/logrotate<span style="color: #990000">.</span>d/iptables
+/var/log/iptables<span style="color: #990000">.</span>log
+{
+  rotate <span style="color: #993399">7</span>
+  daily
+  missingok
+  notifempty
+  delaycompress
+  compress
+  postrotate
+    /sbin/service rsyslog reload <span style="color: #993399">2</span><span style="color: #990000">&gt;&amp;</span><span style="color: #993399">1</span> <span style="color: #990000">||</span> <span style="font-weight: bold"><span style="color: #0000FF">true</span></span>
+  endscript
+}
+__EOF__</tt></pre></div></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>

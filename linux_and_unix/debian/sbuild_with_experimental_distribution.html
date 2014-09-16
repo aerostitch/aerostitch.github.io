@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="This short tutorial explains how to build a package using sbuild for the experimental distribution." />
+<meta name="keywords" content="sbuild, debian, experimental" />
+<meta name="author" content="Joseph Herlant" />
+<link rel="shortcut icon" href="/etc/asciidoc/images/icons/favicon.png" />
+<title>Building with sbuild for the experimental distribution</title>
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/asciidoc.css" type="text/css" />
+
+
+<script type="text/javascript" src="/asciidoc_twbs_backend/js/asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(3);
+/*]]>*/
+</script>
+<!-- Bootstrap core CSS -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
+<!-- ztree treeview css -->
+<link rel="stylesheet" href="/asciidoc_twbs_backend/css/zTreeStyle.css" />
+<!-- Custom styles for this template -->
+<link href="/asciidoc_twbs_backend/css/theme.css" rel="stylesheet" />
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+<body class="article">
+   <!-- Fixed navbar -->
+    <div id="menu-header-bar">
+    </div>
+<div id="content">
+    <div class="container theme-showcase">
+    <div  id="global-container-offcanvas" class="row row-offcanvas row-offcanvas-right">
+
+      <div  id="left-pane" class="col-xs-12 col-sm-9 col-md-9 cold-lg-9">
+        <div class="right-aligned-div menu-indicator menu-indicator-asciidoc" id="show-me-menu-direction">
+          Navigation menu and tocs are just this way
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+<div>
+  <span id="author">Joseph Herlant</span>
+  <br />
+  <span id="revnumber">version 1.0.0,</span>
+  <span id="revdate">2014-06-21</span>
+  <span id="revremark">: Initial version</span>
+</div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+<div id="header">
+<h1>Building with sbuild for the experimental distribution</h1>
+This short tutorial explains how to build a package using sbuild for the experimental distribution.
+</div>
+      </div>
+<div class="sect1">
+<h2 id="_introduction">1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Experimental distribution is not a complete distribution, so you can&#8217;t specify
+it when you create an sbuild chroot. I didn&#8217;t find a complete documentation on
+how to do that so here&#8217;s mine based on my own experience.</p></div>
+<div class="paragraph"><p>For more informations about the experimental repository, see:
+<a href="https://wiki.debian.org/DebianExperimental">https://wiki.debian.org/DebianExperimental</a></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_creating_chroot">2. Creating chroot</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In my configuration, I had already a sbuild environment configured for unstable.
+For more informations about how to configurei a basic sbuild environement, see:
+<a href="https://wiki.debian.org/sbuild">https://wiki.debian.org/sbuild</a></p></div>
+<div class="paragraph"><p>So, first add a new chroot with a tarball named experimental-$arch and with
+"unstable" as target.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo sbuild-createchroot <span style="color: #990000">\</span>
+  --make-sbuild-tarball<span style="color: #990000">=</span>/var/lib/sbuild/experimental-amd<span style="color: #993399">64</span><span style="color: #990000">.</span>tar<span style="color: #990000">.</span>gz <span style="color: #990000">\</span>
+  unstable `mktemp -d` http<span style="color: #990000">:</span>//ftp<span style="color: #990000">.</span>debian<span style="color: #990000">.</span>org/debian</tt></pre></div></div>
+<div class="paragraph"><p>Now, you need to change the distribution in the chroot configuration file. Those
+files are located in "/etc/schroot/chroot.d/" directory. Edit each until you
+find the right one (the one with the "file" field having the name you gave to
+the tarball in the creation command).</p></div>
+<div class="paragraph"><p>Mine was:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>$ cat /etc/schroot/chroot.d/unstable-amd64-sbuild-i6snHD
+[unstable-amd64-sbuild]
+type=file
+description=Debian unstable/amd64 autobuilder
+file=/var/lib/sbuild/experimental-amd64.tar.gz
+groups=root,sbuild
+root-groups=root,sbuild</pre>
+</div></div>
+<div class="paragraph"><p>Edit it and replace the "unstable" sentences with "experimental". You can do it
+with the following command (replacing the file name with yours:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo sed <span style="color: #FF0000">'s/unstable/experimental/g'</span> -i /etc/schroot/chroot<span style="color: #990000">.</span>d/unstable-amd<span style="color: #993399">64</span>-sbuild-i6snHD</tt></pre></div></div>
+<div class="paragraph"><p>You can also change the name of the file for a more explicit one:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo mv /etc/schroot/chroot<span style="color: #990000">.</span>d/unstable-amd<span style="color: #993399">64</span>-sbuild-i6snHD /etc/schroot/chroot<span style="color: #990000">.</span>d/experimental-amd<span style="color: #993399">64</span>-sbuild-i6snHD</tt></pre></div></div>
+<div class="paragraph"><p>Now the file you changed should look like this:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>$ cat /etc/schroot/chroot.d/experimental-amd64-sbuild-i6snHD
+[experimental-amd64-sbuild]
+type=file
+description=Debian experimental/amd64 autobuilder
+file=/var/lib/sbuild/experimental-amd64.tar.gz
+groups=root,sbuild
+root-groups=root,sbuild</pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuring_your_chroot_for_experimental">3. Configuring your chroot for experimental</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>First, to find your chroot, you have to use the <code class="monospaced">schroot -l | grep sbuild</code>
+command. This should display something like:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>$ schroot -l | grep sbuild
+chroot:experimental-amd64-sbuild
+chroot:unstable-amd64-sbuild
+source:experimental-amd64-sbuild
+source:unstable-amd64-sbuild</pre>
+</div></div>
+<div class="paragraph"><p>When you use the "source:$distribution-$architecture-sbuild", all the changes
+you make to the chroot while editing it with <code class="monospaced">sbuild-shell</code> are <strong>saved</strong> on exit.</p></div>
+<div class="paragraph"><p>When you use the "chroot:$distribution-$architecture-sbuild", all the changes
+you make to the chroot while editing it with <code class="monospaced">sbuild-shell</code> are <strong>lost</strong> on exit.</p></div>
+<div class="paragraph"><p>So here you need to make the experimental repository available in the chroot and
+you need it saved for further usage. Here we will ad the experimental repo to
+the newly created /etc/apt/sources.list.d/experimental.list file, the pin the
+unstable distribution to a higher priority to ensure the build environment will
+be able to find a package and pin the experimental distribution to a lower one
+(doing the other way should not work - at least it didn&#8217;t for me). Which gives:</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>$ sudo sbuild-shell source:experimental-amd64-sbuild
+I: /bin/sh
+# cat /etc/apt/sources.list
+deb http://ftp.debian.org/debian unstable main
+deb-src http://ftp.debian.org/debian unstable main
+# ls -l /etc/apt/sources.list.d
+total 0
+# ls -l /etc/apt/preferences*
+total 0
+# echo "deb http://ftp.debian.org/debian experimental main" &gt; /etc/apt/sources.list.d/experimental.list
+# echo "deb-src http://ftp.debian.org/debian experimental main" &gt;&gt; /etc/apt/sources.list.d/experimental.list
+# echo "Package: *\nPin: release a=unstable\nPin-Priority:900" &gt; /etc/apt/preferences.d/unstable.pref
+# echo "Package: *\nPin: release a=experimental\nPin-Priority:800" &gt; /etc/apt/preferences.d/experimental.pref
+# exit</pre>
+</div></div>
+<div class="paragraph"><p>Then update your chroot (this does <code class="monospaced">apt-get update</code>, <code class="monospaced">apt-get dist-upgrade</code>,
+<code class="monospaced">apt-get clean</code>, <code class="monospaced">apt-get autoclean</code> and <code class="monospaced">apt-get autoremove</code>):</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo sbuild-update -udcar experimental-amd<span style="color: #993399">64</span>-sbuild</tt></pre></div></div>
+<div class="paragraph"><p>Now that you have an environment configured, you should backup your tarball:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo cp /var/lib/sbuild/experimental-amd<span style="color: #993399">64</span><span style="color: #990000">.</span>tar<span style="color: #990000">.</span>gz /var/lib/sbuild/experimental-amd<span style="color: #993399">64</span><span style="color: #990000">.</span>tar<span style="color: #990000">.</span>gz<span style="color: #990000">.</span>clean</tt></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_building_your_package">4. Building your package</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>If you want, you can test your chroot as a sandbox (when exiting this shell all
+your changes will be lost) using:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo sbuild-shell chroot<span style="color: #990000">:</span>experimental-amd<span style="color: #993399">64</span>-sbuild</tt></pre></div></div>
+<div class="paragraph"><p>Before building your package with sbuild, there&#8217;s one last thing you need to do:
+install all the dependencies needed by your package that are <strong>AVAILABLE</strong> in the
+experimental repository (not only the one whose version is needed to be at least
+the experimental version). You need to do that in your chroot and ensure that
+the changes are saved. but first, <strong>you should ensure that you made a backup of
+the chroot tarball</strong> as explained in the previous step.</p></div>
+<div class="paragraph"><p>You don&#8217;t need to install the dependencies of your package that are only
+available in the unstable repository.</p></div>
+<div class="paragraph"><p>In my case, the dependencies that needed to be at least the version matching
+experimental were only gnome-common and libcanberra-dev, but other dependencies
+of my package were available in the experimental repository, so I needed to
+install them also. Which gave (don&#8217;t forget the <strong>-t experimental</strong> in the <code class="monospaced">apt-get
+-t experimental install ...</code> command!):</p></div>
+<div class="listingblock">
+<div class="content monospaced">
+<pre>$ sudo sbuild-shell source:experimental-amd64-sbuild
+# apt-get -t experimental install gnome-common libcanberra-dev libglib2.0-dev libgnome-desktop-3-dev libgstreamer1.0-dev libupower-glib-dev
+# exit</pre>
+</div></div>
+<div class="paragraph"><p>Then ensure the chroot is up-to-date using:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo sbuild-update -udcar experimental-amd<span style="color: #993399">64</span>-sbuild</tt></pre></div></div>
+<div class="paragraph"><p>And now you can build your package!</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>cd /path/to/my/package/source
+sbuild -d experimental -c experimental-amd<span style="color: #993399">64</span>-sbuild</tt></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cleaning_up_the_chroot">5. Cleaning up the chroot</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>When you&#8217;re done with this package, don&#8217;t forget to revert your changes made by
+the previous step in the experimental chroot by copying the clean tarball back:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.7
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>sudo cp /var/lib/sbuild/experimental-amd<span style="color: #993399">64</span><span style="color: #990000">.</span>tar<span style="color: #990000">.</span>gz<span style="color: #990000">.</span>clean /var/lib/sbuild/experimental-amd<span style="color: #993399">64</span><span style="color: #990000">.</span>tar<span style="color: #990000">.</span>gz</tt></pre></div></div>
+</div>
+</div>
+    </div>
+    <div class="col-xs-6 col-sm-3  col-md-3 cold-lg-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="well sidebar-nav"> <div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div> </div>
+      <div class="well sidebar-nav" id="ztree-div-container">
+        <ul class="nav ztree" id="index_page_idx">
+          <li>Documents in this category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.js"></script> -->
+  <script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/jquery.ztree.core-3.5.min.js"></script>
+  <script type="text/javascript" src="/asciidoc_twbs_backend/js/custom_jquery_twbs.js"></script>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+</div>
+</div>
+</body>
+</html>
