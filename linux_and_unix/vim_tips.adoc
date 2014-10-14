@@ -81,6 +81,8 @@ Usefull editor commands
  * `VU` -> Converts current line to upper case
  * `Vu` -> Converts current line to lower case
  * `V~` -> Inverts the case of the current line
+ * `GVG=` -> redo the tabulation correctly (GVG is to select all lines, = is to
+ call the indent process
 
  * `/` -> Searches forward in the document
  * `?` -> Searches backward in the document
