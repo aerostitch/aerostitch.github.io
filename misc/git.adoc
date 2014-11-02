@@ -176,7 +176,7 @@ Adding a particular commit from another branch
 
 If you want to get only a particular change that is in a specific commit of
 another branch, use the following command (--edit is if you want to edit the
-commit message). Be carefull, this command directly commits to the local branch!
+commit message). Be careful, this command directly commits to the local branch!
 
 -----
 git cherry-pick -x --signoff [--edit] <hash_of_the_commit>

@@ -102,7 +102,7 @@ sqlplus "/ as sysdba" @?/rdbms/admin/spauto.sql
 As this script is quite static and uses the old job scheduler of Oracle, you can
 choose to create a job manually using the `DBMS_SCHEDULER` package and customize
 the snapshot capture frequency. In the above example, we create a job as SYS to
-schedule the statspack statistics collection every 15 minutes. Be carefull that
+schedule the statspack statistics collection every 15 minutes. Be careful that
 thaking frequent snapshots will generate a large amount of data. In this case,
 you should reduce the history retention.
 

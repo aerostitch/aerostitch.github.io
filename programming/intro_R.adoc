@@ -85,7 +85,7 @@ s2 <- seq(2,11)
 
 To access something in a vector, use its index just like an array in other
 programming languages. In the above example, we are extracting 'c', replacing
-'b' by 'o' and adding a new strings as 4th value. Be carefull, vector's index
+'b' by 'o' and adding a new strings as 4th value. Be careful, vector's index
 start with 1!
 
 

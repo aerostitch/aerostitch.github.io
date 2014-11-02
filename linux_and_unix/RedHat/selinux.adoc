@@ -64,7 +64,7 @@ Usefull commands
  * `ausearch -ts 16:00 | grep AVC` -> Lists all access violations since 16h the
  one that is in the previous 24 hours
  * `ausearch -ts this-month | grep denied` -> Lists all deactions denied by
- SELinux during the current month. You can put a date there, but be carefull of
+ SELinux during the current month. You can put a date there, but be careful of
  your locale which it will depend on.
 
 
