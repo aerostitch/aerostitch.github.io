@@ -1,4 +1,4 @@
-= Tips about projections
+# Tips about projections
 
 
 Vertica best practices on projections:
@@ -8,7 +8,7 @@ But if you're like me and you can't affort the reload/delete/rename of the
 table, you also can add more TEMP location...
 
 
-== Getting informations about the projections
+## Getting informations about the projections
 
 Get total size used by projections on each nodes:
 
@@ -29,7 +29,7 @@ GROUP BY 1,2,3
 ORDER BY 4 DESC;
 ```
 
-== Refreshing projections
+## Refreshing projections
 
 List which projection is being refreshed on a specific table:
 
