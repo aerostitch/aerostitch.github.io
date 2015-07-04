@@ -1,6 +1,12 @@
 # Tips about licensing and the size of a Vertica DB
 
 
+## Current DB size details
+
+```
+SELECT audit_license_size();
+```
+
 ## DB growth history
 
 Size of the current DB since Jan. 2014 here:
@@ -29,12 +35,22 @@ TIP: add a "-t" to remove the header if you don't want it in the result!
 TIP: adding a space at the begining of the vsql avoid having it added in the
 bash history if you're using bash. ;)
 
-## Tables and projections size
+
+## Get raw size of a table
+
+Example for the MySchema.MyTable table.
+Note: It can take a long time to return the result as it scans all the ROS
+
+```
+select audit('MySchema.MyTable', 0, 1);
+```
+
+
+## Tables and projections compressed size
 
 Projections size:
 
 ```
-
 SELECT ANCHOR_TABLE_NAME
   , PROJECTION_SCHEMA
   , ((SUM(USED_BYTES))/1024/1024/1024)  AS TOTAL_SIZE
