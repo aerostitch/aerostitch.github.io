@@ -28,3 +28,58 @@ TIP: add a "-t" to remove the header if you don't want it in the result!
 
 TIP: adding a space at the begining of the vsql avoid having it added in the
 bash history if you're using bash. ;)
+
+## Tables and projections size
+
+Projections size:
+
+```
+
+SELECT ANCHOR_TABLE_NAME
+  , PROJECTION_SCHEMA
+  , ((SUM(USED_BYTES))/1024/1024/1024)  AS TOTAL_SIZE
+FROM PROJECTION_STORAGE 
+GROUP BY PROJECTION_SCHEMA, ANCHOR_TABLE_NAME
+ORDER BY TOTAL_SIZE desc;
+```
+
+Tables size (compressed):
+
+```
+SELECT anchor_table_schema
+  , anchor_table_name
+  , sum(used_bytes)/1024/1024/1024::FLOAT as size_in_Gbytes
+  , sum(ros_used_bytes)/1024/1024/1024::FLOAT as ros_size_in_Gbytes
+  , sum(ros_count) as ros_count
+FROM column_storage
+GROUP BY anchor_table_schema, anchor_table_name
+ORDER BY size_in_Gbytes DESC;
+```
+
+Same but by nodes:
+
+```
+SELECT anchor_table_schema
+  , anchor_table_name
+  , node_name
+  , sum(used_bytes)/1024/1024/1024::FLOAT as size_in_Gbytes
+  , sum(ros_used_bytes)/1024/1024/1024::FLOAT as ros_size_in_Gbytes
+  , sum(ros_count) as ros_count
+FROM column_storage
+GROUP BY anchor_table_schema, anchor_table_name, node_name
+ORDER BY size_in_Gbytes DESC;
+```
+
+Or by columns:
+
+```
+SELECT anchor_table_schema
+  , anchor_table_name
+  , anchor_table_column_name
+  , sum(used_bytes)/1024/1024/1024::FLOAT as size_in_Gbytes
+  , sum(ros_used_bytes)/1024/1024/1024::FLOAT as ros_size_in_Gbytes
+  , sum(ros_count) as ros_count
+FROM column_storage
+GROUP BY anchor_table_schema, anchor_table_name, anchor_table_column_name
+ORDER BY size_in_Gbytes DESC;
+```
