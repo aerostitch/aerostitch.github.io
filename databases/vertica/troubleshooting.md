@@ -24,9 +24,9 @@ To close a session: ``` SELECT CLOSE_SESSION('<sessionid>');```
 ```
 select node_name , table_schema, projection_id, projection_name
   , count(distinct ros_id) distinct_nbr_of_ros
-  from partitions
-  group by ode_name, table_schema, projection_id, projection_name
-  order by distinct_nbr_of_ros;
+from partitions
+group by node_name, table_schema, projection_id, projection_name
+order by distinct_nbr_of_ros desc;
 ```
 
 ## Tuple mover in progress
