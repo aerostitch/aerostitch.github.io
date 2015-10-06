@@ -19,6 +19,16 @@ SELECT * FROM V_MONITOR.SESSIONS where current_statement!='';
 
 To close a session: ``` SELECT CLOSE_SESSION('<sessionid>');```
 
+## Number of ROS per node per projection
+
+```
+select node_name , table_schema, projection_id, projection_name
+  , count(distinct ros_id) distinct_nbr_of_ros
+  from partitions
+  group by ode_name, table_schema, projection_id, projection_name
+  order by distinct_nbr_of_ros;
+```
+
 ## Tuple mover in progress
 
 ```
@@ -87,6 +97,18 @@ dbadmin=> select table_name from data_collector where table_name ilike '%dc_io_%
 
 select * from dc_io_info;
 
+## Locks
 
+### Check the locks history
 
+```
+select dump_lock_usage();
+```
 
+Will go to the vertica.log
+
+Check for X Locks. You can have those on several levels but the worst one is
+on the global catalog as the whole cluster has to hold the lock.
+Check wait statistics (wait for the xlock to be set. generally in
+conflict with another xlock)
+The global catalog X locks are set when placing a commit, create/drop table/role/privileges.
