@@ -19,6 +19,16 @@ SELECT * FROM V_MONITOR.SESSIONS where current_statement!='';
 
 To close a session: ``` SELECT CLOSE_SESSION('<sessionid>');```
 
+List the number of sessions per user and client host:
+
+```
+select user_name, split_part(client_hostname, ':', 1), count(*) as nbr_sessions
+from sessions
+group by user_name, split_part(client_hostname, ':', 1)
+order by nbr_sessions desc;
+```
+
+
 ## Number of ROS per node per projection
 
 ```
