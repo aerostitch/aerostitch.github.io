@@ -39,6 +39,15 @@ group by node_name, table_schema, projection_id, projection_name
 order by distinct_nbr_of_ros desc;
 ```
 
+## Number of ROS per projection per node, per partition key
+
+```
+select node_name, table_schema, projection_id, projection_name, partition_key,
+count(distinct ros_id) distinct_nbr_of_ros from partitions group by node_name,
+table_schema, projection_id, projection_name,partition_key order by
+distinct_nbr_of_ros desc;
+```
+
 ## Tuple mover in progress
 
 ```
