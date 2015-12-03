@@ -48,17 +48,6 @@ select audit('MySchema.MyTable', 0, 1);
 
 ## Tables and projections compressed size
 
-Projections size:
-
-```
-SELECT ANCHOR_TABLE_NAME
-  , PROJECTION_SCHEMA
-  , ((SUM(USED_BYTES))/1024/1024/1024)  AS TOTAL_SIZE
-FROM PROJECTION_STORAGE
-GROUP BY PROJECTION_SCHEMA, ANCHOR_TABLE_NAME
-ORDER BY TOTAL_SIZE desc;
-```
-
 Size of the projections
 ```
 SELECT ANCHOR_TABLE_NAME

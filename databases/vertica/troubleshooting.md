@@ -39,6 +39,13 @@ group by node_name, table_schema, projection_id, projection_name
 order by distinct_nbr_of_ros desc;
 ```
 
+or:
+
+```
+select node_name, projection_schema, projection_name, ros_count
+from projection_storage order by ros_count desc;
+```
+
 ## Number of ROS per projection per node, per partition key
 
 ```
@@ -46,6 +53,19 @@ select node_name, table_schema, projection_id, projection_name, partition_key,
 count(distinct ros_id) distinct_nbr_of_ros from partitions group by node_name,
 table_schema, projection_id, projection_name,partition_key order by
 distinct_nbr_of_ros desc;
+```
+
+## Projections usage
+
+io_type "input" is for reads
+io_type "output" is for writes
+```
+select anchor_table_schema, anchor_table_name, projection_name, user_name,
+io_type, count(*) as times_used, min(query_start_timestamp) as first_use,
+max(query_start_timestamp) as last_used
+from projection_usage
+group by anchor_table_schema, anchor_table_name, projection_name, user_name, io_type
+order by last_used desc, times_used desc;
 ```
 
 ## Tuple mover in progress
