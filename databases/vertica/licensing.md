@@ -27,7 +27,7 @@ VERTICA_HOST=myhost.example.com
 VERTICA_USER=my.user
 VERTICA_PWD=AVerySecuredPwd
 VERTICA_DB=MyDatabase
- vsql -h ${VERTICA_HOST} -U ${VERTICA_USER} -w ${VERTICA_PWD} -d ${VERTICA_DB} -F $';' -A -o /tmp/$(date +%Y%m%d)_vertica_prod_size.csv -c "SELECT audit_start_timestamp, database_size_bytes / ( 1024^3 ) as database_size_gb, license_size_bytes / ( 1024^3 )  as license_size_gb, usage_percent * 100 as pct_use FROM v_catalog.license_audits where audit_start_timestamp >= '2014-01-01 00:00:00' ORDER BY audit_start_timestamp DESC ;"
+ vsql -h ${VERTICA_HOST} -U ${VERTICA_USER} -w ${VERTICA_PWD} -d ${VERTICA_DB} -F $';' -A -o /tmp/$(date +%Y%m%d)_vertica_prod_size.csv -c "SELECT TO_CHAR(audit_start_timestamp, 'MM/DD/YYYY HH24:MI:SS') as audit_start_timestamp, database_size_bytes / ( 1024^3 ) as database_size_gb, license_size_bytes / ( 1024^3 )  as license_size_gb, usage_percent * 100 as pct_use FROM v_catalog.license_audits where audit_start_timestamp >= '2014-01-01 00:00:00' ORDER BY audit_start_timestamp DESC ;"
 ```
 
 TIP: add a "-t" to remove the header if you don't want it in the result!
