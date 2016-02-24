@@ -1,0 +1,17 @@
+
+  {% if site.pages %}
+  <br /> <br />
+  <h1 class="page-heading">Tips</h1>
+
+  <ul>
+    {% assign pa = site.pages | sort: 'categories' %}
+    {% for p in pa %}
+      {% if p.title %}
+      <li>
+        <a href="{{ p.url | prepend: site.baseurl }}">{{ p.title }}</a>
+      </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+

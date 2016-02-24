@@ -1,0 +1,19 @@
+
+<script type="text/javascript" src="{{ "/js/jquery.ztree.core-3.5.min.js" | prepend: site.baseurl }}"></script>
+<script type="text/javascript" src="{{ "/js/menu.js" | prepend: site.baseurl }}"></script>
+<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+  <div class="well sidebar-nav" id="ztree-div-container">
+    <ul class="nav ztree" id="index_page_idx">
+      <li>Documents in this category</li>
+    </ul>
+  </div>
+<!--
+  <div class="list-group">
+		{% for p in site.pages %}
+		{% if p.title %}
+		<a class="list-group-item" href="{{ p.url | prepend: site.baseurl }}">{{ p.title }}</a>
+		{% endif %}
+		{% endfor %}
+	</div>
+-->
+</div>

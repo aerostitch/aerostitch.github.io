@@ -1,0 +1,37 @@
+# Site settings
+title: Aerostitch's tips
+email: herlantj+github@gmail.com
+description: >
+  Welcome to the place where I put most of the scripts / code snippets or other
+  informations that don't fit in my tiny memory when I find some time to do so.
+  <br />
+  Here you will find tech tips about databases, programmation / scripting,
+  operating systems (linux, unix and also a few tips on Windows OS) and some interesting softwares.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://aerostitch.github.io" # the base hostname & protocol for your site
+github_username: aerostitch
+
+# Build settings
+markdown: kramdown
+show_drafts: false
+
+# Defaults
+defaults:
+  -
+    scope:
+      path: ""
+      type: ""
+    values:
+      author: "Joseph Herlant"
+
+github: [metadata]
+kramdown:
+  input: GFM
+  hard_wrap: false
+gems:
+  - jekyll-coffeescript
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jemoji
+    #  - jekyll-mentions
+    #  - jekyll-feed

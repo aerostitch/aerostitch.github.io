@@ -1,0 +1,21 @@
+---
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset>
+  {% assign pa = site.pages | sort: 'categories' %}
+  {% for p in pa %}
+  {% if p.categories and p.title %}
+  <url>
+    <title>{{ p.title }}</title>
+    <categories>{{ p.categories | join: ' # ' }}</categories>
+    <path>{{ p.categories | join: '/' }}</path>
+  </url>
+  {% elsif p.title %}
+  <url>
+    <title>{{ p.title }}</title>
+    <categories></categories>
+    <path>{{ p.url }}</path>
+  </url>
+  {% endif %}
+  {% endfor %}
+</urlset>

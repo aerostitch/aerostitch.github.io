@@ -1,0 +1,18 @@
+---
+---
+[
+{% assign pa = site.pages | sort: 'categories' %}
+{% for p in pa %}
+{% if p.title %}
+{
+  "name": [ "{{ p.categories | join: '", "' }}" ],
+  "dir": "{{ p.dir }}",
+  "layout": "{{ p.layout }}",
+  "name": "{{ p.name }}",
+  "path": "{{ p.path }}",
+  "tags": [ "{{ p.tags | join: '", "' }}" ],
+  "url": "{{ p.url }}"
+}{% unless p == pa.last %},{% endunless %}
+{% endif %}
+{% endfor %}
+]
