@@ -5,11 +5,11 @@
 {% for p in pa %}
 {% if p.title %}
 {
-  "name": [ "{{ p.categories | join: '", "' }}" ],
+  "name": "{{ p.title }}",
   "dir": "{{ p.dir }}",
   "layout": "{{ p.layout }}",
-  "name": "{{ p.name }}",
   "path": "{{ p.path }}",
+  "categories": [ "{{ p.categories | join: '", "' }}" ],
   "tags": [ "{{ p.tags | join: '", "' }}" ],
   "url": "{{ p.url }}"
 }{% unless p == pa.last %},{% endunless %}

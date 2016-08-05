@@ -138,8 +138,10 @@ function build_sidebar_treeview_ztree(){
       }
     },
     success: function(json_tree){
-      $.each(json_tree, function(i, node){ cmp_url_lvl(node, 1) })
-      $.fn.zTree.init($("#index_page_idx"), setting, json_tree);
+      tree = push_node_in_tree(json_tree);
+      console.debug(tree);
+
+      $.fn.zTree.init($("#index_page_idx"), setting, tree);
     }
   });
 }
@@ -153,10 +155,25 @@ function ztree_node_onClick(e,treeId, treeNode) {
 }
 
 /*
- * This function modifies the dom on load to auto-open the path of the current
- * file in the tree
+ * TODO: Document that! :)
  */
-function cmp_url_lvl(json_node, url_index){
+function push_node_in_tree(flat_tree){
+  tree = [];
+  console.debug(flat_tree);
+  for (var n = 0; n<flat_tree.length; n++){
+    node = flat_tree[n];
+    console.debug(node);
+    if (node.dir == "/"){
+      tree.push(node);
+    } else {
+      //for (var t=0; t<tree.length; t++){
+        tree.push(node);
+        console.debug("testa");
+      //}
+    }
+  }
+  return tree;
+  /*
   node_path = json_node.name.toLowerCase().replace(/ /,'_');
   loc = $(location).attr('pathname').split('/')[url_index].toLowerCase().replace(/ /,'_');
   if(node_path == loc) {
@@ -167,5 +184,6 @@ function cmp_url_lvl(json_node, url_index){
       })
     }
   }
+  */
 }
 
