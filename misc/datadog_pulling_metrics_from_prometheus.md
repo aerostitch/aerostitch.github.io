@@ -86,6 +86,8 @@ In our example that translates to:
         self.process(endpoint, send_histograms_buckets=send_buckets, instance=instance)
 ```
 
+And that's it really! :)
+
 ### Going further
 
 The [`PrometheusCheck` class](https://github.com/DataDog/dd-agent/blob/master/checks/prometheus_check.py) can allow you to go further in your usage of prometheus. For example, if you are really allergic to the protobuf format the check is capable of pulling the metrics using the text format.
