@@ -69,6 +69,7 @@ This function takes a few arguments:
 * `send_histograms_buckets` (defaults to `True`) chooses or not to send the histogram buckets of your prometheus metrics (the stuff inside the brackets for your prometheus metrics) or to just send the metric value and skipping the histograms. The histograms buckets can create a lot of tags and metrics, so if you don't need it, just set that to false.
 * `instance` (defaults to `None`). For this one, just pass the instance that the agent provided when calling your check method.
 
+In our example that translates to:
 ```python
     def check(self, instance):
         endpoint = instance.get('prometheus_endpoint')
