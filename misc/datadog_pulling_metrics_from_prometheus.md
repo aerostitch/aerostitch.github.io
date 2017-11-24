@@ -32,7 +32,7 @@ In the constructor of your class you will need (after executing the constructor 
   * __Optionally__ you can define the variable `self.type_overrides`. `type_overrides` is a dictionnary where the keys are prometheus metric names and the values are a metric type (name as string) to use instead of the one listed in the payload. It can be used to force a type on untyped metrics.
  
 So in our example that corresponds to:
-```
+```python
 from checks import CheckException
 from checks.prometheus_check import PrometheusCheck
 
@@ -69,7 +69,7 @@ This function takes a few arguments:
 * `send_histograms_buckets` (defaults to `True`) chooses or not to send the histogram buckets of your prometheus metrics (the stuff inside the brackets for your prometheus metrics) or to just send the metric value and skipping the histograms. The histograms buckets can create a lot of tags and metrics, so if you don't need it, just set that to false.
 * `instance` (defaults to `None`). For this one, just pass the instance that the agent provided when calling your check method.
 
-```
+```python
     def check(self, instance):
         endpoint = instance.get('prometheus_endpoint')
         if endpoint is None:
